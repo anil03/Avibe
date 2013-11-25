@@ -11,16 +11,23 @@
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
 		4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C31798118440EA700F7D41B /* InfoPlist.strings */; };
-		4C31798518440EA700F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31798418440EA700F7D41B /* main.m */; };
-		4C31798918440EA700F7D41B /* YMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31798818440EA700F7D41B /* YMAppDelegate.m */; };
-		4C31798C18440EA700F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C31798A18440EA700F7D41B /* Main.storyboard */; };
-		4C31798F18440EA700F7D41B /* YMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C31798E18440EA700F7D41B /* YMViewController.m */; };
 		4C31799118440EA700F7D41B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C31799018440EA700F7D41B /* Images.xcassets */; };
 		4C31799818440EA700F7D41B /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31799718440EA700F7D41B /* XCTest.framework */; };
 		4C31799918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31799A18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
 		4C3179A218440EA700F7D41B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179A018440EA700F7D41B /* InfoPlist.strings */; };
 		4C3179A418440EA700F7D41B /* MusicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179A318440EA700F7D41B /* MusicTests.m */; };
+		4C3179B418440F4800F7D41B /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179B118440F4800F7D41B /* Song.m */; };
+		4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179B218440F4800F7D41B /* Song.xcdatamodeld */; };
+		4C3179BA18440F5300F7D41B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179B718440F5300F7D41B /* AppDelegate.m */; };
+		4C3179C218440FAA00F7D41B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C118440FAA00F7D41B /* CoreData.framework */; };
+		4C3179C71844103400F7D41B /* SampleMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179C41844103400F7D41B /* SampleMusicViewController.m */; };
+		4C3179C81844103400F7D41B /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179C61844103400F7D41B /* TableViewController.m */; };
+		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
+		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
+		4C3179D0184410C300F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179CD184410C300F7D41B /* main.m */; };
+		4C3179D1184410C300F7D41B /* Music-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Music-Info.plist */; };
+		4C3179D61844112E00F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179D41844112E00F7D41B /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,21 +45,29 @@
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4C31797C18440EA700F7D41B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		4C31798018440EA700F7D41B /* Music-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Music-Info.plist"; sourceTree = "<group>"; };
 		4C31798218440EA700F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		4C31798418440EA700F7D41B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4C31798618440EA700F7D41B /* Music-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Music-Prefix.pch"; sourceTree = "<group>"; };
-		4C31798718440EA700F7D41B /* YMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMAppDelegate.h; sourceTree = "<group>"; };
-		4C31798818440EA700F7D41B /* YMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YMAppDelegate.m; sourceTree = "<group>"; };
-		4C31798B18440EA700F7D41B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4C31798D18440EA700F7D41B /* YMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YMViewController.h; sourceTree = "<group>"; };
-		4C31798E18440EA700F7D41B /* YMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YMViewController.m; sourceTree = "<group>"; };
 		4C31799018440EA700F7D41B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4C31799618440EA700F7D41B /* MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31799718440EA700F7D41B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		4C31799F18440EA700F7D41B /* MusicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MusicTests-Info.plist"; sourceTree = "<group>"; };
 		4C3179A118440EA700F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4C3179A318440EA700F7D41B /* MusicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicTests.m; sourceTree = "<group>"; };
+		4C3179B018440F4800F7D41B /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Song.h; path = Model/Song.h; sourceTree = "<group>"; };
+		4C3179B118440F4800F7D41B /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Song.m; path = Model/Song.m; sourceTree = "<group>"; };
+		4C3179B318440F4800F7D41B /* Song.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Song.xcdatamodel; sourceTree = "<group>"; };
+		4C3179B618440F5300F7D41B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Controller/AppDelegate.h; sourceTree = "<group>"; };
+		4C3179B718440F5300F7D41B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Controller/AppDelegate.m; sourceTree = "<group>"; };
+		4C3179C118440FAA00F7D41B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4C3179C31844103400F7D41B /* SampleMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleMusicViewController.h; path = Controller/SampleMusicViewController.h; sourceTree = "<group>"; };
+		4C3179C41844103400F7D41B /* SampleMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SampleMusicViewController.m; path = Controller/SampleMusicViewController.m; sourceTree = "<group>"; };
+		4C3179C51844103400F7D41B /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TableViewController.h; path = Controller/TableViewController.h; sourceTree = "<group>"; };
+		4C3179C61844103400F7D41B /* TableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TableViewController.m; path = Controller/TableViewController.m; sourceTree = "<group>"; };
+		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4C3179CD184410C300F7D41B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4C3179CE184410C300F7D41B /* Music-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Music-Info.plist"; sourceTree = "<group>"; };
+		4C3179CF184410C300F7D41B /* Music-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Music-Prefix.pch"; sourceTree = "<group>"; };
+		4C3179D51844112E00F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +75,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */,
+				4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */,
+				4C3179C218440FAA00F7D41B /* CoreData.framework in Frameworks */,
 				4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */,
 				4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */,
 				4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */,
@@ -101,6 +119,9 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C3179CB1844107D00F7D41B /* MediaPlayer.framework */,
+				4C3179C91844107800F7D41B /* AVFoundation.framework */,
+				4C3179C118440FAA00F7D41B /* CoreData.framework */,
 				4C31797818440EA700F7D41B /* Foundation.framework */,
 				4C31797A18440EA700F7D41B /* CoreGraphics.framework */,
 				4C31797C18440EA700F7D41B /* UIKit.framework */,
@@ -112,11 +133,9 @@
 		4C31797E18440EA700F7D41B /* Music */ = {
 			isa = PBXGroup;
 			children = (
-				4C31798718440EA700F7D41B /* YMAppDelegate.h */,
-				4C31798818440EA700F7D41B /* YMAppDelegate.m */,
-				4C31798A18440EA700F7D41B /* Main.storyboard */,
-				4C31798D18440EA700F7D41B /* YMViewController.h */,
-				4C31798E18440EA700F7D41B /* YMViewController.m */,
+				4C3179AF18440EF100F7D41B /* View */,
+				4C3179AE18440EED00F7D41B /* Model */,
+				4C3179AD18440EAD00F7D41B /* Controller */,
 				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,
 			);
@@ -126,10 +145,10 @@
 		4C31797F18440EA700F7D41B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C31798018440EA700F7D41B /* Music-Info.plist */,
+				4C3179CD184410C300F7D41B /* main.m */,
+				4C3179CE184410C300F7D41B /* Music-Info.plist */,
+				4C3179CF184410C300F7D41B /* Music-Prefix.pch */,
 				4C31798118440EA700F7D41B /* InfoPlist.strings */,
-				4C31798418440EA700F7D41B /* main.m */,
-				4C31798618440EA700F7D41B /* Music-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -150,6 +169,37 @@
 				4C3179A018440EA700F7D41B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C3179AD18440EAD00F7D41B /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
+				4C3179C41844103400F7D41B /* SampleMusicViewController.m */,
+				4C3179C51844103400F7D41B /* TableViewController.h */,
+				4C3179C61844103400F7D41B /* TableViewController.m */,
+				4C3179B618440F5300F7D41B /* AppDelegate.h */,
+				4C3179B718440F5300F7D41B /* AppDelegate.m */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		4C3179AE18440EED00F7D41B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				4C3179B018440F4800F7D41B /* Song.h */,
+				4C3179B118440F4800F7D41B /* Song.m */,
+				4C3179B218440F4800F7D41B /* Song.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		4C3179AF18440EF100F7D41B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				4C3179D41844112E00F7D41B /* Main.storyboard */,
+			);
+			name = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +246,7 @@
 		4C31796D18440EA700F7D41B /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = YM;
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Yuhua Mai";
 				TargetAttributes = {
@@ -229,9 +279,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C3179D1184410C300F7D41B /* Music-Info.plist in Resources */,
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
 				4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */,
-				4C31798C18440EA700F7D41B /* Main.storyboard in Resources */,
+				4C3179D61844112E00F7D41B /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,9 +301,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C31798F18440EA700F7D41B /* YMViewController.m in Sources */,
-				4C31798918440EA700F7D41B /* YMAppDelegate.m in Sources */,
-				4C31798518440EA700F7D41B /* main.m in Sources */,
+				4C3179C81844103400F7D41B /* TableViewController.m in Sources */,
+				4C3179C71844103400F7D41B /* SampleMusicViewController.m in Sources */,
+				4C3179BA18440F5300F7D41B /* AppDelegate.m in Sources */,
+				4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */,
+				4C3179D0184410C300F7D41B /* main.m in Sources */,
+				4C3179B418440F4800F7D41B /* Song.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,20 +337,20 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		4C31798A18440EA700F7D41B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C31798B18440EA700F7D41B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4C3179A018440EA700F7D41B /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				4C3179A118440EA700F7D41B /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4C3179D41844112E00F7D41B /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C3179D51844112E00F7D41B /* en */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -471,6 +525,20 @@
 			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		4C3179B218440F4800F7D41B /* Song.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				4C3179B318440F4800F7D41B /* Song.xcdatamodel */,
+			);
+			currentVersion = 4C3179B318440F4800F7D41B /* Song.xcdatamodel */;
+			name = Song.xcdatamodeld;
+			path = Model/Song.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 4C31796D18440EA700F7D41B /* Project object */;
 }
