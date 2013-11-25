@@ -45,7 +45,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _songInfo.text = [NSString stringWithFormat:@"%@ %@ %@", _song.title, _song.album, _song.artist];
+    _songInfo.text = [NSString stringWithFormat:@"%@, %@, %@", _song.title, _song.album, _song.artist];
+    
+    NSString *searchTitle = [_song.title stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
     
     //JSON
     [[AVAudioSession sharedInstance] setDelegate: self];
@@ -54,9 +57,10 @@
     if (setCategoryError)
         NSLog(@"Error setting category! %@", setCategoryError);
     
+    
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:
-                        kiTUNESearchAPI];
+                        searchURL];
         [self performSelectorOnMainThread:@selector(fetchedData:)
                                withObject:data waitUntilDone:YES];
     });

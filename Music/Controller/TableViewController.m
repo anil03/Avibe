@@ -123,10 +123,10 @@
     Song *song = [NSEntityDescription insertNewObjectForEntityForName:@"Song" inManagedObjectContext:_managedObjectContext];
 
     if (!currentPlayingSong) {
-        //deal with nil
-        song.title = @"Sample Title";
-        song.album = @"Sample Album";
-        song.artist = @"Sample Artist";
+        //deal with nil, hardcode for demo
+        song.title = @"Mirrors";
+        song.album = @"The 20/20 Experience";
+        song.artist = @"JustinTimberlake";
     }else{    
         song.title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];;
         song.album = [currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle];
