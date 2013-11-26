@@ -19,3 +19,9 @@ DerivedData
 
 #CocoaPods
 Pods
+
+#Database
+*/Debug/*
+db.xcindexdb
+db.xcindexdb-shm
+db.xcindexdb-wal
