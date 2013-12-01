@@ -8,6 +8,7 @@
 
 #import "TableViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import <Parse/Parse.h>
 
 #import "AppDelegate.h"
 #import "SampleMusicViewController.h"
@@ -34,8 +35,9 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     _managedObjectContext = [(AppDelegate*)[[UIApplication sharedApplication] delegate] managedObjectContext];
- 
-    [self fetechData];
+
+//    [self fetechData];
+    [self refreshCoreData:nil];
 }
 
 
@@ -93,9 +95,9 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    Song *song = [_songs objectAtIndex:indexPath.row];
-    cell.textLabel.text = song.title;
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", song.album, song.artist];
+    PFObject *song = [_songs objectAtIndex:indexPath.row];
+    cell.textLabel.text = [song objectForKey:@"title"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
     
     return cell;
 }
@@ -138,15 +140,35 @@
         }
     }
     
-    [self fetechData];
+    PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+    [songRecord setObject:song.title forKey:@"title"];
+    [songRecord setObject:song.album forKey:@"album"];
+    [songRecord setObject:song.artist forKey:@"artist"];
+    [songRecord setObject:[PFUser currentUser] forKey:@"author"];
+    [songRecord save];
+    
+//    [self fetechData];
+    [self refreshCoreData:nil];
     [self.tableView reloadData];
     
 }
 
-- (IBAction)ClearCoreData:(id)sender {
-    [self deleteAllObjects:@"Song"];
-    _songs = nil;
-    [self.tableView reloadData];
+- (IBAction)refreshCoreData:(id)sender {
+//    [self deleteAllObjects:@"Song"];
+//    _songs = nil;
+    
+    //Create query for all Post object by the current user
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"author" equalTo:[PFUser currentUser]];
+    
+    // Run the query
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            //Save results and update the table
+            _songs = objects;
+            [self.tableView reloadData];
+        }
+    }];
 }
 
 @end

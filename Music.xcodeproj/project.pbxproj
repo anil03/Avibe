@@ -28,6 +28,12 @@
 		4C3179D0184410C300F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179CD184410C300F7D41B /* main.m */; };
 		4C3179D1184410C300F7D41B /* Music-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Music-Info.plist */; };
 		4C3179D61844112E00F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179D41844112E00F7D41B /* Main.storyboard */; };
+		4CEBEE2B184ADD7F0018ABE0 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2A184ADD7F0018ABE0 /* Parse.framework */; };
+		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
+		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
+		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
+		4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */; };
+		4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +74,12 @@
 		4C3179CE184410C300F7D41B /* Music-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Music-Info.plist"; sourceTree = "<group>"; };
 		4C3179CF184410C300F7D41B /* Music-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Music-Prefix.pch"; sourceTree = "<group>"; };
 		4C3179D51844112E00F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4CEBEE2A184ADD7F0018ABE0 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Developer/Parse/Parse.framework; sourceTree = "<group>"; };
+		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +87,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */,
+				4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */,
+				4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */,
+				4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */,
+				4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */,
+				4CEBEE2B184ADD7F0018ABE0 /* Parse.framework in Frameworks */,
 				4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */,
 				4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */,
 				4C3179C218440FAA00F7D41B /* CoreData.framework in Frameworks */,
@@ -119,11 +137,17 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4C3179CB1844107D00F7D41B /* MediaPlayer.framework */,
+				4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */,
+				4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */,
 				4C3179C91844107800F7D41B /* AVFoundation.framework */,
+				4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */,
 				4C3179C118440FAA00F7D41B /* CoreData.framework */,
-				4C31797818440EA700F7D41B /* Foundation.framework */,
 				4C31797A18440EA700F7D41B /* CoreGraphics.framework */,
+				4C31797818440EA700F7D41B /* Foundation.framework */,
+				4C3179CB1844107D00F7D41B /* MediaPlayer.framework */,
+				4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */,
+				4CEBEE2A184ADD7F0018ABE0 /* Parse.framework */,
+				4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */,
 				4C31797C18440EA700F7D41B /* UIKit.framework */,
 				4C31799718440EA700F7D41B /* XCTest.framework */,
 			);
@@ -437,6 +461,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Desktop/github/Music,
+					/Users/Michael/Developer/Parse,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
 				INFOPLIST_FILE = "Music/Music-Info.plist";
@@ -453,6 +482,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/Michael/Desktop/github/Music,
+					/Users/Michael/Developer/Parse,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
 				INFOPLIST_FILE = "Music/Music-Info.plist";

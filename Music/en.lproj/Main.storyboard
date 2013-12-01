@@ -40,9 +40,9 @@
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" id="UNB-Mv-3sd">
-                        <barButtonItem key="leftBarButtonItem" title="Clear" id="3tJ-or-aJt">
+                        <barButtonItem key="leftBarButtonItem" title="Refresh" id="3tJ-or-aJt">
                             <connections>
-                                <action selector="ClearCoreData:" destination="QtU-0U-1mZ" id="bXt-sl-08I"/>
+                                <action selector="refreshCoreData:" destination="QtU-0U-1mZ" id="ytT-N2-NFg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="CurrPlaying" id="tEi-oo-wb8">
