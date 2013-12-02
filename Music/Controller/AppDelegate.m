@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import <Parse/Parse.h>
+
 
 @implementation AppDelegate
 
@@ -23,22 +23,22 @@
     [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
     
     //User login
-    PFUser *user = [PFUser user];
+//    PFUser *user = [PFUser user];
 //    user.username = @"myhgew";
 //    user.password = @"password";
 //    user.email = @"myhgew@gmail.com";
     
-    user.username = @"myhgew1";
-    user.password = @"password";
-    user.email = @"myhgew1@gmail.com";
-    
-    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (!error) {
-            // Hooray! Let them use the app now.
-        } else {
-            [PFUser logInWithUsername:@"myhgew" password:@"password"];
-        }
-    }];
+//    user.username = @"myhgew1";
+//    user.password = @"password";
+//    user.email = @"myhgew1@gmail.com";
+//    
+//    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (!error) {
+//            // Hooray! Let them use the app now.
+//        } else {
+//            [PFUser logInWithUsername:@"myhgew" password:@"password"];
+//        }
+//    }];
     
     return YES;
 }

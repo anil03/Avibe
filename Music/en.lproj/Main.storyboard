@@ -58,7 +58,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kae-QR-Yww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="836" y="-29"/>
+            <point key="canvasLocation" x="832" y="-21"/>
         </scene>
         <!--Sample Music View Controller-->
         <scene sceneID="mZf-3q-GUz">
@@ -118,7 +118,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIa-wH-eF2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1218" y="-29"/>
+            <point key="canvasLocation" x="1276" y="-21"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fuS-r9-b3K">
@@ -131,12 +131,53 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="QtU-0U-1mZ" kind="relationship" relationship="rootViewController" id="muk-Tv-HKO"/>
+                        <segue destination="hi8-M8-DaS" kind="relationship" relationship="rootViewController" id="bR0-nJ-EKe"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvo-ZK-TqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="310" y="-29"/>
+            <point key="canvasLocation" x="-164" y="-21"/>
+        </scene>
+        <!--Subclass Config View Controller-->
+        <scene sceneID="2sg-Ce-HJ7">
+            <objects>
+                <viewController id="hi8-M8-DaS" customClass="SubclassConfigViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dd0-8h-P3Y"/>
+                        <viewControllerLayoutGuide type="bottom" id="QXi-ga-BMJ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="X7m-gl-Bs7">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dop-j9-KvV">
+                                <rect key="frame" x="61" y="190" width="199" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13F-2a-12u">
+                                <rect key="frame" x="137" y="378" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="logOutButtonTapAction:" destination="hi8-M8-DaS" eventType="touchUpInside" id="1cs-Yh-crE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="IEi-JN-3hT"/>
+                    <connections>
+                        <outlet property="welcomeLabel" destination="Dop-j9-KvV" id="Scm-qa-bew"/>
+                        <segue destination="QtU-0U-1mZ" kind="push" id="l6f-vf-0nd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kat-Ni-Bp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="347" y="-21"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
