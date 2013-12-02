@@ -10,8 +10,6 @@
 #import "MyLogInViewController.h"
 #import "MySignUpViewController.h"
 
-#import "TableViewController.h"
-
 @implementation SubclassConfigViewController
 
 
@@ -39,7 +37,6 @@
         
         // Customize the Sign Up View Controller
         //Should swtich to main view
-        
         MySignUpViewController *signUpViewController = [[MySignUpViewController alloc] init];
         signUpViewController.delegate = self;
         signUpViewController.fields = PFSignUpFieldsDefault | PFSignUpFieldsAdditional;
@@ -115,11 +112,20 @@
 }
 
 
+
 #pragma mark - ()
 
 - (IBAction)logOutButtonTapAction:(id)sender {
     [PFUser logOut];
-    [self.navigationController popViewControllerAnimated:YES];
+    [self viewDidLoad];
+    [self viewWillAppear:YES];
+    [self viewDidAppear:YES];
+    
+//    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)segueToMainScreen:(id)sender {
+    [self performSegueWithIdentifier:@"MainControllerSegue" sender:self];
 }
 
 @end

@@ -156,23 +156,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="13F-2a-12u">
-                                <rect key="frame" x="137" y="378" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="logOutButtonTapAction:" destination="hi8-M8-DaS" eventType="touchUpInside" id="1cs-Yh-crE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="IEi-JN-3hT"/>
+                    <navigationItem key="navigationItem" id="IEi-JN-3hT">
+                        <barButtonItem key="leftBarButtonItem" title="Logout" id="6yc-k7-pqy">
+                            <connections>
+                                <action selector="logOutButtonTapAction:" destination="hi8-M8-DaS" id="xDl-cA-1JF"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Main" id="Snf-3N-jze">
+                            <connections>
+                                <action selector="segueToMainScreen:" destination="hi8-M8-DaS" id="22P-rK-Lqn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="welcomeLabel" destination="Dop-j9-KvV" id="Scm-qa-bew"/>
-                        <segue destination="QtU-0U-1mZ" kind="push" id="l6f-vf-0nd"/>
+                        <segue destination="QtU-0U-1mZ" kind="push" identifier="MainControllerSegue" id="l6f-vf-0nd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kat-Ni-Bp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
