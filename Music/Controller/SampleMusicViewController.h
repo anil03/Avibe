@@ -12,5 +12,6 @@
 @interface SampleMusicViewController : UIViewController
 
 @property (nonatomic, strong) Song *song;
+@property (nonatomic, strong) PFObject *pfObject;
 
 @end

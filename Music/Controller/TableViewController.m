@@ -115,7 +115,14 @@
     {
         // Get reference to the destination view controller
         SampleMusicViewController *controller = [segue destinationViewController];
-        controller.song = sender;
+//        controller.song = [[Song alloc] init];
+        controller.pfObject = sender;
+        
+//        controller.song.title = [sender objectForKey:@"title"];
+//        controller.song.album = [sender objectForKey:@"album"];
+//        controller.song.artist = [sender objectForKey:@"artist"];
+
+        
     }
 }
 

@@ -27,6 +27,7 @@
 @implementation SampleMusicViewController
 @synthesize song = _song;
 @synthesize songInfo = _songInfo;
+@synthesize pfObject = _pfObject;
 
 @synthesize player; // the player object
 @synthesize button;
@@ -45,9 +46,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _songInfo.text = [NSString stringWithFormat:@"%@, %@, %@", _song.title, _song.album, _song.artist];
+//    _song = [[Song alloc]init];
+//    _song.title = [_pfObject objectForKey:@"title"];
+//    _song.album = [_pfObject objectForKey:@"album"];
+//    _song.artist = [_pfObject objectForKey:@"artist"];
     
-    NSString *searchTitle = [_song.title stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    _songInfo.text = [NSString stringWithFormat:@"%@, %@, %@", [_pfObject objectForKey:@"title"], [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
+    
+    NSString *searchTitle = [[_pfObject objectForKey:@"title"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
     
     //JSON
