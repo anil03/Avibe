@@ -26,7 +26,7 @@
 		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
 		4C3179D0184410C300F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179CD184410C300F7D41B /* main.m */; };
-		4C3179D1184410C300F7D41B /* Music-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Music-Info.plist */; };
+		4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Beet-Info.plist */; };
 		4C3179D61844112E00F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179D41844112E00F7D41B /* Main.storyboard */; };
 		4C985EA9184D8C9400BEDFAD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C985EA8184D8C9400BEDFAD /* Parse.framework */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
@@ -63,15 +63,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C31797518440EA700F7D41B /* Music.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Music.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		4C31797C18440EA700F7D41B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4C31798218440EA700F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4C31799018440EA700F7D41B /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		4C31799618440EA700F7D41B /* MusicTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C31799618440EA700F7D41B /* BeetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BeetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31799718440EA700F7D41B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4C31799F18440EA700F7D41B /* MusicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MusicTests-Info.plist"; sourceTree = "<group>"; };
+		4C31799F18440EA700F7D41B /* BeetTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BeetTests-Info.plist"; sourceTree = "<group>"; };
 		4C3179A118440EA700F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4C3179A318440EA700F7D41B /* MusicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicTests.m; sourceTree = "<group>"; };
 		4C3179B018440F4800F7D41B /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Song.h; path = Model/Song.h; sourceTree = "<group>"; };
@@ -87,8 +87,8 @@
 		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4C3179CD184410C300F7D41B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		4C3179CE184410C300F7D41B /* Music-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Music-Info.plist"; sourceTree = "<group>"; };
-		4C3179CF184410C300F7D41B /* Music-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Music-Prefix.pch"; sourceTree = "<group>"; };
+		4C3179CE184410C300F7D41B /* Beet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Beet-Info.plist"; sourceTree = "<group>"; };
+		4C3179CF184410C300F7D41B /* Beet-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Beet-Prefix.pch"; sourceTree = "<group>"; };
 		4C3179D51844112E00F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C985EA8184D8C9400BEDFAD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -154,8 +154,8 @@
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
-				4C31797E18440EA700F7D41B /* Music */,
-				4C31799D18440EA700F7D41B /* MusicTests */,
+				4C31797E18440EA700F7D41B /* Beet */,
+				4C31799D18440EA700F7D41B /* BeetTests */,
 				4C31797718440EA700F7D41B /* Frameworks */,
 				4C31797618440EA700F7D41B /* Products */,
 			);
@@ -164,8 +164,8 @@
 		4C31797618440EA700F7D41B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4C31797518440EA700F7D41B /* Music.app */,
-				4C31799618440EA700F7D41B /* MusicTests.xctest */,
+				4C31797518440EA700F7D41B /* Beet.app */,
+				4C31799618440EA700F7D41B /* BeetTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,7 +191,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4C31797E18440EA700F7D41B /* Music */ = {
+		4C31797E18440EA700F7D41B /* Beet */ = {
 			isa = PBXGroup;
 			children = (
 				4CEBEE42184CE3950018ABE0 /* Asset */,
@@ -202,6 +202,7 @@
 				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,
 			);
+			name = Beet;
 			path = Music;
 			sourceTree = "<group>";
 		};
@@ -209,26 +210,27 @@
 			isa = PBXGroup;
 			children = (
 				4C3179CD184410C300F7D41B /* main.m */,
-				4C3179CE184410C300F7D41B /* Music-Info.plist */,
-				4C3179CF184410C300F7D41B /* Music-Prefix.pch */,
+				4C3179CE184410C300F7D41B /* Beet-Info.plist */,
+				4C3179CF184410C300F7D41B /* Beet-Prefix.pch */,
 				4C31798118440EA700F7D41B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4C31799D18440EA700F7D41B /* MusicTests */ = {
+		4C31799D18440EA700F7D41B /* BeetTests */ = {
 			isa = PBXGroup;
 			children = (
 				4C3179A318440EA700F7D41B /* MusicTests.m */,
 				4C31799E18440EA700F7D41B /* Supporting Files */,
 			);
+			name = BeetTests;
 			path = MusicTests;
 			sourceTree = "<group>";
 		};
 		4C31799E18440EA700F7D41B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				4C31799F18440EA700F7D41B /* MusicTests-Info.plist */,
+				4C31799F18440EA700F7D41B /* BeetTests-Info.plist */,
 				4C3179A018440EA700F7D41B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -300,9 +302,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4C31797418440EA700F7D41B /* Music */ = {
+		4C31797418440EA700F7D41B /* Beet */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C3179A718440EA700F7D41B /* Build configuration list for PBXNativeTarget "Music" */;
+			buildConfigurationList = 4C3179A718440EA700F7D41B /* Build configuration list for PBXNativeTarget "Beet" */;
 			buildPhases = (
 				4C31797118440EA700F7D41B /* Sources */,
 				4C31797218440EA700F7D41B /* Frameworks */,
@@ -312,14 +314,14 @@
 			);
 			dependencies = (
 			);
-			name = Music;
+			name = Beet;
 			productName = Music;
-			productReference = 4C31797518440EA700F7D41B /* Music.app */;
+			productReference = 4C31797518440EA700F7D41B /* Beet.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4C31799518440EA700F7D41B /* MusicTests */ = {
+		4C31799518440EA700F7D41B /* BeetTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4C3179AA18440EA700F7D41B /* Build configuration list for PBXNativeTarget "MusicTests" */;
+			buildConfigurationList = 4C3179AA18440EA700F7D41B /* Build configuration list for PBXNativeTarget "BeetTests" */;
 			buildPhases = (
 				4C31799218440EA700F7D41B /* Sources */,
 				4C31799318440EA700F7D41B /* Frameworks */,
@@ -330,9 +332,9 @@
 			dependencies = (
 				4C31799C18440EA700F7D41B /* PBXTargetDependency */,
 			);
-			name = MusicTests;
+			name = BeetTests;
 			productName = MusicTests;
-			productReference = 4C31799618440EA700F7D41B /* MusicTests.xctest */;
+			productReference = 4C31799618440EA700F7D41B /* BeetTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -353,7 +355,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Music" */;
+			buildConfigurationList = 4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Beet" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -366,8 +368,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4C31797418440EA700F7D41B /* Music */,
-				4C31799518440EA700F7D41B /* MusicTests */,
+				4C31797418440EA700F7D41B /* Beet */,
+				4C31799518440EA700F7D41B /* BeetTests */,
 			);
 		};
 /* End PBXProject section */
@@ -377,7 +379,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C3179D1184410C300F7D41B /* Music-Info.plist in Resources */,
+				4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */,
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
 				4CEBEE57184CE3D00018ABE0 /* SignUpDown.png in Resources */,
 				4CEBEE59184CE3D00018ABE0 /* Twitter.png in Resources */,
@@ -436,7 +438,7 @@
 /* Begin PBXTargetDependency section */
 		4C31799C18440EA700F7D41B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4C31797418440EA700F7D41B /* Music */;
+			target = 4C31797418440EA700F7D41B /* Beet */;
 			targetProxy = 4C31799B18440EA700F7D41B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -554,10 +556,10 @@
 					/Users/Michael/Developer/github/Beet,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
-				INFOPLIST_FILE = "Music/Music-Info.plist";
+				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
+				INFOPLIST_FILE = "Music/Beet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Beet;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -576,10 +578,10 @@
 					/Users/Michael/Developer/github/Beet,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
-				INFOPLIST_FILE = "Music/Music-Info.plist";
+				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
+				INFOPLIST_FILE = "Music/Beet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Beet;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -601,8 +603,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "MusicTests/MusicTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "MusicTests/BeetTests-Info.plist";
+				PRODUCT_NAME = BeetTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -620,8 +622,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
-				INFOPLIST_FILE = "MusicTests/MusicTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "MusicTests/BeetTests-Info.plist";
+				PRODUCT_NAME = BeetTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -630,7 +632,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Music" */ = {
+		4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Beet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C3179A518440EA700F7D41B /* Debug */,
@@ -639,7 +641,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C3179A718440EA700F7D41B /* Build configuration list for PBXNativeTarget "Music" */ = {
+		4C3179A718440EA700F7D41B /* Build configuration list for PBXNativeTarget "Beet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C3179A818440EA700F7D41B /* Debug */,
@@ -648,7 +650,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4C3179AA18440EA700F7D41B /* Build configuration list for PBXNativeTarget "MusicTests" */ = {
+		4C3179AA18440EA700F7D41B /* Build configuration list for PBXNativeTarget "BeetTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4C3179AB18440EA700F7D41B /* Debug */,
