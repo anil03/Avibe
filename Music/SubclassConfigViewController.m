@@ -125,7 +125,8 @@
 }
 
 - (IBAction)segueToMainScreen:(id)sender {
-    [self performSegueWithIdentifier:@"MainControllerSegue" sender:self];
+    [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"MainControllerSegue" sender:self];
 }
 
 @end
