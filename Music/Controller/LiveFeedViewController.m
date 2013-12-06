@@ -32,7 +32,7 @@
     UIViewController * leftSideDrawerViewController = [[MMExampleLeftSideDrawerViewController alloc] init];
 //    leftDrawer.view.backgroundColor = [UIColor blueColor];
     
-    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] init];
+    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
 //    UILabel *test = [[UILabel alloc] init];
 //    test.text = @"sdfsd";
 //    center.view.backgroundColor = [UIColor redColor];

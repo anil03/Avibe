@@ -40,9 +40,17 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @interface MMExampleCenterTableViewController ()
 
+@property (weak, atomic) UIViewController *viewController;
+
 @end
 
 @implementation MMExampleCenterTableViewController
+
+- (id)initWithSelf:(UIViewController*)controller
+{
+    self.viewController = controller;
+    return [self init];
+}
 
 - (id)init
 {
@@ -129,12 +137,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 -(void)setupLeftMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    [self.viewController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
 }
 
 -(void)setupRightMenuButton{
     MMDrawerBarButtonItem * rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
-    [self.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
+    [self.viewController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
 }
 
 -(void)contentSizeDidChange:(NSString *)size{

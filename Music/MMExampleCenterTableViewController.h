@@ -25,4 +25,6 @@
 @interface MMExampleCenterTableViewController : MMExampleViewController <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong) UITableView * tableView;
 
+- (id)initWithSelf:(UIViewController*)controller;
+
 @end

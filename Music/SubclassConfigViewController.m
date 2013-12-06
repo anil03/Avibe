@@ -135,7 +135,9 @@
 }
 
 - (IBAction)segueToMainScreen:(id)sender {
-    [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
+    LiveFeedViewController *lf = [[LiveFeedViewController alloc] initWithCoder:nil];
+    [self.navigationController pushViewController:lf animated:YES];
+    //    [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
