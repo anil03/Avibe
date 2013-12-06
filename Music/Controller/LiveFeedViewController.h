@@ -12,7 +12,6 @@
 @interface LiveFeedViewController : MMDrawerController
 
 
--(id)initWithCenterViewController:(UIViewController *)centerViewController leftDrawerViewController:(UIViewController *)leftDrawerViewController rightDrawerViewController:(UIViewController *)rightDrawerViewController;
 
 @end
 

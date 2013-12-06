@@ -16,6 +16,8 @@
 #import "MMExampleDrawerVisualStateManager.h"
 #import "MMNavigationController.h"
 
+#import "MMDrawerBarButtonItem.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 @interface LiveFeedViewController ()
@@ -24,34 +26,38 @@
 
 @implementation LiveFeedViewController
 
--(id)init
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
+    
     UIViewController * leftSideDrawerViewController = [[MMExampleLeftSideDrawerViewController alloc] init];
+//    leftDrawer.view.backgroundColor = [UIColor blueColor];
     
     UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] init];
+//    UILabel *test = [[UILabel alloc] init];
+//    test.text = @"sdfsd";
+//    center.view.backgroundColor = [UIColor redColor];
+//    [center.view addSubview:test];
     
     UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
     
+//    self = [super initWithCenterViewController:center leftDrawerViewController:leftDrawer rightDrawerViewController:rightDrawer];
+    
     UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
     [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
+    
     
     if(OSVersionIsAtLeastiOS7()){
         UINavigationController * rightSideNavController = [[MMNavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
 		[rightSideNavController setRestorationIdentifier:@"MMExampleRightNavigationControllerRestorationKey"];
         UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
 		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
-        self = [super
-                                 initWithCenterViewController:navigationController
+        self = [super initWithCenterViewController:navigationController
                                  leftDrawerViewController:leftSideNavController
                                  rightDrawerViewController:rightSideNavController];
         [self setShowsShadow:NO];
     }
-    else{
-        self = [super                              initWithCenterViewController:navigationController
-                                 leftDrawerViewController:leftSideDrawerViewController
-                                 rightDrawerViewController:rightSideDrawerViewController];
-    }
 
+    
     [self setRestorationIdentifier:@"MMDrawer"];
     [self setMaximumRightDrawerWidth:200.0];
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
@@ -70,25 +76,67 @@
     return self;
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+    
+//    [self setupLeftMenuButton];
+//    [self setupRightMenuButton];
+//    
+//    UITapGestureRecognizer * doubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(doubleTap:)];
+//    [doubleTap setNumberOfTapsRequired:2];
+//    [self.view addGestureRecognizer:doubleTap];
+//    
+//    UITapGestureRecognizer * twoFingerDoubleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(twoFingerDoubleTap:)];
+//    [twoFingerDoubleTap setNumberOfTapsRequired:2];
+//    [twoFingerDoubleTap setNumberOfTouchesRequired:2];
+//    [self.view addGestureRecognizer:twoFingerDoubleTap];
+//    
+//    if(OSVersionIsAtLeastiOS7()){
+//        UIColor * barColor = [UIColor
+//                              colorWithRed:247.0/255.0
+//                              green:249.0/255.0
+//                              blue:250.0/255.0
+//                              alpha:1.0];
+//        [self.navigationController.navigationBar setBarTintColor:barColor];
+//    }
+//    else {
+//        UIColor * barColor = [UIColor
+//                              colorWithRed:78.0/255.0
+//                              green:156.0/255.0
+//                              blue:206.0/255.0
+//                              alpha:1.0];
+//        [self.navigationController.navigationBar setTintColor:barColor];
+//    }
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+//#pragma mark - Button
+//-(void)setupLeftMenuButton{
+//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+//    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+//}
+//
+//-(void)setupRightMenuButton{
+//    MMDrawerBarButtonItem * rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
+//    [self.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
+//}
+//
+//#pragma mark - Button Handlers
+//-(void)leftDrawerButtonPress:(id)sender{
+//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+//}
+//
+//-(void)rightDrawerButtonPress:(id)sender{
+//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideRight animated:YES completion:nil];
+//}
+//
+//-(void)doubleTap:(UITapGestureRecognizer*)gesture{
+//    [self.mm_drawerController bouncePreviewForDrawerSide:MMDrawerSideLeft completion:nil];
+//}
+//
+//-(void)twoFingerDoubleTap:(UITapGestureRecognizer*)gesture{
+//    [self.mm_drawerController bouncePreviewForDrawerSide:MMDrawerSideRight completion:nil];
+//}
 
 @end

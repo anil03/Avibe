@@ -136,19 +136,15 @@
 
 - (IBAction)segueToMainScreen:(id)sender {
     [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
-//    [self performSegueWithIdentifier:@"MainControllerSegue" sender:self];
-    
-    
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([[segue identifier] isEqualToString:@"LiveFeedViewSegue"])
     {
-        // Get reference to the destination view controller
-        LiveFeedViewController *controller = [segue destinationViewController];
-        //        controller.song = [[Song alloc] init];
-//        controller.pfObject = sender;
+        //Set up the destination controller programmatically
+//        LiveFeedViewController *controller = [segue destinationViewController];
+        
     }
 }
 
