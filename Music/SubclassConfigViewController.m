@@ -10,6 +10,16 @@
 #import "MyLogInViewController.h"
 #import "MySignUpViewController.h"
 
+#import "LiveFeedViewController.h"
+
+
+
+@interface SubclassConfigViewController ()
+
+@property (nonatomic,strong) MMDrawerController * drawerController;
+
+@end
+
 @implementation SubclassConfigViewController
 
 
@@ -127,6 +137,19 @@
 - (IBAction)segueToMainScreen:(id)sender {
     [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
 //    [self performSegueWithIdentifier:@"MainControllerSegue" sender:self];
+    
+    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([[segue identifier] isEqualToString:@"LiveFeedViewSegue"])
+    {
+        // Get reference to the destination view controller
+        LiveFeedViewController *controller = [segue destinationViewController];
+        //        controller.song = [[Song alloc] init];
+//        controller.pfObject = sender;
+    }
 }
 
 @end

@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Live Feed View Controller-->
         <scene sceneID="tmP-7j-kEl">
             <objects>
-                <viewController id="TaF-VU-CIL" sceneMemberID="viewController">
+                <viewController id="TaF-VU-CIL" customClass="LiveFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QXD-VL-Vf7"/>
                         <viewControllerLayoutGuide type="bottom" id="fEy-to-YF3"/>
