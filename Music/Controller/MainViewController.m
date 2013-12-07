@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
 
-#import "LiveFeedViewController.h"
+#import "MainViewController.h"
 
 #import "MMDrawerController.h"
 #import "MMExampleCenterTableViewController.h"
@@ -20,11 +20,11 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-@interface LiveFeedViewController ()
+@interface MainViewController ()
 
 @end
 
-@implementation LiveFeedViewController
+@implementation MainViewController
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {

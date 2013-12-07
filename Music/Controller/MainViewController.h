@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MMDrawerController.h"
 
-@interface LiveFeedViewController : MMDrawerController
+@interface MainViewController : MMDrawerController
 
 
 

@@ -10,7 +10,7 @@
 #import "MyLogInViewController.h"
 #import "MySignUpViewController.h"
 
-#import "LiveFeedViewController.h"
+#import "MainViewController.h"
 
 
 
@@ -36,6 +36,8 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO];
     
     // Check if user is logged in
     if (![PFUser currentUser]) {        
@@ -135,7 +137,7 @@
 }
 
 - (IBAction)segueToMainScreen:(id)sender {
-    LiveFeedViewController *lf = [[LiveFeedViewController alloc] initWithCoder:nil];
+    MainViewController *lf = [[MainViewController alloc] initWithCoder:nil];
     [self.navigationController pushViewController:lf animated:YES];
     //    [self performSegueWithIdentifier:@"LiveFeedViewSegue" sender:self];
 }
