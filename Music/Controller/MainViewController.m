@@ -24,36 +24,29 @@
 
 @interface MainViewController ()
 
+//@property (strong, nonatomic) UIViewController *centerViewController;
+
 @end
 
 @implementation MainViewController
+
+//@synthesize centerViewController = _centerViewController;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     
     UIViewController * leftSideDrawerViewController = [[MMExampleLeftSideDrawerViewController alloc] init];
-//    leftDrawer.view.backgroundColor = [UIColor blueColor];
     
-//    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
+    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
     
-    LiveFeedViewController *centerViewController = [[LiveFeedViewController alloc] init];
-    
-//    UILabel *test = [[UILabel alloc] init];
-//    test.text = @"sdfsd";
-//    center.view.backgroundColor = [UIColor redColor];
-//    [center.view addSubview:test];
-    
-//    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
-    
-//    self = [super initWithCenterViewController:center leftDrawerViewController:leftDrawer rightDrawerViewController:rightDrawer];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    _centerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LiveFeed"];
     
     UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
     [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
     
     
     if(OSVersionIsAtLeastiOS7()){
-//        UINavigationController * rightSideNavController = [[MMNavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
-//		[rightSideNavController setRestorationIdentifier:@"MMExampleRightNavigationControllerRestorationKey"];
         UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
 		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
         self = [super initWithCenterViewController:navigationController
@@ -115,7 +108,7 @@
 
 }
 
-//#pragma mark - Button
+#pragma mark - Button
 //-(void)setupLeftMenuButton{
 //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 //    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];

@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Example Center Table View Controller-->
+        <!--Live Feed View Controller-->
         <scene sceneID="feb-oj-4HT">
             <objects>
-                <viewController id="32X-ul-wLi" customClass="MMExampleCenterTableViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LiveFeed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="32X-ul-wLi" customClass="LiveFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="B00-ZT-lVv"/>
                         <viewControllerLayoutGuide type="bottom" id="N6w-7T-12x"/>
@@ -15,12 +15,20 @@
                     <view key="view" contentMode="scaleToFill" id="Ka0-6z-MvH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LiveFeedViewController" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJm-8e-kdL">
+                                <rect key="frame" x="70" y="273" width="181" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oGZ-c7-k2f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1198" y="-793"/>
+            <point key="canvasLocation" x="140" y="-787"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="fDq-SV-gIq">
@@ -76,7 +84,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kae-QR-Yww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="832" y="-21"/>
+            <point key="canvasLocation" x="140" y="-35"/>
         </scene>
         <!--Sample Music View Controller-->
         <scene sceneID="mZf-3q-GUz">
@@ -136,7 +144,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIa-wH-eF2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1276" y="-21"/>
+            <point key="canvasLocation" x="584" y="-35"/>
         </scene>
         <!--My Log In View Controller-->
         <scene sceneID="wKy-91-Jx2">
@@ -176,20 +184,20 @@
             </objects>
             <point key="canvasLocation" x="-774" y="-35"/>
         </scene>
-        <!--Subclass Config View Controller-->
-        <scene sceneID="2sg-Ce-HJ7">
+        <!--Share View Controller-->
+        <scene sceneID="esk-wg-kUR">
             <objects>
-                <viewController id="hi8-M8-DaS" customClass="SubclassConfigViewController" sceneMemberID="viewController">
+                <viewController id="JdT-NF-KVQ" customClass="ShareViewController" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Dd0-8h-P3Y"/>
-                        <viewControllerLayoutGuide type="bottom" id="QXi-ga-BMJ"/>
+                        <viewControllerLayoutGuide type="top" id="JwL-Co-ewV"/>
+                        <viewControllerLayoutGuide type="bottom" id="Kl5-NP-r5d"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="X7m-gl-Bs7">
+                    <view key="view" contentMode="scaleToFill" id="phJ-4J-R1y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dop-j9-KvV">
-                                <rect key="frame" x="61" y="190" width="199" height="25"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="ShareViewController" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14c-sR-a87">
+                                <rect key="frame" x="70" y="273" width="181" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
@@ -197,25 +205,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="IEi-JN-3hT">
-                        <barButtonItem key="leftBarButtonItem" title="Logout" id="6yc-k7-pqy">
-                            <connections>
-                                <action selector="logOutButtonTapAction:" destination="hi8-M8-DaS" id="xDl-cA-1JF"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Main" id="Snf-3N-jze">
-                            <connections>
-                                <action selector="segueToMainScreen:" destination="hi8-M8-DaS" id="zv5-Gm-Aa1"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="welcomeLabel" destination="Dop-j9-KvV" id="Scm-qa-bew"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="kat-Ni-Bp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mgi-LS-joF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="313" y="-767"/>
+            <point key="canvasLocation" x="522" y="-787"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
