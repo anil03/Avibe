@@ -253,8 +253,8 @@
 			isa = PBXGroup;
 			children = (
 				4CEBEE42184CE3950018ABE0 /* Asset */,
-				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AE18440EED00F7D41B /* Model */,
+				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AD18440EAD00F7D41B /* Controller */,
 				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,

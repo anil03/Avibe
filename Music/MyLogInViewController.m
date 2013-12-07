@@ -22,13 +22,22 @@
 
 @synthesize fieldsBackground;
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
     
     //Set up Property
     self.delegate = self;
     self.facebookPermissions = @[@"friends_about_me"];
     self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton;
+    
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+   
     
     // Customize the Sign Up View Controller
     //Should swtich to main view
@@ -104,6 +113,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Handle SignIn & SignUp evenet
 - (void)finishVerification
 {
 //    [self performSegueWithIdentifier:@"MainViewSegue" sender:nil];
@@ -111,6 +121,12 @@
     
     MainViewController *mainViewController = [[MainViewController alloc] initWithCoder:nil];
     [self.navigationController pushViewController:mainViewController animated:YES];
+}
+
+- (void)failToLogIn
+{
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fail", nil) message:NSLocalizedString(@"Sorry, not able to Log In!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+
 }
 
 
@@ -138,6 +154,7 @@
 // Sent to the delegate when the log in attempt fails.
 - (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
     NSLog(@"Failed to log in...");
+    [self failToLogIn];
 }
 
 // Sent to the delegate when the log in screen is dismissed.
@@ -175,6 +192,7 @@
 // Sent to the delegate when the sign up attempt fails.
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
     NSLog(@"Failed to sign up...");
+    [self failToLogIn];
 }
 
 // Sent to the delegate when the sign up screen is dismissed.
