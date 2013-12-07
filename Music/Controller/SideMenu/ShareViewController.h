@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ShareViewController : UIViewController
+#import "MMExampleViewController.h"
+
+@interface ShareViewController : MMExampleViewController
 
 @end

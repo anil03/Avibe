@@ -118,7 +118,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 7;
+    return 8;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -139,6 +139,8 @@
             return 3;
         case MMDrawerSectionStretchDrawer:
             return 1;
+        case MMDrawerSectionBeet:
+            return 2;
         default:
             return 0;
     }
@@ -291,6 +293,10 @@
             else
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             break;
+        }
+        case MMDrawerSectionBeet:{
+            [cell.textLabel setText:@"change to another view"];
+            [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
         default:
             break;

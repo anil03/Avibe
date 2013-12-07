@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LiveFeedViewController : UIViewController
+#import "MMExampleViewController.h"
+
+@interface LiveFeedViewController : MMExampleViewController <UITableViewDataSource,UITableViewDelegate>
+
+@property (nonatomic,strong) UITableView * tableView;
+
+- (id)initWithSelf:(UIViewController*)controller;
 
 @end

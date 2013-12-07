@@ -18,30 +18,27 @@
 
 #import "MMDrawerBarButtonItem.h"
 
+#import "SideMenuViewController.h"
 #import "LiveFeedViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
 
-//@property (strong, nonatomic) UIViewController *centerViewController;
+//@property (weak, nonatomic) UIViewController *centerViewController;
 
 @end
 
 @implementation MainViewController
 
-//@synthesize centerViewController = _centerViewController;
+//@synthesize centerViewController;
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     
-    UIViewController * leftSideDrawerViewController = [[MMExampleLeftSideDrawerViewController alloc] init];
-    
-    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
-    
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    _centerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LiveFeed"];
-    
+    UIViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] init];
+    UIViewController *centerViewController = [[LiveFeedViewController alloc] init];
+   
     UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
     [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
     
@@ -49,6 +46,7 @@
     if(OSVersionIsAtLeastiOS7()){
         UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
 		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
+        
         self = [super initWithCenterViewController:navigationController
                                  leftDrawerViewController:leftSideNavController];
         [self setShowsShadow:NO];
@@ -108,7 +106,7 @@
 
 }
 
-#pragma mark - Button
+//#pragma mark - Button
 //-(void)setupLeftMenuButton{
 //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 //    [self.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];

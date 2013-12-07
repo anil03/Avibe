@@ -7,7 +7,7 @@
         <!--Live Feed View Controller-->
         <scene sceneID="feb-oj-4HT">
             <objects>
-                <viewController storyboardIdentifier="LiveFeed" useStoryboardIdentifierAsRestorationIdentifier="YES" id="32X-ul-wLi" customClass="LiveFeedViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LiveFeed" id="32X-ul-wLi" customClass="LiveFeedViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="B00-ZT-lVv"/>
                         <viewControllerLayoutGuide type="bottom" id="N6w-7T-12x"/>

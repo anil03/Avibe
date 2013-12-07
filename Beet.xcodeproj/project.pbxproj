@@ -33,6 +33,7 @@
 		4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90171853B46200585F4E /* ListenedViewController.m */; };
 		4C4C901B1853B47300585F4E /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C901A1853B47300585F4E /* FriendsViewController.m */; };
 		4C4C901E1853B47E00585F4E /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C901D1853B47E00585F4E /* UserViewController.m */; };
+		4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5DB891853C317006E7B0F /* SideMenuViewController.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; };
 		4CD0D70218515CC100350E0C /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */; };
@@ -123,6 +124,8 @@
 		4C4C901A1853B47300585F4E /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controller/SideMenu/FriendsViewController.m; sourceTree = "<group>"; };
 		4C4C901C1853B47E00585F4E /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = Controller/SideMenu/UserViewController.h; sourceTree = "<group>"; };
 		4C4C901D1853B47E00585F4E /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = Controller/SideMenu/UserViewController.m; sourceTree = "<group>"; };
+		4CA5DB881853C317006E7B0F /* SideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuViewController.h; path = Controller/SideMenu/SideMenuViewController.h; sourceTree = "<group>"; };
+		4CA5DB891853C317006E7B0F /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuViewController.m; path = Controller/SideMenu/SideMenuViewController.m; sourceTree = "<group>"; };
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
@@ -357,10 +360,8 @@
 		4C4C900F1853AB4200585F4E /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				4CD0D6F418515CC100350E0C /* MMExampleCenterTableViewController.h */,
-				4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */,
-				4CD0D6F818515CC100350E0C /* MMExampleLeftSideDrawerViewController.h */,
-				4CD0D6F918515CC100350E0C /* MMExampleLeftSideDrawerViewController.m */,
+				4CA5DB881853C317006E7B0F /* SideMenuViewController.h */,
+				4CA5DB891853C317006E7B0F /* SideMenuViewController.m */,
 				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
 				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
 				4C4C90131853B44A00585F4E /* ShareViewController.h */,
@@ -378,6 +379,10 @@
 		4CD0D6EF1851245400350E0C /* DrawerViewController */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0D6F418515CC100350E0C /* MMExampleCenterTableViewController.h */,
+				4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */,
+				4CD0D6F818515CC100350E0C /* MMExampleLeftSideDrawerViewController.h */,
+				4CD0D6F918515CC100350E0C /* MMExampleLeftSideDrawerViewController.m */,
 				4CD0D7201851671700350E0C /* MMTableViewCell.h */,
 				4CD0D7211851671700350E0C /* MMTableViewCell.m */,
 				4CD0D7251851673E00350E0C /* MMCenterTableViewCell.h */,
@@ -610,6 +615,7 @@
 				4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */,
 				4CD0D70D185164DD00350E0C /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4C3179C71844103400F7D41B /* SampleMusicViewController.m in Sources */,
+				4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */,
 				4CD0D7221851671700350E0C /* MMTableViewCell.m in Sources */,
 				4C3179BA18440F5300F7D41B /* AppDelegate.m in Sources */,
 				4CD0D70718515CC100350E0C /* MMExampleViewController.m in Sources */,
