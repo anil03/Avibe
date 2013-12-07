@@ -298,9 +298,10 @@
 		4C3179AD18440EAD00F7D41B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0D6EF1851245400350E0C /* DrawerViewController */,
 				4C4C900E1853A8EE00585F4E /* Archive */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
-				4CD0D6EF1851245400350E0C /* DrawerViewController */,
+				4C4C900F1853AB4200585F4E /* SideMenu */,
 				4CD0D6EC1851234900350E0C /* MainViewController.h */,
 				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4C3179C51844103400F7D41B /* TableViewController.h */,
@@ -336,6 +337,13 @@
 				4CEBEE3C184CE0780018ABE0 /* SubclassConfigViewController.m */,
 			);
 			name = Archive;
+			sourceTree = "<group>";
+		};
+		4C4C900F1853AB4200585F4E /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = SideMenu;
 			sourceTree = "<group>";
 		};
 		4CD0D6EF1851245400350E0C /* DrawerViewController */ = {
