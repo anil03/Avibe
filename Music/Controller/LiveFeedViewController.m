@@ -38,7 +38,7 @@
 //    center.view.backgroundColor = [UIColor redColor];
 //    [center.view addSubview:test];
     
-    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
+//    UIViewController * rightSideDrawerViewController = [[MMExampleRightSideDrawerViewController alloc] init];
     
 //    self = [super initWithCenterViewController:center leftDrawerViewController:leftDrawer rightDrawerViewController:rightDrawer];
     
@@ -47,13 +47,12 @@
     
     
     if(OSVersionIsAtLeastiOS7()){
-        UINavigationController * rightSideNavController = [[MMNavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
-		[rightSideNavController setRestorationIdentifier:@"MMExampleRightNavigationControllerRestorationKey"];
+//        UINavigationController * rightSideNavController = [[MMNavigationController alloc] initWithRootViewController:rightSideDrawerViewController];
+//		[rightSideNavController setRestorationIdentifier:@"MMExampleRightNavigationControllerRestorationKey"];
         UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
 		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
         self = [super initWithCenterViewController:navigationController
-                                 leftDrawerViewController:leftSideNavController
-                                 rightDrawerViewController:rightSideNavController];
+                                 leftDrawerViewController:leftSideNavController];
         [self setShowsShadow:NO];
     }
 

@@ -82,7 +82,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
 
     [self setupLeftMenuButton];
-    [self setupRightMenuButton];
+//    [self setupRightMenuButton];
     
     if(OSVersionIsAtLeastiOS7()){
         UIColor * barColor = [UIColor
