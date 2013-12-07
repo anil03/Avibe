@@ -28,6 +28,11 @@
 		4C3179D0184410C300F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179CD184410C300F7D41B /* main.m */; };
 		4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Beet-Info.plist */; };
 		4C3179D61844112E00F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179D41844112E00F7D41B /* Main.storyboard */; };
+		4C4C90121853B43600585F4E /* LiveFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90111853B43600585F4E /* LiveFeedViewController.m */; };
+		4C4C90151853B44A00585F4E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90141853B44A00585F4E /* ShareViewController.m */; };
+		4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90171853B46200585F4E /* ListenedViewController.m */; };
+		4C4C901B1853B47300585F4E /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C901A1853B47300585F4E /* FriendsViewController.m */; };
+		4C4C901E1853B47E00585F4E /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C901D1853B47E00585F4E /* UserViewController.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; };
 		4CD0D70218515CC100350E0C /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */; };
@@ -108,6 +113,16 @@
 		4C3179CE184410C300F7D41B /* Beet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Beet-Info.plist"; sourceTree = "<group>"; };
 		4C3179CF184410C300F7D41B /* Beet-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Beet-Prefix.pch"; sourceTree = "<group>"; };
 		4C3179D51844112E00F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4C4C90101853B43600585F4E /* LiveFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiveFeedViewController.h; path = Controller/SideMenu/LiveFeedViewController.h; sourceTree = "<group>"; };
+		4C4C90111853B43600585F4E /* LiveFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiveFeedViewController.m; path = Controller/SideMenu/LiveFeedViewController.m; sourceTree = "<group>"; };
+		4C4C90131853B44A00585F4E /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = Controller/SideMenu/ShareViewController.h; sourceTree = "<group>"; };
+		4C4C90141853B44A00585F4E /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = Controller/SideMenu/ShareViewController.m; sourceTree = "<group>"; };
+		4C4C90161853B46200585F4E /* ListenedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ListenedViewController.h; path = Controller/SideMenu/ListenedViewController.h; sourceTree = "<group>"; };
+		4C4C90171853B46200585F4E /* ListenedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ListenedViewController.m; path = Controller/SideMenu/ListenedViewController.m; sourceTree = "<group>"; };
+		4C4C90191853B47300585F4E /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Controller/SideMenu/FriendsViewController.h; sourceTree = "<group>"; };
+		4C4C901A1853B47300585F4E /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controller/SideMenu/FriendsViewController.m; sourceTree = "<group>"; };
+		4C4C901C1853B47E00585F4E /* UserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserViewController.h; path = Controller/SideMenu/UserViewController.h; sourceTree = "<group>"; };
+		4C4C901D1853B47E00585F4E /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserViewController.m; path = Controller/SideMenu/UserViewController.m; sourceTree = "<group>"; };
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
@@ -304,10 +319,6 @@
 				4C4C900F1853AB4200585F4E /* SideMenu */,
 				4CD0D6EC1851234900350E0C /* MainViewController.h */,
 				4CD0D6ED1851234900350E0C /* MainViewController.m */,
-				4C3179C51844103400F7D41B /* TableViewController.h */,
-				4C3179C61844103400F7D41B /* TableViewController.m */,
-				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
-				4C3179C41844103400F7D41B /* SampleMusicViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -333,6 +344,10 @@
 		4C4C900E1853A8EE00585F4E /* Archive */ = {
 			isa = PBXGroup;
 			children = (
+				4C3179C51844103400F7D41B /* TableViewController.h */,
+				4C3179C61844103400F7D41B /* TableViewController.m */,
+				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
+				4C3179C41844103400F7D41B /* SampleMusicViewController.m */,
 				4CEBEE3B184CE0780018ABE0 /* SubclassConfigViewController.h */,
 				4CEBEE3C184CE0780018ABE0 /* SubclassConfigViewController.m */,
 			);
@@ -342,6 +357,20 @@
 		4C4C900F1853AB4200585F4E /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0D6F418515CC100350E0C /* MMExampleCenterTableViewController.h */,
+				4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */,
+				4CD0D6F818515CC100350E0C /* MMExampleLeftSideDrawerViewController.h */,
+				4CD0D6F918515CC100350E0C /* MMExampleLeftSideDrawerViewController.m */,
+				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
+				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
+				4C4C90131853B44A00585F4E /* ShareViewController.h */,
+				4C4C90141853B44A00585F4E /* ShareViewController.m */,
+				4C4C90161853B46200585F4E /* ListenedViewController.h */,
+				4C4C90171853B46200585F4E /* ListenedViewController.m */,
+				4C4C90191853B47300585F4E /* FriendsViewController.h */,
+				4C4C901A1853B47300585F4E /* FriendsViewController.m */,
+				4C4C901C1853B47E00585F4E /* UserViewController.h */,
+				4C4C901D1853B47E00585F4E /* UserViewController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -360,12 +389,8 @@
 				4CD0D70A185164DD00350E0C /* MMSideDrawerSectionHeaderView.m */,
 				4CD0D70B185164DD00350E0C /* MMSideDrawerTableViewCell.h */,
 				4CD0D70C185164DD00350E0C /* MMSideDrawerTableViewCell.m */,
-				4CD0D6F418515CC100350E0C /* MMExampleCenterTableViewController.h */,
-				4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */,
 				4CD0D6F618515CC100350E0C /* MMExampleDrawerVisualStateManager.h */,
 				4CD0D6F718515CC100350E0C /* MMExampleDrawerVisualStateManager.m */,
-				4CD0D6F818515CC100350E0C /* MMExampleLeftSideDrawerViewController.h */,
-				4CD0D6F918515CC100350E0C /* MMExampleLeftSideDrawerViewController.m */,
 				4CD0D6FA18515CC100350E0C /* MMExampleRightSideDrawerViewController.h */,
 				4CD0D6FB18515CC100350E0C /* MMExampleRightSideDrawerViewController.m */,
 				4CD0D6FC18515CC100350E0C /* MMExampleSideDrawerViewController.h */,
@@ -573,6 +598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C4C901B1853B47300585F4E /* FriendsViewController.m in Sources */,
 				4CD0D70518515CC100350E0C /* MMExampleRightSideDrawerViewController.m in Sources */,
 				4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */,
 				4CD0D70318515CC100350E0C /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -581,6 +607,7 @@
 				4C3179C81844103400F7D41B /* TableViewController.m in Sources */,
 				4CD0D70618515CC100350E0C /* MMExampleSideDrawerViewController.m in Sources */,
 				4CD0D70418515CC100350E0C /* MMExampleLeftSideDrawerViewController.m in Sources */,
+				4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */,
 				4CD0D70D185164DD00350E0C /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4C3179C71844103400F7D41B /* SampleMusicViewController.m in Sources */,
 				4CD0D7221851671700350E0C /* MMTableViewCell.m in Sources */,
@@ -591,8 +618,11 @@
 				4CD0D71E1851667E00350E0C /* MMDrawerVisualState.m in Sources */,
 				4CD0D7241851673900350E0C /* MMCenterTableViewCell.m in Sources */,
 				4CD0D71C1851667E00350E0C /* MMDrawerBarButtonItem.m in Sources */,
+				4C4C90151853B44A00585F4E /* ShareViewController.m in Sources */,
 				4CD0D71D1851667E00350E0C /* MMDrawerController.m in Sources */,
+				4C4C90121853B43600585F4E /* LiveFeedViewController.m in Sources */,
 				4CEBEE3D184CE0790018ABE0 /* MyLogInViewController.m in Sources */,
+				4C4C901E1853B47E00585F4E /* UserViewController.m in Sources */,
 				4C3179D0184410C300F7D41B /* main.m in Sources */,
 				4CD0D70218515CC100350E0C /* MMExampleCenterTableViewController.m in Sources */,
 				4CEBEE3E184CE0790018ABE0 /* MySignUpViewController.m in Sources */,

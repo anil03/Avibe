@@ -48,10 +48,10 @@ typedef enum {
 @property (nonatomic, readonly, assign) PFLogInFields fields;
 
 /// The username text field. It is nil if the element is not enabled.
-@property (nonatomic, readonly, retain) UITextField *usernameField;
+@property (nonatomic, retain) UITextField *usernameField;
 
 /// The password text field. It is nil if the element is not enabled.
-@property (nonatomic, readonly, retain) UITextField *passwordField;
+@property (nonatomic, retain) UITextField *passwordField;
 
 /// The password forgotten button. It is nil if the element is not enabled.
 @property (nonatomic, readonly, retain) UIButton *passwordForgottenButton;

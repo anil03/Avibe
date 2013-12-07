@@ -18,6 +18,8 @@
 
 #import "MMDrawerBarButtonItem.h"
 
+#import "LiveFeedViewController.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 @interface MainViewController ()
@@ -32,7 +34,10 @@
     UIViewController * leftSideDrawerViewController = [[MMExampleLeftSideDrawerViewController alloc] init];
 //    leftDrawer.view.backgroundColor = [UIColor blueColor];
     
-    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
+//    UIViewController * centerViewController = [[MMExampleCenterTableViewController alloc] initWithSelf:self];
+    
+    LiveFeedViewController *centerViewController = [[LiveFeedViewController alloc] init];
+    
 //    UILabel *test = [[UILabel alloc] init];
 //    test.text = @"sdfsd";
 //    center.view.backgroundColor = [UIColor redColor];
