@@ -10,6 +10,6 @@
 
 #import "SideMenuRowViewController.h"
 
-@interface ListenedViewController : SideMenuRowViewController
+@interface ListenedViewController : UITableViewController
 
 @end

@@ -368,22 +368,13 @@
 		4C4C900F1853AB4200585F4E /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				4CDBF6F118550E5900D4AD66 /* Function */,
 				4CD0D6FC18515CC100350E0C /* MMExampleSideDrawerViewController.h */,
 				4CD0D6FD18515CC100350E0C /* MMExampleSideDrawerViewController.m */,
 				4CA5DB881853C317006E7B0F /* SideMenuViewController.h */,
 				4CA5DB891853C317006E7B0F /* SideMenuViewController.m */,
 				4CA88E821853FB65005D0FE0 /* SideMenuRowViewController.h */,
 				4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */,
-				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
-				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
-				4C4C90131853B44A00585F4E /* ShareViewController.h */,
-				4C4C90141853B44A00585F4E /* ShareViewController.m */,
-				4C4C90161853B46200585F4E /* ListenedViewController.h */,
-				4C4C90171853B46200585F4E /* ListenedViewController.m */,
-				4C4C90191853B47300585F4E /* FriendsViewController.h */,
-				4C4C901A1853B47300585F4E /* FriendsViewController.m */,
-				4C4C901C1853B47E00585F4E /* UserViewController.h */,
-				4C4C901D1853B47E00585F4E /* UserViewController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -432,6 +423,23 @@
 				4CD0D71B1851667E00350E0C /* UIViewController+MMDrawerController.m */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		4CDBF6F118550E5900D4AD66 /* Function */ = {
+			isa = PBXGroup;
+			children = (
+				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
+				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
+				4C4C90131853B44A00585F4E /* ShareViewController.h */,
+				4C4C90141853B44A00585F4E /* ShareViewController.m */,
+				4C4C90161853B46200585F4E /* ListenedViewController.h */,
+				4C4C90171853B46200585F4E /* ListenedViewController.m */,
+				4C4C90191853B47300585F4E /* FriendsViewController.h */,
+				4C4C901A1853B47300585F4E /* FriendsViewController.m */,
+				4C4C901C1853B47E00585F4E /* UserViewController.h */,
+				4C4C901D1853B47E00585F4E /* UserViewController.m */,
+			);
+			name = Function;
 			sourceTree = "<group>";
 		};
 		4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */ = {

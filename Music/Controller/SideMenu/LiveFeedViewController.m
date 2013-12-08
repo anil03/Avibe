@@ -41,13 +41,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
-@property (nonatomic, strong) NSArray *songs;
+@property (nonatomic, strong) NSArray *PFObjects;
 
 @end
 
 @implementation LiveFeedViewController
 
-@synthesize songs = _songs;
+@synthesize PFObjects = _PFObjects;
 
 
 - (id)initWithSelf:(UIViewController*)controller
@@ -76,6 +76,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
     
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
+    self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;
+    
     [self refreshCoreData:nil];
 }
 
@@ -90,7 +93,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_songs count];
+    return [_PFObjects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -99,8 +102,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *song = [_songs objectAtIndex:indexPath.row];
-    cell.textLabel.text = [song objectForKey:@"title"];
+    PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
     
     return cell;
@@ -109,7 +112,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SampleMusicViewController"];
-    controller.pfObject = [_songs objectAtIndex:indexPath.row];
+    controller.pfObject = [_PFObjects objectAtIndex:indexPath.row];
     controller.delegate = self;
     
     [self.mm_drawerController setCenterViewController:controller withFullCloseAnimation:YES completion:nil];
@@ -138,27 +141,31 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 #pragma mark Bar Button
 - (IBAction)AddSong:(id)sender {
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    Song *song = [[Song alloc] init];
+//    Song *song = [[Song alloc] init];
     
-    if (!currentPlayingSong) {
-        //deal with nil, hardcode for demo
-        song.title = @"Mirrors";
-        song.album = @"The 20/20 Experience";
-        song.artist = @"JustinTimberlake";
-    }else{
-        song.title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];;
-        song.album = [currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle];
-        song.artist = [currentPlayingSong valueForProperty:MPMediaItemPropertyArtist];
-        
-        
-    }
+//    if (!currentPlayingSong) {
+//        //deal with nil, hardcode for demo
+//        song.title = @"Mirrors";
+//        song.album = @"The 20/20 Experience";
+//        song.artist = @"JustinTimberlake";
+//    }else{
+//        song.title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];;
+//        song.album = [currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle];
+//        song.artist = [currentPlayingSong valueForProperty:MPMediaItemPropertyArtist];
+//        
+//        
+//    }
     
     PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-    [songRecord setObject:song.title forKey:@"title"];
-    [songRecord setObject:song.album forKey:@"album"];
-    [songRecord setObject:song.artist forKey:@"artist"];
-    [songRecord setObject:[PFUser currentUser] forKey:@"author"];
-    [songRecord save];
+    [songRecord setObject:@"Lucky" forKey:@"title"];
+    [songRecord setObject:@"The 20/20 Experience" forKey:@"album"];
+    [songRecord setObject:@"JustinTimberlake" forKey:@"artist"];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
+    [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Save!");
+        }
+    }];
     
     //    [self fetechData];
     [self refreshCoreData:nil];
@@ -172,16 +179,18 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"author" equalTo:[PFUser currentUser]];
+//    [postQuery whereKey:@"author" equalTo:[PFUser currentUser]];
     
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
-            _songs = objects;
+            _PFObjects = objects;
             [self.tableView reloadData];
         }
     }];
+    
+    
 }
 
 

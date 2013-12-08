@@ -15,6 +15,8 @@
 #import "FriendsViewController.h"
 #import "UserViewController.h"
 
+#import "MMNavigationController.h"
+
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
     BeetRow_Share,
@@ -28,6 +30,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property (nonatomic, strong) LiveFeedViewController *liveFeedViewController;
 @property (nonatomic, strong) ShareViewController *shareViewController;
 @property (nonatomic, strong) ListenedViewController *listenedViewController;
+@property (nonatomic, strong) MMNavigationController *navigationListenedViewController;
 @property (nonatomic, strong) FriendsViewController *friendsViewController;
 @property (nonatomic, strong) UserViewController *userViewController;
 
@@ -38,6 +41,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @synthesize liveFeedViewController;
 @synthesize shareViewController;
 @synthesize listenedViewController;
+@synthesize navigationListenedViewController;
 @synthesize friendsViewController;
 @synthesize userViewController;
 
@@ -48,7 +52,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
         
         liveFeedViewController = (LiveFeedViewController*)controller;
         shareViewController = [[ShareViewController alloc] init];
+        
         listenedViewController = [[ListenedViewController alloc] init];
+        navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
+        
         friendsViewController = [[FriendsViewController alloc] init];
         userViewController = [[UserViewController alloc] init];
 
@@ -151,7 +158,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 break;
             }
             case BeetRow_Listened:
-                [self.mm_drawerController setCenterViewController:listenedViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:navigationListenedViewController withFullCloseAnimation:YES completion:nil];
                 break;
             case BeetRow_Friends:
                 [self.mm_drawerController setCenterViewController:friendsViewController withFullCloseAnimation:YES completion:nil];

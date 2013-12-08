@@ -10,6 +10,6 @@
 
 #import "SideMenuRowViewController.h"
 
-@interface ShareViewController : SideMenuRowViewController
+@interface ShareViewController : UITableViewController
 
 @end
