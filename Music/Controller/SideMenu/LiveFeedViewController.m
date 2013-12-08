@@ -142,34 +142,31 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 #pragma mark Bar Button
 - (IBAction)AddSong:(id)sender {
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-//    Song *song = [[Song alloc] init];
-    
-//    if (!currentPlayingSong) {
-//        //deal with nil, hardcode for demo
-//        song.title = @"Mirrors";
-//        song.album = @"The 20/20 Experience";
-//        song.artist = @"JustinTimberlake";
-//    }else{
-//        song.title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];;
-//        song.album = [currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle];
-//        song.artist = [currentPlayingSong valueForProperty:MPMediaItemPropertyArtist];
-//        
-//        
-//    }
     
     PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-    [songRecord setObject:@"Lucky" forKey:@"title"];
-    [songRecord setObject:@"The 20/20 Experience" forKey:@"album"];
-    [songRecord setObject:@"JustinTimberlake" forKey:@"artist"];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
-    [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+
+    
+    if (!currentPlayingSong) {
+        //deal with nil, hardcode for demo
+        [songRecord setObject:@"Lucky" forKey:@"title"];
+        [songRecord setObject:@"The 20/20 Experience" forKey:@"album"];
+        [songRecord setObject:@"JustinTimberlake" forKey:@"artist"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
+    }else{
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
+    }
+    
+        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Save!");
         }
     }];
     
-    [self.tableView reloadData];
     [self refreshView:self.refreshControl];
+    [self.tableView reloadData];
 
 }
 
