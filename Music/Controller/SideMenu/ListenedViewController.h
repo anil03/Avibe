@@ -8,7 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SideMenuRowViewController.h"
 
 @interface ListenedViewController : UITableViewController
 

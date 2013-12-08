@@ -54,6 +54,7 @@
 		4CD0D71F1851667E00350E0C /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D71B1851667E00350E0C /* UIViewController+MMDrawerController.m */; };
 		4CD0D7221851671700350E0C /* MMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D7211851671700350E0C /* MMTableViewCell.m */; };
 		4CD0D7241851673900350E0C /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D7231851673900350E0C /* MMCenterTableViewCell.m */; };
+		4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CDBF6F2185515DC00D4AD66 /* User.storyboard */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -168,6 +169,7 @@
 		4CD0D7211851671700350E0C /* MMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTableViewCell.m; sourceTree = "<group>"; };
 		4CD0D7231851673900350E0C /* MMCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCenterTableViewCell.m; sourceTree = "<group>"; };
 		4CD0D7251851673E00350E0C /* MMCenterTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MMCenterTableViewCell.h; sourceTree = "<group>"; };
+		4CDBF6F2185515DC00D4AD66 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -347,6 +349,7 @@
 			isa = PBXGroup;
 			children = (
 				4C3179D41844112E00F7D41B /* Main.storyboard */,
+				4CDBF6F2185515DC00D4AD66 /* User.storyboard */,
 				4CA88E851854034D005D0FE0 /* Cell.h */,
 				4CA88E861854034D005D0FE0 /* Cell.m */,
 				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
@@ -560,6 +563,7 @@
 				4CEBEE59184CE3D00018ABE0 /* Twitter.png in Resources */,
 				4CEBEE55184CE3D00018ABE0 /* MainBG.png in Resources */,
 				4CEBEE56184CE3D00018ABE0 /* SignUp.png in Resources */,
+				4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */,
 				4CEBEE54184CE3D00018ABE0 /* Logo.png in Resources */,
 				4CEBEE51184CE3D00018ABE0 /* Facebook.png in Resources */,
 				4CEBEE4F184CE3D00018ABE0 /* Exit.png in Resources */,

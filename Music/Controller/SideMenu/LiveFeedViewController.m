@@ -79,7 +79,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
     self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;
     
-    [self refreshCoreData:nil];
+    [self setupRefreshControl];
+    [self refreshView:self.refreshControl];
 }
 
 #pragma mark - Table view data source
@@ -167,31 +168,58 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }
     }];
     
-    //    [self fetechData];
-    [self refreshCoreData:nil];
     [self.tableView reloadData];
+    [self refreshView:self.refreshControl];
+
+}
+
+#pragma mark - RefreshControl Method
+- (void)setupRefreshControl
+{
+    // Inside a Table View Controller's viewDidLoad method
+	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
+	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+	[refresh addTarget:self
+                action:@selector(refreshView:)
+      forControlEvents:UIControlEventValueChanged];
+	self.refreshControl = refresh;
+    
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshView:)
+                  forControlEvents:UIControlEventValueChanged];
+}
+
+
+-(void)refreshView:(UIRefreshControl *)refresh {
+	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
+    
+    // custom refresh logic would be placed here...
+    [self fetchData:refresh];
+    
     
 }
 
-- (IBAction)refreshCoreData:(id)sender {
-    //    [self deleteAllObjects:@"Song"];
-    //    _songs = nil;
-    
+-(void)fetchData:(UIRefreshControl*)refresh
+{
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-//    [postQuery whereKey:@"author" equalTo:[PFUser currentUser]];
-    
+//    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
-            _PFObjects = objects;
+            self.PFObjects = objects;
             [self.tableView reloadData];
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MMM d, h:mm a"];
+            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
+            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+            [refresh endRefreshing];
         }
     }];
-    
-    
 }
+
 
 
 

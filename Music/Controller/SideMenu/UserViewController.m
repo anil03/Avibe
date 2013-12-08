@@ -10,6 +10,9 @@
 
 @interface UserViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *username;
+@property (weak, nonatomic) IBOutlet UILabel *numberOfSongs;
+
 @end
 
 @implementation UserViewController
@@ -27,13 +30,19 @@
 {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor purpleColor];
+    self.username.text = [[PFUser currentUser] username];
+    [self updateInfo];
+
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)updateInfo{
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    // Run the query
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            self.numberOfSongs.text = [NSString stringWithFormat:@"Own: %d songs.", [objects count]];
+        }
+    }];
 }
-
 @end
