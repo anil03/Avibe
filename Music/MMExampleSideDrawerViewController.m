@@ -87,6 +87,7 @@
     [self.navigationController.navigationBar setTitleTextAttributes:navBarTitleDict];
     
     self.drawerWidths = @[@(160),@(200),@(240),@(280),@(320)];
+    [self.mm_drawerController setMaximumLeftDrawerWidth:160];
     
     CGSize logoSize = CGSizeMake(58, 62);
     MMLogoView * logo = [[MMLogoView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,
@@ -118,29 +119,29 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 8;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
     switch (section) {
-        case MMDrawerSectionViewSelection:
-            return 2;
-        case MMDrawerSectionDrawerWidth:
-            return self.drawerWidths.count;
-        case MMDrawerSectionShadowToggle:
-            return 1;
-        case MMDrawerSectionOpenDrawerGestures:
-            return 3;
-        case MMDrawerSectionCloseDrawerGestures:
-            return 6;
-        case MMDrawerSectionCenterHiddenInteraction:
-            return 3;
-        case MMDrawerSectionStretchDrawer:
-            return 1;
         case MMDrawerSectionBeet:
-            return 2;
+            return 5;
+//        case MMDrawerSectionViewSelection:
+//            return 2;
+//        case MMDrawerSectionDrawerWidth:
+//            return self.drawerWidths.count;
+//        case MMDrawerSectionShadowToggle:
+//            return 1;
+//        case MMDrawerSectionOpenDrawerGestures:
+//            return 3;
+//        case MMDrawerSectionCloseDrawerGestures:
+//            return 6;
+//        case MMDrawerSectionCenterHiddenInteraction:
+//            return 3;
+//        case MMDrawerSectionStretchDrawer:
+//            return 1;
         default:
             return 0;
     }
@@ -295,8 +296,8 @@
             break;
         }
         case MMDrawerSectionBeet:{
-            [cell.textLabel setText:@"change to another view"];
-            [cell setAccessoryType:UITableViewCellAccessoryNone];
+            //Implement in subclass
+            break;
         }
         default:
             break;

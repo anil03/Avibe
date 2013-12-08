@@ -5,35 +5,9 @@
     </dependencies>
     <scenes>
         <!--Live Feed View Controller-->
-        <scene sceneID="feb-oj-4HT">
-            <objects>
-                <viewController storyboardIdentifier="LiveFeed" id="32X-ul-wLi" customClass="LiveFeedViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="B00-ZT-lVv"/>
-                        <viewControllerLayoutGuide type="bottom" id="N6w-7T-12x"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ka0-6z-MvH">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="LiveFeedViewController" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NJm-8e-kdL">
-                                <rect key="frame" x="70" y="273" width="181" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oGZ-c7-k2f" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="-787"/>
-        </scene>
-        <!--Table View Controller-->
         <scene sceneID="fDq-SV-gIq">
             <objects>
-                <tableViewController id="QtU-0U-1mZ" customClass="TableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="TableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QtU-0U-1mZ" customClass="LiveFeedViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Wq4-5C-tYX">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -79,17 +53,16 @@
                     </navigationItem>
                     <connections>
                         <outlet property="CurrPlaying" destination="tEi-oo-wb8" id="i4t-j8-azJ"/>
-                        <segue destination="6eu-Cb-CG4" kind="push" identifier="SampleMusicSegue" id="9NS-kh-Drz"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kae-QR-Yww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140" y="-35"/>
+            <point key="canvasLocation" x="142" y="-35"/>
         </scene>
         <!--Sample Music View Controller-->
         <scene sceneID="mZf-3q-GUz">
             <objects>
-                <viewController id="6eu-Cb-CG4" customClass="SampleMusicViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SampleMusicViewController" id="6eu-Cb-CG4" customClass="SampleMusicViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qrU-oR-naY"/>
                         <viewControllerLayoutGuide type="bottom" id="ST0-U0-sB9"/>
@@ -144,7 +117,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iIa-wH-eF2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584" y="-35"/>
+            <point key="canvasLocation" x="586" y="-35"/>
         </scene>
         <!--My Log In View Controller-->
         <scene sceneID="wKy-91-Jx2">
@@ -183,6 +156,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvo-ZK-TqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-774" y="-35"/>
+        </scene>
+        <!--Table View Controller-->
+        <scene sceneID="eOX-e3-0F3">
+            <objects>
+                <tableViewController id="qfp-3d-CN5" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="9Sl-tj-wYm">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="RFe-UX-7a3" style="IBUITableViewCellStyleDefault" id="m1G-m8-eIK">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="m1G-m8-eIK" id="1ys-gf-43i">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="RFe-UX-7a3">
+                                            <rect key="frame" x="15" y="0.0" width="290" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qfp-3d-CN5" id="vLI-Q4-Zqy"/>
+                            <outlet property="delegate" destination="qfp-3d-CN5" id="DHu-nn-Cf2"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9TN-bx-UkR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="142" y="-793"/>
         </scene>
         <!--Share View Controller-->
         <scene sceneID="esk-wg-kUR">

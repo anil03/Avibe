@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MMExampleViewController.h"
+#import "SideMenuRowViewController.h"
 
-@interface ShareViewController : MMExampleViewController
+@interface ShareViewController : SideMenuRowViewController
 
 @end

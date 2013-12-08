@@ -1,5 +1,5 @@
 //
-//  ListenedViewController.h
+//  Cell.h
 //  Beet
 //
 //  Created by Yuhua Mai on 12/7/13.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SideMenuRowViewController.h"
-
-@interface ListenedViewController : SideMenuRowViewController
+@interface Cell : UITableViewCell
 
 @end

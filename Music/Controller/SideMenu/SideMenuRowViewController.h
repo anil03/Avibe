@@ -1,5 +1,5 @@
 //
-//  ListenedViewController.h
+//  SideMenuRowViewController.h
 //  Beet
 //
 //  Created by Yuhua Mai on 12/7/13.
@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SideMenuRowViewController.h"
+#import "MMExampleViewController.h"
 
-@interface ListenedViewController : SideMenuRowViewController
+@interface SideMenuRowViewController : MMExampleViewController
 
 @end

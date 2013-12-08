@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UserViewController : UIViewController
+#import "SideMenuRowViewController.h"
+
+@interface UserViewController : SideMenuRowViewController
 
 @end

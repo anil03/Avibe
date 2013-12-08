@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "Song.h"
+#import "LiveFeedViewController.h"
 
 @interface SampleMusicViewController : UIViewController
 
 @property (nonatomic, strong) Song *song;
 @property (nonatomic, strong) PFObject *pfObject;
+@property (nonatomic, weak) LiveFeedViewController *delegate;
 
 @end

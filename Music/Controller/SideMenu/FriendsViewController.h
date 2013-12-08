@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FriendsViewController : UIViewController
+#import "SideMenuRowViewController.h"
+
+@interface FriendsViewController : SideMenuRowViewController
 
 @end

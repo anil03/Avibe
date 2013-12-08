@@ -12,6 +12,6 @@
 
 @interface SideMenuViewController : MMExampleSideDrawerViewController
 
-
+-(id)initWithDefaultCenterView:(UIViewController*)controller;
 
 @end

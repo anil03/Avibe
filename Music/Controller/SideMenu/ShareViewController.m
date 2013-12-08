@@ -8,8 +8,7 @@
 
 #import "ShareViewController.h"
 
-#import "MMDrawerBarButtonItem.h"
-#import "UIViewController+MMDrawerController.h"
+
 
 
 @interface ShareViewController ()
@@ -35,19 +34,8 @@
     label.text = @"ShareView";
     self.view.backgroundColor = [UIColor redColor];
     [self.view addSubview:label];
-    
-    [self setupLeftMenuButton];
-
 }
 
--(void)setupLeftMenuButton{
-    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-}
 
-#pragma mark - Button Handlers
--(void)leftDrawerButtonPress:(id)sender{
-    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-}
 
 @end

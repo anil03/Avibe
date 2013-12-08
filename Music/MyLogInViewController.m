@@ -42,7 +42,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-   
+    if ([PFUser currentUser]) {
+        [self finishVerification];
+        return;
+    }
     
     // Customize the Sign Up View Controller
     //Should swtich to main view

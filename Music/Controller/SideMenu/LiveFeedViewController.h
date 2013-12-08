@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-#import "MMExampleViewController.h"
+#import "SideMenuRowViewController.h"
 
-@interface LiveFeedViewController : MMExampleViewController <UITableViewDataSource,UITableViewDelegate>
+@interface LiveFeedViewController : UITableViewController
+//<UITableViewDataSource,UITableViewDelegate>
 
-@property (nonatomic,strong) UITableView * tableView;
+//@property (nonatomic,strong) UITableView * tableView;
 
-- (id)initWithSelf:(UIViewController*)controller;
+//- (id)initWithSelf:(UIViewController*)controller;
 
 @end

@@ -11,6 +11,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
 
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 #define kLatestKivaLoansURL [NSURL URLWithString:@"http://api.kivaws.org/v1/loans/search.json?status=fundraising"]
@@ -42,9 +44,16 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setupLeftMenuButton];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self setupLeftMenuButton];
 	// Do any additional setup after loading the view.
 //    _song = [[Song alloc]init];
 //    _song.title = [_pfObject objectForKey:@"title"];
@@ -191,6 +200,18 @@
      removeObserver: self
      name: MPMoviePlayerDidExitFullscreenNotification
      object: theMovie];
+}
+
+#pragma mark - Button Handlers
+-(void)setupLeftMenuButton{
+//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
+    [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
 }
 
 

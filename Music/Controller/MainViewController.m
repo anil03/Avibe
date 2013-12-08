@@ -35,9 +35,9 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    
-    UIViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] init];
-    UIViewController *centerViewController = [[LiveFeedViewController alloc] init];
+    UIViewController *centerViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TableViewController"];
+//    UIViewController *centerViewController = [[LiveFeedViewController alloc] init];
+    UIViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:centerViewController];
    
     UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
     [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
@@ -54,7 +54,7 @@
 
     
     [self setRestorationIdentifier:@"MMDrawer"];
-    [self setMaximumRightDrawerWidth:200.0];
+    [self setMaximumLeftDrawerWidth:160.0];
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     
