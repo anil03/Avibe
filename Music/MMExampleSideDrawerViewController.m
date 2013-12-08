@@ -26,6 +26,8 @@
 #import "MMLogoView.h"
 #import "MMNavigationController.h"
 
+
+
 @implementation MMExampleSideDrawerViewController
 
 - (void)viewDidLoad
@@ -119,7 +121,7 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -128,6 +130,8 @@
     switch (section) {
         case MMDrawerSectionBeet:
             return 5;
+        case MMDrawerSectionLogout:
+            return 1;
 //        case MMDrawerSectionViewSelection:
 //            return 2;
 //        case MMDrawerSectionDrawerWidth:
@@ -296,6 +300,10 @@
             break;
         }
         case MMDrawerSectionBeet:{
+            //Implement in subclass
+            break;
+        }
+        case MMDrawerSectionLogout:{
             //Implement in subclass
             break;
         }

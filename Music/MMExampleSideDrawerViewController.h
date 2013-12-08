@@ -25,7 +25,8 @@
 
 typedef NS_ENUM(NSInteger, MMDrawerSection){
     MMDrawerSectionBeet,
-
+    MMDrawerSectionLogout,
+    
     MMDrawerSectionViewSelection,
     MMDrawerSectionDrawerWidth,
     MMDrawerSectionShadowToggle,

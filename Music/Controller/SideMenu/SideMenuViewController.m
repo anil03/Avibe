@@ -16,6 +16,7 @@
 #import "UserViewController.h"
 
 #import "MMNavigationController.h"
+#import "MyLogInViewController.h"
 
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
@@ -30,9 +31,14 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property (nonatomic, strong) LiveFeedViewController *liveFeedViewController;
 @property (nonatomic, strong) ShareViewController *shareViewController;
 @property (nonatomic, strong) ListenedViewController *listenedViewController;
-@property (nonatomic, strong) MMNavigationController *navigationListenedViewController;
 @property (nonatomic, strong) FriendsViewController *friendsViewController;
 @property (nonatomic, strong) UserViewController *userViewController;
+
+@property (nonatomic, strong) MMNavigationController *navigationLiveFeedViewController;
+@property (nonatomic, strong) MMNavigationController *navigationShareViewController;
+@property (nonatomic, strong) MMNavigationController *navigationListenedViewController;
+@property (nonatomic, strong) MMNavigationController *navigationFriendsViewController;
+@property (nonatomic, strong) MMNavigationController *navigationUserViewController;
 
 @end
 
@@ -41,23 +47,28 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @synthesize liveFeedViewController;
 @synthesize shareViewController;
 @synthesize listenedViewController;
-@synthesize navigationListenedViewController;
 @synthesize friendsViewController;
 @synthesize userViewController;
 
--(id)initWithDefaultCenterView:(UIViewController*)controller{
+-(id)initWithDefaultCenterView:(MMNavigationController*)controller{
     self = [super init];
     if(self){
         [self setRestorationIdentifier:@"MMExampleLeftSideDrawerController"];
         
-        liveFeedViewController = (LiveFeedViewController*)controller;
+        self.navigationLiveFeedViewController = controller;
+
         shareViewController = [[ShareViewController alloc] init];
-        
+        self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
+
         listenedViewController = [[ListenedViewController alloc] init];
-        navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
+        self.navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
         
         friendsViewController = [[FriendsViewController alloc] init];
+        self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
+
         userViewController = [[UserViewController alloc] init];
+        self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
+
 
     }
     return self;
@@ -94,6 +105,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
         return @"Left Drawer Width";
     else if(section == MMDrawerSectionBeet)
         return @"Beet";
+    else if(section == MMDrawerSectionLogout)
+        return [[[PFUser currentUser] username] uppercaseString];
     else
         return [super tableView:tableView titleForHeaderInSection:section];
 }
@@ -132,6 +145,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 break;
         }
         [cell setAccessoryType:UITableViewCellAccessoryNone];
+    }else if(indexPath.section == MMDrawerSectionLogout){
+        if (indexPath.row == 0) {
+            [cell.textLabel setText:@"Sign out"];
+        }
     }
     return cell;
 }
@@ -151,23 +168,32 @@ typedef NS_ENUM(NSInteger, BeetRow){
     else if(indexPath.section == MMDrawerSectionBeet){
         switch (indexPath.row) {
             case BeetRow_LiveFeed:
-                [self.mm_drawerController setCenterViewController:liveFeedViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
                 break;
             case BeetRow_Share:{
-                [self.mm_drawerController setCenterViewController:shareViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
                 break;
             }
             case BeetRow_Listened:
-                [self.mm_drawerController setCenterViewController:navigationListenedViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
                 break;
             case BeetRow_Friends:
-                [self.mm_drawerController setCenterViewController:friendsViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
                 break;
             case BeetRow_User:
-                [self.mm_drawerController setCenterViewController:userViewController withFullCloseAnimation:YES completion:nil];
+                [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
                 break;
             default:
                 break;
+        }
+    }
+    else if(indexPath.section == MMDrawerSectionLogout){
+        if (indexPath.row == 0) {
+            //log out
+            [PFUser logOut];
+            
+//            MyLogInViewController *logInViewController = [[MyLogInViewController alloc] init];
+            [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
         }
     }
     else {

@@ -280,6 +280,9 @@
 				4C3179AE18440EED00F7D41B /* Model */,
 				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AD18440EAD00F7D41B /* Controller */,
+				4CDBF6F118550E5900D4AD66 /* Function */,
+				4CD0D6EC1851234900350E0C /* MainViewController.h */,
+				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,
 			);
@@ -326,8 +329,6 @@
 				4C4C900E1853A8EE00585F4E /* Archive */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
 				4C4C900F1853AB4200585F4E /* SideMenu */,
-				4CD0D6EC1851234900350E0C /* MainViewController.h */,
-				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -357,6 +358,8 @@
 		4C4C900E1853A8EE00585F4E /* Archive */ = {
 			isa = PBXGroup;
 			children = (
+				4CA88E821853FB65005D0FE0 /* SideMenuRowViewController.h */,
+				4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */,
 				4C3179C51844103400F7D41B /* TableViewController.h */,
 				4C3179C61844103400F7D41B /* TableViewController.m */,
 				4CEBEE3B184CE0780018ABE0 /* SubclassConfigViewController.h */,
@@ -368,13 +371,10 @@
 		4C4C900F1853AB4200585F4E /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				4CDBF6F118550E5900D4AD66 /* Function */,
 				4CD0D6FC18515CC100350E0C /* MMExampleSideDrawerViewController.h */,
 				4CD0D6FD18515CC100350E0C /* MMExampleSideDrawerViewController.m */,
 				4CA5DB881853C317006E7B0F /* SideMenuViewController.h */,
 				4CA5DB891853C317006E7B0F /* SideMenuViewController.m */,
-				4CA88E821853FB65005D0FE0 /* SideMenuRowViewController.h */,
-				4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";

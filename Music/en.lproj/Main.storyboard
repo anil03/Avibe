@@ -122,7 +122,7 @@
         <!--My Log In View Controller-->
         <scene sceneID="wKy-91-Jx2">
             <objects>
-                <viewController id="jCj-Ii-4r3" customClass="MyLogInViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogInViewController" id="jCj-Ii-4r3" customClass="MyLogInViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wU0-or-QWL"/>
                         <viewControllerLayoutGuide type="bottom" id="ams-FB-rlY"/>
