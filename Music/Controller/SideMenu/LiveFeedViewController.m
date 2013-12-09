@@ -66,17 +66,14 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self setupLeftMenuButton];
+    [self setupBarMenuButton];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
     
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
-    self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;
     
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
@@ -210,9 +207,14 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 
 #pragma mark - Button Handlers
--(void)setupLeftMenuButton{
+-(void)setupBarMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
+    
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
+    self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
