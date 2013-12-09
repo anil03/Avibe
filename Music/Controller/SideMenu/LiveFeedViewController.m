@@ -66,13 +66,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 - (void)viewWillAppear:(BOOL)animated
 {
+    [super viewWillAppear:animated];
     [self setupBarMenuButton];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     
     
     [self setupRefreshControl];
@@ -214,7 +214,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
-    self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{

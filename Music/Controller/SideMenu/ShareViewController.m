@@ -40,8 +40,9 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-	[self setupLeftMenuButton];
+    [super viewWillAppear:animated];
 }
+
 
 - (void)viewDidLoad
 {
@@ -129,14 +130,6 @@
 
 
 
-#pragma mark - Button Handlers
--(void)setupLeftMenuButton{
-	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-}
 
--(void)leftDrawerButtonPress:(id)sender{
-	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-}
 
 @end

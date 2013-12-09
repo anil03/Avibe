@@ -8,6 +8,9 @@
 
 #import "UserViewController.h"
 
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
+
 @interface UserViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *username;
@@ -24,6 +27,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[self setupMenuButton];
 }
 
 - (void)viewDidLoad
@@ -45,4 +53,17 @@
         }
     }];
 }
+
+#pragma mark - Button Handlers
+-(void)setupMenuButton{
+	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
 @end

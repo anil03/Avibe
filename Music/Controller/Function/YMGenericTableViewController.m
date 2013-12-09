@@ -12,6 +12,7 @@
 
 #import "SampleMusicViewController.h"
 #import "MMNavigationController.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface YMGenericTableViewController ()
 
@@ -26,6 +27,11 @@
         // Custom initialization
     }
     return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[self setupLeftMenuButton];
 }
 
 - (void)viewDidLoad
@@ -134,5 +140,17 @@
 }
 
  */
+
+#pragma mark - Button Handlers
+-(void)setupLeftMenuButton{
+	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
 
 @end
