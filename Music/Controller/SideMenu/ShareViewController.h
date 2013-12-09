@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "SideMenuRowViewController.h"
+#import "YMGenericTableViewController.h"
 
-@interface ShareViewController : UITableViewController
+@interface ShareViewController : YMGenericTableViewController
 
 @end

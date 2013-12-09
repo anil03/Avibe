@@ -41,13 +41,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
-@property (nonatomic, strong) NSArray *PFObjects;
+
 
 @end
 
 @implementation LiveFeedViewController
 
-@synthesize PFObjects = _PFObjects;
 
 
 - (id)initWithSelf:(UIViewController*)controller
@@ -94,7 +93,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_PFObjects count];
+    return [self.PFObjects count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -103,23 +102,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
+    PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
     
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SampleMusicViewController"];
-    controller.pfObject = [_PFObjects objectAtIndex:indexPath.row];
-    controller.delegate = self;
-    
-    [self.mm_drawerController setCenterViewController:controller withFullCloseAnimation:YES completion:nil];
-    
-//    [self performSegueWithIdentifier:@"SampleMusicSegue" sender:[_songs objectAtIndex:indexPath.row]];
-}
 
 #pragma mark Segue
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

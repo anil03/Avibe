@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import "YMGenericTableViewController.h"
 
-@interface ListenedViewController : UITableViewController
+@interface ListenedViewController : YMGenericTableViewController
 
 @end

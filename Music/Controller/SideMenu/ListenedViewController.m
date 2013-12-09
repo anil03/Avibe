@@ -76,16 +76,6 @@
     return cell;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SampleMusicViewController"];
-    controller.pfObject = [_songs objectAtIndex:indexPath.row];
-//    controller.delegate = self;
-    
-    [self.mm_drawerController setCenterViewController:controller withFullCloseAnimation:YES completion:nil];
-    
-    //    [self performSegueWithIdentifier:@"SampleMusicSegue" sender:[_songs objectAtIndex:indexPath.row]];
-}
 
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl

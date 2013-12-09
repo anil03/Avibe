@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C07231A18564F1100D6E63C /* SampleMusic.storyboard */; };
+		4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -90,6 +92,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C07231A18564F1100D6E63C /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
+		4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewController.h; path = Controller/Function/YMGenericTableViewController.h; sourceTree = "<group>"; };
+		4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewController.m; path = Controller/Function/YMGenericTableViewController.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -233,6 +238,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C07231C18564F4000D6E63C /* SampleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
+				4C3179C41844103400F7D41B /* SampleMusicViewController.m */,
+			);
+			name = SampleMusic;
+			sourceTree = "<group>";
+		};
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
@@ -282,7 +296,6 @@
 				4C3179AE18440EED00F7D41B /* Model */,
 				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AD18440EAD00F7D41B /* Controller */,
-				4CDBF6F118550E5900D4AD66 /* Function */,
 				4CD0D6EC1851234900350E0C /* MainViewController.h */,
 				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4C31799018440EA700F7D41B /* Images.xcassets */,
@@ -327,9 +340,11 @@
 		4C3179AD18440EAD00F7D41B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4C07231C18564F4000D6E63C /* SampleMusic */,
 				4CD0D6EF1851245400350E0C /* DrawerViewController */,
 				4C4C900E1853A8EE00585F4E /* Archive */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
+				4CDBF6F118550E5900D4AD66 /* Function */,
 				4C4C900F1853AB4200585F4E /* SideMenu */,
 			);
 			name = Controller;
@@ -349,11 +364,10 @@
 			isa = PBXGroup;
 			children = (
 				4C3179D41844112E00F7D41B /* Main.storyboard */,
+				4C07231A18564F1100D6E63C /* SampleMusic.storyboard */,
 				4CDBF6F2185515DC00D4AD66 /* User.storyboard */,
 				4CA88E851854034D005D0FE0 /* Cell.h */,
 				4CA88E861854034D005D0FE0 /* Cell.m */,
-				4C3179C31844103400F7D41B /* SampleMusicViewController.h */,
-				4C3179C41844103400F7D41B /* SampleMusicViewController.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -431,6 +445,8 @@
 		4CDBF6F118550E5900D4AD66 /* Function */ = {
 			isa = PBXGroup;
 			children = (
+				4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */,
+				4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */,
 				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
 				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
 				4C4C90131853B44A00585F4E /* ShareViewController.h */,
@@ -561,6 +577,7 @@
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
 				4CEBEE57184CE3D00018ABE0 /* SignUpDown.png in Resources */,
 				4CEBEE59184CE3D00018ABE0 /* Twitter.png in Resources */,
+				4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */,
 				4CEBEE55184CE3D00018ABE0 /* MainBG.png in Resources */,
 				4CEBEE56184CE3D00018ABE0 /* SignUp.png in Resources */,
 				4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */,
@@ -651,6 +668,7 @@
 				4C4C90151853B44A00585F4E /* ShareViewController.m in Sources */,
 				4CD0D71D1851667E00350E0C /* MMDrawerController.m in Sources */,
 				4C4C90121853B43600585F4E /* LiveFeedViewController.m in Sources */,
+				4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */,
 				4CEBEE3D184CE0790018ABE0 /* MyLogInViewController.m in Sources */,
 				4C4C901E1853B47E00585F4E /* UserViewController.m in Sources */,
 				4C3179D0184410C300F7D41B /* main.m in Sources */,
@@ -787,10 +805,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/Michael/Desktop/github/Music,
-					/Users/Michael/Developer/Parse,
 					/Users/Michael/Developer/github/Beet,
 					/Users/Michael/Developer/github/Beet/Music/Framework,
 				);
@@ -801,7 +818,7 @@
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
 					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/MMDrawerController\"/**",
+					"\"${PODS_ROOT}/Headers/MMDrawerController\"",
 				);
 				INFOPLIST_FILE = "Music/Beet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -818,6 +835,7 @@
 					SystemConfiguration,
 				);
 				PRODUCT_NAME = Beet;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -830,10 +848,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/Michael/Desktop/github/Music,
-					/Users/Michael/Developer/Parse,
 					/Users/Michael/Developer/github/Beet,
 					/Users/Michael/Developer/github/Beet/Music/Framework,
 				);
@@ -844,7 +861,7 @@
 					"\"${PODS_ROOT}/Headers/AFNetworking\"",
 					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
 					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/MMDrawerController\"/**",
+					"\"${PODS_ROOT}/Headers/MMDrawerController\"",
 				);
 				INFOPLIST_FILE = "Music/Beet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -861,6 +878,7 @@
 					SystemConfiguration,
 				);
 				PRODUCT_NAME = Beet;
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

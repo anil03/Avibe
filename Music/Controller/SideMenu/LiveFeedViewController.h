@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "SideMenuRowViewController.h"
+#import "YMGenericTableViewController.h"
 
-@interface LiveFeedViewController : UITableViewController
+@interface LiveFeedViewController : YMGenericTableViewController
 //<UITableViewDataSource,UITableViewDelegate>
 
 //@property (nonatomic,strong) UITableView * tableView;

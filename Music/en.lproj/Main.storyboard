@@ -59,66 +59,6 @@
             </objects>
             <point key="canvasLocation" x="142" y="-35"/>
         </scene>
-        <!--Sample Music View Controller-->
-        <scene sceneID="mZf-3q-GUz">
-            <objects>
-                <viewController storyboardIdentifier="SampleMusicViewController" id="6eu-Cb-CG4" customClass="SampleMusicViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="qrU-oR-naY"/>
-                        <viewControllerLayoutGuide type="bottom" id="ST0-U0-sB9"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="bUI-QD-kIW">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Song Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6S-Yb-iLX">
-                                <rect key="frame" x="20" y="100" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xOF-np-NYM">
-                                <rect key="frame" x="108" y="235" width="109" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Play">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="playOrPause:" destination="6eu-Cb-CG4" eventType="touchUpInside" id="EsE-v6-166"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VSl-DN-PA0">
-                                <rect key="frame" x="108" y="286" width="109" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="Movie">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="moviePlay:" destination="6eu-Cb-CG4" eventType="touchUpInside" id="Jei-Pf-U5n"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="iZz-5j-ve3">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="Bmx-4K-Vky">
-                            <connections>
-                                <action selector="Back:" destination="6eu-Cb-CG4" id="37i-7b-uHa"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="button" destination="xOF-np-NYM" id="Gbt-Of-0tc"/>
-                        <outlet property="songInfo" destination="D6S-Yb-iLX" id="ZDB-Yh-fdi"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iIa-wH-eF2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="586" y="-35"/>
-        </scene>
         <!--My Log In View Controller-->
         <scene sceneID="wKy-91-Jx2">
             <objects>

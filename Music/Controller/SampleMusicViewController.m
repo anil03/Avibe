@@ -19,20 +19,37 @@
 #define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&limit=1"]
 //#define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&entity=musicVideo"]
 
-@interface SampleMusicViewController ()
-@property (weak, nonatomic) IBOutlet UILabel *songInfo;
+@interface SampleMusicViewController () <AVAudioPlayerDelegate>
+
+@property (weak, nonatomic) IBOutlet UIImageView *songImage;
+
+@property (weak, nonatomic) IBOutlet UILabel *playedTime;
+@property (weak, nonatomic) IBOutlet UILabel *leftTime;
+
+@property (weak, nonatomic) IBOutlet UISlider *progress;
+@property (strong, nonatomic) NSTimer *progressTimer;
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *artistAlbumLabel;
+
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+
+
 @property (nonatomic, retain) AVAudioPlayer *player;
-@property (strong, nonatomic) IBOutlet UIButton *button;
 @property (strong, nonatomic) MPMoviePlayerController* theMovie;
+
+@property (nonatomic, strong) id timeObserver;
+
+@property (nonatomic, strong) UIViewController *centerViewController;
+@property (nonatomic, strong) UIViewController *leftViewController;
+
 @end
 
 @implementation SampleMusicViewController
-@synthesize song = _song;
-@synthesize songInfo = _songInfo;
+
 @synthesize pfObject = _pfObject;
 
 @synthesize player; // the player object
-@synthesize button;
 @synthesize theMovie;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,35 +61,40 @@
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+
+-(void)viewDidDisappear:(BOOL)animated
 {
-    [self setupLeftMenuButton];
+    [self.player stop];
 }
+
+
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     [self setupLeftMenuButton];
-	// Do any additional setup after loading the view.
-//    _song = [[Song alloc]init];
-//    _song.title = [_pfObject objectForKey:@"title"];
-//    _song.album = [_pfObject objectForKey:@"album"];
-//    _song.artist = [_pfObject objectForKey:@"artist"];
+    //Disable Left to avoid pan by mistake
+    self.centerViewController = self.mm_drawerController.centerViewController;
+//    self.leftViewController = self.mm_drawerController.leftDrawerViewController;
+//    [self.mm_drawerController setLeftDrawerViewController:nil];
     
-    _songInfo.text = [NSString stringWithFormat:@"%@, %@, %@", [_pfObject objectForKey:@"title"], [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
+    self.titleLabel.text = [_pfObject objectForKey:@"title"];
+    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
     
-    NSString *searchTitle = [[_pfObject objectForKey:@"title"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
-    
-    //JSON
+
+    //Set AVAudioSesson
     [[AVAudioSession sharedInstance] setDelegate: self];
     NSError *setCategoryError = nil;
     [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
     if (setCategoryError)
         NSLog(@"Error setting category! %@", setCategoryError);
+
     
-    
+    //Search Music
+    NSString *searchTitle = [[_pfObject objectForKey:@"title"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
+    //Download Music
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:
                         searchURL];
@@ -83,12 +105,32 @@
 
 
 
-- (IBAction)Back:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 
 #pragma mark - JSON
+
+- (void)updateViewInfo:(NSDictionary *)result {
+    NSURL *imageUrl = [NSURL URLWithString:[result objectForKey:@"artworkUrl100"]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+    UIImage *image = [UIImage imageWithData:imageData];
+    [self.songImage setImage:image];
+    
+    //Comment out to fit to original size
+    int scale = 2;
+    float imageWidth = image.size.width*scale;
+    float imageHeight = image.size.height*scale;
+    self.songImage.frame = CGRectMake(self.songImage.center.x-imageWidth/2, self.songImage.center.y-imageHeight/2,imageWidth, imageHeight);
+    
+    self.titleLabel.text = [result objectForKey:@"trackName"];
+    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [result objectForKey:@"artistName"], [result objectForKey:@"collectionName"]];
+    
+    self.playedTime.text = @"0:00";
+    int min = self.player.duration/60;
+    int sec = ceil(self.player.duration-min*60);
+    self.leftTime.text = [NSString stringWithFormat:@"%d:%02d", min, sec];
+    
+    self.progress.maximumValue = self.player.duration;
+    self.progress.userInteractionEnabled = NO;
+}
 
 - (void)fetchedData:(NSData *)responseData {
     //parse out the json data
@@ -111,6 +153,7 @@
     NSString* kind = [result objectForKey:@"kind"];
     NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"previewUrl"]];
     
+    
     //    AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:previewUrl];
     //    AVPlayer* player = [AVPlayer playerWithPlayerItem:playerItem];
     //    player = [AVPlayer playerWithURL:previewUrl];
@@ -126,35 +169,50 @@
         AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:songFile error:nil];
         
         self.player = newPlayer;
+        self.player.delegate = self;
         
         [player prepareToPlay];
-        [player setDelegate: self];
     }else if([kind isEqualToString:@"music-video"]){
         [self playMovieAtURL:previewUrl];
     }
+    
+    [self updateViewInfo:result];
+
 }
 
 - (IBAction) playOrPause: (id) sender {
     
+    self.playButton.selected = !self.playButton.selected;
     // if already playing, then pause
     if (self.player.playing) {
-        [self.button setTitle: @"Play" forState: UIControlStateHighlighted];
-        [self.button setTitle: @"Play" forState: UIControlStateNormal];
         [self.player pause];
-        
-        // if stopped or paused, start playing
+        [self.progressTimer invalidate];
     } else {
-        [self.button setTitle: @"Pause" forState: UIControlStateHighlighted];
-        [self.button setTitle: @"Pause" forState: UIControlStateNormal];
         [self.player play];
+        
+        self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
     }
 }
 
-- (IBAction)moviePlay:(id)sender
+- (void)updateProgress
 {
-    [self.view addSubview:theMovie.view];
-    [theMovie play];
+    
+    int minPlayed = self.player.currentTime/60;
+    int secPlayed = ceil(self.player.currentTime-minPlayed*60);
+    int minLeft = (self.player.duration-self.player.currentTime)/60;
+    int secLeft = ceil((self.player.duration-self.player.currentTime)-minLeft*60);
+    
+    self.playedTime.text = [NSString stringWithFormat:@"%d:%02d", minPlayed, secPlayed];
+    self.leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
+    
+    self.progress.value = self.player.currentTime;
 }
+
+//- (IBAction)moviePlay:(id)sender
+//{
+//    [self.view addSubview:theMovie.view];
+//    [theMovie play];
+//}
 
 -(void) playMovieAtURL: (NSURL*) theURL {
     
@@ -202,17 +260,34 @@
      object: theMovie];
 }
 
+#pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.progressTimer invalidate];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+{
+    [self.progressTimer invalidate];
+}
+
 #pragma mark - Button Handlers
 -(void)setupLeftMenuButton{
 //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
 //    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
     [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
+    
+//    [self.mm_drawerController setCenterViewController:self.centerViewController];
+//    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
+
 }
+
 
 
 @end
