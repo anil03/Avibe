@@ -27,6 +27,7 @@
 #import "Song.h"
 
 #import "Cell.h"
+#import "XMLParser.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionLeftViewState,
@@ -35,13 +36,16 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionRightDrawerAnimation,
 };
 
-@interface LiveFeedViewController ()
+static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
+
+@interface LiveFeedViewController()<XMLParserDelegate>
 
 @property (weak, atomic) UIViewController *viewController;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
-
+@property (nonatomic, strong) XMLParser *parser;
+@property (nonatomic, strong) NSMutableArray *data;
 
 @end
 
@@ -77,6 +81,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    //Setup XMLParser
+    self.data = [[NSMutableArray alloc] init];
+    NSURL *url = [NSURL URLWithString:kURLString];
+    self.parser = [[XMLParser alloc] initWithURL:url AndData:self.data];
+    self.parser.delegate = self;
+    [self.parser startParsing];
 }
 
 #pragma mark - Table view data source
@@ -100,7 +111,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     // Configure the cell...
     PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
-    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
+    if ([song objectForKey:@"author"]) {
+        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
+    }else{
+        cell.textLabel.text = [NSString stringWithFormat:@"%@", [song objectForKey:@"title"]];
+    }
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
     
     return cell;
@@ -194,6 +209,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             self.PFObjects = objects;
             [self.tableView reloadData];
             
+            //Add XMLobjects
+            for (PFObject *pf in self.PFObjects) {
+                [self.data addObject:pf];
+            }
+            self.PFObjects = [NSArray arrayWithArray:self.data];
+            
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
             NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
@@ -219,6 +240,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+#pragma mark - XMLParserDelegate method
+- (void)finishParsing
+{
+    NSLog(@"Parse Finish.");
+    
 }
 
 @end

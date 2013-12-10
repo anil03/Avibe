@@ -11,8 +11,8 @@
 
 @implementation Song
 
-@dynamic title;
-@dynamic album;
-@dynamic artist;
+//@dynamic title;
+//@dynamic album;
+//@dynamic artist;
 
 @end

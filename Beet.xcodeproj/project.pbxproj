@@ -11,6 +11,7 @@
 		4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */; };
 		4C0723391856AB9400D6E63C /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0723381856AB9400D6E63C /* XMLParser.m */; };
 		4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */; };
+		4C07233E1857AD7D00D6E63C /* TestXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233D1857AD7D00D6E63C /* TestXMLParser.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -100,6 +101,7 @@
 		4C0723371856AB9400D6E63C /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLParser.h; path = Model/XMLParser.h; sourceTree = "<group>"; };
 		4C0723381856AB9400D6E63C /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLParser.m; path = Model/XMLParser.m; sourceTree = "<group>"; };
 		4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestNSXMLParser.m; path = XMLTest/TestNSXMLParser.m; sourceTree = "<group>"; };
+		4C07233D1857AD7D00D6E63C /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestXMLParser.m; path = XMLTest/TestXMLParser.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */,
+				4C07233D1857AD7D00D6E63C /* TestXMLParser.m */,
 			);
 			name = XMLTest;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C3179A418440EA700F7D41B /* MusicTests.m in Sources */,
+				4C07233E1857AD7D00D6E63C /* TestXMLParser.m in Sources */,
 				4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

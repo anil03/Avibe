@@ -8,9 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol XMLParserDelegate <NSObject>
+
+- (void)finishParsing;
+
+@end
+
 @interface XMLParser : NSObject
 
-- (id)initWithURL:(NSURL*)url AndDelegate:(id)delegate;
-- (BOOL)startParse;
+@property (nonatomic, weak) id<XMLParserDelegate> delegate;
+
+- (id)initWithURL:(NSURL*)url AndData:(NSMutableArray*)data;
+- (void)startParsing;
 
 @end

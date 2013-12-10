@@ -10,7 +10,8 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Song : NSManagedObject
+//@interface Song : NSManagedObject
+@interface Song : NSObject
 
 @property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSString * album;
