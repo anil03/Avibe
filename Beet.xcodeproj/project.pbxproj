@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C07231A18564F1100D6E63C /* SampleMusic.storyboard */; };
 		4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */; };
+		4C0723391856AB9400D6E63C /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0723381856AB9400D6E63C /* XMLParser.m */; };
+		4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -39,7 +41,7 @@
 		4CA88E841853FB65005D0FE0 /* SideMenuRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */; };
 		4CA88E871854034D005D0FE0 /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E861854034D005D0FE0 /* Cell.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
-		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; };
+		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4CD0D70218515CC100350E0C /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */; };
 		4CD0D70318515CC100350E0C /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F718515CC100350E0C /* MMExampleDrawerVisualStateManager.m */; };
 		4CD0D70418515CC100350E0C /* MMExampleLeftSideDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F918515CC100350E0C /* MMExampleLeftSideDrawerViewController.m */; };
@@ -95,6 +97,9 @@
 		4C07231A18564F1100D6E63C /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
 		4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewController.h; path = Controller/Function/YMGenericTableViewController.h; sourceTree = "<group>"; };
 		4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewController.m; path = Controller/Function/YMGenericTableViewController.m; sourceTree = "<group>"; };
+		4C0723371856AB9400D6E63C /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLParser.h; path = Model/XMLParser.h; sourceTree = "<group>"; };
+		4C0723381856AB9400D6E63C /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLParser.m; path = Model/XMLParser.m; sourceTree = "<group>"; };
+		4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestNSXMLParser.m; path = XMLTest/TestNSXMLParser.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -247,6 +252,23 @@
 			name = SampleMusic;
 			sourceTree = "<group>";
 		};
+		4C0723361856AB5E00D6E63C /* XML */ = {
+			isa = PBXGroup;
+			children = (
+				4C0723371856AB9400D6E63C /* XMLParser.h */,
+				4C0723381856AB9400D6E63C /* XMLParser.m */,
+			);
+			name = XML;
+			sourceTree = "<group>";
+		};
+		4C07233A1856AD9F00D6E63C /* XMLTest */ = {
+			isa = PBXGroup;
+			children = (
+				4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */,
+			);
+			name = XMLTest;
+			sourceTree = "<group>";
+		};
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
@@ -321,6 +343,7 @@
 		4C31799D18440EA700F7D41B /* BeetTests */ = {
 			isa = PBXGroup;
 			children = (
+				4C07233A1856AD9F00D6E63C /* XMLTest */,
 				4C3179A318440EA700F7D41B /* MusicTests.m */,
 				4C31799E18440EA700F7D41B /* Supporting Files */,
 			);
@@ -353,6 +376,7 @@
 		4C3179AE18440EED00F7D41B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C0723361856AB5E00D6E63C /* XML */,
 				4C3179B018440F4800F7D41B /* Song.h */,
 				4C3179B118440F4800F7D41B /* Song.m */,
 				4C3179B218440F4800F7D41B /* Song.xcdatamodeld */,
@@ -658,6 +682,7 @@
 				4CA88E871854034D005D0FE0 /* Cell.m in Sources */,
 				4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */,
 				4CD0D7221851671700350E0C /* MMTableViewCell.m in Sources */,
+				4C0723391856AB9400D6E63C /* XMLParser.m in Sources */,
 				4C3179BA18440F5300F7D41B /* AppDelegate.m in Sources */,
 				4CD0D70718515CC100350E0C /* MMExampleViewController.m in Sources */,
 				4CD0D70818515CC100350E0C /* MMNavigationController.m in Sources */,
@@ -685,6 +710,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C3179A418440EA700F7D41B /* MusicTests.m in Sources */,
+				4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,18 +913,26 @@
 		4C3179AB18440EA700F7D41B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Music.app/Music";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Beet.app/Beet";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/Michael/Developer/github/Beet/Music/Framework,
+					/Users/Michael/Developer/github/Beet,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
+				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${PODS_ROOT}/Headers\"/**",
 				);
 				INFOPLIST_FILE = "MusicTests/BeetTests-Info.plist";
 				PRODUCT_NAME = BeetTests;
@@ -910,15 +944,23 @@
 		4C3179AC18440EA700F7D41B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Music.app/Music";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Beet.app/Beet";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					/Users/Michael/Developer/github/Beet/Music/Framework,
+					/Users/Michael/Developer/github/Beet,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Music-Prefix.pch";
+				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"${PODS_ROOT}/Headers\"/**",
+				);
 				INFOPLIST_FILE = "MusicTests/BeetTests-Info.plist";
 				PRODUCT_NAME = BeetTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";

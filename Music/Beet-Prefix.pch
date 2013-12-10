@@ -17,6 +17,8 @@
     #import <Parse/Parse.h>
     #define SAMPLEMUSIC_STORYBOARD_NAME @"SampleMusic"
     #define SAMPLEMUSIC_CONTROLLER_NAME @"SampleMusicViewController"
+
+    
 #endif
 
 static BOOL OSVersionIsAtLeastiOS7() {
