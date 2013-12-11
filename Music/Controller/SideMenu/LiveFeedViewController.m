@@ -26,7 +26,8 @@
 #import "SampleMusicViewController.h"
 #import "Song.h"
 
-#import "Cell.h"
+#import "YMGenericTableViewCell.h"
+
 #import "XMLParser.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 };
 
 static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
+static NSString *const CellIdentifier = @"Cell";
 
 @interface LiveFeedViewController()<XMLParserDelegate>
 
@@ -106,17 +108,19 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    YMGenericTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell setupWithDictionary:nil];
     
     // Configure the cell...
-    PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
-    if ([song objectForKey:@"author"]) {
-        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
-    }else{
-        cell.textLabel.text = [NSString stringWithFormat:@"%@", [song objectForKey:@"title"]];
-    }
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
+//    PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
+//    if ([song objectForKey:@"author"]) {
+//        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
+//    }else{
+//        cell.textLabel.text = [NSString stringWithFormat:@"%@", [song objectForKey:@"title"]];
+//    }
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
     
     return cell;
 }
@@ -231,9 +235,7 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 -(void)setupBarMenuButton{
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-    
-    [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
-    
+        
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
 }

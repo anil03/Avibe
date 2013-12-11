@@ -13,7 +13,6 @@
 
 #import "SampleMusicViewController.h"
 
-#import "Cell.h"
 
 @interface ListenedViewController ()
 
@@ -44,7 +43,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
 }

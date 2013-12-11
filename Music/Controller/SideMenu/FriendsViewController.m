@@ -13,8 +13,6 @@
 
 #import "SampleMusicViewController.h"
 
-#import "Cell.h"
-
 @interface FriendsViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -42,7 +40,6 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    [self.tableView registerClass:[Cell class] forCellReuseIdentifier:@"Cell"];
     
     UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(addFriend:)];
     self.mm_drawerController.navigationItem.rightBarButtonItem = barButton;

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface Cell : UITableViewCell
+@interface YMGenericTableViewCell : UITableViewCell
+
+- (void)setupWithDictionary:(NSDictionary *)dictionary;
 
 @end

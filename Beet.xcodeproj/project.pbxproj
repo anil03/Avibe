@@ -12,6 +12,7 @@
 		4C0723391856AB9400D6E63C /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0723381856AB9400D6E63C /* XMLParser.m */; };
 		4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */; };
 		4C07233E1857AD7D00D6E63C /* TestXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233D1857AD7D00D6E63C /* TestXMLParser.m */; };
+		4C0723481858C28800D6E63C /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0723471858C28800D6E63C /* background.png */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -40,7 +41,7 @@
 		4C4C901E1853B47E00585F4E /* UserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C901D1853B47E00585F4E /* UserViewController.m */; };
 		4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5DB891853C317006E7B0F /* SideMenuViewController.m */; };
 		4CA88E841853FB65005D0FE0 /* SideMenuRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */; };
-		4CA88E871854034D005D0FE0 /* Cell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E861854034D005D0FE0 /* Cell.m */; };
+		4CA88E871854034D005D0FE0 /* YMGenericTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4CD0D70218515CC100350E0C /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6F518515CC100350E0C /* MMExampleCenterTableViewController.m */; };
@@ -102,6 +103,7 @@
 		4C0723381856AB9400D6E63C /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XMLParser.m; path = Model/XMLParser.m; sourceTree = "<group>"; };
 		4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestNSXMLParser.m; path = XMLTest/TestNSXMLParser.m; sourceTree = "<group>"; };
 		4C07233D1857AD7D00D6E63C /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestXMLParser.m; path = XMLTest/TestXMLParser.m; sourceTree = "<group>"; };
+		4C0723471858C28800D6E63C /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resource/background.png; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,8 +145,8 @@
 		4CA5DB891853C317006E7B0F /* SideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuViewController.m; path = Controller/SideMenu/SideMenuViewController.m; sourceTree = "<group>"; };
 		4CA88E821853FB65005D0FE0 /* SideMenuRowViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SideMenuRowViewController.h; path = Controller/SideMenu/SideMenuRowViewController.h; sourceTree = "<group>"; };
 		4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuRowViewController.m; path = Controller/SideMenu/SideMenuRowViewController.m; sourceTree = "<group>"; };
-		4CA88E851854034D005D0FE0 /* Cell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cell.h; path = View/Cell.h; sourceTree = "<group>"; };
-		4CA88E861854034D005D0FE0 /* Cell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Cell.m; path = View/Cell.m; sourceTree = "<group>"; };
+		4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewCell.h; path = View/YMGenericTableViewCell.h; sourceTree = "<group>"; };
+		4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewCell.m; path = View/YMGenericTableViewCell.m; sourceTree = "<group>"; };
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
@@ -272,6 +274,14 @@
 			name = XMLTest;
 			sourceTree = "<group>";
 		};
+		4C0723461858C27C00D6E63C /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				4C0723471858C28800D6E63C /* background.png */,
+			);
+			name = TableView;
+			sourceTree = "<group>";
+		};
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
@@ -317,7 +327,7 @@
 		4C31797E18440EA700F7D41B /* Beet */ = {
 			isa = PBXGroup;
 			children = (
-				4CEBEE42184CE3950018ABE0 /* Asset */,
+				4CEBEE42184CE3950018ABE0 /* Resource */,
 				4C3179AE18440EED00F7D41B /* Model */,
 				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AD18440EAD00F7D41B /* Controller */,
@@ -393,8 +403,6 @@
 				4C3179D41844112E00F7D41B /* Main.storyboard */,
 				4C07231A18564F1100D6E63C /* SampleMusic.storyboard */,
 				4CDBF6F2185515DC00D4AD66 /* User.storyboard */,
-				4CA88E851854034D005D0FE0 /* Cell.h */,
-				4CA88E861854034D005D0FE0 /* Cell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -474,6 +482,8 @@
 			children = (
 				4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */,
 				4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */,
+				4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */,
+				4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */,
 				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
 				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
 				4C4C90131853B44A00585F4E /* ShareViewController.h */,
@@ -499,9 +509,10 @@
 			name = LogInAndSignUp;
 			sourceTree = "<group>";
 		};
-		4CEBEE42184CE3950018ABE0 /* Asset */ = {
+		4CEBEE42184CE3950018ABE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C0723461858C27C00D6E63C /* TableView */,
 				4CEBEE43184CE3D00018ABE0 /* Exit.png */,
 				4CEBEE44184CE3D00018ABE0 /* ExitDown.png */,
 				4CEBEE45184CE3D00018ABE0 /* Facebook.png */,
@@ -515,7 +526,7 @@
 				4CEBEE4D184CE3D00018ABE0 /* Twitter.png */,
 				4CEBEE4E184CE3D00018ABE0 /* TwitterDown.png */,
 			);
-			name = Asset;
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -611,6 +622,7 @@
 				4CEBEE54184CE3D00018ABE0 /* Logo.png in Resources */,
 				4CEBEE51184CE3D00018ABE0 /* Facebook.png in Resources */,
 				4CEBEE4F184CE3D00018ABE0 /* Exit.png in Resources */,
+				4C0723481858C28800D6E63C /* background.png in Resources */,
 				4CEBEE50184CE3D00018ABE0 /* ExitDown.png in Resources */,
 				4CEBEE52184CE3D00018ABE0 /* FacebookDown.png in Resources */,
 				4CEBEE53184CE3D00018ABE0 /* LoginFieldBG.png in Resources */,
@@ -682,7 +694,7 @@
 				4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */,
 				4CD0D70D185164DD00350E0C /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4C3179C71844103400F7D41B /* SampleMusicViewController.m in Sources */,
-				4CA88E871854034D005D0FE0 /* Cell.m in Sources */,
+				4CA88E871854034D005D0FE0 /* YMGenericTableViewCell.m in Sources */,
 				4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */,
 				4CD0D7221851671700350E0C /* MMTableViewCell.m in Sources */,
 				4C0723391856AB9400D6E63C /* XMLParser.m in Sources */,
