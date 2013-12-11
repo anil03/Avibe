@@ -82,6 +82,28 @@
     
     [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
     
+    //Set view
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.layer.opacity = 0.7;
+
+//    [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
+
+////    cell.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.0];
+//    UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(10,10,300,60)];
+//    whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
+//    whiteRoundedCornerView.layer.masksToBounds = NO;
+//    whiteRoundedCornerView.layer.cornerRadius = 3.0;
+//    whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);
+//    whiteRoundedCornerView.layer.shadowOpacity = 0.5;
+//    [cell.contentView addSubview:whiteRoundedCornerView];
+//    [cell.contentView sendSubviewToBack:whiteRoundedCornerView];
+    
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.layer.opacity = 1;
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -120,18 +142,31 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 70;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    static NSString * CellIdentifier = @"Cell";
+    YMGenericTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+    PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
+    NSDictionary *dictionary;
+    
+    if ([song objectForKey:@"author"]) {
+        dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"author"], @"author", nil];
+        
+    }else{
+        dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", nil];
+    }
+    
+    [cell setupWithDictionary:dictionary];
     
     return cell;
 }
+
+
 
 /*
 // Override to support conditional editing of the table view.

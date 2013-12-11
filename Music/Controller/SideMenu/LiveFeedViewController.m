@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 };
 
 static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
-static NSString *const CellIdentifier = @"Cell";
+
 
 @interface LiveFeedViewController()<XMLParserDelegate>
 
@@ -106,43 +106,26 @@ static NSString *const CellIdentifier = @"Cell";
     return [self.PFObjects count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    YMGenericTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    [cell setupWithDictionary:nil];
-    
-    // Configure the cell...
-//    PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
-//    if ([song objectForKey:@"author"]) {
-//        cell.textLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"author"]];
-//    }else{
-//        cell.textLabel.text = [NSString stringWithFormat:@"%@", [song objectForKey:@"title"]];
+
+
+
+//#pragma mark Segue
+//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+//{
+//    if ([[segue identifier] isEqualToString:@"SampleMusicSegue"])
+//    {
+//        // Get reference to the destination view controller
+//        SampleMusicViewController *controller = [segue destinationViewController];
+//        //        controller.song = [[Song alloc] init];
+//        controller.pfObject = sender;
+//        
+//        //        controller.song.title = [sender objectForKey:@"title"];
+//        //        controller.song.album = [sender objectForKey:@"album"];
+//        //        controller.song.artist = [sender objectForKey:@"artist"];
+//        
+//        
 //    }
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
-    
-    return cell;
-}
-
-
-#pragma mark Segue
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([[segue identifier] isEqualToString:@"SampleMusicSegue"])
-    {
-        // Get reference to the destination view controller
-        SampleMusicViewController *controller = [segue destinationViewController];
-        //        controller.song = [[Song alloc] init];
-        controller.pfObject = sender;
-        
-        //        controller.song.title = [sender objectForKey:@"title"];
-        //        controller.song.album = [sender objectForKey:@"album"];
-        //        controller.song.artist = [sender objectForKey:@"artist"];
-        
-        
-    }
-}
+//}
 
 #pragma mark Bar Button
 - (IBAction)AddSong:(id)sender {

@@ -9,7 +9,8 @@
 #import "YMGenericTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface YMGenericTableViewCell () {
+@interface YMGenericTableViewCell ()
+{
     NSString *website;
     NSString *twitter;
     NSString *facebook;
@@ -20,9 +21,9 @@
 @property (strong, nonatomic) UILabel *albumLabel;
 @property (strong, nonatomic) UILabel *artistLabel;
 @property (strong, nonatomic) UIImageView *albumImage;
+@property (strong, nonatomic) UIView *mainView;
 
 
-@property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UILabel *nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *locationLabel;
 @property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
@@ -43,12 +44,26 @@
     if (self) {
         // Initialization code
         [self setBackgroundColor:[UIColor clearColor]];
-
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 200, 50)];
-        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 200, 50)];
-        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 200, 50)];
+        [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+        
+        UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(10,10,300,60)];
+        whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
+        whiteRoundedCornerView.layer.masksToBounds = NO;
+        whiteRoundedCornerView.layer.cornerRadius = 3.0;
+        whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);
+        whiteRoundedCornerView.layer.shadowOpacity = 0.5;
+        [self.contentView addSubview:whiteRoundedCornerView];
+        [self.contentView sendSubviewToBack:whiteRoundedCornerView];
+        
+//        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width-10, self.frame.size.height)];
+//        _mainView.backgroundColor = [UIColor redColor];
+        
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 300, 50)];
+        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, 200, 50)];
+        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 30, 300, 50)];
         _albumImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 200, 50)];
         
+        [self addSubview:_mainView];
         [self addSubview:_titleLabel];
         [self addSubview:_albumLabel];
         [self addSubview:_artistLabel];
@@ -60,7 +75,10 @@
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary
 {
-    _titleLabel.text = @"test";
+    _titleLabel.text = [dictionary valueForKey:@"title"];
+//    _albumLabel.text = [dictionary valueForKey:@"album"];
+    _artistLabel.text = [dictionary valueForKey:@"artist"];
+
     
 //    self.mainView.layer.cornerRadius = 10;
 //    self.mainView.layer.masksToBounds = YES;

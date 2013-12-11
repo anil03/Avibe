@@ -61,21 +61,21 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [_songs count];
+    return [self.PFObjects count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
-    PFObject *song = [_songs objectAtIndex:indexPath.row];
-    cell.textLabel.text = [song objectForKey:@"title"];
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
-    
-    return cell;
-}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *CellIdentifier = @"Cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//    
+//    // Configure the cell...
+//    PFObject *song = [_songs objectAtIndex:indexPath.row];
+//    cell.textLabel.text = [song objectForKey:@"title"];
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
+//    
+//    return cell;
+//}
 
 
 
@@ -114,7 +114,7 @@
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
-            _songs = objects;
+            self.PFObjects = objects;
             [self.tableView reloadData];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];

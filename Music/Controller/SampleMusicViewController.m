@@ -19,7 +19,7 @@
 #define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&limit=1"]
 //#define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&entity=musicVideo"]
 
-@interface SampleMusicViewController () <AVAudioPlayerDelegate>
+@interface SampleMusicViewController () <AVAudioPlayerDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *songImage;
 
@@ -133,6 +133,13 @@
 }
 
 - (void)fetchedData:(NSData *)responseData {
+    //Can't find the song
+    if (!responseData) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
     //parse out the json data
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization
@@ -286,6 +293,16 @@
 //    [self.mm_drawerController setCenterViewController:self.centerViewController];
 //    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
 
+}
+
+#pragma mark - UIAlertview delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+//        NSLog(@"user pressed OK");
+        [self leftDrawerButtonPress:nil];
+    } else {
+        NSLog(@"user pressed Cancel");
+    }
 }
 
 
