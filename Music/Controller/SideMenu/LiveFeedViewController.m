@@ -49,6 +49,10 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 @property (nonatomic, strong) XMLParser *parser;
 @property (nonatomic, strong) NSMutableArray *data;
 
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+
+
 @end
 
 @implementation LiveFeedViewController
@@ -76,13 +80,21 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
     [self setupBarMenuButton];
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    
+    //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _spinner.center = CGPointMake(160, 240);
+    _spinner.hidesWhenStopped = YES;
+    [self.view addSubview:_spinner];
     
     //Setup XMLParser
     self.data = [[NSMutableArray alloc] init];
@@ -166,12 +178,24 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 
 -(void)refreshView:(UIRefreshControl *)refresh {
 	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
+    refresh.tintColor = [UIColor whiteColor];
     
     // custom refresh logic would be placed here...
+    [_spinner startAnimating];
     [self fetchData:refresh];
     
     
 }
+
+
+//- (void)loadView
+//{
+//    [super loadView];
+//    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+//    [self.view addSubview:self.activityIndicator];
+//    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+//    [self.activityIndicator startAnimating];
+//}
 
 -(void)fetchData:(UIRefreshControl*)refresh
 {
@@ -196,6 +220,8 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
             NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
             refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
             [refresh endRefreshing];
+            
+            [_spinner stopAnimating];
         }
     }];
 }

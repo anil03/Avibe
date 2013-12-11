@@ -74,13 +74,20 @@
     [super viewDidLoad];
     
     [self setupLeftMenuButton];
+    
+    //View Setup
+    UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
+    [self.view addSubview:backgroundImage];
+    [self.view sendSubviewToBack:backgroundImage];
+
+    
     //Disable Left to avoid pan by mistake
     self.centerViewController = self.mm_drawerController.centerViewController;
 //    self.leftViewController = self.mm_drawerController.leftDrawerViewController;
 //    [self.mm_drawerController setLeftDrawerViewController:nil];
     
-    self.titleLabel.text = [_pfObject objectForKey:@"title"];
-    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
+//    self.titleLabel.text = [_pfObject objectForKey:@"title"];
+//    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
     
 
     //Set AVAudioSesson

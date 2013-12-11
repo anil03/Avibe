@@ -13,6 +13,7 @@
 		4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */; };
 		4C07233E1857AD7D00D6E63C /* TestXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233D1857AD7D00D6E63C /* TestXMLParser.m */; };
 		4C0723481858C28800D6E63C /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C0723471858C28800D6E63C /* background.png */; };
+		4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C0723491858F14B00D6E63C /* sample_music_background.jpg */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -104,6 +105,7 @@
 		4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestNSXMLParser.m; path = XMLTest/TestNSXMLParser.m; sourceTree = "<group>"; };
 		4C07233D1857AD7D00D6E63C /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestXMLParser.m; path = XMLTest/TestXMLParser.m; sourceTree = "<group>"; };
 		4C0723471858C28800D6E63C /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = background.png; path = Resource/background.png; sourceTree = "<group>"; };
+		4C0723491858F14B00D6E63C /* sample_music_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = sample_music_background.jpg; path = Resource/sample_music_background.jpg; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Beet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Beet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -277,6 +279,7 @@
 		4C0723461858C27C00D6E63C /* TableView */ = {
 			isa = PBXGroup;
 			children = (
+				4C0723491858F14B00D6E63C /* sample_music_background.jpg */,
 				4C0723471858C28800D6E63C /* background.png */,
 			);
 			name = TableView;
@@ -618,6 +621,7 @@
 				4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */,
 				4CEBEE55184CE3D00018ABE0 /* MainBG.png in Resources */,
 				4CEBEE56184CE3D00018ABE0 /* SignUp.png in Resources */,
+				4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */,
 				4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */,
 				4CEBEE54184CE3D00018ABE0 /* Logo.png in Resources */,
 				4CEBEE51184CE3D00018ABE0 /* Facebook.png in Resources */,
