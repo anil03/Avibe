@@ -20,19 +20,9 @@
 @property (strong, nonatomic) UILabel *titleLabel;
 @property (strong, nonatomic) UILabel *albumLabel;
 @property (strong, nonatomic) UILabel *artistLabel;
+@property (strong, nonatomic) UILabel *userLabel;
+
 @property (strong, nonatomic) UIImageView *albumImage;
-@property (strong, nonatomic) UIView *mainView;
-
-
-@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *locationLabel;
-@property (weak, nonatomic) IBOutlet UILabel *aboutLabel;
-@property (weak, nonatomic) IBOutlet UILabel *webLabel;
-@property (weak, nonatomic) IBOutlet UIButton *webButton;
-@property (weak, nonatomic) IBOutlet UIImageView *twImage;
-@property (weak, nonatomic) IBOutlet UIButton *twButton;
-@property (weak, nonatomic) IBOutlet UIImageView *fbImage;
-@property (weak, nonatomic) IBOutlet UIButton *fbButton;
 
 @end
 
@@ -58,15 +48,37 @@
 //        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width-10, self.frame.size.height)];
 //        _mainView.backgroundColor = [UIColor redColor];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 0, 300, 50)];
-        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, 200, 50)];
-        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 30, 300, 50)];
-        _albumImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 200, 50)];
+        float cellHeightForOneLine = 50;
         
-        [self addSubview:_mainView];
+        float leftOffset = 25;
+        float titleLabelWidth = 100;
+        float artistLabelWidth = 100;
+        float userLabelWidth = 80;
+        
+        //Color Desgin:http://www.colourlovers.com/palette/3164361/palm_trees
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, titleLabelWidth, cellHeightForOneLine)];
+        _titleLabel.textColor = [[UIColor alloc] initWithRed:9.0/255.0 green:38.0/255.0 blue:0.0/255.0 alpha:1];
+//        _titleLabel.adjustsFontSizeToFitWidth = YES;
+        
+        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelWidth+leftOffset, 0, artistLabelWidth, cellHeightForOneLine)];
+//        _artistLabel.adjustsFontSizeToFitWidth = YES;
+        
+        
+        _userLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelWidth+artistLabelWidth+leftOffset, 0, userLabelWidth, cellHeightForOneLine)];
+        _userLabel.textColor = [[UIColor alloc] initWithRed:95.0/255.0 green:81.0/255.0 blue:0.0/255.0 alpha:1];
+//        _userLabel.adjustsFontSizeToFitWidth = YES;
+        
+        
+        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 30, 200, cellHeightForOneLine)];
+        _albumLabel.textColor = [[UIColor alloc] initWithRed:86.0/255.0 green:107.0/255.0 blue:21.0/255.0 alpha:1];
+        _albumLabel.adjustsFontSizeToFitWidth = YES;
+        
+        _albumImage = [[UIImageView alloc] initWithFrame:CGRectMake(30, 0, 200, cellHeightForOneLine)];
+        
         [self addSubview:_titleLabel];
         [self addSubview:_albumLabel];
         [self addSubview:_artistLabel];
+        [self addSubview:_userLabel];
         [self addSubview:_albumImage];
 
     }
@@ -75,9 +87,12 @@
 
 - (void)setupWithDictionary:(NSDictionary *)dictionary
 {
+    
     _titleLabel.text = [dictionary valueForKey:@"title"];
-//    _albumLabel.text = [dictionary valueForKey:@"album"];
     _artistLabel.text = [dictionary valueForKey:@"artist"];
+    _userLabel.text = @"FriendA";//[dictionary valueForKey:@"author"];
+
+    _albumLabel.text = [dictionary valueForKey:@"album"];
 
     
 //    self.mainView.layer.cornerRadius = 10;

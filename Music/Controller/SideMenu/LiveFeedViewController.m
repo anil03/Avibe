@@ -94,17 +94,6 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [self.PFObjects count];
-}
 
 
 
