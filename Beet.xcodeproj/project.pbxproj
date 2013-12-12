@@ -854,9 +854,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/Michael/Developer/github/Beet,
-					/Users/Michael/Developer/github/Beet/Music/Framework,
-					"/Users/david/Downloads/Beet/**",
+					"\"${SRCROOT}/Music\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
@@ -898,9 +896,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/Michael/Developer/github/Beet,
-					/Users/Michael/Developer/github/Beet/Music/Framework,
-					"/Users/david/Downloads/Beet/**",
+					"\"${SRCROOT}/Music\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
