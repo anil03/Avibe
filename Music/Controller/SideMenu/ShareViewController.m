@@ -110,6 +110,8 @@
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Favorite"];
     [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updatedAt"];
+
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {

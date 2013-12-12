@@ -136,6 +136,9 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 #pragma mark Bar Button
 - (void)updateSongInParse {
+    //Save Scrobbler Music from XML Parser
+    [self setupXMLParserAndParse]; //Update XMLData
+    
     //iPod Music
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
@@ -148,8 +151,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [self.XMLData addObject:songRecord];
     }
     
-    //Save Scrobbler Music from XML Parser
-    [self setupXMLParserAndParse]; //Update XMLData
+
     
     //Get rid of duplicated data then save
     NSMutableArray *dataToSave = [self filterDuplicatedDataToSaveInParse:self.XMLData];

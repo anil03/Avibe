@@ -45,14 +45,14 @@
 
     
     
-    if(OSVersionIsAtLeastiOS7()){
+//    if(OSVersionIsAtLeastiOS7()){
         UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
 		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
         
         self = [super initWithCenterViewController:navigationController
                                  leftDrawerViewController:leftSideNavController];
         [self setShowsShadow:NO];
-    }
+//    }
 
     
     [self setRestorationIdentifier:@"MMDrawer"];

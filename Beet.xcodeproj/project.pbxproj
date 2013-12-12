@@ -336,7 +336,6 @@
 				4C3179AD18440EAD00F7D41B /* Controller */,
 				4CD0D6EC1851234900350E0C /* MainViewController.h */,
 				4CD0D6ED1851234900350E0C /* MainViewController.m */,
-				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,
 			);
 			name = Beet;
@@ -515,6 +514,7 @@
 		4CEBEE42184CE3950018ABE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C0723461858C27C00D6E63C /* TableView */,
 				4CEBEE43184CE3D00018ABE0 /* Exit.png */,
 				4CEBEE44184CE3D00018ABE0 /* ExitDown.png */,
