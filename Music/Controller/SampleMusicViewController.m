@@ -43,6 +43,9 @@
 @property (nonatomic, strong) UIViewController *centerViewController;
 @property (nonatomic, strong) UIViewController *leftViewController;
 
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+
+
 @end
 
 @implementation SampleMusicViewController
@@ -74,6 +77,15 @@
     [super viewDidLoad];
     
     [self setupLeftMenuButton];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _spinner.center = CGPointMake(160, 240);
+    _spinner.hidesWhenStopped = YES;
+    [self.view addSubview:_spinner];
+    [_spinner startAnimating];
+
     
     //View Setup
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
@@ -191,7 +203,7 @@
     }
     
     [self updateViewInfo:result];
-
+    [_spinner stopAnimating];
 }
 
 - (IBAction) playOrPause: (id) sender {
