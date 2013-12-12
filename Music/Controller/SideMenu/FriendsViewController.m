@@ -155,11 +155,56 @@
 	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+    UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"AddFriend" style:UIBarButtonItemStyleBordered target:self action:@selector(addFriendButtonPress)];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)addFriendButtonPress{
+    PFObject *friend = [PFObject objectWithClassName:@"Friend"];
+//    BOOL friendNotExisted = YES;
+    
+    NSString *userToSave = [[PFUser currentUser] username];
+    NSString *friendToSave = @"DemoFriend2";
+    [friend setObject:userToSave forKey:@"user"];
+    [friend setObject:friendToSave forKey:@"friend"];
+    
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Friend"];
+    [postQuery whereKey:@"user" equalTo:userToSave];
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        //Fetch Objects
+        for(PFObject *pf in objects){
+            NSString *existingUser = [pf objectForKey:@"user"];
+            NSString *existingFriend = [pf objectForKey:@"friend"];
+            
+            if ([existingUser isEqualToString:userToSave] && [existingFriend isEqualToString:friendToSave]) {
+                NSLog(@"Duplicated friend");
+                
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, the friend you add already exists" delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
+                
+                return;
+            }
+        }
+        
+        //No duplicate, save
+        [friend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Save Friend!");
+                [self refreshView:self.refreshControl];
+                [self.tableView reloadData];
+            }else{
+                NSLog(@"Erorr:%@", error);
+            }
+            
+        }];
+    }];
+
+    
+    
 }
 
 @end
