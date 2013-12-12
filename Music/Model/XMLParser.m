@@ -81,8 +81,9 @@
     
     if ([elementName isEqualToString:@"track"]) {
         //End of the element, store song
+        NSString *currentUsername = [[PFUser currentUser] username];
+        [self.tempSong setObject:currentUsername forKey:@"user"];
         [self.data addObject:self.tempSong];
-//        self.tempSong = nil;
     }else if([elementName isEqualToString:@"artist"]){
         [self.tempSong setObject:self.tempText forKey:@"artist"];
     }else if([elementName isEqualToString:@"name"]){

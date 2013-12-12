@@ -47,7 +47,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="CurrPlaying" id="tEi-oo-wb8">
                             <connections>
-                                <action selector="AddSong:" destination="QtU-0U-1mZ" id="zbt-I0-h4a"/>
+                                <action selector="updateSongInParse:" destination="QtU-0U-1mZ" id="TVI-nV-1M7"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

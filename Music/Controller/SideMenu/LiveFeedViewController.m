@@ -47,7 +47,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
 @property (nonatomic, strong) XMLParser *parser;
-@property (nonatomic, strong) NSMutableArray *data;
+@property (nonatomic, strong) NSMutableArray *XMLData;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
@@ -89,6 +89,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 }
 
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -96,29 +98,16 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
-    
-    
-    
+
     //Spinner
     _spinner = [[UIActivityIndicatorView alloc]
                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _spinner.center = CGPointMake(160, 240);
     _spinner.hidesWhenStopped = YES;
     [self.view addSubview:_spinner];
-    
-    //Setup XMLParser
-    self.data = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:kURLString];
-    self.parser = [[XMLParser alloc] initWithURL:url AndData:self.data];
-    self.parser.delegate = self;
-    [self.parser startParsing];
 }
 
 #pragma mark - Table view data source
-
-
-
-
 
 //#pragma mark Segue
 //-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -139,34 +128,83 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 //}
 
 #pragma mark Bar Button
-- (IBAction)AddSong:(id)sender {
+- (IBAction)updateSongInParse:(id)sender {
+    [_spinner startAnimating];
+
+    //iPod Music
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     
     PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
 
-    
     if (!currentPlayingSong) {
         //deal with nil, hardcode for demo
         [songRecord setObject:@"Lucky" forKey:@"title"];
         [songRecord setObject:@"The 20/20 Experience" forKey:@"album"];
         [songRecord setObject:@"JustinTimberlake" forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     }else{
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"author"];
+//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     }
     
-        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    //Save Scrobbler Music from XML Parser
+    [self setupXMLParserAndParse]; //Update XMLData
+    [self.XMLData addObject:songRecord];
+    
+    //Get rid of duplicated data then save
+    NSMutableArray *dataToSave = [self filterDuplicatedDataToSaveInParse:self.XMLData];
+    [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
-            NSLog(@"Save!");
+            NSLog(@"Save XML Data succeeded!");
+            //Fetch data and Update table view
+            [self refreshView:self.refreshControl];
+        }else{
+            NSLog(@"Error Saving XML Data: %@", error);
         }
     }];
     
-    [self refreshView:self.refreshControl];
-    [self.tableView reloadData];
+    
+}
 
+- (NSMutableArray*)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
+{
+    NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
+    
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+    
+    //Fetch Objects
+    NSArray *fetechObjects = [postQuery findObjects];
+    BOOL songExisted = NO;
+    for(PFObject *pfToSave in XMLData){
+        songExisted = NO;
+        
+        NSString *newTitle = [pfToSave objectForKey:@"title"];
+        NSString *newArtist = [pfToSave objectForKey:@"artist"];
+        NSString *newAlbum = [pfToSave objectForKey:@"album"];
+        
+        for(PFObject *pf in fetechObjects){
+            NSString *existingTitle = [pf objectForKey:@"title"];
+            NSString *existingArtist = [pf objectForKey:@"artist"];
+            NSString *existingAlbum = [pf objectForKey:@"album"];
+            
+            if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
+                //Duplicated Object
+                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
+                songExisted = YES;
+                break;
+            }
+        }
+        
+        if (songExisted) {
+            continue;
+        }
+        [dataToSave addObject:pfToSave];
+    }
+    
+    return dataToSave;
 }
 
 #pragma mark - RefreshControl Method
@@ -192,38 +230,23 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     
     // custom refresh logic would be placed here...
     [_spinner startAnimating];
+
     [self fetchData:refresh];
     
     
 }
-
-
-//- (void)loadView
-//{
-//    [super loadView];
-//    self.activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-//    [self.view addSubview:self.activityIndicator];
-//    self.activityIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
-//    [self.activityIndicator startAnimating];
-//}
 
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
 //    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updatedAt"];
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
             self.PFObjects = objects;
-            [self.tableView reloadData];
-            
-            //Add XMLobjects
-            for (PFObject *pf in self.PFObjects) {
-                [self.data addObject:pf];
-            }
-            self.PFObjects = [NSArray arrayWithArray:self.data];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -232,6 +255,10 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
             [refresh endRefreshing];
             
             [_spinner stopAnimating];
+            
+            [self.tableView reloadData];
+        }else{
+            NSLog(@"Error In Fetch Data: %@", error);
         }
     }];
 }
@@ -244,7 +271,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
         
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(AddSong:)];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(updateSongInParse:)];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
 }
 
@@ -252,7 +279,18 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
-#pragma mark - XMLParserDelegate method
+#pragma mark - XML method
+- (void)setupXMLParserAndParse
+{
+    //Setup XMLParser
+    self.XMLData = nil; //clear previous data
+    self.XMLData = [[NSMutableArray alloc] init];
+    NSURL *url = [NSURL URLWithString:kURLString];
+    self.parser = [[XMLParser alloc] initWithURL:url AndData:self.XMLData];
+    self.parser.delegate = self;
+    [self.parser startParsing];
+}
+
 - (void)finishParsing
 {
     NSLog(@"Parse Finish.");
