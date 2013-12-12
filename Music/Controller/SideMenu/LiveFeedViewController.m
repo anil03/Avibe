@@ -108,6 +108,13 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 }
 
 #pragma mark - Table view data source
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        //Deleting, dosomething
+        
+    }
+}
 
 //#pragma mark Segue
 //-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -128,9 +135,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 //}
 
 #pragma mark Bar Button
-- (IBAction)updateSongInParse:(id)sender {
-    [_spinner startAnimating];
-
+- (void)updateSongInParse {
     //iPod Music
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
@@ -150,23 +155,23 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     NSMutableArray *dataToSave = [self filterDuplicatedDataToSaveInParse:self.XMLData];
     
     //NO more songs need to be added
-    if ([dataToSave count] == 0) {
+    /*if ([dataToSave count] == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Congratulations!" message: @"All songs have been updated." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
-    }
+    }*/
     
     [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Save XML Data succeeded!");
             //Fetch data and Update table view
-            [self refreshView:self.refreshControl];
+            [self fetchData:self.refreshControl];
         }else{
             NSLog(@"Error Saving XML Data: %@", error);
         }
     }];
-    
-    
 }
+
+
 
 - (NSMutableArray*)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
 {
@@ -207,6 +212,33 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     return dataToSave;
 }
 
+-(void)fetchData:(UIRefreshControl*)refresh
+{
+    //Create query for all Post object by the current user
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    //    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updatedAt"];
+    // Run the query
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            //Save results and update the table
+            self.PFObjects = objects;
+            
+            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+            [formatter setDateFormat:@"MMM d, h:mm a"];
+            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
+            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+            [refresh endRefreshing];
+            
+            [_spinner stopAnimating];
+            
+            [self.tableView reloadData];
+        }else{
+            NSLog(@"Error In Fetch Data: %@", error);
+        }
+    }];
+}
+
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {
@@ -230,38 +262,11 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     
     // custom refresh logic would be placed here...
     [_spinner startAnimating];
-
-    [self fetchData:refresh];
-    
+    [self updateSongInParse];
     
 }
 
--(void)fetchData:(UIRefreshControl*)refresh
-{
-    //Create query for all Post object by the current user
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-//    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updatedAt"];
-    // Run the query
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            //Save results and update the table
-            self.PFObjects = objects;
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMM d, h:mm a"];
-            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
-            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
-            [refresh endRefreshing];
-            
-            [_spinner stopAnimating];
-            
-            [self.tableView reloadData];
-        }else{
-            NSLog(@"Error In Fetch Data: %@", error);
-        }
-    }];
-}
+
 
 
 
@@ -271,13 +276,37 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
         
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(updateSongInParse:)];
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(updateSongInParse:)];
+    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
+    
     [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
+
+-(void)editSong
+{
+    if(self.editing)
+    {
+        [super setEditing:NO animated:NO];
+        [self setEditing:NO animated:NO];
+        [self.tableView reloadData];
+        [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Edit"];
+        [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStylePlain];
+    }
+    else
+    {
+        [super setEditing:YES animated:YES];
+        [self setEditing:YES animated:YES];
+        [self.tableView reloadData];
+        [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Done"];
+        [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
+    }
+}
+
+
 
 #pragma mark - XML method
 - (void)setupXMLParserAndParse
