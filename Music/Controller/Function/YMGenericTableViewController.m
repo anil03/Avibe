@@ -153,8 +153,8 @@
     PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];
     NSDictionary *dictionary;
     
-    if ([song objectForKey:@"author"]) {
-        dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"author"], @"author", nil];
+    if ([song objectForKey:@"user"]) {
+        dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"user"], @"user", nil];
         
     }else{
         dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", nil];

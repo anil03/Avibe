@@ -90,7 +90,7 @@
     
     _titleLabel.text = [dictionary valueForKey:@"title"];
     _artistLabel.text = [dictionary valueForKey:@"artist"];
-    _userLabel.text = @"FriendA";//[dictionary valueForKey:@"author"];
+    _userLabel.text = [dictionary valueForKey:@"user"];
 
     _albumLabel.text = [dictionary valueForKey:@"album"];
 
