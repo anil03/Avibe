@@ -35,12 +35,14 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-    UIViewController *centerViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TableViewController"];
-//    UIViewController *centerViewController = [[LiveFeedViewController alloc] init];
-    UIViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:centerViewController];
-   
+//    UIViewController *centerViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TableViewController"];
+    LiveFeedViewController *centerViewController = [[LiveFeedViewController alloc] init];
     UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
-    [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
+//    [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
+    
+    SideMenuViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:centerViewController];
+    centerViewController.delegate = leftSideDrawerViewController;
+
     
     
     if(OSVersionIsAtLeastiOS7()){

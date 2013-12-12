@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_User,
 };
 
-@interface SideMenuViewController ()
+@interface SideMenuViewController () <LiveFeedViewControllerDelegate, UserViewControllerDelegate>
 
 @property (nonatomic, strong) LiveFeedViewController *liveFeedViewController;
 @property (nonatomic, strong) ShareViewController *shareViewController;
@@ -39,6 +39,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property (nonatomic, strong) MMNavigationController *navigationListenedViewController;
 @property (nonatomic, strong) MMNavigationController *navigationFriendsViewController;
 @property (nonatomic, strong) MMNavigationController *navigationUserViewController;
+
+@property (nonatomic, strong) NSString *lastFMAccountUsername;
 
 @end
 
@@ -67,6 +69,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
         self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
 
         userViewController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateViewControllerWithIdentifier:@"UserViewController"];
+        userViewController.delegate = self;
         self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
 
 
@@ -199,6 +202,17 @@ typedef NS_ENUM(NSInteger, BeetRow){
     else {
         [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     }
+}
+
+
+#pragma mark - UserViewController Delegate
+- (void)setLastFMAccount:(NSString*)account
+{
+    _lastFMAccountUsername = account;
+}
+- (NSString*)getLastFMAccount
+{
+    return _lastFMAccountUsername;
 }
 
 @end

@@ -10,6 +10,15 @@
 
 #import "SideMenuRowViewController.h"
 
+@protocol UserViewControllerDelegate <NSObject>
+
+- (void)setLastFMAccount:(NSString*)account;
+- (NSString*)getLastFMAccount;
+
+@end
+
 @interface UserViewController : SideMenuRowViewController
+
+@property (nonatomic, weak) id<UserViewControllerDelegate> delegate;
 
 @end

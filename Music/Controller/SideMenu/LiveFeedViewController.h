@@ -11,11 +11,14 @@
 #import "SideMenuRowViewController.h"
 #import "YMGenericTableViewController.h"
 
+@protocol LiveFeedViewControllerDelegate <NSObject>
+
+- (NSString*)getLastFMAccount;
+
+@end
+
 @interface LiveFeedViewController : YMGenericTableViewController
-//<UITableViewDataSource,UITableViewDelegate>
 
-//@property (nonatomic,strong) UITableView * tableView;
-
-//- (id)initWithSelf:(UIViewController*)controller;
+@property (nonatomic, weak) id<LiveFeedViewControllerDelegate> delegate;
 
 @end

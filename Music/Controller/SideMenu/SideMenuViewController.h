@@ -10,7 +10,9 @@
 
 #import "MMExampleSideDrawerViewController.h"
 
+
 @interface SideMenuViewController : MMExampleSideDrawerViewController
+
 
 -(id)initWithDefaultCenterView:(UIViewController*)controller;
 

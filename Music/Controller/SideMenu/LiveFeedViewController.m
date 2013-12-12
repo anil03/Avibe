@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionRightDrawerAnimation,
 };
 
-static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
+static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
 
 
 @interface LiveFeedViewController()<XMLParserDelegate>
@@ -78,6 +78,14 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
 {
     [super viewWillAppear:animated];
     [self setupBarMenuButton];
+    
+    //Setup Scrobbler URL
+    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
+        if ([self.delegate getLastFMAccount] == nil) {
+            return;
+        }
+        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
+    }
 }
 
 
@@ -88,6 +96,8 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    
     
     //Spinner
     _spinner = [[UIActivityIndicatorView alloc]
