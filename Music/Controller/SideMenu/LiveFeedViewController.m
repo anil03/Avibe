@@ -133,28 +133,28 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
     //iPod Music
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    
-    PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-
-    if (!currentPlayingSong) {
-        //deal with nil, hardcode for demo
-        [songRecord setObject:@"Lucky" forKey:@"title"];
-        [songRecord setObject:@"The 20/20 Experience" forKey:@"album"];
-        [songRecord setObject:@"JustinTimberlake" forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-    }else{
+    if (currentPlayingSong){
+        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
         [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+        
+        [self.XMLData addObject:songRecord];
     }
     
     //Save Scrobbler Music from XML Parser
     [self setupXMLParserAndParse]; //Update XMLData
-    [self.XMLData addObject:songRecord];
     
     //Get rid of duplicated data then save
     NSMutableArray *dataToSave = [self filterDuplicatedDataToSaveInParse:self.XMLData];
+    
+    //NO more songs need to be added
+    if ([dataToSave count] == 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Congratulations!" message: @"All songs have been updated." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+    
     [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
             NSLog(@"Save XML Data succeeded!");

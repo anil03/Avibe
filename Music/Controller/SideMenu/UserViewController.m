@@ -53,7 +53,7 @@
 
 - (void)updateInfo{
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {

@@ -105,7 +105,7 @@
 {
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
