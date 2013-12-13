@@ -48,6 +48,9 @@
 //        }
 //    }];
     
+    //Background
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
     return YES;
 }
 							
@@ -183,6 +186,19 @@
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [PFFacebookUtils handleOpenURL:url];
+}
+
+#pragma mark - Background Method
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    //Tutorial Chapter17 - Adding background fetching
+    //Run your app in simulator. In XCode Menu, Go to “Debug” => “Simulate Background Fetch”.
+    NSLog(@"########### Received Background Fetch ###########");
+    //Download  the Content .
+    
+    
+    //Tell the system that you ar done.
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
 @end
