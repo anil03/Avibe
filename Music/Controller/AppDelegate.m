@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 
+#import <MediaPlayer/MediaPlayer.h>
+
 
 @implementation AppDelegate
 
@@ -191,14 +193,41 @@
 #pragma mark - Background Method
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    
     //Tutorial Chapter17 - Adding background fetching
     //Run your app in simulator. In XCode Menu, Go to “Debug” => “Simulate Background Fetch”.
     NSLog(@"########### Received Background Fetch ###########");
     //Download  the Content .
     
     
-    //Tell the system that you ar done.
-    completionHandler(UIBackgroundFetchResultNewData);
+    
+    //iPod Music
+    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+    if (currentPlayingSong){
+        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+        
+        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Save In Background Mode successfully.");
+                
+                //Tell the system that you ar done.
+                completionHandler(UIBackgroundFetchResultNewData);
+            }else{
+                completionHandler(UIBackgroundFetchResultFailed);
+            }
+        }];
+    }else{
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+    
+    NSLog(@"########### End Background Fetch ###########");
+    
+    
+
 }
 
 - (void) application : (UIApplication *)application didReceiveRemoteNotification:
