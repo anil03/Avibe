@@ -18,7 +18,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-//    NSManagedObjectContext *context = [self managedObjectContext];
+    //    NSManagedObjectContext *context = [self managedObjectContext];
     
     [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
     [PFFacebookUtils initializeFacebook];
@@ -29,31 +29,31 @@
     PFACL *defaultACL = [PFACL ACL];
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-
-    //User login
-//    PFUser *user = [PFUser user];
-//    user.username = @"myhgew";
-//    user.password = @"password";
-//    user.email = @"myhgew@gmail.com";
     
-//    user.username = @"myhgew1";
-//    user.password = @"password";
-//    user.email = @"myhgew1@gmail.com";
-//    
-//    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (!error) {
-//            // Hooray! Let them use the app now.
-//        } else {
-//            [PFUser logInWithUsername:@"myhgew" password:@"password"];
-//        }
-//    }];
+    //User login
+    //    PFUser *user = [PFUser user];
+    //    user.username = @"myhgew";
+    //    user.password = @"password";
+    //    user.email = @"myhgew@gmail.com";
+    
+    //    user.username = @"myhgew1";
+    //    user.password = @"password";
+    //    user.email = @"myhgew1@gmail.com";
+    //
+    //    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+    //        if (!error) {
+    //            // Hooray! Let them use the app now.
+    //        } else {
+    //            [PFUser logInWithUsername:@"myhgew" password:@"password"];
+    //        }
+    //    }];
     
     //Background
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -62,7 +62,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -200,5 +200,14 @@
     //Tell the system that you ar done.
     completionHandler(UIBackgroundFetchResultNewData);
 }
+
+- (void) application : (UIApplication *)application didReceiveRemoteNotification:
+(NSDictionary *)userInfo performFetchWithCompletionHandler:(void(^)
+                                                            (UIBackgroundFetchResult))completionHandler
+{
+    //fetch the latest content
+   
+}
+
 
 @end

@@ -29,7 +29,7 @@
     //Set up Property
     self.delegate = self;
     self.facebookPermissions = @[@"friends_about_me"];
-    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsTwitter | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten;
+    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten;
     
     return self;
 }
@@ -37,6 +37,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
+    
 }
 
 - (void)viewDidLoad {
@@ -73,19 +74,26 @@
     [self.logInView.facebookButton setTitle:@"" forState:UIControlStateNormal];
     [self.logInView.facebookButton setTitle:@"" forState:UIControlStateHighlighted];
     
-    [self.logInView.twitterButton setImage:nil forState:UIControlStateNormal];
-    [self.logInView.twitterButton setImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.twitterButton setBackgroundImage:[UIImage imageNamed:@"Twitter.png"] forState:UIControlStateNormal];
-    [self.logInView.twitterButton setBackgroundImage:[UIImage imageNamed:@"TwitterDown.png"] forState:UIControlStateHighlighted];
-    [self.logInView.twitterButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.twitterButton setTitle:@"" forState:UIControlStateHighlighted];
+    //Log in
+    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogIn.png"] forState:UIControlStateNormal];
+    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogInDown.png"] forState:UIControlStateHighlighted];
+    [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
+    [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
     
-//    [self.logInView.logInButton setBackgroundColor:[UIColor redColor]];
-    
+    //Sign up
     [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"Signup.png"] forState:UIControlStateNormal];
     [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignupDown.png"] forState:UIControlStateHighlighted];
     [self.logInView.signUpButton setTitle:@"" forState:UIControlStateNormal];
     [self.logInView.signUpButton setTitle:@"" forState:UIControlStateHighlighted];
+    
+    //passwordForgottenButton
+    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgotten.png"] forState:UIControlStateNormal];
+    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgottenDown.png"] forState:UIControlStateHighlighted];
+    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateNormal];
+    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateHighlighted];
+    
+    [self.logInView.externalLogInLabel setHidden:YES];
+    [self.logInView.signUpLabel setHidden:YES];
     
     // Add login field background
     fieldsBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LoginFieldBG.png"]];
@@ -112,17 +120,28 @@
     [super viewDidLayoutSubviews];
     
     // Set frame for elements
-//    [self.logInView.dismissButton setFrame:CGRectMake(10.0f, 10.0f, 87.5f, 45.5f)];
-    [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
-    [self.logInView.facebookButton setFrame:CGRectMake(35.0f, 287.0f, 120.0f, 40.0f)];
-    [self.logInView.twitterButton setFrame:CGRectMake(35.0f+130.0f, 287.0f, 120.0f, 40.0f)];
-    [self.logInView.logInButton setFrame:CGRectMake(35.0f, 335.0f, 250.0f, 40.0f)];
-    [self.logInView.signUpButton setFrame:CGRectMake(35.0f, 385.0f, 250.0f, 40.0f)];
-//    [self.logInView.passwordForgottenButton setFrame:CGRectMake(35.0f, 435.0f, 250.0f, 40.0f)];
+    float column1 = 35.0f;
+    float column2 = 165.0f;
+    float rowField = 175.0f;
+    float row1 = 330.0f;
+    float row2 = 405.0f;
     
-    [self.logInView.usernameField setFrame:CGRectMake(35.0f, 145.0f, 250.0f, 50.0f)];
-    [self.logInView.passwordField setFrame:CGRectMake(35.0f, 195.0f, 250.0f, 50.0f)];
-    [self.fieldsBackground setFrame:CGRectMake(35.0f, 145.0f, 250.0f, 100.0f)];
+    [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
+    
+    [self.logInView.facebookButton setFrame:CGRectMake(column1, row2, 120.0f, 40.0f)];
+    [self.logInView.passwordForgottenButton setFrame:CGRectMake(column2, row2, 120.0f, 40.0f)];
+    
+    [self.logInView.logInButton setFrame:CGRectMake(column1, row1, 120.0f, 40.0f)];
+    //Clear LogInButton Title
+    [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
+    [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
+    
+    [self.logInView.signUpButton setFrame:CGRectMake(column2, row1, 120.0f, 40.0f)];
+
+    
+    [self.logInView.usernameField setFrame:CGRectMake(column1, rowField, 250.0f, 50.0f)];
+    [self.logInView.passwordField setFrame:CGRectMake(column1, rowField+50.0f, 250.0f, 50.0f)];
+    [self.fieldsBackground setFrame:CGRectMake(column1, rowField, 250.0f, 100.0f)];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {

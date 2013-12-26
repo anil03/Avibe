@@ -25,7 +25,7 @@
     
     // Change button apperance
     [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
-    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
+//    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
     
     [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUp.png"] forState:UIControlStateNormal];
     [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUpDown.png"] forState:UIControlStateHighlighted];
@@ -65,9 +65,10 @@
 
     CGRect fieldFrame = self.signUpView.usernameField.frame;
 
-    [self.signUpView.dismissButton setFrame:CGRectMake(10.0f, 10.0f, 87.5f, 45.5f)];
+    [self.signUpView.dismissButton setFrame:CGRectMake(0.0f, 15.0f, 87.5f, 45.5f)];
     [self.signUpView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
-    [self.signUpView.signUpButton setFrame:CGRectMake(35.0f, 385.0f, 250.0f, 40.0f)];
+    [self.signUpView.signUpButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2-60.0f, 385.0f, 120.0f, 40.0f)];
+    
     [self.fieldsBackground setFrame:CGRectMake(35.0f, fieldFrame.origin.y + yOffset, 250.0f, 174.0f)];
     
     [self.signUpView.usernameField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,

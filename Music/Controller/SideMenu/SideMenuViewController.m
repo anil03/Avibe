@@ -15,6 +15,8 @@
 #import "FriendsViewController.h"
 #import "UserViewController.h"
 
+#import "MyLogInViewController.h"
+
 #import "MMNavigationController.h"
 #import "MyLogInViewController.h"
 
@@ -195,8 +197,23 @@ typedef NS_ENUM(NSInteger, BeetRow){
             //log out
             [PFUser logOut];
             
-//            MyLogInViewController *logInViewController = [[MyLogInViewController alloc] init];
-            [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
+            MyLogInViewController *logInViewController = [[MyLogInViewController alloc] initWithCoder:nil];
+            
+            //Clear all controller
+            liveFeedViewController = nil;
+            shareViewController = nil;
+            listenedViewController = nil;
+            friendsViewController = nil;
+            userViewController = nil;
+            
+            self.navigationLiveFeedViewController = nil;
+            self.navigationShareViewController = nil;
+            self.navigationListenedViewController = nil;
+            self.navigationFriendsViewController = nil;
+            self.navigationUserViewController = nil;
+            
+            
+            [self.mm_drawerController.navigationController pushViewController:logInViewController animated:YES];
         }
     }
     else {
