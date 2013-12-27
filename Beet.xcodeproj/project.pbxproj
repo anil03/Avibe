@@ -79,6 +79,7 @@
 		4CE6C3BF186CE3070028F963 /* MySignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3BD186CE3070028F963 /* MySignUpViewController.m */; };
 		4CE6C3C2186CE3380028F963 /* SubclassConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C1186CE3380028F963 /* SubclassConfigViewController.m */; };
 		4CE6C3C5186CE3430028F963 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C4186CE3430028F963 /* UIViewController+MMDrawerController.m */; };
+		4CE6C3C8186DE6CF0028F963 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C7186DE6CF0028F963 /* AddFriendsViewController.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -209,6 +210,8 @@
 		4CE6C3C1186CE3380028F963 /* SubclassConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SubclassConfigViewController.m; path = Controller/SubclassConfigViewController.m; sourceTree = "<group>"; };
 		4CE6C3C3186CE3430028F963 /* UIViewController+MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+MMDrawerController.h"; path = "Controller/UIViewController+MMDrawerController.h"; sourceTree = "<group>"; };
 		4CE6C3C4186CE3430028F963 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+MMDrawerController.m"; path = "Controller/UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
+		4CE6C3C6186DE6CF0028F963 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddFriendsViewController.h; path = Controller/Function/AddFriendsViewController.h; sourceTree = "<group>"; };
+		4CE6C3C7186DE6CF0028F963 /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddFriendsViewController.m; path = Controller/Function/AddFriendsViewController.m; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -383,12 +386,12 @@
 		4C3179AD18440EAD00F7D41B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
+				4C4C900F1853AB4200585F4E /* SideMenu */,
+				4CDBF6F118550E5900D4AD66 /* Function */,
 				4C07231C18564F4000D6E63C /* SampleMusic */,
 				4CD0D6EF1851245400350E0C /* DrawerViewController */,
 				4C4C900E1853A8EE00585F4E /* Archive */,
-				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
-				4CDBF6F118550E5900D4AD66 /* Function */,
-				4C4C900F1853AB4200585F4E /* SideMenu */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -493,6 +496,8 @@
 				4C4C90171853B46200585F4E /* ListenedViewController.m */,
 				4C4C90191853B47300585F4E /* FriendsViewController.h */,
 				4C4C901A1853B47300585F4E /* FriendsViewController.m */,
+				4CE6C3C6186DE6CF0028F963 /* AddFriendsViewController.h */,
+				4CE6C3C7186DE6CF0028F963 /* AddFriendsViewController.m */,
 				4C4C901C1853B47E00585F4E /* UserViewController.h */,
 				4C4C901D1853B47E00585F4E /* UserViewController.m */,
 			);
@@ -716,6 +721,7 @@
 				4CE6C3C2186CE3380028F963 /* SubclassConfigViewController.m in Sources */,
 				4CE6C3AE186CE2BF0028F963 /* MMDrawerVisualState.m in Sources */,
 				4CE6C3B9186CE2BF0028F963 /* MMTableViewCell.m in Sources */,
+				4CE6C3C8186DE6CF0028F963 /* AddFriendsViewController.m in Sources */,
 				4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */,
 				4CE6C3B7186CE2BF0028F963 /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4CE6C3B8186CE2BF0028F963 /* MMSideDrawerTableViewCell.m in Sources */,
