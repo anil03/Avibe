@@ -105,6 +105,7 @@
 {
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    postQuery.limit = 15;
     [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
     [postQuery orderByDescending:@"updatedAt"];
     
