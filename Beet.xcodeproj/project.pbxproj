@@ -81,6 +81,9 @@
 		4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CA186E62B70028F963 /* User.storyboard */; };
 		4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CD186E639A0028F963 /* Main.storyboard */; };
 		4CE6C3D1186E6A020028F963 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */; };
+		4CE6C3E8186E844B0028F963 /* welcome0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3E5186E844B0028F963 /* welcome0.png */; };
+		4CE6C3E9186E844B0028F963 /* welcome1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3E6186E844B0028F963 /* welcome1.png */; };
+		4CE6C3EA186E844B0028F963 /* welcome2.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3E7186E844B0028F963 /* welcome2.png */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -215,6 +218,9 @@
 		4CE6C3CD186E639A0028F963 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = View/Main.storyboard; sourceTree = "<group>"; };
 		4CE6C3CF186E6A020028F963 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Controller/WelcomeViewController.h; sourceTree = "<group>"; };
 		4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Controller/WelcomeViewController.m; sourceTree = "<group>"; };
+		4CE6C3E5186E844B0028F963 /* welcome0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome0.png; path = Resource/Welcome/welcome0.png; sourceTree = "<group>"; };
+		4CE6C3E6186E844B0028F963 /* welcome1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome1.png; path = Resource/Welcome/welcome1.png; sourceTree = "<group>"; };
+		4CE6C3E7186E844B0028F963 /* welcome2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome2.png; path = Resource/Welcome/welcome2.png; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -529,6 +535,16 @@
 			name = SignInAndSignUp;
 			sourceTree = "<group>";
 		};
+		4CE6C3D2186E7BE80028F963 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				4CE6C3E5186E844B0028F963 /* welcome0.png */,
+				4CE6C3E6186E844B0028F963 /* welcome1.png */,
+				4CE6C3E7186E844B0028F963 /* welcome2.png */,
+			);
+			name = Welcome;
+			sourceTree = "<group>";
+		};
 		4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */ = {
 			isa = PBXGroup;
 			children = (
@@ -543,6 +559,7 @@
 		4CEBEE42184CE3950018ABE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4CE6C3D2186E7BE80028F963 /* Welcome */,
 				4CE6C368186CBBEA0028F963 /* SignInAndSignUp */,
 				4C31799018440EA700F7D41B /* Images.xcassets */,
 				4C0723461858C27C00D6E63C /* TableView */,
@@ -644,14 +661,17 @@
 				4CE6C387186CE22E0028F963 /* LoginFieldBG.png in Resources */,
 				4CE6C3AD186CE2BF0028F963 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4CE6C376186CBEFD0028F963 /* LogInDown.png in Resources */,
+				4CE6C3E9186E844B0028F963 /* welcome1.png in Resources */,
 				4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */,
 				4C0723481858C28800D6E63C /* background.png in Resources */,
+				4CE6C3E8186E844B0028F963 /* welcome0.png in Resources */,
 				4CE6C380186CDAF80028F963 /* Logo.png in Resources */,
 				4CE6C371186CBE890028F963 /* SignUp.png in Resources */,
 				4CE6C3CB186E62B70028F963 /* SampleMusic.storyboard in Resources */,
 				4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */,
 				4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */,
 				4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */,
+				4CE6C3EA186E844B0028F963 /* welcome2.png in Resources */,
 				4CE6C37A186CD5310028F963 /* FacebookDown.png in Resources */,
 				4CE6C37D186CD8880028F963 /* PasswordForgotten.png in Resources */,
 			);
