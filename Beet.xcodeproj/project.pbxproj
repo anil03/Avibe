@@ -102,6 +102,7 @@
 		4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */; };
 		4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */; };
 		4CEE7D27186F624F0012624D /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE7D26186F624F0012624D /* Setting.m */; };
+		4CEE7D29186F70D90012624D /* music-record-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D28186F70D90012624D /* music-record-24.png */; };
 		EF77F77D7AA64C47900A60DB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F724E3B98E8440059B00A6C0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -253,6 +254,7 @@
 		4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		4CEE7D25186F624F0012624D /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Setting.h; path = Model/Setting.h; sourceTree = "<group>"; };
 		4CEE7D26186F624F0012624D /* Setting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Setting.m; path = Model/Setting.m; sourceTree = "<group>"; };
+		4CEE7D28186F70D90012624D /* music-record-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "music-record-24.png"; path = "Resource/SideMenu/music-record-24.png"; sourceTree = "<group>"; };
 		5B085EF440F545DD93B4A79C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F724E3B98E8440059B00A6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -584,6 +586,7 @@
 				4CE6C3EE186F52410028F963 /* settings-32.png */,
 				4CE6C3FD186F5F090028F963 /* conference-24.png */,
 				4CE6C3FE186F5F090028F963 /* dj-24.png */,
+				4CEE7D28186F70D90012624D /* music-record-24.png */,
 				4CE6C3FF186F5F090028F963 /* newspaper-10-24.png */,
 				4CE6C400186F5F090028F963 /* sharethis-3-24.png */,
 				4CE6C407186F5FAC0028F963 /* undo-2-16.png */,
@@ -699,6 +702,7 @@
 			files = (
 				4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */,
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
+				4CEE7D29186F70D90012624D /* music-record-24.png in Resources */,
 				4CE6C379186CD5310028F963 /* Facebook.png in Resources */,
 				4CE6C408186F5FAC0028F963 /* undo-2-16.png in Resources */,
 				4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */,

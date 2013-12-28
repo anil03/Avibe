@@ -130,7 +130,7 @@
     // Return the number of rows in the section.
     switch (section) {
         case MMDrawerSectionBeet:
-            return 3;
+            return 4;
         case MMDrawerSectionUser:
             return 2;
 //        case MMDrawerSectionViewSelection:
