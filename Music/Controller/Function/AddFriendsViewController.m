@@ -19,9 +19,13 @@
 
 @interface AddFriendsViewController ()
 
+@property (nonatomic, strong) NSMutableArray *contactList;
+
 @end
 
 @implementation AddFriendsViewController
+
+@synthesize contactList = _contactList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,7 +84,7 @@
 // Get the contacts.
 - (void)getContactsWithAddressBook:(ABAddressBookRef )addressBook {
     
-    NSMutableArray *contactList = [[NSMutableArray alloc] init];
+    _contactList = [[NSMutableArray alloc] init];
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
     CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
     
@@ -109,21 +113,21 @@
         
         for(CFIndex i = 0; i < ABMultiValueGetCount(phones); i++) {
             mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
-            if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
-            {
-                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Phone"];
-            }
-            else if ([mobileLabel isEqualToString:(NSString*)kABPersonPhoneIPhoneLabel])
-            {
-                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Phone"];
-                break ;
-            }
+            NSLog(@"Phone %@ at %d", (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i), i);
+//            if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
+//            {
+//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Phone"];
+//            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneIPhoneLabel]){
+//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"iPhone"];
+//            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMainLabel]){
+//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Main"];
+//            }
             
         }
-        [contactList addObject:dOfPerson];
+        [_contactList addObject:dOfPerson];
         
     }
-    NSLog(@"Contacts = %@",contactList);
+    NSLog(@"Contacts = %@",_contactList);
 }
 
 /*
@@ -155,6 +159,27 @@
  kABPersonAddressCountryKey;
  kABPersonAddressCountryCodeKey;
  */
+
+#pragma mark - TableView method
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_contactList count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    
+    cell.textLabel.text = @"2";
+    cell.detailTextLabel.text = @"3";
+    
+    return cell;
+}
 
 
 #pragma mark - BarMenuButton

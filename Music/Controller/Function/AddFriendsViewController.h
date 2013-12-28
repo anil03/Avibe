@@ -13,7 +13,7 @@
 
 @end
 
-@interface AddFriendsViewController : UIViewController
+@interface AddFriendsViewController : UITableViewController
 
 @property (nonatomic, weak) id<AddFriendsViewControllerDelegate> delegate;
 
