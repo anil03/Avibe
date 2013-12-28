@@ -351,8 +351,6 @@
 				4C3179AE18440EED00F7D41B /* Model */,
 				4C3179AF18440EF100F7D41B /* View */,
 				4C3179AD18440EAD00F7D41B /* Controller */,
-				4CD0D6EC1851234900350E0C /* MainViewController.h */,
-				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4C31797F18440EA700F7D41B /* Supporting Files */,
 			);
 			name = Beet;
@@ -397,6 +395,8 @@
 			children = (
 				4CE6C3CF186E6A020028F963 /* WelcomeViewController.h */,
 				4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */,
+				4CD0D6EC1851234900350E0C /* MainViewController.h */,
+				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
 				4C4C900F1853AB4200585F4E /* SideMenu */,
 				4CDBF6F118550E5900D4AD66 /* Function */,

@@ -9,9 +9,7 @@
 #import "MyLogInViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-#import "MySignUpViewController.h"
 
-#import "MainViewController.h"
 #import "SubclassConfigViewController.h"
 
 @interface MyLogInViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
@@ -29,7 +27,7 @@
     //Set up Property
     self.delegate = self;
     self.facebookPermissions = @[@"friends_about_me"];
-    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsSignUpButton | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten;
+    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten | PFLogInFieldsDismissButton;
     
     return self;
 }
@@ -43,28 +41,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([PFUser currentUser]) {
-        [self finishVerification];
-        return;
-    }
-    
-    // Customize the Sign Up View Controller
-    //Should swtich to main view
-    MySignUpViewController *signUpViewController = [[MySignUpViewController alloc] init];
-    signUpViewController.delegate = self;
-    signUpViewController.fields = PFSignUpFieldsDefault | PFSignUpFieldsAdditional;
-    self.signUpController = signUpViewController;
-    
-    
-    
+
     //Set up View
     
     [self.logInView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBG.png"]]];
     [self.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo.png"]]];
     
     // Set buttons appearance
-    [self.logInView.dismissButton setHidden:YES];
-//    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
+//    [self.logInView.dismissButton setHidden:YES];
+    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
 //    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
     
     [self.logInView.facebookButton setImage:nil forState:UIControlStateNormal];
@@ -146,93 +131,6 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-#pragma mark - Handle SignIn & SignUp evenet
-- (void)finishVerification
-{
-//    [self performSegueWithIdentifier:@"MainViewSegue" sender:nil];
-    [self.navigationController setNavigationBarHidden:NO];
-    
-    MainViewController *mainViewController = [[MainViewController alloc] initWithCoder:nil];
-    [self.navigationController pushViewController:mainViewController animated:YES];
-}
-
-- (void)failToLogIn
-{
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fail", nil) message:NSLocalizedString(@"Sorry, not able to Log In!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-
-}
-
-
-#pragma mark - PFLogInViewControllerDelegate
-
-// Sent to the delegate to determine whether the log in request should be submitted to the server.
-- (BOOL)logInViewController:(PFLogInViewController *)logInController shouldBeginLogInWithUsername:(NSString *)username password:(NSString *)password {
-    if (username && password && username.length && password.length) {
-        return YES;
-    }
-    
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-    return NO;
-}
-
-
-
-// Sent to the delegate when a PFUser is logged in.
-- (void)logInViewController:(PFLogInViewController *)logInController didLogInUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    [self finishVerification];
-}
-
-// Sent to the delegate when the log in attempt fails.
-- (void)logInViewController:(PFLogInViewController *)logInController didFailToLogInWithError:(NSError *)error {
-    NSLog(@"Failed to log in...");
-    [self failToLogIn];
-}
-
-// Sent to the delegate when the log in screen is dismissed.
-- (void)logInViewControllerDidCancelLogIn:(PFLogInViewController *)logInController {
-    NSLog(@"User dismissed the logInViewController");
-}
-
-#pragma mark - PFSignUpViewControllerDelegate
-
-// Sent to the delegate to determine whether the sign up request should be submitted to the server.
-- (BOOL)signUpViewController:(PFSignUpViewController *)signUpController shouldBeginSignUp:(NSDictionary *)info {
-    BOOL informationComplete = YES;
-    for (id key in info) {
-        NSString *field = [info objectForKey:key];
-        if (!field || field.length == 0) {
-            informationComplete = NO;
-            break;
-        }
-    }
-    
-    if (!informationComplete) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Missing Information", nil) message:NSLocalizedString(@"Make sure you fill out all of the information!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
-    }
-    
-    return informationComplete;
-}
-
-// Sent to the delegate when a PFUser is signed up.
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
-    [self dismissViewControllerAnimated:YES completion:NULL];
-    
-    [self finishVerification];
-}
-
-// Sent to the delegate when the sign up attempt fails.
-- (void)signUpViewController:(PFSignUpViewController *)signUpController didFailToSignUpWithError:(NSError *)error {
-    NSLog(@"Failed to sign up...");
-    [self failToLogIn];
-}
-
-// Sent to the delegate when the sign up screen is dismissed.
-- (void)signUpViewControllerDidCancelSignUp:(PFSignUpViewController *)signUpController {
-    NSLog(@"User dismissed the signUpViewController");
 }
 
 
