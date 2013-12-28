@@ -34,9 +34,9 @@
         // Initialization code
 
         if(OSVersionIsAtLeastiOS7()){
-            [self setBackgroundColor:[UIColor colorWithRed:110./255.0
-                                                     green:113.0/255.0
-                                                      blue:115.0/255.0
+            [self setBackgroundColor:[UIColor colorWithRed:30./255.0
+                                                     green:49.0/255.0
+                                                      blue:107.0/255.0
                                                      alpha:1.0]];
         }
         else {

@@ -48,9 +48,9 @@
     
     UIColor * tableViewBackgroundColor;
     if(OSVersionIsAtLeastiOS7()){
-        tableViewBackgroundColor = [UIColor colorWithRed:110.0/255.0
-                                                   green:113.0/255.0
-                                                    blue:115.0/255.0
+        tableViewBackgroundColor = [UIColor colorWithRed:3.0/255.0
+                                                   green:49.0/255.0
+                                                    blue:107.0/255.0
                                                    alpha:1.0];
     }
     else {
@@ -63,14 +63,15 @@
     
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
-    [self.view setBackgroundColor:[UIColor colorWithRed:66.0/255.0
-                                                  green:69.0/255.0
-                                                   blue:71.0/255.0
+    
+    [self.view setBackgroundColor:[UIColor colorWithRed:63.0/255.0
+                                                  green:146.0/255.0
+                                                   blue:210.0/255.0
                                                   alpha:1.0]];
     
-    UIColor * barColor = [UIColor colorWithRed:161.0/255.0
-                                         green:164.0/255.0
-                                          blue:166.0/255.0
+    UIColor * barColor = [UIColor colorWithRed:63.0/255.0
+                                         green:146.0/255.0
+                                          blue:210.0/255.0
                                          alpha:1.0];
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBarTintColor:)]){
         [self.navigationController.navigationBar setBarTintColor:barColor];
@@ -129,9 +130,9 @@
     // Return the number of rows in the section.
     switch (section) {
         case MMDrawerSectionBeet:
-            return 5;
-        case MMDrawerSectionLogout:
-            return 1;
+            return 3;
+        case MMDrawerSectionUser:
+            return 2;
 //        case MMDrawerSectionViewSelection:
 //            return 2;
 //        case MMDrawerSectionDrawerWidth:
@@ -303,7 +304,7 @@
             //Implement in subclass
             break;
         }
-        case MMDrawerSectionLogout:{
+        case MMDrawerSectionUser:{
             //Implement in subclass
             break;
         }

@@ -24,9 +24,9 @@
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
     BeetRow_Share,
-    BeetRow_Listened,
+//    BeetRow_Listened,
+//    BeetRow_User,
     BeetRow_Friends,
-    BeetRow_User,
 };
 
 @interface SideMenuViewController () <LiveFeedViewControllerDelegate, UserViewControllerDelegate>
@@ -111,14 +111,20 @@ typedef NS_ENUM(NSInteger, BeetRow){
         return @"Left Drawer Width";
     else if(section == MMDrawerSectionBeet)
         return @"Beet";
-    else if(section == MMDrawerSectionLogout)
+    else if(section == MMDrawerSectionUser)
         return [[[PFUser currentUser] username] uppercaseString];
     else
         return [super tableView:tableView titleForHeaderInSection:section];
 }
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    cell.backgroundColor = ([indexPath row]%2)?[UIColor lightGrayColor]:[UIColor whiteColor];
+}
+
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell * cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+
     if(indexPath.section == MMDrawerSectionDrawerWidth){
         
         CGFloat width = [self.drawerWidths[indexPath.row] intValue];
@@ -138,22 +144,26 @@ typedef NS_ENUM(NSInteger, BeetRow){
             case BeetRow_Share:
                 [cell.textLabel setText:@"Share"];
                 break;
-            case BeetRow_Listened:
-                [cell.textLabel setText:@"Listened"];
-                break;
+//            case BeetRow_Listened:
+//                [cell.textLabel setText:@"Listened"];
+//                break;
             case BeetRow_Friends:
                 [cell.textLabel setText:@"Friends"];
-                break;
-            case BeetRow_User:
-                [cell.textLabel setText:@"User"];
                 break;
             default:
                 break;
         }
         [cell setAccessoryType:UITableViewCellAccessoryNone];
-    }else if(indexPath.section == MMDrawerSectionLogout){
-        if (indexPath.row == 0) {
-            [cell.textLabel setText:@"Sign out"];
+    }else if(indexPath.section == MMDrawerSectionUser){
+        switch (indexPath.row) {
+            case 0:
+                [cell.textLabel setText:@"Profile"];
+                break;
+            case 1:
+                [cell.textLabel setText:@"Sign out"];
+                break;
+            default:
+                break;
         }
     }
     return cell;
@@ -180,41 +190,47 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
                 break;
             }
-            case BeetRow_Listened:
-                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
-                break;
+//            case BeetRow_Listened:
+//                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
+//                break;
             case BeetRow_Friends:
                 [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
-                break;
-            case BeetRow_User:
-                [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
                 break;
             default:
                 break;
         }
     }
-    else if(indexPath.section == MMDrawerSectionLogout){
-        if (indexPath.row == 0) {
-            //log out
-            [PFUser logOut];
-            
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            WelcomeViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelComeViewController"];
-            
-            //Clear all controller
-            liveFeedViewController = nil;
-            shareViewController = nil;
-            listenedViewController = nil;
-            friendsViewController = nil;
-            userViewController = nil;
-            
-            self.navigationLiveFeedViewController = nil;
-            self.navigationShareViewController = nil;
-            self.navigationListenedViewController = nil;
-            self.navigationFriendsViewController = nil;
-            self.navigationUserViewController = nil;
-            
-            [self.mm_drawerController.navigationController pushViewController:welcomeViewController animated:YES];
+    else if(indexPath.section == MMDrawerSectionUser){
+        switch (indexPath.row) {
+            case 0:
+                [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
+                break;
+            case 1:
+            {
+                //log out
+                [PFUser logOut];
+                
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                WelcomeViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+                
+                //Clear all controller
+                liveFeedViewController = nil;
+                shareViewController = nil;
+                listenedViewController = nil;
+                friendsViewController = nil;
+                userViewController = nil;
+                
+                self.navigationLiveFeedViewController = nil;
+                self.navigationShareViewController = nil;
+                self.navigationListenedViewController = nil;
+                self.navigationFriendsViewController = nil;
+                self.navigationUserViewController = nil;
+                
+                [self.mm_drawerController.navigationController pushViewController:welcomeViewController animated:YES];
+                break;
+            }
+            default:
+                break;
         }
     }
     else {
