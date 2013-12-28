@@ -40,12 +40,27 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Share";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
 }
 
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    
+    
+    
+    
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
 }

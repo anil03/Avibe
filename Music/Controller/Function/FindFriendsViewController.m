@@ -199,6 +199,17 @@
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Find Friends";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
 //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;

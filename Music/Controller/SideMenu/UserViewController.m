@@ -11,6 +11,8 @@
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
 
+#import "Setting.h"
+
 @interface UserViewController () <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *username;
@@ -39,6 +41,8 @@
 {
     [super viewDidLoad];
     
+    self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
+    
     _lastFMAccountInput.delegate = self;
 
     self.username.text = [[PFUser currentUser] username];
@@ -64,6 +68,18 @@
 
 #pragma mark - Button Handlers
 -(void)setupMenuButton{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Profile";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
+    
 	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     

@@ -12,6 +12,9 @@
 
 @property (nonatomic, strong) NSString *lastFMAccount;
 
+- (UIColor*)sharedBackgroundColor;
+
 + (Setting *)sharedSetting;
+
 
 @end

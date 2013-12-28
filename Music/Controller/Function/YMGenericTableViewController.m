@@ -15,6 +15,8 @@
 #import "MMNavigationController.h"
 #import "MMDrawerBarButtonItem.h"
 
+#import "Setting.h"
+
 @interface YMGenericTableViewController ()
 
 @property (assign, nonatomic) CATransform3D initialTransformation;
@@ -43,7 +45,8 @@
     [super viewDidLoad];
 
     //View Setup
-    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
+//    self.tableView.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
+    self.tableView.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     _shownIndexes = [NSMutableSet set];

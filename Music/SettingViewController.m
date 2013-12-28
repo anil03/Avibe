@@ -26,12 +26,26 @@
 
     [self setupBarMenuButton];
     
+    self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
+    
     _lastFMAccountTextField.delegate = self;
     _lastFMAccountTextField.text = [[Setting sharedSetting] lastFMAccount];
 }
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Settings";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
+    
     UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;
     

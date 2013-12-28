@@ -300,6 +300,17 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 #pragma mark - Button Handlers
 -(void)setupBarMenuButton{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Live Feed";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
         
