@@ -11,7 +11,11 @@
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
 
+#import "MMNavigationController.h"
+
 #import "SampleMusicViewController.h"
+
+#import "AddFriendsViewController.h"
 
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -164,6 +168,8 @@
 }
 
 -(void)addFriendButtonPress{
+    //Add friend
+    /*
     PFObject *friend = [PFObject objectWithClassName:@"Friend"];
 //    BOOL friendNotExisted = YES;
     
@@ -202,7 +208,15 @@
             
         }];
     }];
-
+*/
+    
+    
+    //Pop from bottom
+    AddFriendsViewController *addFriendsViewController = [[AddFriendsViewController alloc] init];
+//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:addFriendsViewController];
+//    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withFullCloseAnimation:YES completion:nil];
+    [self.mm_drawerController.navigationController pushViewController:addFriendsViewController animated:YES];
+//    [self presentViewController:navigationAddFriendsViewController animated:YES completion:nil];
     
     //Address Book
     ABAddressBookRef addressBook = ABAddressBookCreate();

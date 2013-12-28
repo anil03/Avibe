@@ -8,6 +8,10 @@
 
 #import "AddFriendsViewController.h"
 
+#import "MMDrawerBarButtonItem.h"
+#import "UIViewController+MMDrawerController.h"
+
+
 @interface AddFriendsViewController ()
 
 @end
@@ -23,16 +27,35 @@
     return self;
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{    
+
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+
+//    [self setupBarMenuButton];
+
 }
 
-- (void)didReceiveMemoryWarning
+-(void)setupBarMenuButton{
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    [self.mm_drawerController.navigationController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];
+    self.mm_drawerController.navigationController.navigationItem.rightBarButtonItem = rightDrawerButton;
+//    [self.mm_drawerController.navigationController.navigationItem setRightBarButtonItem:rightDrawerButton];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+- (void)popCurrentView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
 }
 
 @end
