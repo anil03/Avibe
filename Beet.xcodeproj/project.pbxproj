@@ -101,6 +101,7 @@
 		4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */; };
 		4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */; };
 		4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */; };
+		4CEE7D27186F624F0012624D /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE7D26186F624F0012624D /* Setting.m */; };
 		EF77F77D7AA64C47900A60DB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F724E3B98E8440059B00A6C0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -250,6 +251,8 @@
 		4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		4CEE7D25186F624F0012624D /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Setting.h; path = Model/Setting.h; sourceTree = "<group>"; };
+		4CEE7D26186F624F0012624D /* Setting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Setting.m; path = Model/Setting.m; sourceTree = "<group>"; };
 		5B085EF440F545DD93B4A79C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F724E3B98E8440059B00A6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -437,6 +440,8 @@
 				4C3179B018440F4800F7D41B /* Song.h */,
 				4C3179B118440F4800F7D41B /* Song.m */,
 				4C3179B218440F4800F7D41B /* Song.xcdatamodeld */,
+				4CEE7D25186F624F0012624D /* Setting.h */,
+				4CEE7D26186F624F0012624D /* Setting.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -796,6 +801,7 @@
 				4CE6C3B3186CE2BF0028F963 /* MMExampleSideDrawerViewController.m in Sources */,
 				4C0723391856AB9400D6E63C /* XMLParser.m in Sources */,
 				4C3179BA18440F5300F7D41B /* AppDelegate.m in Sources */,
+				4CEE7D27186F624F0012624D /* Setting.m in Sources */,
 				4CE6C3C2186CE3380028F963 /* SubclassConfigViewController.m in Sources */,
 				4CE6C3AE186CE2BF0028F963 /* MMDrawerVisualState.m in Sources */,
 				4CE6C3B9186CE2BF0028F963 /* MMTableViewCell.m in Sources */,

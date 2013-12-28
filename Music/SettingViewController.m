@@ -10,8 +10,11 @@
 
 #import "UIViewController+MMDrawerController.h"
 
+#import "Setting.h"
 
-@interface SettingViewController ()
+@interface SettingViewController () <UITextFieldDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
 
 @end
 
@@ -22,6 +25,9 @@
     [super viewDidLoad];
 
     [self setupBarMenuButton];
+    
+    _lastFMAccountTextField.delegate = self;
+    _lastFMAccountTextField.text = [[Setting sharedSetting] lastFMAccount];
 }
 
 #pragma mark - BarMenuButton
@@ -38,4 +44,40 @@
 {
     [self.mm_drawerController setCenterViewController:self.previousViewController];
 }
+
+#pragma mark - UITextField Delegate
+
+- (void)setLastFMAccount:(NSString*)account{
+    [[Setting sharedSetting] setLastFMAccount:account];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //hide the keyboard
+    if (textField == _lastFMAccountTextField) {
+        [self setLastFMAccount:textField.text];
+    }
+    
+    [textField resignFirstResponder];
+    
+    //return NO or YES, it doesn't matter
+    return YES;
+}
+
+#pragma mark - Touch
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    for (UIView * txt in self.view.subviews){
+        if ([txt isKindOfClass:[UITextField class]] && [txt isFirstResponder]) {
+            UITextField *textField = (UITextField*)txt;
+
+            if (textField == _lastFMAccountTextField) {
+                [self setLastFMAccount:textField.text];
+            }
+            
+            [txt resignFirstResponder];
+        }
+    }
+}
+
 @end
