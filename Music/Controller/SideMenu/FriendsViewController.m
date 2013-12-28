@@ -211,7 +211,7 @@
     
     
     //Pop from bottom
-    FindFriendsViewController *addFriendsViewController = [[FindFriendsViewController alloc] init];
+    FindFriendsViewController *addFriendsViewController = [[UIStoryboard storyboardWithName:@"FindFriendsStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"FindFriends"];
     addFriendsViewController.delegate = self;
     addFriendsViewController.friendsViewController = self.mm_drawerController.centerViewController;
     

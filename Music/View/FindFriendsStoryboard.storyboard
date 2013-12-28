@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Add Friends View Controller-->
+        <!--Find Friends View Controller-->
         <scene sceneID="hka-l7-BRv">
             <objects>
-                <tableViewController id="duJ-Xo-FIX" customClass="AddFriendsViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FindFriends" id="duJ-Xo-FIX" customClass="FindFriendsViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="QL7-5q-MVL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,8 +27,19 @@
                             <outlet property="delegate" destination="duJ-Xo-FIX" id="Eek-Lj-y4U"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="searchDisplayController" destination="NJi-Vc-Ust" id="ran-Hk-Gxd"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wnA-G0-5c5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="NJi-Vc-Ust">
+                    <connections>
+                        <outlet property="delegate" destination="duJ-Xo-FIX" id="0cd-RQ-wN8"/>
+                        <outlet property="searchContentsController" destination="duJ-Xo-FIX" id="IeF-DP-FWG"/>
+                        <outlet property="searchResultsDataSource" destination="duJ-Xo-FIX" id="bjh-V2-0kZ"/>
+                        <outlet property="searchResultsDelegate" destination="duJ-Xo-FIX" id="IHp-Od-KDg"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="208" y="-32"/>
         </scene>

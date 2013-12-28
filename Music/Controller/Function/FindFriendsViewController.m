@@ -94,29 +94,41 @@
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople,i);
         
         //For username and surname
-        ABMultiValueRef phones =(__bridge ABMultiValueRef)((__bridge NSString*)ABRecordCopyValue(ref, kABPersonPhoneProperty));
+        
         
         CFStringRef firstName, lastName;
         firstName = ABRecordCopyValue(ref, kABPersonFirstNameProperty);
         lastName  = ABRecordCopyValue(ref, kABPersonLastNameProperty);
-        [dOfPerson setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"name"];
         
-        //For Email ids
-        ABMutableMultiValueRef eMail  = ABRecordCopyValue(ref, kABPersonEmailProperty);
-        if(ABMultiValueGetCount(eMail) > 0) {
-            [dOfPerson setObject:(__bridge NSString *)ABMultiValueCopyValueAtIndex(eMail, 0) forKey:@"email"];
-            
+        if (firstName != nil && lastName != nil) {
+            [dOfPerson setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"name"];
+        }else if (firstName != nil){
+            [dOfPerson setObject:[NSString stringWithFormat:@"%@", firstName] forKey:@"name"];
+        }else if (lastName != nil){
+            [dOfPerson setObject:[NSString stringWithFormat:@"%@", lastName] forKey:@"name"];
         }
         
+        //For Email ids
+//        ABMutableMultiValueRef eMail  = ABRecordCopyValue(ref, kABPersonEmailProperty);
+//        if(ABMultiValueGetCount(eMail) > 0) {
+//            [dOfPerson setObject:(__bridge NSString *)ABMultiValueCopyValueAtIndex(eMail, 0) forKey:@"email"];
+//        }
+        
         //For Phone number
+        ABMultiValueRef phones =(__bridge ABMultiValueRef)((__bridge NSString*)ABRecordCopyValue(ref, kABPersonPhoneProperty));
         NSString* mobileLabel;
+        NSString* phoneNumber = @"";
         
         for(CFIndex i = 0; i < ABMultiValueGetCount(phones); i++) {
             mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
-            NSLog(@"Phone %@ at %d", (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i), i);
+            NSString *currentPhoneNumber = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i);
+//            NSLog(@"Phone %@ at %ld", (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i), i);
+            phoneNumber = [[phoneNumber stringByAppendingString:currentPhoneNumber] stringByAppendingString:@" "];
+            
 //            if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
 //            {
-//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Phone"];
+//            [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"phone"]; //Now just save one phone number
+
 //            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneIPhoneLabel]){
 //                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"iPhone"];
 //            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMainLabel]){
@@ -124,6 +136,8 @@
 //            }
             
         }
+        [dOfPerson setObject:phoneNumber forKey:@"phone"];
+        
         [_contactList addObject:dOfPerson];
         
     }
@@ -175,8 +189,9 @@
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
-    cell.textLabel.text = @"2";
-    cell.detailTextLabel.text = @"3";
+    NSMutableDictionary *dictionary = [_contactList objectAtIndex:indexPath.row];
+    cell.textLabel.text = [dictionary objectForKey:@"name"];
+    cell.detailTextLabel.text = [dictionary objectForKey:@"phone"];
     
     return cell;
 }
