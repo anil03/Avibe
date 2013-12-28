@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C07231A18564F1100D6E63C /* SampleMusic.storyboard */; };
 		4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */; };
 		4C0723391856AB9400D6E63C /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C0723381856AB9400D6E63C /* XMLParser.m */; };
 		4C07233C1856AE5F00D6E63C /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C07233B1856AE5F00D6E63C /* TestNSXMLParser.m */; };
@@ -34,7 +33,6 @@
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
 		4C3179D0184410C300F7D41B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3179CD184410C300F7D41B /* main.m */; };
 		4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179CE184410C300F7D41B /* Beet-Info.plist */; };
-		4C3179D61844112E00F7D41B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C3179D41844112E00F7D41B /* Main.storyboard */; };
 		4C4C90121853B43600585F4E /* LiveFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90111853B43600585F4E /* LiveFeedViewController.m */; };
 		4C4C90151853B44A00585F4E /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90141853B44A00585F4E /* ShareViewController.m */; };
 		4C4C90181853B46200585F4E /* ListenedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4C90171853B46200585F4E /* ListenedViewController.m */; };
@@ -45,7 +43,6 @@
 		4CA88E871854034D005D0FE0 /* YMGenericTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CDBF6F2185515DC00D4AD66 /* User.storyboard */; };
 		4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C369186CBBFC0028F963 /* MainBG.png */; };
 		4CE6C371186CBE890028F963 /* SignUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36D186CBE890028F963 /* SignUp.png */; };
 		4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36E186CBE890028F963 /* SignUpDown.png */; };
@@ -80,6 +77,10 @@
 		4CE6C3C2186CE3380028F963 /* SubclassConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C1186CE3380028F963 /* SubclassConfigViewController.m */; };
 		4CE6C3C5186CE3430028F963 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C4186CE3430028F963 /* UIViewController+MMDrawerController.m */; };
 		4CE6C3C8186DE6CF0028F963 /* AddFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C7186DE6CF0028F963 /* AddFriendsViewController.m */; };
+		4CE6C3CB186E62B70028F963 /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */; };
+		4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CA186E62B70028F963 /* User.storyboard */; };
+		4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CD186E639A0028F963 /* Main.storyboard */; };
+		4CE6C3D1186E6A020028F963 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -100,7 +101,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C07231A18564F1100D6E63C /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
 		4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewController.h; path = Controller/Function/YMGenericTableViewController.h; sourceTree = "<group>"; };
 		4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewController.m; path = Controller/Function/YMGenericTableViewController.m; sourceTree = "<group>"; };
 		4C0723371856AB9400D6E63C /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XMLParser.h; path = Model/XMLParser.h; sourceTree = "<group>"; };
@@ -135,7 +135,6 @@
 		4C3179CD184410C300F7D41B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4C3179CE184410C300F7D41B /* Beet-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Beet-Info.plist"; sourceTree = "<group>"; };
 		4C3179CF184410C300F7D41B /* Beet-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Beet-Prefix.pch"; sourceTree = "<group>"; };
-		4C3179D51844112E00F7D41B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C4C90101853B43600585F4E /* LiveFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LiveFeedViewController.h; path = Controller/SideMenu/LiveFeedViewController.h; sourceTree = "<group>"; };
 		4C4C90111853B43600585F4E /* LiveFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LiveFeedViewController.m; path = Controller/SideMenu/LiveFeedViewController.m; sourceTree = "<group>"; };
 		4C4C90131853B44A00585F4E /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ShareViewController.h; path = Controller/SideMenu/ShareViewController.h; sourceTree = "<group>"; };
@@ -155,7 +154,6 @@
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
-		4CDBF6F2185515DC00D4AD66 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		4CE6C369186CBBFC0028F963 /* MainBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MainBG.png; path = Resource/SignInAndSignUp/MainBG.png; sourceTree = "<group>"; };
 		4CE6C36D186CBE890028F963 /* SignUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUp.png; path = Resource/SignInAndSignUp/SignUp.png; sourceTree = "<group>"; };
 		4CE6C36E186CBE890028F963 /* SignUpDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUpDown.png; path = Resource/SignInAndSignUp/SignUpDown.png; sourceTree = "<group>"; };
@@ -212,6 +210,11 @@
 		4CE6C3C4186CE3430028F963 /* UIViewController+MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+MMDrawerController.m"; path = "Controller/UIViewController+MMDrawerController.m"; sourceTree = "<group>"; };
 		4CE6C3C6186DE6CF0028F963 /* AddFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AddFriendsViewController.h; path = Controller/Function/AddFriendsViewController.h; sourceTree = "<group>"; };
 		4CE6C3C7186DE6CF0028F963 /* AddFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AddFriendsViewController.m; path = Controller/Function/AddFriendsViewController.m; sourceTree = "<group>"; };
+		4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SampleMusic.storyboard; path = View/SampleMusic.storyboard; sourceTree = "<group>"; };
+		4CE6C3CA186E62B70028F963 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = User.storyboard; path = View/User.storyboard; sourceTree = "<group>"; };
+		4CE6C3CD186E639A0028F963 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = View/Main.storyboard; sourceTree = "<group>"; };
+		4CE6C3CF186E6A020028F963 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Controller/WelcomeViewController.h; sourceTree = "<group>"; };
+		4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Controller/WelcomeViewController.m; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -386,6 +389,8 @@
 		4C3179AD18440EAD00F7D41B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4CE6C3CF186E6A020028F963 /* WelcomeViewController.h */,
+				4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
 				4C4C900F1853AB4200585F4E /* SideMenu */,
 				4CDBF6F118550E5900D4AD66 /* Function */,
@@ -410,9 +415,9 @@
 		4C3179AF18440EF100F7D41B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4C3179D41844112E00F7D41B /* Main.storyboard */,
-				4C07231A18564F1100D6E63C /* SampleMusic.storyboard */,
-				4CDBF6F2185515DC00D4AD66 /* User.storyboard */,
+				4CE6C3CD186E639A0028F963 /* Main.storyboard */,
+				4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */,
+				4CE6C3CA186E62B70028F963 /* User.storyboard */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -630,24 +635,24 @@
 				4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */,
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
 				4CE6C379186CD5310028F963 /* Facebook.png in Resources */,
-				4C07231B18564F1100D6E63C /* SampleMusic.storyboard in Resources */,
 				4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */,
+				4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */,
 				4CE6C375186CBEFD0028F963 /* LogIn.png in Resources */,
 				4CE6C37E186CD8880028F963 /* PasswordForgottenDown.png in Resources */,
 				4CE6C383186CDFB00028F963 /* Exit.png in Resources */,
 				4CE6C388186CE22E0028F963 /* SignUpFieldBG.png in Resources */,
 				4CE6C387186CE22E0028F963 /* LoginFieldBG.png in Resources */,
-				4CDBF6F3185515DC00D4AD66 /* User.storyboard in Resources */,
 				4CE6C3AD186CE2BF0028F963 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4CE6C376186CBEFD0028F963 /* LogInDown.png in Resources */,
+				4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */,
 				4C0723481858C28800D6E63C /* background.png in Resources */,
 				4CE6C380186CDAF80028F963 /* Logo.png in Resources */,
 				4CE6C371186CBE890028F963 /* SignUp.png in Resources */,
+				4CE6C3CB186E62B70028F963 /* SampleMusic.storyboard in Resources */,
 				4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */,
 				4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */,
 				4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */,
 				4CE6C37A186CD5310028F963 /* FacebookDown.png in Resources */,
-				4C3179D61844112E00F7D41B /* Main.storyboard in Resources */,
 				4CE6C37D186CD8880028F963 /* PasswordForgotten.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,6 +728,7 @@
 				4CE6C3B9186CE2BF0028F963 /* MMTableViewCell.m in Sources */,
 				4CE6C3C8186DE6CF0028F963 /* AddFriendsViewController.m in Sources */,
 				4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */,
+				4CE6C3D1186E6A020028F963 /* WelcomeViewController.m in Sources */,
 				4CE6C3B7186CE2BF0028F963 /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4CE6C3B8186CE2BF0028F963 /* MMSideDrawerTableViewCell.m in Sources */,
 				4C4C90151853B44A00585F4E /* ShareViewController.m in Sources */,
@@ -775,14 +781,6 @@
 				4C3179A118440EA700F7D41B /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		4C3179D41844112E00F7D41B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C3179D51844112E00F7D41B /* en */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

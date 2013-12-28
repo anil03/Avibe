@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="2Lf-An-amz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B3116" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="xYj-2S-h1g">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
@@ -57,7 +57,69 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kae-QR-Yww" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="142" y="-35"/>
+            <point key="canvasLocation" x="522" y="-85"/>
+        </scene>
+        <!--Welcome View Controller-->
+        <scene sceneID="ALN-XX-T09">
+            <objects>
+                <viewController id="xYj-2S-h1g" customClass="WelcomeViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="89i-TN-cOy"/>
+                        <viewControllerLayoutGuide type="bottom" id="tMs-gz-9wl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bOs-0t-lnb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Qod-eL-cqQ">
+                                <rect key="frame" x="141" y="465" width="39" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="pageIndicatorTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.10196079313755035" green="0.68235296010971069" blue="0.40392160415649414" alpha="1" colorSpace="deviceRGB"/>
+                            </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6H-ND-Tq1">
+                                <rect key="frame" x="20" y="510" width="130" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.26274511220000002" green="0.57647061349999995" blue="0.81568634510000004" alpha="1" colorSpace="deviceRGB"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.26274511220000002" green="0.57647061349999995" blue="0.81568634510000004" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logInButtonPressed" destination="xYj-2S-h1g" eventType="touchUpInside" id="ud0-4k-yuB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ysh-dE-3eO">
+                                <rect key="frame" x="170" y="510" width="130" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Sign Up">
+                                    <color key="titleColor" red="0.26274511218070984" green="0.57647061347961426" blue="0.81568634510040283" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" red="0.36862745879999997" green="0.58039218189999997" blue="0.73725491759999995" alpha="1" colorSpace="deviceRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="SignUpButtonPressed" destination="xYj-2S-h1g" eventType="touchUpInside" id="fac-FQ-bwN"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kpe-WW-TOl">
+                                <rect key="frame" x="20" y="20" width="280" height="437"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.078431375324726105" green="0.38823533058166504" blue="0.63529413938522339" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageView" destination="Kpe-WW-TOl" id="KKn-HJ-Pv4"/>
+                        <outlet property="pageControl" destination="Qod-eL-cqQ" id="99s-6y-Qv2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AYj-XH-cSs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-735" y="-708"/>
         </scene>
         <!--My Log In View Controller-->
         <scene sceneID="wKy-91-Jx2">
@@ -76,7 +138,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pGc-cK-vsi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-316" y="-35"/>
+            <point key="canvasLocation" x="-294" y="-692"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fuS-r9-b3K">
@@ -95,7 +157,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rvo-ZK-TqU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-774" y="-35"/>
+            <point key="canvasLocation" x="-730" y="99"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="eOX-e3-0F3">
