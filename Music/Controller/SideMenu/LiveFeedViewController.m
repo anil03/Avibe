@@ -154,64 +154,88 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
     
     //Get rid of duplicated data then save
-    NSMutableArray *dataToSave = [self filterDuplicatedDataToSaveInParse:self.XMLData];
+    [self filterDuplicatedDataToSaveInParse:self.XMLData];
     
     //NO more songs need to be added
     /*if ([dataToSave count] == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Congratulations!" message: @"All songs have been updated." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }*/
-    
-    [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Save XML Data succeeded!");
-            //Fetch data and Update table view
-            [self fetchData:self.refreshControl];
-        }else{
-            NSLog(@"Error Saving XML Data: %@", error);
-        }
-    }];
 }
 
 
 
-- (NSMutableArray*)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
+- (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
 {
     NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
+    __block int numberOfDuplicated = 0;
+    
     
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
     [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    
-    //Fetch Objects
-    NSArray *fetechObjects = [postQuery findObjects];
-    BOOL songExisted = NO;
-    for(PFObject *pfToSave in XMLData){
-        songExisted = NO;
+    postQuery.limit = 1000;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *fetechObjects, NSError *error) {
+        BOOL songExisted = NO;
         
-        NSString *newTitle = [pfToSave objectForKey:@"title"];
-        NSString *newArtist = [pfToSave objectForKey:@"artist"];
-        NSString *newAlbum = [pfToSave objectForKey:@"album"];
-        
-        for(PFObject *pf in fetechObjects){
-            NSString *existingTitle = [pf objectForKey:@"title"];
-            NSString *existingArtist = [pf objectForKey:@"artist"];
-            NSString *existingAlbum = [pf objectForKey:@"album"];
+        for(PFObject *pfToSave in XMLData){
+            songExisted = NO;
             
-            if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
-                //Duplicated Object
-                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
-                songExisted = YES;
-                break;
+            NSString *newTitle = [pfToSave objectForKey:@"title"];
+            NSString *newArtist = [pfToSave objectForKey:@"artist"];
+            NSString *newAlbum = [pfToSave objectForKey:@"album"];
+            
+            /* Too slow in background
+             PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+             [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+             [postQuery whereKey:@"title" containsString:newTitle];
+             [postQuery whereKey:@"artist" containsString:newArtist];
+             [postQuery whereKey:@"album" containsString:newAlbum];
+             
+             if ([postQuery countObjects] > 0) {
+             songExisted = YES;
+             }
+             */
+            
+            
+            for(PFObject *pf in fetechObjects){
+                NSString *existingTitle = [pf objectForKey:@"title"];
+                NSString *existingArtist = [pf objectForKey:@"artist"];
+                NSString *existingAlbum = [pf objectForKey:@"album"];
+                
+                if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
+                    //Duplicated Object
+                    numberOfDuplicated++;
+//                    NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
+                    songExisted = YES;
+                    break;
+                }
             }
+            
+            
+            if (songExisted) {
+                continue;
+            }
+            [dataToSave addObject:pfToSave];
         }
         
-        if (songExisted) {
-            continue;
-        }
-        [dataToSave addObject:pfToSave];
-    }
+        
+        [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Save XML Data succeeded!");
+                NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
+
+                //Fetch data and Update table view
+                [self fetchData:self.refreshControl];
+            }else{
+                NSLog(@"Error Saving XML Data: %@", error);
+            }
+        }];
+
+    }];
     
-    return dataToSave;
+    
+    
+    
 }
 
 -(void)fetchData:(UIRefreshControl*)refresh
@@ -279,10 +303,9 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
         
-//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStyleBordered target:self action:@selector(updateSongInParse:)];
-    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
+//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
     
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
+//    [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
