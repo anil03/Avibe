@@ -67,16 +67,37 @@
         [selectionBackgroundView setBackgroundColor:selectionBackgroundColor];
         [self setSelectedBackgroundView:selectionBackgroundView];
         
+        //Textlabel
+        /*
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
         [self.textLabel setTextColor:[UIColor
                                       colorWithRed:230.0/255.0
                                       green:236.0/255.0
                                       blue:242.0/255.0
                                       alpha:1.0]];
+        self.textLabel.frame = CGRectMake(80, 0, 320, 20);
         if(OSVersionIsAtLeastiOS7()== NO){
             [self.textLabel setShadowColor:[[UIColor blackColor] colorWithAlphaComponent:.5]];
             [self.textLabel setShadowOffset:CGSizeMake(0, 1)];
         }
+        */
+        
+        //Custom label
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 320, 30)];
+        [_label setBackgroundColor:[UIColor clearColor]];
+        [_label setTextColor:[UIColor
+                                      colorWithRed:230.0/255.0
+                                      green:236.0/255.0
+                                      blue:242.0/255.0
+                                      alpha:1.0]];
+        [self addSubview:_label];
+        [self bringSubviewToFront:_label];
+        
+        //Button
+        _button = [[UIButton alloc] initWithFrame:CGRectMake(5, 8, 24, 24)];
+//        [button setBackgroundColor:[UIColor redColor]];
+        _button.enabled = NO;
+        [self addSubview:_button];
     }
     return self;
 }

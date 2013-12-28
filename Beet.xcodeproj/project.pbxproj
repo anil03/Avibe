@@ -87,8 +87,14 @@
 		4CE6C3EC186F2C230028F963 /* FindFriendsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3EB186F2C230028F963 /* FindFriendsStoryboard.storyboard */; };
 		4CE6C3EF186F52410028F963 /* settings-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3EE186F52410028F963 /* settings-32.png */; };
 		4CE6C3F1186F52A60028F963 /* settings-32-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3F0186F52A60028F963 /* settings-32-highlight.png */; };
-		4CE6C3F4186F546B0028F963 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3F3186F546B0028F963 /* SettingViewController.m */; };
 		4CE6C3F6186F55090028F963 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3F5186F55090028F963 /* SettingStoryboard.storyboard */; };
+		4CE6C3FC186F594F0028F963 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3FB186F594F0028F963 /* SettingViewController.m */; };
+		4CE6C402186F5F090028F963 /* conference-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3FD186F5F090028F963 /* conference-24.png */; };
+		4CE6C403186F5F090028F963 /* dj-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3FE186F5F090028F963 /* dj-24.png */; };
+		4CE6C404186F5F090028F963 /* newspaper-10-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3FF186F5F090028F963 /* newspaper-10-24.png */; };
+		4CE6C405186F5F090028F963 /* sharethis-3-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C400186F5F090028F963 /* sharethis-3-24.png */; };
+		4CE6C406186F5F090028F963 /* undo-2-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C401186F5F090028F963 /* undo-2-24.png */; };
+		4CE6C408186F5FAC0028F963 /* undo-2-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C407186F5FAC0028F963 /* undo-2-16.png */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -229,9 +235,15 @@
 		4CE6C3EB186F2C230028F963 /* FindFriendsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FindFriendsStoryboard.storyboard; path = View/FindFriendsStoryboard.storyboard; sourceTree = "<group>"; };
 		4CE6C3EE186F52410028F963 /* settings-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-32.png"; path = "Resource/SideMenu/settings-32.png"; sourceTree = "<group>"; };
 		4CE6C3F0186F52A60028F963 /* settings-32-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-32-highlight.png"; path = "Resource/SideMenu/settings-32-highlight.png"; sourceTree = "<group>"; };
-		4CE6C3F2186F546B0028F963 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SettingViewController.h; path = Controller/Function/SettingViewController.h; sourceTree = "<group>"; };
-		4CE6C3F3186F546B0028F963 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SettingViewController.m; path = Controller/Function/SettingViewController.m; sourceTree = "<group>"; };
 		4CE6C3F5186F55090028F963 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SettingStoryboard.storyboard; path = View/SettingStoryboard.storyboard; sourceTree = "<group>"; };
+		4CE6C3FA186F594F0028F963 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		4CE6C3FB186F594F0028F963 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		4CE6C3FD186F5F090028F963 /* conference-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "conference-24.png"; path = "Resource/SideMenu/conference-24.png"; sourceTree = "<group>"; };
+		4CE6C3FE186F5F090028F963 /* dj-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dj-24.png"; path = "Resource/SideMenu/dj-24.png"; sourceTree = "<group>"; };
+		4CE6C3FF186F5F090028F963 /* newspaper-10-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "newspaper-10-24.png"; path = "Resource/SideMenu/newspaper-10-24.png"; sourceTree = "<group>"; };
+		4CE6C400186F5F090028F963 /* sharethis-3-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sharethis-3-24.png"; path = "Resource/SideMenu/sharethis-3-24.png"; sourceTree = "<group>"; };
+		4CE6C401186F5F090028F963 /* undo-2-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "undo-2-24.png"; path = "Resource/SideMenu/undo-2-24.png"; sourceTree = "<group>"; };
+		4CE6C407186F5FAC0028F963 /* undo-2-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "undo-2-16.png"; path = "Resource/SideMenu/undo-2-16.png"; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -457,8 +469,12 @@
 		4C4C900F1853AB4200585F4E /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				4CE6C39C186CE2BF0028F963 /* MMExampleSideDrawerViewController.h */,
+				4CE6C39D186CE2BF0028F963 /* MMExampleSideDrawerViewController.m */,
 				4CA5DB881853C317006E7B0F /* SideMenuViewController.h */,
 				4CA5DB891853C317006E7B0F /* SideMenuViewController.m */,
+				4CE6C3A6186CE2BF0028F963 /* MMSideDrawerTableViewCell.h */,
+				4CE6C3A7186CE2BF0028F963 /* MMSideDrawerTableViewCell.m */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -485,8 +501,6 @@
 				4CE6C399186CE2BF0028F963 /* MMExampleLeftSideDrawerViewController.m */,
 				4CE6C39A186CE2BF0028F963 /* MMExampleRightSideDrawerViewController.h */,
 				4CE6C39B186CE2BF0028F963 /* MMExampleRightSideDrawerViewController.m */,
-				4CE6C39C186CE2BF0028F963 /* MMExampleSideDrawerViewController.h */,
-				4CE6C39D186CE2BF0028F963 /* MMExampleSideDrawerViewController.m */,
 				4CE6C39E186CE2BF0028F963 /* MMExampleViewController.h */,
 				4CE6C39F186CE2BF0028F963 /* MMExampleViewController.m */,
 				4CE6C3A0186CE2BF0028F963 /* MMLogoView.h */,
@@ -495,8 +509,6 @@
 				4CE6C3A3186CE2BF0028F963 /* MMNavigationController.m */,
 				4CE6C3A4186CE2BF0028F963 /* MMSideDrawerSectionHeaderView.h */,
 				4CE6C3A5186CE2BF0028F963 /* MMSideDrawerSectionHeaderView.m */,
-				4CE6C3A6186CE2BF0028F963 /* MMSideDrawerTableViewCell.h */,
-				4CE6C3A7186CE2BF0028F963 /* MMSideDrawerTableViewCell.m */,
 				4CE6C3A8186CE2BF0028F963 /* MMTableViewCell.h */,
 				4CE6C3A9186CE2BF0028F963 /* MMTableViewCell.m */,
 				4CE6C3C3186CE3430028F963 /* UIViewController+MMDrawerController.h */,
@@ -524,8 +536,8 @@
 				4CE6C3C7186DE6CF0028F963 /* FindFriendsViewController.m */,
 				4C4C901C1853B47E00585F4E /* UserViewController.h */,
 				4C4C901D1853B47E00585F4E /* UserViewController.m */,
-				4CE6C3F2186F546B0028F963 /* SettingViewController.h */,
-				4CE6C3F3186F546B0028F963 /* SettingViewController.m */,
+				4CE6C3FA186F594F0028F963 /* SettingViewController.h */,
+				4CE6C3FB186F594F0028F963 /* SettingViewController.m */,
 			);
 			name = Function;
 			sourceTree = "<group>";
@@ -565,6 +577,12 @@
 			children = (
 				4CE6C3F0186F52A60028F963 /* settings-32-highlight.png */,
 				4CE6C3EE186F52410028F963 /* settings-32.png */,
+				4CE6C3FD186F5F090028F963 /* conference-24.png */,
+				4CE6C3FE186F5F090028F963 /* dj-24.png */,
+				4CE6C3FF186F5F090028F963 /* newspaper-10-24.png */,
+				4CE6C400186F5F090028F963 /* sharethis-3-24.png */,
+				4CE6C407186F5FAC0028F963 /* undo-2-16.png */,
+				4CE6C401186F5F090028F963 /* undo-2-24.png */,
 			);
 			name = SideMenu;
 			sourceTree = "<group>";
@@ -677,6 +695,7 @@
 				4C3179D1184410C300F7D41B /* Beet-Info.plist in Resources */,
 				4C31799118440EA700F7D41B /* Images.xcassets in Resources */,
 				4CE6C379186CD5310028F963 /* Facebook.png in Resources */,
+				4CE6C408186F5FAC0028F963 /* undo-2-16.png in Resources */,
 				4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */,
 				4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */,
 				4CE6C375186CBEFD0028F963 /* LogIn.png in Resources */,
@@ -698,9 +717,14 @@
 				4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */,
 				4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */,
 				4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */,
+				4CE6C405186F5F090028F963 /* sharethis-3-24.png in Resources */,
 				4CE6C3EA186E844B0028F963 /* welcome2.png in Resources */,
 				4CE6C3F1186F52A60028F963 /* settings-32-highlight.png in Resources */,
 				4CE6C37A186CD5310028F963 /* FacebookDown.png in Resources */,
+				4CE6C402186F5F090028F963 /* conference-24.png in Resources */,
+				4CE6C404186F5F090028F963 /* newspaper-10-24.png in Resources */,
+				4CE6C406186F5F090028F963 /* undo-2-24.png in Resources */,
+				4CE6C403186F5F090028F963 /* dj-24.png in Resources */,
 				4CE6C3EC186F2C230028F963 /* FindFriendsStoryboard.storyboard in Resources */,
 				4CE6C37D186CD8880028F963 /* PasswordForgotten.png in Resources */,
 			);
@@ -756,7 +780,6 @@
 			files = (
 				4CE6C3BE186CE3070028F963 /* MyLogInViewController.m in Sources */,
 				4CE6C3C5186CE3430028F963 /* UIViewController+MMDrawerController.m in Sources */,
-				4CE6C3F4186F546B0028F963 /* SettingViewController.m in Sources */,
 				4C4C901B1853B47300585F4E /* FriendsViewController.m in Sources */,
 				4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */,
 				4CE6C3BF186CE3070028F963 /* MySignUpViewController.m in Sources */,
@@ -793,6 +816,7 @@
 				4C3179B418440F4800F7D41B /* Song.m in Sources */,
 				4CE6C3B5186CE2BF0028F963 /* MMLogoView.m in Sources */,
 				4CE6C3AB186CE2BF0028F963 /* MMDrawerBarButtonItem.m in Sources */,
+				4CE6C3FC186F594F0028F963 /* SettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

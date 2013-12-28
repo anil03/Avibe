@@ -24,6 +24,8 @@
 
 #import "SettingViewController.h"
 
+#import "MMSideDrawerTableViewCell.h"
+
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
     BeetRow_Share,
@@ -152,11 +154,18 @@ typedef NS_ENUM(NSInteger, BeetRow){
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    cell.backgroundColor = ([indexPath row]%2)?[UIColor lightGrayColor]:[UIColor whiteColor];
+//    cell.backgroundColor = ([indexPath row]%2)?[UIColor lightGrayColor]:[UIColor whiteColor];
+    
+//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+//    [button setBackgroundColor:[UIColor redColor]];
+//    button.enabled = NO;
+//    [cell addSubview:button];
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell * cell = [super tableView:tableView cellForRowAtIndexPath:indexPath];
+    static NSString *CellIdentifier = @"Cell";
+
+    MMSideDrawerTableViewCell * cell = [[MMSideDrawerTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 
     if(indexPath.section == MMDrawerSectionDrawerWidth){
         
@@ -172,16 +181,19 @@ typedef NS_ENUM(NSInteger, BeetRow){
     }else if(indexPath.section == MMDrawerSectionBeet){
         switch (indexPath.row) {
             case BeetRow_LiveFeed:
-                [cell.textLabel setText:@"Live Feed"];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"dj-24.png"] forState:UIControlStateNormal];
+                [cell.label setText:@"Live Feed"];
                 break;
             case BeetRow_Share:
-                [cell.textLabel setText:@"Share"];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"sharethis-3-24.png"] forState:UIControlStateNormal];
+                [cell.label setText:@"Share"];
                 break;
 //            case BeetRow_Listened:
 //                [cell.textLabel setText:@"Listened"];
 //                break;
             case BeetRow_Friends:
-                [cell.textLabel setText:@"Friends"];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"conference-24.png"] forState:UIControlStateNormal];
+                [cell.label setText:@"Friends"];
                 break;
             default:
                 break;
@@ -190,10 +202,13 @@ typedef NS_ENUM(NSInteger, BeetRow){
     }else if(indexPath.section == MMDrawerSectionUser){
         switch (indexPath.row) {
             case 0:
-                [cell.textLabel setText:@"Profile"];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"newspaper-10-24.png"] forState:UIControlStateNormal];
+
+                [cell.label setText:@"Profile"];
                 break;
             case 1:
-                [cell.textLabel setText:@"Sign out"];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"undo-2-24.png"] forState:UIControlStateNormal];
+                [cell.label setText:@"Sign out"];
                 break;
             default:
                 break;

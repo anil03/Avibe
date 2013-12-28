@@ -23,4 +23,8 @@
 
 @interface MMSideDrawerTableViewCell : MMTableViewCell
 
+@property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIButton *button;
+
+
 @end
