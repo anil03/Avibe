@@ -8,6 +8,7 @@
 
 #import "SideMenuViewController.h"
 #import "MMTableViewCell.h"
+#import "MMSideDrawerSectionHeaderView.h"
 
 #import "LiveFeedViewController.h"
 #import "ShareViewController.h"
@@ -20,6 +21,8 @@
 
 #import "MMNavigationController.h"
 #import "MyLogInViewController.h"
+
+#import "SettingViewController.h"
 
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
@@ -105,14 +108,44 @@ typedef NS_ENUM(NSInteger, BeetRow){
     [self setTitle:@"Left Drawer"];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    //custom user section
+    if(section == MMDrawerSectionUser){
+        MMSideDrawerSectionHeaderView * headerView;
+        if(OSVersionIsAtLeastiOS7()){
+            headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 56.0)];
+        }
+        else {
+            headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 23.0)];
+        }
+        [headerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+        [headerView setTitle:[tableView.dataSource tableView:tableView titleForHeaderInSection:section]];
+        
+        UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(100, 20, 32, 32)];
+        [button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"settings-32-highlight.png"] forState:UIControlStateHighlighted];
+        [button addTarget:self
+                     action:@selector(setting)
+           forControlEvents:UIControlEventTouchUpInside];
+        [headerView addSubview:button];
+        [headerView bringSubviewToFront:button];
+        
+        return headerView;
+    }else{
+     return [super tableView:tableView viewForHeaderInSection:section];
+    }
+}
+
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if(section == MMDrawerSectionDrawerWidth)
         return @"Left Drawer Width";
     else if(section == MMDrawerSectionBeet)
         return @"Beet";
-    else if(section == MMDrawerSectionUser)
+    else if(section == MMDrawerSectionUser){
         return [[[PFUser currentUser] username] uppercaseString];
+    }
     else
         return [super tableView:tableView titleForHeaderInSection:section];
 }
@@ -247,6 +280,19 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (NSString*)getLastFMAccount
 {
     return _lastFMAccountUsername;
+}
+
+#pragma mark - Setting
+- (void)setting
+{
+//    NSLog(@"Press Setting");
+    
+    SettingViewController *settingViewController = [[UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    settingViewController.previousViewController = self.mm_drawerController.centerViewController;
+    
+    MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:settingViewController];
+    
+    [self.mm_drawerController setCenterViewController:navigationSettingViewController withCloseAnimation:YES completion:nil];
 }
 
 @end
