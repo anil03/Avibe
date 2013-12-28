@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
 
-#import "AddFriendsViewController.h"
+#import "FindFriendsViewController.h"
 
 #import "FriendsViewController.h"
 
@@ -17,13 +17,13 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 
-@interface AddFriendsViewController ()
+@interface FindFriendsViewController ()
 
 @property (nonatomic, strong) NSMutableArray *contactList;
 
 @end
 
-@implementation AddFriendsViewController
+@implementation FindFriendsViewController
 
 @synthesize contactList = _contactList;
 

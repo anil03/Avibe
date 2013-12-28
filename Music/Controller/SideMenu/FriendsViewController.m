@@ -15,11 +15,11 @@
 
 #import "SampleMusicViewController.h"
 
-#import "AddFriendsViewController.h"
+#import "FindFriendsViewController.h"
 
 
 
-@interface FriendsViewController () <AddFriendsViewControllerDelegate>
+@interface FriendsViewController () <FindFriendsViewControllerDelegate>
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -211,7 +211,7 @@
     
     
     //Pop from bottom
-    AddFriendsViewController *addFriendsViewController = [[AddFriendsViewController alloc] init];
+    FindFriendsViewController *addFriendsViewController = [[FindFriendsViewController alloc] init];
     addFriendsViewController.delegate = self;
     addFriendsViewController.friendsViewController = self.mm_drawerController.centerViewController;
     

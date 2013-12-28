@@ -111,17 +111,22 @@
     float row1 = 330.0f;
     float row2 = 405.0f;
     
+    float btnWidth = 120.0f;
+    float btnHeight = 38.0f;
+    
+    [self.logInView.dismissButton setFrame:CGRectMake(0.0f, 15.0f, 87.5f, 45.5f)];
+    
     [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
     
-    [self.logInView.facebookButton setFrame:CGRectMake(column1, row2, 120.0f, 40.0f)];
-    [self.logInView.passwordForgottenButton setFrame:CGRectMake(column2, row2, 120.0f, 40.0f)];
+    [self.logInView.facebookButton setFrame:CGRectMake(column1, row2, btnWidth, btnHeight)];
+    [self.logInView.passwordForgottenButton setFrame:CGRectMake(column2, row2, btnWidth, btnHeight)];
     
-    [self.logInView.logInButton setFrame:CGRectMake(column1, row1, 120.0f, 40.0f)];
+    [self.logInView.logInButton setFrame:CGRectMake(column1/2+column2/2, row1, btnWidth, btnHeight)];
     //Clear LogInButton Title
     [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
     [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
     
-    [self.logInView.signUpButton setFrame:CGRectMake(column2, row1, 120.0f, 40.0f)];
+    [self.logInView.signUpButton setFrame:CGRectMake(column2, row1, btnWidth, btnHeight)];
 
     
     [self.logInView.usernameField setFrame:CGRectMake(column1, rowField, 250.0f, 50.0f)];

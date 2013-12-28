@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol AddFriendsViewControllerDelegate <NSObject>
+@protocol FindFriendsViewControllerDelegate <NSObject>
 
 
 @end
 
-@interface AddFriendsViewController : UITableViewController
+@interface FindFriendsViewController : UITableViewController
 
-@property (nonatomic, weak) id<AddFriendsViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<FindFriendsViewControllerDelegate> delegate;
 
 @property (nonatomic, weak) UIViewController *friendsViewController;
 
