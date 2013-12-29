@@ -103,6 +103,23 @@
 		4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */; };
 		4CEE7D27186F624F0012624D /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CEE7D26186F624F0012624D /* Setting.m */; };
 		4CEE7D29186F70D90012624D /* music-record-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D28186F70D90012624D /* music-record-24.png */; };
+		4CEE7D3C186F9E850012624D /* angry_birds_cake.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D2B186F9E850012624D /* angry_birds_cake.jpg */; };
+		4CEE7D3D186F9E850012624D /* creme_brelee.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D2C186F9E850012624D /* creme_brelee.jpg */; };
+		4CEE7D3E186F9E850012624D /* egg_benedict.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D2D186F9E850012624D /* egg_benedict.jpg */; };
+		4CEE7D3F186F9E850012624D /* full_breakfast.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D2E186F9E850012624D /* full_breakfast.jpg */; };
+		4CEE7D40186F9E850012624D /* green_tea.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D2F186F9E850012624D /* green_tea.jpg */; };
+		4CEE7D41186F9E850012624D /* ham_and_cheese_panini.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D30186F9E850012624D /* ham_and_cheese_panini.jpg */; };
+		4CEE7D42186F9E850012624D /* ham_and_egg_sandwich.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D31186F9E850012624D /* ham_and_egg_sandwich.jpg */; };
+		4CEE7D43186F9E850012624D /* hamburger.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D32186F9E850012624D /* hamburger.jpg */; };
+		4CEE7D44186F9E850012624D /* instant_noodle_with_egg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D33186F9E850012624D /* instant_noodle_with_egg.jpg */; };
+		4CEE7D45186F9E850012624D /* japanese_noodle_with_pork.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D34186F9E850012624D /* japanese_noodle_with_pork.jpg */; };
+		4CEE7D46186F9E850012624D /* mushroom_risotto.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D35186F9E850012624D /* mushroom_risotto.jpg */; };
+		4CEE7D47186F9E850012624D /* noodle_with_bbq_pork.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D36186F9E850012624D /* noodle_with_bbq_pork.jpg */; };
+		4CEE7D48186F9E850012624D /* photo-frame.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D37186F9E850012624D /* photo-frame.png */; };
+		4CEE7D49186F9E850012624D /* starbucks_coffee.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D38186F9E850012624D /* starbucks_coffee.jpg */; };
+		4CEE7D4A186F9E850012624D /* thai_shrimp_cake.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D39186F9E850012624D /* thai_shrimp_cake.jpg */; };
+		4CEE7D4B186F9E850012624D /* vegetable_curry.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D3A186F9E850012624D /* vegetable_curry.jpg */; };
+		4CEE7D4C186F9E850012624D /* white_chocolate_donut.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4CEE7D3B186F9E850012624D /* white_chocolate_donut.jpg */; };
 		EF77F77D7AA64C47900A60DB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F724E3B98E8440059B00A6C0 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -255,6 +272,23 @@
 		4CEE7D25186F624F0012624D /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Setting.h; path = Model/Setting.h; sourceTree = "<group>"; };
 		4CEE7D26186F624F0012624D /* Setting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Setting.m; path = Model/Setting.m; sourceTree = "<group>"; };
 		4CEE7D28186F70D90012624D /* music-record-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "music-record-24.png"; path = "Resource/SideMenu/music-record-24.png"; sourceTree = "<group>"; };
+		4CEE7D2B186F9E850012624D /* angry_birds_cake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = angry_birds_cake.jpg; sourceTree = "<group>"; };
+		4CEE7D2C186F9E850012624D /* creme_brelee.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = creme_brelee.jpg; sourceTree = "<group>"; };
+		4CEE7D2D186F9E850012624D /* egg_benedict.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = egg_benedict.jpg; sourceTree = "<group>"; };
+		4CEE7D2E186F9E850012624D /* full_breakfast.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = full_breakfast.jpg; sourceTree = "<group>"; };
+		4CEE7D2F186F9E850012624D /* green_tea.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = green_tea.jpg; sourceTree = "<group>"; };
+		4CEE7D30186F9E850012624D /* ham_and_cheese_panini.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ham_and_cheese_panini.jpg; sourceTree = "<group>"; };
+		4CEE7D31186F9E850012624D /* ham_and_egg_sandwich.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ham_and_egg_sandwich.jpg; sourceTree = "<group>"; };
+		4CEE7D32186F9E850012624D /* hamburger.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hamburger.jpg; sourceTree = "<group>"; };
+		4CEE7D33186F9E850012624D /* instant_noodle_with_egg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = instant_noodle_with_egg.jpg; sourceTree = "<group>"; };
+		4CEE7D34186F9E850012624D /* japanese_noodle_with_pork.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = japanese_noodle_with_pork.jpg; sourceTree = "<group>"; };
+		4CEE7D35186F9E850012624D /* mushroom_risotto.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mushroom_risotto.jpg; sourceTree = "<group>"; };
+		4CEE7D36186F9E850012624D /* noodle_with_bbq_pork.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = noodle_with_bbq_pork.jpg; sourceTree = "<group>"; };
+		4CEE7D37186F9E850012624D /* photo-frame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "photo-frame.png"; sourceTree = "<group>"; };
+		4CEE7D38186F9E850012624D /* starbucks_coffee.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = starbucks_coffee.jpg; sourceTree = "<group>"; };
+		4CEE7D39186F9E850012624D /* thai_shrimp_cake.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = thai_shrimp_cake.jpg; sourceTree = "<group>"; };
+		4CEE7D3A186F9E850012624D /* vegetable_curry.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = vegetable_curry.jpg; sourceTree = "<group>"; };
+		4CEE7D3B186F9E850012624D /* white_chocolate_donut.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = white_chocolate_donut.jpg; sourceTree = "<group>"; };
 		5B085EF440F545DD93B4A79C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		F724E3B98E8440059B00A6C0 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -609,6 +643,7 @@
 		4CEBEE42184CE3950018ABE0 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4CEE7D2A186F9E4F0012624D /* UICollectionView */,
 				4CE6C3ED186F523A0028F963 /* SideMenu */,
 				4CE6C3D2186E7BE80028F963 /* Welcome */,
 				4CE6C368186CBBEA0028F963 /* SignInAndSignUp */,
@@ -616,6 +651,30 @@
 				4C0723461858C27C00D6E63C /* TableView */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		4CEE7D2A186F9E4F0012624D /* UICollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				4CEE7D2B186F9E850012624D /* angry_birds_cake.jpg */,
+				4CEE7D2C186F9E850012624D /* creme_brelee.jpg */,
+				4CEE7D2D186F9E850012624D /* egg_benedict.jpg */,
+				4CEE7D2E186F9E850012624D /* full_breakfast.jpg */,
+				4CEE7D2F186F9E850012624D /* green_tea.jpg */,
+				4CEE7D30186F9E850012624D /* ham_and_cheese_panini.jpg */,
+				4CEE7D31186F9E850012624D /* ham_and_egg_sandwich.jpg */,
+				4CEE7D32186F9E850012624D /* hamburger.jpg */,
+				4CEE7D33186F9E850012624D /* instant_noodle_with_egg.jpg */,
+				4CEE7D34186F9E850012624D /* japanese_noodle_with_pork.jpg */,
+				4CEE7D35186F9E850012624D /* mushroom_risotto.jpg */,
+				4CEE7D36186F9E850012624D /* noodle_with_bbq_pork.jpg */,
+				4CEE7D37186F9E850012624D /* photo-frame.png */,
+				4CEE7D38186F9E850012624D /* starbucks_coffee.jpg */,
+				4CEE7D39186F9E850012624D /* thai_shrimp_cake.jpg */,
+				4CEE7D3A186F9E850012624D /* vegetable_curry.jpg */,
+				4CEE7D3B186F9E850012624D /* white_chocolate_donut.jpg */,
+			);
+			name = UICollectionView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -705,9 +764,13 @@
 				4CEE7D29186F70D90012624D /* music-record-24.png in Resources */,
 				4CE6C379186CD5310028F963 /* Facebook.png in Resources */,
 				4CE6C408186F5FAC0028F963 /* undo-2-16.png in Resources */,
+				4CEE7D4B186F9E850012624D /* vegetable_curry.jpg in Resources */,
+				4CEE7D42186F9E850012624D /* ham_and_egg_sandwich.jpg in Resources */,
+				4CEE7D40186F9E850012624D /* green_tea.jpg in Resources */,
 				4C07234A1858F14B00D6E63C /* sample_music_background.jpg in Resources */,
 				4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */,
 				4CE6C375186CBEFD0028F963 /* LogIn.png in Resources */,
+				4CEE7D3E186F9E850012624D /* egg_benedict.jpg in Resources */,
 				4CE6C37E186CD8880028F963 /* PasswordForgottenDown.png in Resources */,
 				4CE6C3F6186F55090028F963 /* SettingStoryboard.storyboard in Resources */,
 				4CE6C383186CDFB00028F963 /* Exit.png in Resources */,
@@ -715,27 +778,40 @@
 				4CE6C387186CE22E0028F963 /* LoginFieldBG.png in Resources */,
 				4CE6C3AD186CE2BF0028F963 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4CE6C376186CBEFD0028F963 /* LogInDown.png in Resources */,
+				4CEE7D47186F9E850012624D /* noodle_with_bbq_pork.jpg in Resources */,
+				4CEE7D4C186F9E850012624D /* white_chocolate_donut.jpg in Resources */,
+				4CEE7D3D186F9E850012624D /* creme_brelee.jpg in Resources */,
+				4CEE7D48186F9E850012624D /* photo-frame.png in Resources */,
 				4CE6C3E9186E844B0028F963 /* welcome1.png in Resources */,
 				4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */,
 				4C0723481858C28800D6E63C /* background.png in Resources */,
+				4CEE7D46186F9E850012624D /* mushroom_risotto.jpg in Resources */,
+				4CEE7D44186F9E850012624D /* instant_noodle_with_egg.jpg in Resources */,
 				4CE6C3E8186E844B0028F963 /* welcome0.png in Resources */,
 				4CE6C380186CDAF80028F963 /* Logo.png in Resources */,
 				4CE6C3EF186F52410028F963 /* settings-32.png in Resources */,
 				4CE6C371186CBE890028F963 /* SignUp.png in Resources */,
+				4CEE7D49186F9E850012624D /* starbucks_coffee.jpg in Resources */,
 				4CE6C3CB186E62B70028F963 /* SampleMusic.storyboard in Resources */,
 				4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */,
 				4C31798318440EA700F7D41B /* InfoPlist.strings in Resources */,
 				4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */,
 				4CE6C405186F5F090028F963 /* sharethis-3-24.png in Resources */,
+				4CEE7D41186F9E850012624D /* ham_and_cheese_panini.jpg in Resources */,
+				4CEE7D4A186F9E850012624D /* thai_shrimp_cake.jpg in Resources */,
+				4CEE7D45186F9E850012624D /* japanese_noodle_with_pork.jpg in Resources */,
 				4CE6C3EA186E844B0028F963 /* welcome2.png in Resources */,
+				4CEE7D3F186F9E850012624D /* full_breakfast.jpg in Resources */,
 				4CE6C3F1186F52A60028F963 /* settings-32-highlight.png in Resources */,
 				4CE6C37A186CD5310028F963 /* FacebookDown.png in Resources */,
 				4CE6C402186F5F090028F963 /* conference-24.png in Resources */,
+				4CEE7D43186F9E850012624D /* hamburger.jpg in Resources */,
 				4CE6C404186F5F090028F963 /* newspaper-10-24.png in Resources */,
 				4CE6C406186F5F090028F963 /* undo-2-24.png in Resources */,
 				4CE6C403186F5F090028F963 /* dj-24.png in Resources */,
 				4CE6C3EC186F2C230028F963 /* FindFriendsStoryboard.storyboard in Resources */,
 				4CE6C37D186CD8880028F963 /* PasswordForgotten.png in Resources */,
+				4CEE7D3C186F9E850012624D /* angry_birds_cake.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

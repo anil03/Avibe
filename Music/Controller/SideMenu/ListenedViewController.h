@@ -10,6 +10,7 @@
 
 #import "YMGenericTableViewController.h"
 
-@interface ListenedViewController : YMGenericTableViewController
+//@interface ListenedViewController : YMGenericTableViewController
+@interface ListenedViewController : UICollectionViewController
 
 @end

@@ -70,7 +70,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
         shareViewController = [[ShareViewController alloc] init];
         self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
 
-        listenedViewController = [[ListenedViewController alloc] init];
+//        listenedViewController = [[ListenedViewController alloc] init];
+        listenedViewController = [[ListenedViewController alloc] initWithCollectionViewLayout:nil];
         self.navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
         
         friendsViewController = [[FriendsViewController alloc] init];

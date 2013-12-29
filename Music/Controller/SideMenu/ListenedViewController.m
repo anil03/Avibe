@@ -15,6 +15,9 @@
 
 
 @interface ListenedViewController ()
+{
+    NSArray *recipeImages;
+}
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -26,43 +29,47 @@
 
 @synthesize songs = _songs;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-        // Custom initialization
-	}
-	return self;
+    UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [aFlowLayout setItemSize:CGSizeMake(150, 100)];
+    [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    
+    self = [super initWithCollectionViewLayout:aFlowLayout];
+    
+    if(self){
+        
+    }
+    
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     
-    //Navigation Title
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"Listened";
-    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
-                                           green:49.0/255.0
-                                            blue:107.0/255.0
-                                           alpha:1.0];
-    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [titleLabel sizeToFit];
-    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    [self setupMenuButton];
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
     
+    //UICollectionview
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+    
     
     
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    
+    recipeImages = [NSArray arrayWithObjects:@"angry_birds_cake.jpg", @"creme_brelee.jpg", @"egg_benedict.jpg", @"full_breakfast.jpg", @"green_tea.jpg", @"ham_and_cheese_panini.jpg", @"ham_and_egg_sandwich.jpg", @"hamburger.jpg", @"instant_noodle_with_egg.jpg", @"japanese_noodle_with_pork.jpg", @"mushroom_risotto.jpg", @"noodle_with_bbq_pork.jpg", @"starbucks_coffee.jpg", @"thai_shrimp_cake.jpg", @"vegetable_curry.jpg", @"white_chocolate_donut.jpg", nil];
 }
 
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -87,7 +94,33 @@
 //    
 //    return cell;
 //}
+*/
 
+#pragma mark - UICollection view data source
+- (NSInteger)numberOfSections
+{
+    return 1;
+}
+
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+//    return 5;
+    return recipeImages.count;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    static NSString *identifier = @"Cell";
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    //Not implement ImageView yet
+    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
+    
+    return cell;
+}
 
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
@@ -127,8 +160,9 @@
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
-            self.PFObjects = objects;
-            [self.tableView reloadData];
+            
+//            self.PFObjects = objects;
+//            [self.tableView reloadData];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -139,7 +173,29 @@
     }];
 }
 
+#pragma mark - Button Handlers
+-(void)setupMenuButton{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Listened";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
+    
+	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+}
 
+-(void)leftDrawerButtonPress:(id)sender{
+	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
 
 
 
