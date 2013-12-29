@@ -41,6 +41,7 @@
 		4CA5DB8A1853C317006E7B0F /* SideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA5DB891853C317006E7B0F /* SideMenuViewController.m */; };
 		4CA88E841853FB65005D0FE0 /* SideMenuRowViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */; };
 		4CA88E871854034D005D0FE0 /* YMGenericTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */; };
+		4CAAC96A186FE2190098573F /* YMGenericCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C369186CBBFC0028F963 /* MainBG.png */; };
@@ -184,6 +185,8 @@
 		4CA88E831853FB65005D0FE0 /* SideMenuRowViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SideMenuRowViewController.m; path = Controller/SideMenu/SideMenuRowViewController.m; sourceTree = "<group>"; };
 		4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewCell.h; path = View/YMGenericTableViewCell.h; sourceTree = "<group>"; };
 		4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewCell.m; path = View/YMGenericTableViewCell.m; sourceTree = "<group>"; };
+		4CAAC968186FE2190098573F /* YMGenericCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericCollectionViewCell.h; path = Controller/Function/YMGenericCollectionViewCell.h; sourceTree = "<group>"; };
+		4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericCollectionViewCell.m; path = Controller/Function/YMGenericCollectionViewCell.m; sourceTree = "<group>"; };
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
@@ -422,6 +425,8 @@
 		4C31797F18440EA700F7D41B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4CD0D6EF1851245400350E0C /* DrawerViewController */,
+				4C4C900E1853A8EE00585F4E /* Archive */,
 				4C3179B618440F5300F7D41B /* AppDelegate.h */,
 				4C3179B718440F5300F7D41B /* AppDelegate.m */,
 				4C3179CD184410C300F7D41B /* main.m */,
@@ -461,10 +466,9 @@
 				4CD0D6ED1851234900350E0C /* MainViewController.m */,
 				4CEBEE36184CE05B0018ABE0 /* LogInAndSignUp */,
 				4C4C900F1853AB4200585F4E /* SideMenu */,
+				4CAAC96B186FE3000098573F /* Generic */,
 				4CDBF6F118550E5900D4AD66 /* Function */,
 				4C07231C18564F4000D6E63C /* SampleMusic */,
-				4CD0D6EF1851245400350E0C /* DrawerViewController */,
-				4C4C900E1853A8EE00585F4E /* Archive */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -520,6 +524,19 @@
 			name = SideMenu;
 			sourceTree = "<group>";
 		};
+		4CAAC96B186FE3000098573F /* Generic */ = {
+			isa = PBXGroup;
+			children = (
+				4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */,
+				4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */,
+				4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */,
+				4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */,
+				4CAAC968186FE2190098573F /* YMGenericCollectionViewCell.h */,
+				4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */,
+			);
+			name = Generic;
+			sourceTree = "<group>";
+		};
 		4CD0D6EF1851245400350E0C /* DrawerViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -561,10 +578,6 @@
 		4CDBF6F118550E5900D4AD66 /* Function */ = {
 			isa = PBXGroup;
 			children = (
-				4C07231D1856686B00D6E63C /* YMGenericTableViewController.h */,
-				4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */,
-				4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */,
-				4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */,
 				4C4C90101853B43600585F4E /* LiveFeedViewController.h */,
 				4C4C90111853B43600585F4E /* LiveFeedViewController.m */,
 				4C4C90131853B44A00585F4E /* ShareViewController.h */,
@@ -867,6 +880,7 @@
 				4CE6C3C5186CE3430028F963 /* UIViewController+MMDrawerController.m in Sources */,
 				4C4C901B1853B47300585F4E /* FriendsViewController.m in Sources */,
 				4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */,
+				4CAAC96A186FE2190098573F /* YMGenericCollectionViewCell.m in Sources */,
 				4CE6C3BF186CE3070028F963 /* MySignUpViewController.m in Sources */,
 				4CA88E841853FB65005D0FE0 /* SideMenuRowViewController.m in Sources */,
 				4CE6C3B0186CE2BF0028F963 /* MMExampleDrawerVisualStateManager.m in Sources */,

@@ -13,6 +13,8 @@
 
 #import "SampleMusicViewController.h"
 
+#import "YMGenericCollectionViewCell.h"
+
 
 @interface ListenedViewController ()
 {
@@ -31,15 +33,17 @@
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-    UICollectionViewFlowLayout *aFlowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [aFlowLayout setItemSize:CGSizeMake(150, 100)];
-    [aFlowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(100, 100)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [flowLayout setMinimumInteritemSpacing:5.0f]; //Between items
+    [flowLayout setMinimumLineSpacing:5.0f]; //Between lines
+    flowLayout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0); //Between sections
     
-    
-    self = [super initWithCollectionViewLayout:aFlowLayout];
+    self = [super initWithCollectionViewLayout:flowLayout];
     
     if(self){
-        
+        // setup
     }
     
     return self;
@@ -57,8 +61,7 @@
 	[super viewDidLoad];
     
     //UICollectionview
-    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-    
+    [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     
     
 	[self setupRefreshControl];
@@ -97,15 +100,15 @@
 */
 
 #pragma mark - UICollection view data source
-- (NSInteger)numberOfSections
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return 1;
+    return 4;
 }
 
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-//    return 5;
-    return recipeImages.count;
+    return 5;
+//    return recipeImages.count;
 }
 
 
@@ -115,11 +118,38 @@
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     
     //Not implement ImageView yet
-    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
-    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
+//    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
+//    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
+//    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
     
     return cell;
+}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        /*
+        RecipeCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
+        headerView.title.text = title;
+        UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
+        headerView.backgroundImage.image = headerImage;
+        
+        reusableview = headerView;
+         */
+    }
+    
+    if (kind == UICollectionElementKindSectionFooter) {
+        /*
+        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+        
+        reusableview = footerview;
+         */
+    }
+    
+    return reusableview;
 }
 
 #pragma mark - RefreshControl Method
