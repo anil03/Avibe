@@ -44,6 +44,7 @@
 		4CAAC96A186FE2190098573F /* YMGenericCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */; };
 		4CD0D6EE1851234900350E0C /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CD0D6ED1851234900350E0C /* MainViewController.m */; };
 		4CD0D6F31851281800350E0C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CD0D6F21851281800350E0C /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		4CDC231B1871B16000E89058 /* YMGenericCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC231A1871B16000E89058 /* YMGenericCollectionViewController.m */; };
 		4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C369186CBBFC0028F963 /* MainBG.png */; };
 		4CE6C371186CBE890028F963 /* SignUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36D186CBE890028F963 /* SignUp.png */; };
 		4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36E186CBE890028F963 /* SignUpDown.png */; };
@@ -190,6 +191,8 @@
 		4CD0D6EC1851234900350E0C /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Controller/MainViewController.h; sourceTree = "<group>"; };
 		4CD0D6ED1851234900350E0C /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Controller/MainViewController.m; sourceTree = "<group>"; };
 		4CD0D6F21851281800350E0C /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Music/Framework/Parse.framework; sourceTree = "<group>"; };
+		4CDC23191871B16000E89058 /* YMGenericCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericCollectionViewController.h; path = Controller/Generic/YMGenericCollectionViewController.h; sourceTree = "<group>"; };
+		4CDC231A1871B16000E89058 /* YMGenericCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericCollectionViewController.m; path = Controller/Generic/YMGenericCollectionViewController.m; sourceTree = "<group>"; };
 		4CE6C369186CBBFC0028F963 /* MainBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MainBG.png; path = Resource/SignInAndSignUp/MainBG.png; sourceTree = "<group>"; };
 		4CE6C36D186CBE890028F963 /* SignUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUp.png; path = Resource/SignInAndSignUp/SignUp.png; sourceTree = "<group>"; };
 		4CE6C36E186CBE890028F963 /* SignUpDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUpDown.png; path = Resource/SignInAndSignUp/SignUpDown.png; sourceTree = "<group>"; };
@@ -531,6 +534,8 @@
 				4C07231E1856686B00D6E63C /* YMGenericTableViewController.m */,
 				4CA88E851854034D005D0FE0 /* YMGenericTableViewCell.h */,
 				4CA88E861854034D005D0FE0 /* YMGenericTableViewCell.m */,
+				4CDC23191871B16000E89058 /* YMGenericCollectionViewController.h */,
+				4CDC231A1871B16000E89058 /* YMGenericCollectionViewController.m */,
 				4CAAC968186FE2190098573F /* YMGenericCollectionViewCell.h */,
 				4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */,
 			);
@@ -898,6 +903,7 @@
 				4CEE7D27186F624F0012624D /* Setting.m in Sources */,
 				4CE6C3C2186CE3380028F963 /* SubclassConfigViewController.m in Sources */,
 				4CE6C3AE186CE2BF0028F963 /* MMDrawerVisualState.m in Sources */,
+				4CDC231B1871B16000E89058 /* YMGenericCollectionViewController.m in Sources */,
 				4CE6C3B9186CE2BF0028F963 /* MMTableViewCell.m in Sources */,
 				4CE6C3C8186DE6CF0028F963 /* FindFriendsViewController.m in Sources */,
 				4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */,

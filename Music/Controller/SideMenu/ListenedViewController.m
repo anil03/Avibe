@@ -5,6 +5,7 @@
 //  Created by Yuhua Mai on 12/7/13.
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
+// UITableViewController
 
 #import "ListenedViewController.h"
 
@@ -35,14 +36,7 @@
 
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(80, 100)];
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [flowLayout setMinimumInteritemSpacing:10.0f]; //Between items
-    [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
-    flowLayout.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20); //Between sections
-    
-    self = [super initWithCollectionViewLayout:flowLayout];
+    self = [super initWithCollectionViewLayout:layout];
     
     if(self){
         // setup
