@@ -31,5 +31,13 @@
                            alpha:1.0];
 }
 
+- (UIColor*)sharedCellColor
+{
+    return [UIColor colorWithRed:63.0/255.0
+                           green:146.0/255.0
+                            blue:210.0/255.0
+                           alpha:1.0];
+}
+
 
 @end

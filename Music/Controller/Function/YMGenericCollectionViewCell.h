@@ -10,4 +10,6 @@
 
 @interface YMGenericCollectionViewCell : UICollectionViewCell
 
+- (void)setupWithDictionary:(NSDictionary *)dictionary;
+
 @end

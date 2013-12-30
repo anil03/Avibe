@@ -15,6 +15,8 @@
 
 #import "YMGenericCollectionViewCell.h"
 
+#import "Setting.h"
+
 
 @interface ListenedViewController ()
 {
@@ -34,11 +36,11 @@
 - (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
 {
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(100, 100)];
+    [flowLayout setItemSize:CGSizeMake(80, 100)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [flowLayout setMinimumInteritemSpacing:5.0f]; //Between items
-    [flowLayout setMinimumLineSpacing:5.0f]; //Between lines
-    flowLayout.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0); //Between sections
+    [flowLayout setMinimumInteritemSpacing:10.0f]; //Between items
+    [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
+    flowLayout.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20); //Between sections
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -52,13 +54,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
+    [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+
     [self setupMenuButton];
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
+    
     
     //UICollectionview
     [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
