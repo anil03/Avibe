@@ -29,6 +29,8 @@
 
 #import "YMGenericTableViewCell.h"
 #import "YMGenericCollectionViewCell.h"
+#import "YMGenericCollectionReusableView.h"
+#import "YMGenericCollectionViewFlowLayout.h"
 
 #import "Setting.h"
 
@@ -73,12 +75,14 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 {
 //    self = [super init];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    UICollectionViewFlowLayout *flowLayout = [[YMGenericCollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(80, 100)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     [flowLayout setMinimumInteritemSpacing:10.0f]; //Between items
     [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
     flowLayout.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20); //Between sections
+    flowLayout.headerReferenceSize = CGSizeMake(50, 30); //get header
+    flowLayout.footerReferenceSize = CGSizeMake(50, 30);
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -87,7 +91,12 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         
         //UICollectionview
         [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.collectionView registerClass:[YMGenericCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
+        [self.collectionView registerClass:[YMGenericCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
         [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+        
+        self.collectionView.delegate=self;
+        self.collectionView.dataSource=self;
     }
     
     return self;
@@ -111,13 +120,16 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 {
     [super viewDidLoad];
     
+    //UICollectionView
+
+    
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
 
     //Spinner
     _spinner = [[UIActivityIndicatorView alloc]
-               initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     _spinner.center = CGPointMake(160, 240);
     _spinner.hidesWhenStopped = YES;
     [self.view addSubview:_spinner];
@@ -176,12 +188,18 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 	return cell;
 }
 
-// - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-// {
-// UICollectionReusableView *reusableview = nil;
-//
-// if (kind == UICollectionElementKindSectionHeader) {
-//
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+   UICollectionReusableView *reusableview = nil;
+
+   if (kind == UICollectionElementKindSectionHeader) {
+
+       UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+       footerview.backgroundColor = [UIColor greenColor];
+       
+       reusableview = footerview;
+       
 // RecipeCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
 // NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
 // headerView.title.text = title;
@@ -189,19 +207,19 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 // headerView.backgroundImage.image = headerImage;
 //
 // reusableview = headerView;
-//
-// }
-//
-// if (kind == UICollectionElementKindSectionFooter) {
-//
-// UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-//
-// reusableview = footerview;
-//
-// }
-//
-// return reusableview;
-// }
+
+   }
+
+   if (kind == UICollectionElementKindSectionFooter) {
+
+       UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+
+       reusableview = footerview;
+
+   }
+
+   return reusableview;
+}
 
 #pragma mark Bar Button
 - (void)updateSongInParse {
@@ -230,29 +248,29 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Congratulations!" message: @"All songs have been updated." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alert show];
     }*/
-}
+    }
 
 
 
-- (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
-{
-    NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
-    __block int numberOfDuplicated = 0;
-    
-    
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    postQuery.limit = 1000;
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *fetechObjects, NSError *error) {
-        BOOL songExisted = NO;
+    - (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
+    {
+        NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
+        __block int numberOfDuplicated = 0;
         
-        for(PFObject *pfToSave in XMLData){
-            songExisted = NO;
+        
+        PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+        [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+        postQuery.limit = 1000;
+        [postQuery findObjectsInBackgroundWithBlock:^(NSArray *fetechObjects, NSError *error) {
+            BOOL songExisted = NO;
             
-            NSString *newTitle = [pfToSave objectForKey:@"title"];
-            NSString *newArtist = [pfToSave objectForKey:@"artist"];
-            NSString *newAlbum = [pfToSave objectForKey:@"album"];
-            
+            for(PFObject *pfToSave in XMLData){
+                songExisted = NO;
+                
+                NSString *newTitle = [pfToSave objectForKey:@"title"];
+                NSString *newArtist = [pfToSave objectForKey:@"artist"];
+                NSString *newAlbum = [pfToSave objectForKey:@"album"];
+                
             /* Too slow in background
              PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
              [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
@@ -264,9 +282,9 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
              songExisted = YES;
              }
              */
-            
-            
-            for(PFObject *pf in fetechObjects){
+             
+             
+             for(PFObject *pf in fetechObjects){
                 NSString *existingTitle = [pf objectForKey:@"title"];
                 NSString *existingArtist = [pf objectForKey:@"artist"];
                 NSString *existingAlbum = [pf objectForKey:@"album"];
@@ -301,10 +319,10 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         }];
 
     }];
-    
-    
-    
-    
+
+
+
+
 }
 
 -(void)fetchData:(UIRefreshControl*)refresh
@@ -342,13 +360,13 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
 	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
 	[refresh addTarget:self
-                action:@selector(refreshView:)
-      forControlEvents:UIControlEventValueChanged];
+        action:@selector(refreshView:)
+        forControlEvents:UIControlEventValueChanged];
 	self.refreshControl = refresh;
     
     [self.refreshControl addTarget:self
-                            action:@selector(refreshView:)
-                  forControlEvents:UIControlEventValueChanged];
+        action:@selector(refreshView:)
+        forControlEvents:UIControlEventValueChanged];
 }
 
 
@@ -373,16 +391,16 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.text = @"Live Feed";
     titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
-                                           green:49.0/255.0
-                                            blue:107.0/255.0
-                                           alpha:1.0];
+     green:49.0/255.0
+     blue:107.0/255.0
+     alpha:1.0];
     [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
     
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-        
+    
 //    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
     
 //    [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];

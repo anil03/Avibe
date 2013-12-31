@@ -45,6 +45,8 @@
 		4CDC232818734DEB00E89058 /* LiveFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC232218734DEB00E89058 /* LiveFeedViewController.m */; };
 		4CDC232918734DEB00E89058 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC232418734DEB00E89058 /* ShareViewController.m */; };
 		4CDC232D18734E2400E89058 /* FriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC232C18734E2400E89058 /* FriendsViewController.m */; };
+		4CDC233018736EBB00E89058 /* YMGenericCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC232F18736EBB00E89058 /* YMGenericCollectionReusableView.m */; };
+		4CDC2333187372A100E89058 /* YMGenericCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDC2332187372A100E89058 /* YMGenericCollectionViewFlowLayout.m */; };
 		4CE6C36A186CBBFC0028F963 /* MainBG.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C369186CBBFC0028F963 /* MainBG.png */; };
 		4CE6C371186CBE890028F963 /* SignUp.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36D186CBE890028F963 /* SignUp.png */; };
 		4CE6C372186CBE890028F963 /* SignUpDown.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C36E186CBE890028F963 /* SignUpDown.png */; };
@@ -193,6 +195,10 @@
 		4CDC232418734DEB00E89058 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ShareViewController.m; path = Controller/Function/ShareViewController.m; sourceTree = "<group>"; };
 		4CDC232B18734E2400E89058 /* FriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FriendsViewController.h; path = Controller/Function/FriendsViewController.h; sourceTree = "<group>"; };
 		4CDC232C18734E2400E89058 /* FriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FriendsViewController.m; path = Controller/Function/FriendsViewController.m; sourceTree = "<group>"; };
+		4CDC232E18736EBB00E89058 /* YMGenericCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericCollectionReusableView.h; path = Controller/Generic/YMGenericCollectionReusableView.h; sourceTree = "<group>"; };
+		4CDC232F18736EBB00E89058 /* YMGenericCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericCollectionReusableView.m; path = Controller/Generic/YMGenericCollectionReusableView.m; sourceTree = "<group>"; };
+		4CDC2331187372A100E89058 /* YMGenericCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericCollectionViewFlowLayout.h; path = Controller/Generic/YMGenericCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		4CDC2332187372A100E89058 /* YMGenericCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericCollectionViewFlowLayout.m; path = Controller/Generic/YMGenericCollectionViewFlowLayout.m; sourceTree = "<group>"; };
 		4CE6C369186CBBFC0028F963 /* MainBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = MainBG.png; path = Resource/SignInAndSignUp/MainBG.png; sourceTree = "<group>"; };
 		4CE6C36D186CBE890028F963 /* SignUp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUp.png; path = Resource/SignInAndSignUp/SignUp.png; sourceTree = "<group>"; };
 		4CE6C36E186CBE890028F963 /* SignUpDown.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = SignUpDown.png; path = Resource/SignInAndSignUp/SignUpDown.png; sourceTree = "<group>"; };
@@ -538,6 +544,10 @@
 				4CDC231A1871B16000E89058 /* YMGenericCollectionViewController.m */,
 				4CAAC968186FE2190098573F /* YMGenericCollectionViewCell.h */,
 				4CAAC969186FE2190098573F /* YMGenericCollectionViewCell.m */,
+				4CDC232E18736EBB00E89058 /* YMGenericCollectionReusableView.h */,
+				4CDC232F18736EBB00E89058 /* YMGenericCollectionReusableView.m */,
+				4CDC2331187372A100E89058 /* YMGenericCollectionViewFlowLayout.h */,
+				4CDC2332187372A100E89058 /* YMGenericCollectionViewFlowLayout.m */,
 			);
 			name = Generic;
 			sourceTree = "<group>";
@@ -907,6 +917,7 @@
 				4CE6C3B9186CE2BF0028F963 /* MMTableViewCell.m in Sources */,
 				4CE6C3C8186DE6CF0028F963 /* FindFriendsViewController.m in Sources */,
 				4C3179B518440F4800F7D41B /* Song.xcdatamodeld in Sources */,
+				4CDC233018736EBB00E89058 /* YMGenericCollectionReusableView.m in Sources */,
 				4CE6C3D1186E6A020028F963 /* WelcomeViewController.m in Sources */,
 				4CDC232718734DEB00E89058 /* ListenedViewController.m in Sources */,
 				4CE6C3B7186CE2BF0028F963 /* MMSideDrawerSectionHeaderView.m in Sources */,
@@ -918,6 +929,7 @@
 				4C07231F1856686B00D6E63C /* YMGenericTableViewController.m in Sources */,
 				4CE6C3AC186CE2BF0028F963 /* MMDrawerController.m in Sources */,
 				4C3179D0184410C300F7D41B /* main.m in Sources */,
+				4CDC2333187372A100E89058 /* YMGenericCollectionViewFlowLayout.m in Sources */,
 				4CE6C3B1186CE2BF0028F963 /* MMExampleLeftSideDrawerViewController.m in Sources */,
 				4C3179B418440F4800F7D41B /* Song.m in Sources */,
 				4CE6C3B5186CE2BF0028F963 /* MMLogoView.m in Sources */,
