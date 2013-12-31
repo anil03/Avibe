@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "YMGenericTableViewController.h"
-#import "YMGenericCollectionViewController.h"
+//#import "YMGenericCollectionViewController.h"
 
-//@interface ListenedViewController : YMGenericTableViewController
-@interface ListenedViewController : YMGenericCollectionViewController
+@interface ListenedViewController : YMGenericTableViewController
+//@interface ListenedViewController : YMGenericCollectionViewController
 
 @end

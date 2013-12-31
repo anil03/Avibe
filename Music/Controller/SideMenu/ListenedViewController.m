@@ -20,9 +20,6 @@
 
 
 @interface ListenedViewController ()
-{
-    NSArray *recipeImages;
-}
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
@@ -34,21 +31,22 @@
 
 @synthesize songs = _songs;
 
-- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
-{
-    self = [super initWithCollectionViewLayout:layout];
-    
-    if(self){
-        // setup
-    }
-    
-    return self;
-}
+//- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
+//{
+//    self = [super initWithCollectionViewLayout:layout];
+//    
+//    if(self){
+//        // setup
+//    }
+//    
+//    return self;
+//}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+    
+//    [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
 
     [self setupMenuButton];
 }
@@ -59,18 +57,18 @@
     
     
     //UICollectionview
-    [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+//    [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
     
     
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
     
     
-    recipeImages = [NSArray arrayWithObjects:@"angry_birds_cake.jpg", @"creme_brelee.jpg", @"egg_benedict.jpg", @"full_breakfast.jpg", @"green_tea.jpg", @"ham_and_cheese_panini.jpg", @"ham_and_egg_sandwich.jpg", @"hamburger.jpg", @"instant_noodle_with_egg.jpg", @"japanese_noodle_with_pork.jpg", @"mushroom_risotto.jpg", @"noodle_with_bbq_pork.jpg", @"starbucks_coffee.jpg", @"thai_shrimp_cake.jpg", @"vegetable_curry.jpg", @"white_chocolate_donut.jpg", nil];
+
 }
 
 #pragma mark - Table view data source
-/*
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
@@ -95,10 +93,10 @@
 //    
 //    return cell;
 //}
-*/
+
 
 #pragma mark - UICollection view data source
-
+/*
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
     return 4;
@@ -128,7 +126,7 @@
     UICollectionReusableView *reusableview = nil;
     
     if (kind == UICollectionElementKindSectionHeader) {
-        /*
+ 
         RecipeCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
         NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
         headerView.title.text = title;
@@ -136,19 +134,20 @@
         headerView.backgroundImage.image = headerImage;
         
         reusableview = headerView;
-         */
+ 
     }
     
     if (kind == UICollectionElementKindSectionFooter) {
-        /*
+        
         UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
         
         reusableview = footerview;
-         */
+         
     }
     
     return reusableview;
 }
+*/
 
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
@@ -189,8 +188,8 @@
         if (!error) {
             //Save results and update the table
             
-//            self.PFObjects = objects;
-//            [self.tableView reloadData];
+            self.PFObjects = objects;
+            [self.tableView reloadData];
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
