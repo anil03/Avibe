@@ -10,7 +10,10 @@
 
 #import "SideMenuRowViewController.h"
 #import "YMGenericTableViewController.h"
+#import "YMGenericCollectionViewController.h"
 
-@interface ShareViewController : YMGenericTableViewController
+//@interface ShareViewController : YMGenericTableViewController
+@interface ShareViewController : YMGenericCollectionViewController
+
 
 @end

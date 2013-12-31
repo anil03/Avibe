@@ -8,6 +8,8 @@
 
 #import "YMGenericCollectionViewController.h"
 
+#import "Setting.h"
+
 @interface YMGenericCollectionViewController ()
 
 @end
@@ -36,6 +38,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+
 }
 
 - (void)didReceiveMemoryWarning

@@ -12,6 +12,5 @@
 //#import "YMGenericCollectionViewController.h"
 
 @interface ListenedViewController : YMGenericTableViewController
-//@interface ListenedViewController : YMGenericCollectionViewController
 
 @end
