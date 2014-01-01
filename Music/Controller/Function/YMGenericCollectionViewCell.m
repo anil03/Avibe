@@ -12,10 +12,10 @@
 
 @interface YMGenericCollectionViewCell ()
 
-@property (nonatomic, strong) UILabel *titleLabel;
-@property (strong, nonatomic) UILabel *albumLabel;
-@property (strong, nonatomic) UILabel *artistLabel;
-@property (strong, nonatomic) UILabel *userLabel;
+//@property (nonatomic, strong) UILabel *titleLabel;
+//@property (strong, nonatomic) UILabel *albumLabel;
+//@property (strong, nonatomic) UILabel *artistLabel;
+//@property (strong, nonatomic) UILabel *userLabel;
 
 @end
 
@@ -28,22 +28,29 @@
         // Initialization code
         self.backgroundColor = [[Setting sharedSetting] sharedCellColor];
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 200, 30)];
-        _titleLabel.text = @"test";
-
-        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 20, 200, 30)];
-        _albumLabel.text = @"_albumLabel";
+        _label = [[UILabel alloc] initWithFrame:self.bounds];
+//        _label.text = @"test";
+        _label.font = [UIFont fontWithName:@"Helvetica Neue" size:(12.0)];
+        _label.textAlignment = NSTextAlignmentCenter;
+//        _label.adjustsFontSizeToFitWidth = YES;
+        [self addSubview:_label];
         
-        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 35, 200, 30)];
-        _artistLabel.text = @"_artistLabel";
-        
-        _userLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, 200, 30)];
-        _userLabel.text = @"_userLabel";
-        
-        [self addSubview:_titleLabel];
-        [self addSubview:_albumLabel];
-        [self addSubview:_artistLabel];
-        [self addSubview:_userLabel];
+//        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 200, 30)];
+//        _titleLabel.text = @"test";
+//
+//        _albumLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 20, 200, 30)];
+//        _albumLabel.text = @"_albumLabel";
+//        
+//        _artistLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 35, 200, 30)];
+//        _artistLabel.text = @"_artistLabel";
+//        
+//        _userLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 50, 200, 30)];
+//        _userLabel.text = @"_userLabel";
+//        
+//        [self addSubview:_titleLabel];
+//        [self addSubview:_albumLabel];
+//        [self addSubview:_artistLabel];
+//        [self addSubview:_userLabel];
     }
     return self;
 }

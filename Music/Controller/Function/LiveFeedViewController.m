@@ -29,7 +29,7 @@
 
 #import "YMGenericTableViewCell.h"
 #import "YMGenericCollectionViewCell.h"
-#import "YMGenericCollectionReusableView.h"
+#import "YMGenericCollectionReusableHeaderView.h"
 #import "YMGenericCollectionViewFlowLayout.h"
 
 #import "Setting.h"
@@ -58,6 +58,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
+@property (nonatomic, strong) NSArray *PFObjects;
+
 
 @end
 
@@ -76,13 +78,13 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 //    self = [super init];
     
     UICollectionViewFlowLayout *flowLayout = [[YMGenericCollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(80, 100)];
+    [flowLayout setItemSize:CGSizeMake(([UIScreen mainScreen].bounds.size.width-25)/4, 30)];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    [flowLayout setMinimumInteritemSpacing:10.0f]; //Between items
+    [flowLayout setMinimumInteritemSpacing:5.0f]; //Between items
     [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
-    flowLayout.sectionInset = UIEdgeInsetsMake(20, 20, 20, 20); //Between sections
-    flowLayout.headerReferenceSize = CGSizeMake(50, 30); //get header
-    flowLayout.footerReferenceSize = CGSizeMake(50, 30);
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5); //Between sections
+    flowLayout.headerReferenceSize = CGSizeMake(50, 30); //set header
+//    flowLayout.footerReferenceSize = CGSizeMake(50, 30);
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -91,8 +93,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         
         //UICollectionview
         [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
-        [self.collectionView registerClass:[YMGenericCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
-        [self.collectionView registerClass:[YMGenericCollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
+        [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
+        [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
         [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
         
         self.collectionView.delegate=self;
@@ -166,20 +168,51 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-	return 4;
+	return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-	return 5;
-    //    return recipeImages.count;
+	return [self.PFObjects count]*4;
 }
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
 	
-	UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+	YMGenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 	
+    //Data source
+    int columnNumber = 4;
+    int index = indexPath.row/columnNumber;
+    
+    PFObject *song = [self.PFObjects objectAtIndex:index];
+//    dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"user"], @"user", nil];
+    
+    switch (indexPath.row%columnNumber) {
+        case 0:{
+            cell.backgroundColor = [[Setting sharedSetting] primary1Color];
+            cell.label.text = [song objectForKey:@"title"];
+            break;
+        }
+        case 1:{
+            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+            cell.label.text = [song objectForKey:@"album"];
+            break;
+        }
+        case 2:{
+            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+            cell.label.text = [song objectForKey:@"artist"];
+            break;
+        }
+        case 3:{
+            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+            cell.label.text = [song objectForKey:@"user"];
+            break;
+        }
+        default:
+            break;
+    }
+    
     //Not implement ImageView yet
     //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
     //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
@@ -196,7 +229,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
    if (kind == UICollectionElementKindSectionHeader) {
 
        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-       footerview.backgroundColor = [UIColor greenColor];
+//       footerview.backgroundColor = [UIColor greenColor];
        
        reusableview = footerview;
        
@@ -329,14 +362,14 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 {
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    postQuery.limit = 10;
+    postQuery.limit = 20;
     //    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
     [postQuery orderByDescending:@"updatedAt"];
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             //Save results and update the table
-//            self.PFObjects = objects;
+            self.PFObjects = objects;
             
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -345,7 +378,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
             [refresh endRefreshing];
             
             [_spinner stopAnimating];
-            
+
+            [self.collectionView reloadData];
 //            [self.tableView reloadData];
         }else{
             NSLog(@"Error In Fetch Data: %@", error);

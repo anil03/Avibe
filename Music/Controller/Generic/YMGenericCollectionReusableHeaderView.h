@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMGenericCollectionReusableView : UICollectionReusableView
+@interface YMGenericCollectionReusableHeaderView : UICollectionReusableView
 
 @end

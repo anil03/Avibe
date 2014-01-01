@@ -15,6 +15,8 @@
 - (UIColor*)sharedBackgroundColor;
 - (UIColor*)sharedCellColor;
 
+- (UIColor*)primary1Color;
+
 + (Setting *)sharedSetting;
 
 

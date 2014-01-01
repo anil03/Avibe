@@ -10,6 +10,8 @@
 
 @interface YMGenericCollectionViewCell : UICollectionViewCell
 
+@property (nonatomic, strong) UILabel *label;
+
 - (void)setupWithDictionary:(NSDictionary *)dictionary;
 
 @end
