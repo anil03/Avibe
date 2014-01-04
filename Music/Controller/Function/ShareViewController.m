@@ -16,6 +16,8 @@
 
 #import "SampleMusicViewController.h"
 
+#import "Setting.h"
+
 
 @interface ShareViewController ()
 
@@ -52,7 +54,7 @@
 	[super viewDidLoad];
 	
     //UICollectionview
-    [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+    [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
 	
 	[self setupRefreshControl];
 	[self refreshView:self.refreshControl];
@@ -75,7 +77,8 @@
 	static NSString *identifier = @"Cell";
 	
 	UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-	
+	cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+
  //Not implement ImageView yet
  //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
  //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];

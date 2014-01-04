@@ -83,7 +83,7 @@
 		4CE6C3C8186DE6CF0028F963 /* FindFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C7186DE6CF0028F963 /* FindFriendsViewController.m */; };
 		4CE6C3CB186E62B70028F963 /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */; };
 		4CE6C3CC186E62B70028F963 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CA186E62B70028F963 /* User.storyboard */; };
-		4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CD186E639A0028F963 /* Main.storyboard */; };
+		4CE6C3CE186E639A0028F963 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3CD186E639A0028F963 /* Welcome.storyboard */; };
 		4CE6C3D1186E6A020028F963 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */; };
 		4CE6C3E8186E844B0028F963 /* welcome0.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3E5186E844B0028F963 /* welcome0.png */; };
 		4CE6C3E9186E844B0028F963 /* welcome1.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE6C3E6186E844B0028F963 /* welcome1.png */; };
@@ -257,7 +257,7 @@
 		4CE6C3C7186DE6CF0028F963 /* FindFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FindFriendsViewController.m; path = Controller/Function/FindFriendsViewController.m; sourceTree = "<group>"; };
 		4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SampleMusic.storyboard; path = View/SampleMusic.storyboard; sourceTree = "<group>"; };
 		4CE6C3CA186E62B70028F963 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = User.storyboard; path = View/User.storyboard; sourceTree = "<group>"; };
-		4CE6C3CD186E639A0028F963 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = View/Main.storyboard; sourceTree = "<group>"; };
+		4CE6C3CD186E639A0028F963 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Welcome.storyboard; path = View/Welcome.storyboard; sourceTree = "<group>"; };
 		4CE6C3CF186E6A020028F963 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WelcomeViewController.h; path = Controller/WelcomeViewController.h; sourceTree = "<group>"; };
 		4CE6C3D0186E6A020028F963 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WelcomeViewController.m; path = Controller/WelcomeViewController.m; sourceTree = "<group>"; };
 		4CE6C3E5186E844B0028F963 /* welcome0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome0.png; path = Resource/Welcome/welcome0.png; sourceTree = "<group>"; };
@@ -498,7 +498,7 @@
 		4C3179AF18440EF100F7D41B /* View */ = {
 			isa = PBXGroup;
 			children = (
-				4CE6C3CD186E639A0028F963 /* Main.storyboard */,
+				4CE6C3CD186E639A0028F963 /* Welcome.storyboard */,
 				4CE6C3C9186E62B70028F963 /* SampleMusic.storyboard */,
 				4CE6C3CA186E62B70028F963 /* User.storyboard */,
 				4CE6C3EB186F2C230028F963 /* FindFriendsStoryboard.storyboard */,
@@ -819,7 +819,7 @@
 				4CEE7D3D186F9E850012624D /* creme_brelee.jpg in Resources */,
 				4CEE7D48186F9E850012624D /* photo-frame.png in Resources */,
 				4CE6C3E9186E844B0028F963 /* welcome1.png in Resources */,
-				4CE6C3CE186E639A0028F963 /* Main.storyboard in Resources */,
+				4CE6C3CE186E639A0028F963 /* Welcome.storyboard in Resources */,
 				4C0723481858C28800D6E63C /* background.png in Resources */,
 				4CEE7D46186F9E850012624D /* mushroom_risotto.jpg in Resources */,
 				4CEE7D44186F9E850012624D /* instant_noodle_with_egg.jpg in Resources */,

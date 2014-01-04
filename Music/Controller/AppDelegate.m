@@ -11,6 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -52,6 +53,16 @@
     
     //Background
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    
+    //Set up Welcome View depending on different device
+    UIViewController *welcomeController;
+    if (IS_IPHONE_5) {
+        welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+    }else{
+        welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
+    }
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
+    self.window.rootViewController = navigationController;
     
     return YES;
 }

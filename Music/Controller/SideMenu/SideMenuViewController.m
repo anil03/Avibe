@@ -261,7 +261,12 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [PFUser logOut];
                 
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                WelcomeViewController *welcomeViewController = [storyboard instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+                UIViewController *welcomeController;
+                if (IS_IPHONE_5) {
+                    welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+                }else{
+                    welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
+                }
                 
                 //Clear all controller
                 liveFeedViewController = nil;
@@ -276,7 +281,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 self.navigationFriendsViewController = nil;
                 self.navigationUserViewController = nil;
                 
-                [self.mm_drawerController.navigationController pushViewController:welcomeViewController animated:YES];
+                [self.mm_drawerController.navigationController pushViewController:welcomeController animated:YES];
                 break;
             }
             default:
