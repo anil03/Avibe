@@ -21,6 +21,8 @@
 @interface FindFriendsViewController ()
 
 @property (nonatomic, strong) NSMutableArray *contactList;
+@property (nonatomic, strong) NSMutableArray *registeredUsers;
+@property (nonatomic, strong) NSMutableArray *unRegisteredUsers;
 
 @end
 
@@ -28,28 +30,16 @@
 
 @synthesize contactList = _contactList;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{    
-
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
-    [self setupBarMenuButton];
+    _registeredUsers = [[NSMutableArray alloc] init];
+    _unRegisteredUsers = [[NSMutableArray alloc] init];
     
+    [self setupBarMenuButton];
     [self searchAddressBook];
-
+    [self searchDatabaseForRegisteredUser];
 }
 
 #pragma mark - Address Book
@@ -145,45 +135,44 @@
     NSLog(@"Contacts = %@",_contactList);
 }
 
+
 /*
- // All Personal Information Properties
- kABPersonFirstNameProperty;          // First name - kABStringPropertyType
- kABPersonLastNameProperty;           // Last name - kABStringPropertyType
- kABPersonMiddleNameProperty;         // Middle name - kABStringPropertyType
- kABPersonPrefixProperty;             // Prefix ("Sir" "Duke" "General") - kABStringPropertyType
- kABPersonSuffixProperty;             // Suffix ("Jr." "Sr." "III") - kABStringPropertyType
- kABPersonNicknameProperty;           // Nickname - kABStringPropertyType
- kABPersonFirstNamePhoneticProperty;  // First name Phonetic - kABStringPropertyType
- kABPersonLastNamePhoneticProperty;   // Last name Phonetic - kABStringPropertyType
- kABPersonMiddleNamePhoneticProperty; // Middle name Phonetic - kABStringPropertyType
- kABPersonOrganizationProperty;       // Company name - kABStringPropertyType
- kABPersonJobTitleProperty;           // Job Title - kABStringPropertyType
- kABPersonDepartmentProperty;         // Department name - kABStringPropertyType
- kABPersonEmailProperty;              // Email(s) - kABMultiStringPropertyType
- kABPersonBirthdayProperty;           // Birthday associated with this person - kABDateTimePropertyType
- kABPersonNoteProperty;               // Note - kABStringPropertyType
- kABPersonCreationDateProperty;       // Creation Date (when first saved)
- kABPersonModificationDateProperty;   // Last saved date
- 
- // All Address Information Properties
- kABPersonAddressProperty;            // Street address - kABMultiDictionaryPropertyType
- kABPersonAddressStreetKey;
- kABPersonAddressCityKey;
- kABPersonAddressStateKey;
- kABPersonAddressZIPKey;
- kABPersonAddressCountryKey;
- kABPersonAddressCountryCodeKey;
+ * Fetch from Parse.com to get all registered username
+ * Compared user's contact list
+ * Show registered and unregistered users in tableview
  */
+- (void)searchDatabaseForRegisteredUser
+{
+    PFQuery *query = [PFUser query];
+    [query findObjectsInBackgroundWithTarget:self selector:@selector(handleUsernameInDatabase:error:)];
+}
+- (void)handleUsernameInDatabase:(NSArray *)result error:(NSError *)error
+{
+    if (!error) {
+        
+    }else{
+        //Handle Error Fetching User List from Parse.com
+    }
+}
 
 #pragma mark - TableView method
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [_contactList count];
+    switch (section) {
+        case 0:
+            return [_registeredUsers count];
+            break;
+        case 1:
+            return [_unRegisteredUsers count];
+            break;
+        default:
+            return 0;
+            break;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
