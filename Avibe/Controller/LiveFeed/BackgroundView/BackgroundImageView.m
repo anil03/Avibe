@@ -43,7 +43,7 @@
         [self registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         
         //Load background images
-        ImageFetcher *fetcher = [[ImageFetcher alloc] initWithLimit:_row*_column andTerm:@"lady+gaga"];
+        ImageFetcher *fetcher = [[ImageFetcher alloc] initWithLimit:_row*_column andTerm:@"*"];
         _images = [fetcher getAlbumImages];
     }
     

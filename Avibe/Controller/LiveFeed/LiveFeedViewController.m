@@ -195,6 +195,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     PFObject *song = [self.PFObjects objectAtIndex:index];
 //    dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"user"], @"user", nil];
     
+    cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+    
     switch (indexPath.row%columnNumber) {
         case 0:{
 //            cell.backgroundColor = [[Setting sharedSetting] primary1Color];
