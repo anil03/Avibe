@@ -121,6 +121,7 @@
 		4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD81881E88500B030F9 /* ImageFetcher.m */; };
 		4C231DDB1881F1A300B030F9 /* BackgroundImageViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */; };
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
+		4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicEntries.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -312,6 +313,8 @@
 		4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageViewTest.m; sourceTree = "<group>"; };
 		4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundImageView.h; sourceTree = "<group>"; };
 		4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageView.m; sourceTree = "<group>"; };
+		4C231DE018820CC200B030F9 /* SaveMusicEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveMusicEntries.h; sourceTree = "<group>"; };
+		4C231DE118820CC200B030F9 /* SaveMusicEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveMusicEntries.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Avibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -565,6 +568,7 @@
 		4C231CAA188104F800B030F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
 				4C231D701881DC1300B030F9 /* BackgroundImage */,
 				4C231CAB188104F800B030F9 /* Setting.h */,
 				4C231CAC188104F800B030F9 /* Setting.m */,
@@ -753,6 +757,15 @@
 				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
 			);
 			path = SampleMusic;
+			sourceTree = "<group>";
+		};
+		4C231DDF18820CA300B030F9 /* SaveListenedMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DE018820CC200B030F9 /* SaveMusicEntries.h */,
+				4C231DE118820CC200B030F9 /* SaveMusicEntries.m */,
+			);
+			path = SaveListenedMusic;
 			sourceTree = "<group>";
 		};
 		4C31796C18440EA700F7D41B = {
@@ -1051,6 +1064,7 @@
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
 				4C231D25188104F800B030F9 /* XMLParser.m in Sources */,
+				4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

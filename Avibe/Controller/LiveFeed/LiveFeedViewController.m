@@ -34,9 +34,10 @@
 
 #import "Setting.h"
 
-#import "XMLParser.h"
 
 #import "BackgroundImageView.h"
+
+#import "SaveMusicEntries.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionLeftViewState,
@@ -45,16 +46,14 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionRightDrawerAnimation,
 };
 
-static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
 
 
-@interface LiveFeedViewController()<XMLParserDelegate>
+@interface LiveFeedViewController()
 
 @property (weak, atomic) UIViewController *viewController;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
-@property (nonatomic, strong) XMLParser *parser;
 @property (nonatomic, strong) NSMutableArray *XMLData;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
@@ -121,7 +120,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         if ([self.delegate getLastFMAccount] == nil) {
             return;
         }
-        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
+//        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
     }
 }
 
@@ -263,110 +262,6 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
    return reusableview;
 }
 
-#pragma mark Bar Button
-- (void)updateSongInParse {
-    //Save Scrobbler Music from XML Parser
-    [self setupXMLParserAndParse]; //Update XMLData
-    
-    //iPod Music
-    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    if (currentPlayingSong){
-        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-        
-        [self.XMLData addObject:songRecord];
-    }
-    
-
-    
-    //Get rid of duplicated data then save
-    [self filterDuplicatedDataToSaveInParse:self.XMLData];
-    
-    //NO more songs need to be added
-    /*if ([dataToSave count] == 0) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Congratulations!" message: @"All songs have been updated." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-    }*/
-    }
-
-
-
-    - (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)XMLData
-    {
-        NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
-        __block int numberOfDuplicated = 0;
-        
-        
-        PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-        [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-        postQuery.limit = 1000;
-        [postQuery findObjectsInBackgroundWithBlock:^(NSArray *fetechObjects, NSError *error) {
-            BOOL songExisted = NO;
-            
-            for(PFObject *pfToSave in XMLData){
-                songExisted = NO;
-                
-                NSString *newTitle = [pfToSave objectForKey:@"title"];
-                NSString *newArtist = [pfToSave objectForKey:@"artist"];
-                NSString *newAlbum = [pfToSave objectForKey:@"album"];
-                
-            /* Too slow in background
-             PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-             [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-             [postQuery whereKey:@"title" containsString:newTitle];
-             [postQuery whereKey:@"artist" containsString:newArtist];
-             [postQuery whereKey:@"album" containsString:newAlbum];
-             
-             if ([postQuery countObjects] > 0) {
-             songExisted = YES;
-             }
-             */
-             
-             
-             for(PFObject *pf in fetechObjects){
-                NSString *existingTitle = [pf objectForKey:@"title"];
-                NSString *existingArtist = [pf objectForKey:@"artist"];
-                NSString *existingAlbum = [pf objectForKey:@"album"];
-                
-                if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
-                    //Duplicated Object
-                    numberOfDuplicated++;
-//                    NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
-                    songExisted = YES;
-                    break;
-                }
-            }
-            
-            
-            if (songExisted) {
-                continue;
-            }
-            [dataToSave addObject:pfToSave];
-        }
-        
-        
-        [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Save XML Data succeeded!");
-                NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
-
-                //Fetch data and Update table view
-                [self fetchData:self.refreshControl];
-            }else{
-                NSLog(@"Error Saving XML Data: %@", error);
-            }
-        }];
-
-    }];
-
-
-
-
-}
-
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     //Create query for all Post object by the current user
@@ -419,7 +314,11 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     
     // custom refresh logic would be placed here...
     [_spinner startAnimating];
-    [self updateSongInParse];
+    
+    [[[SaveMusicEntries alloc] init] saveMusic];
+    
+    [self fetchData:self.refreshControl];
+//    [self updateSongInParse];
     
 }
 
@@ -475,22 +374,6 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 
 
-#pragma mark - XML method
-- (void)setupXMLParserAndParse
-{
-    //Setup XMLParser
-    self.XMLData = nil; //clear previous data
-    self.XMLData = [[NSMutableArray alloc] init];
-    NSURL *url = [NSURL URLWithString:kURLString];
-    self.parser = [[XMLParser alloc] initWithURL:url AndData:self.XMLData];
-    self.parser.delegate = self;
-    [self.parser startParsing];
-}
 
-- (void)finishParsing
-{
-    NSLog(@"Parse Finish.");
-    
-}
 
 @end
