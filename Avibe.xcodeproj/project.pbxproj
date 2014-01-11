@@ -24,7 +24,6 @@
 		4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C6A188104F800B030F9 /* MMSideDrawerSectionHeaderView.m */; };
 		4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C6C188104F800B030F9 /* MMSideDrawerTableViewCell.m */; };
 		4C231D09188104F800B030F9 /* MMTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C6E188104F800B030F9 /* MMTableViewCell.m */; };
-		4C231D0A188104F800B030F9 /* SampleMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C70188104F800B030F9 /* SampleMusicViewController.m */; };
 		4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C72188104F800B030F9 /* SubclassConfigViewController.m */; };
 		4C231D0C188104F800B030F9 /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C74188104F800B030F9 /* TableViewController.m */; };
 		4C231D0D188104F800B030F9 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C76188104F800B030F9 /* UIViewController+MMDrawerController.m */; };
@@ -112,6 +111,16 @@
 		4C231D62188104F800B030F9 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF9188104F800B030F9 /* User.storyboard */; };
 		4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231D671881058A00B030F9 /* Avibe-Info.plist */; };
 		4C231D6B1881058A00B030F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231D691881058A00B030F9 /* main.m */; };
+		4C231DCA1881DF3700B030F9 /* AvibeTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231DC31881DF3700B030F9 /* AvibeTests-Info.plist */; };
+		4C231DCB1881DF3700B030F9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C231DC41881DF3700B030F9 /* InfoPlist.strings */; };
+		4C231DCC1881DF3700B030F9 /* MusicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DC61881DF3700B030F9 /* MusicTests.m */; };
+		4C231DCD1881DF3700B030F9 /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */; };
+		4C231DCE1881DF3700B030F9 /* TestXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DC91881DF3700B030F9 /* TestXMLParser.m */; };
+		4C231DD21881E3FF00B030F9 /* BackgroundImageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */; };
+		4C231DD61881E51300B030F9 /* SampleMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD51881E51300B030F9 /* SampleMusicViewController.m */; };
+		4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD81881E88500B030F9 /* ImageFetcher.m */; };
+		4C231DDB1881F1A300B030F9 /* BackgroundImageViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */; };
+		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -176,8 +185,6 @@
 		4C231C6C188104F800B030F9 /* MMSideDrawerTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMSideDrawerTableViewCell.m; sourceTree = "<group>"; };
 		4C231C6D188104F800B030F9 /* MMTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMTableViewCell.h; sourceTree = "<group>"; };
 		4C231C6E188104F800B030F9 /* MMTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMTableViewCell.m; sourceTree = "<group>"; };
-		4C231C6F188104F800B030F9 /* SampleMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicViewController.h; sourceTree = "<group>"; };
-		4C231C70188104F800B030F9 /* SampleMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicViewController.m; sourceTree = "<group>"; };
 		4C231C71188104F800B030F9 /* SubclassConfigViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubclassConfigViewController.h; sourceTree = "<group>"; };
 		4C231C72188104F800B030F9 /* SubclassConfigViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubclassConfigViewController.m; sourceTree = "<group>"; };
 		4C231C73188104F800B030F9 /* TableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
@@ -292,6 +299,19 @@
 		4C231D671881058A00B030F9 /* Avibe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Avibe-Info.plist"; sourceTree = "<group>"; };
 		4C231D681881058A00B030F9 /* Avibe-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Avibe-Prefix.pch"; sourceTree = "<group>"; };
 		4C231D691881058A00B030F9 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4C231DC31881DF3700B030F9 /* AvibeTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AvibeTests-Info.plist"; sourceTree = "<group>"; };
+		4C231DC51881DF3700B030F9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4C231DC61881DF3700B030F9 /* MusicTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTests.m; sourceTree = "<group>"; };
+		4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestNSXMLParser.m; sourceTree = "<group>"; };
+		4C231DC91881DF3700B030F9 /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestXMLParser.m; sourceTree = "<group>"; };
+		4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageTest.m; sourceTree = "<group>"; };
+		4C231DD41881E51300B030F9 /* SampleMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicViewController.h; sourceTree = "<group>"; };
+		4C231DD51881E51300B030F9 /* SampleMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicViewController.m; sourceTree = "<group>"; };
+		4C231DD71881E88500B030F9 /* ImageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFetcher.h; sourceTree = "<group>"; };
+		4C231DD81881E88500B030F9 /* ImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetcher.m; sourceTree = "<group>"; };
+		4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageViewTest.m; sourceTree = "<group>"; };
+		4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundImageView.h; sourceTree = "<group>"; };
+		4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageView.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Avibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -352,11 +372,12 @@
 		4C231C4B188104F800B030F9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4C231C8C188104F800B030F9 /* LiveFeed */,
+				4C231DD31881E51300B030F9 /* SampleMusic */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231C77188104F800B030F9 /* Friends */,
 				4C231C7C188104F800B030F9 /* Generic */,
 				4C231C89188104F800B030F9 /* Listened */,
-				4C231C8C188104F800B030F9 /* LiveFeed */,
 				4C231C90188104F800B030F9 /* Setting */,
 				4C231C93188104F800B030F9 /* Share */,
 				4C231C96188104F800B030F9 /* SideMenu */,
@@ -371,8 +392,6 @@
 			isa = PBXGroup;
 			children = (
 				4C231C4D188104F800B030F9 /* MMController */,
-				4C231C6F188104F800B030F9 /* SampleMusicViewController.h */,
-				4C231C70188104F800B030F9 /* SampleMusicViewController.m */,
 				4C231C71188104F800B030F9 /* SubclassConfigViewController.h */,
 				4C231C72188104F800B030F9 /* SubclassConfigViewController.m */,
 				4C231C73188104F800B030F9 /* TableViewController.h */,
@@ -475,6 +494,8 @@
 		4C231C8D188104F800B030F9 /* BackgroundView */ = {
 			isa = PBXGroup;
 			children = (
+				4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */,
+				4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */,
 			);
 			path = BackgroundView;
 			sourceTree = "<group>";
@@ -544,6 +565,7 @@
 		4C231CAA188104F800B030F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C231D701881DC1300B030F9 /* BackgroundImage */,
 				4C231CAB188104F800B030F9 /* Setting.h */,
 				4C231CAC188104F800B030F9 /* Setting.m */,
 				4C231CAD188104F800B030F9 /* Song.h */,
@@ -667,10 +689,77 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		4C231D6C1881063A00B030F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C231D671881058A00B030F9 /* Avibe-Info.plist */,
+				4C231D681881058A00B030F9 /* Avibe-Prefix.pch */,
+				4C231D691881058A00B030F9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C231D701881DC1300B030F9 /* BackgroundImage */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DD71881E88500B030F9 /* ImageFetcher.h */,
+				4C231DD81881E88500B030F9 /* ImageFetcher.m */,
+			);
+			path = BackgroundImage;
+			sourceTree = "<group>";
+		};
+		4C231DC21881DF3700B030F9 /* AvibeTests */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DD01881E3E300B030F9 /* BackgroundImageTest */,
+				4C231DC71881DF3700B030F9 /* XMLTest */,
+				4C231DCF1881E3B500B030F9 /* Supporting Files */,
+			);
+			path = AvibeTests;
+			sourceTree = "<group>";
+		};
+		4C231DC71881DF3700B030F9 /* XMLTest */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */,
+				4C231DC91881DF3700B030F9 /* TestXMLParser.m */,
+			);
+			path = XMLTest;
+			sourceTree = "<group>";
+		};
+		4C231DCF1881E3B500B030F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DC31881DF3700B030F9 /* AvibeTests-Info.plist */,
+				4C231DC41881DF3700B030F9 /* InfoPlist.strings */,
+				4C231DC61881DF3700B030F9 /* MusicTests.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4C231DD01881E3E300B030F9 /* BackgroundImageTest */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */,
+				4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */,
+			);
+			path = BackgroundImageTest;
+			sourceTree = "<group>";
+		};
+		4C231DD31881E51300B030F9 /* SampleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DD41881E51300B030F9 /* SampleMusicViewController.h */,
+				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
+			);
+			path = SampleMusic;
+			sourceTree = "<group>";
+		};
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
 				4C9168B6187DEE3B000AB100 /* Avibe */,
+				4C231DC21881DF3700B030F9 /* AvibeTests */,
 				4C31797718440EA700F7D41B /* Frameworks */,
 				4C31797618440EA700F7D41B /* Products */,
 				5B085EF440F545DD93B4A79C /* Pods.xcconfig */,
@@ -713,13 +802,11 @@
 		4C9168B6187DEE3B000AB100 /* Avibe */ = {
 			isa = PBXGroup;
 			children = (
-				4C231D671881058A00B030F9 /* Avibe-Info.plist */,
-				4C231D681881058A00B030F9 /* Avibe-Prefix.pch */,
-				4C231D691881058A00B030F9 /* main.m */,
 				4C231CAA188104F800B030F9 /* Model */,
 				4C231CF4188104F800B030F9 /* View */,
 				4C231C4B188104F800B030F9 /* Controller */,
 				4C231CB3188104F800B030F9 /* Resource */,
+				4C231D6C1881063A00B030F9 /* Supporting Files */,
 			);
 			path = Avibe;
 			sourceTree = "<group>";
@@ -873,6 +960,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C231DCA1881DF3700B030F9 /* AvibeTests-Info.plist in Resources */,
+				4C231DCB1881DF3700B030F9 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -922,11 +1011,13 @@
 				4C231D03188104F800B030F9 /* MMExampleSideDrawerViewController.m in Sources */,
 				4C231D14188104F800B030F9 /* YMGenericTableViewCell.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
+				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,
 				4C231CFE188104F800B030F9 /* MMDrawerVisualState.m in Sources */,
 				4C231D1E188104F800B030F9 /* UserViewController.m in Sources */,
 				4C231D13188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m in Sources */,
+				4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */,
 				4C231D09188104F800B030F9 /* MMTableViewCell.m in Sources */,
 				4C231D23188104F800B030F9 /* Song.m in Sources */,
 				4C231D00188104F800B030F9 /* MMExampleDrawerVisualStateManager.m in Sources */,
@@ -937,10 +1028,10 @@
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
+				4C231DD61881E51300B030F9 /* SampleMusicViewController.m in Sources */,
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
-				4C231D0A188104F800B030F9 /* SampleMusicViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
@@ -967,6 +1058,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C231DCC1881DF3700B030F9 /* MusicTests.m in Sources */,
+				4C231DDB1881F1A300B030F9 /* BackgroundImageViewTest.m in Sources */,
+				4C231DCE1881DF3700B030F9 /* TestXMLParser.m in Sources */,
+				4C231DCD1881DF3700B030F9 /* TestNSXMLParser.m in Sources */,
+				4C231DD21881E3FF00B030F9 /* BackgroundImageTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -979,6 +1075,17 @@
 			targetProxy = 4C31799B18440EA700F7D41B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4C231DC41881DF3700B030F9 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4C231DC51881DF3700B030F9 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4C3179A518440EA700F7D41B /* Debug */ = {
@@ -1064,7 +1171,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework",
-					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1107,7 +1213,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework",
-					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1144,16 +1249,15 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Beet.app/Beet";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/${PROJECT_NAME}.app/${PROJECT_NAME}";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/Michael/Developer/github/Beet/Music/Framework,
-					/Users/Michael/Developer/github/Beet,
+					"${SRCROOT}/Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1163,7 +1267,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"${PODS_ROOT}/Headers\"/**",
 				);
-				INFOPLIST_FILE = "MusicTests/AvibeTests-Info.plist";
+				INFOPLIST_FILE = "${PRODUCT_NAME}/AvibeTests-Info.plist";
 				PRODUCT_NAME = AvibeTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1175,22 +1279,21 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Beet.app/Beet";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/${PROJECT_NAME}.app/${PROJECT_NAME}";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
-					/Users/Michael/Developer/github/Beet/Music/Framework,
-					/Users/Michael/Developer/github/Beet,
+					"${SRCROOT}/Framework",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Music/Beet-Prefix.pch";
+				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"${PODS_ROOT}/Headers\"/**",
 				);
-				INFOPLIST_FILE = "MusicTests/AvibeTests-Info.plist";
+				INFOPLIST_FILE = "${PRODUCT_NAME}/AvibeTests-Info.plist";
 				PRODUCT_NAME = AvibeTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

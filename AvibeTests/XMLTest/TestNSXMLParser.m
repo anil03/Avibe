@@ -8,7 +8,7 @@
 
 #import <XCTest/XCTest.h>
 
-#import "Beet-Prefix.pch"
+#import "Avibe-Prefix.pch"
 
 //Usage:
 //http://stackoverflow.com/questions/8813968/parsing-xml-in-nsxmlparser

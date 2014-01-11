@@ -36,6 +36,8 @@
 
 #import "XMLParser.h"
 
+#import "BackgroundImageView.h"
+
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionLeftViewState,
     MMCenterViewControllerSectionLeftDrawerAnimation,
@@ -96,9 +98,10 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
         
-        UIView *view = [[UIView alloc] init];
-        view.backgroundColor = [UIColor redColor];
-        self.collectionView.backgroundView = view;
+        //BackgroundView
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.backgroundView.frame];
+//        backgroundView.backgroundColor = [UIColor redColor];
+        self.collectionView.backgroundView = backgroundView;
 //        [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
         
         self.collectionView.delegate=self;
