@@ -95,7 +95,11 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
-        [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+        
+        UIView *view = [[UIView alloc] init];
+        view.backgroundColor = [UIColor redColor];
+        self.collectionView.backgroundView = view;
+//        [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
         
         self.collectionView.delegate=self;
         self.collectionView.dataSource=self;
@@ -190,22 +194,22 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     
     switch (indexPath.row%columnNumber) {
         case 0:{
-            cell.backgroundColor = [[Setting sharedSetting] primary1Color];
+//            cell.backgroundColor = [[Setting sharedSetting] primary1Color];
             cell.label.text = [song objectForKey:@"title"];
             break;
         }
         case 1:{
-            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
             cell.label.text = [song objectForKey:@"album"];
             break;
         }
         case 2:{
-            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
             cell.label.text = [song objectForKey:@"artist"];
             break;
         }
         case 3:{
-            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
             cell.label.text = [song objectForKey:@"user"];
             break;
         }

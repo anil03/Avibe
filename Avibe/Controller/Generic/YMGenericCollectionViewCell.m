@@ -26,7 +26,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.backgroundColor = [[Setting sharedSetting] sharedCellColor];
+        self.backgroundColor = [UIColor clearColor];
         
         _label = [[UILabel alloc] initWithFrame:self.bounds];
 //        _label.text = @"test";
