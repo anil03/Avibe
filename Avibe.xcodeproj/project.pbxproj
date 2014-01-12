@@ -50,7 +50,6 @@
 		4C231D22188104F800B030F9 /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAC188104F800B030F9 /* Setting.m */; };
 		4C231D23188104F800B030F9 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAE188104F800B030F9 /* Song.m */; };
 		4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAF188104F800B030F9 /* Song.xcdatamodeld */; };
-		4C231D25188104F800B030F9 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CB2188104F800B030F9 /* XMLParser.m */; };
 		4C231D26188104F800B030F9 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB5188104F800B030F9 /* background.png */; };
 		4C231D27188104F800B030F9 /* sample_music_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB6188104F800B030F9 /* sample_music_background.jpg */; };
 		4C231D28188104F800B030F9 /* side-drum-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB8188104F800B030F9 /* side-drum-120.png */; };
@@ -122,6 +121,13 @@
 		4C231DDB1881F1A300B030F9 /* BackgroundImageViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */; };
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
 		4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicEntries.m */; };
+		4C231DEA188311CC00B030F9 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE8188311CC00B030F9 /* XMLParser.m */; };
+		4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
+		4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
+		4C231DF0188316A300B030F9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
+		4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
+		4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF31883179D00B030F9 /* CoreMedia.framework */; };
+		4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF518831A4700B030F9 /* StoreKit.framework */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -237,8 +243,6 @@
 		4C231CAD188104F800B030F9 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		4C231CAE188104F800B030F9 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		4C231CB0188104F800B030F9 /* Song.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Song.xcdatamodel; sourceTree = "<group>"; };
-		4C231CB1188104F800B030F9 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
-		4C231CB2188104F800B030F9 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
 		4C231CB5188104F800B030F9 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		4C231CB6188104F800B030F9 /* sample_music_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_music_background.jpg; sourceTree = "<group>"; };
 		4C231CB8188104F800B030F9 /* side-drum-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "side-drum-120.png"; sourceTree = "<group>"; };
@@ -315,6 +319,14 @@
 		4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageView.m; sourceTree = "<group>"; };
 		4C231DE018820CC200B030F9 /* SaveMusicEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveMusicEntries.h; sourceTree = "<group>"; };
 		4C231DE118820CC200B030F9 /* SaveMusicEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveMusicEntries.m; sourceTree = "<group>"; };
+		4C231DE7188311CC00B030F9 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
+		4C231DE8188311CC00B030F9 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
+		4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioConsumerCredentials.h; sourceTree = "<group>"; };
+		4C231DEC1883129F00B030F9 /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rdio.framework; path = Framework/Rdio.framework; sourceTree = "<group>"; };
+		4C231DEF188316A200B030F9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		4C231DF1188316AC00B030F9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4C231DF31883179D00B030F9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		4C231DF518831A4700B030F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4C31797518440EA700F7D41B /* Avibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -341,6 +353,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */,
 				4C231C05187DF52900B030F9 /* FacebookSDK.framework in Frameworks */,
 				4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */,
 				4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */,
@@ -349,6 +362,7 @@
 				4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */,
 				4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */,
 				4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */,
+				4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */,
 				4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */,
 				4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */,
 				4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */,
@@ -363,6 +377,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */,
+				4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */,
+				4C231DF0188316A300B030F9 /* Security.framework in Frameworks */,
+				4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */,
 				4C31799818440EA700F7D41B /* XCTest.framework in Frameworks */,
 				4C31799A18440EA700F7D41B /* UIKit.framework in Frameworks */,
 				4C31799918440EA700F7D41B /* Foundation.framework in Frameworks */,
@@ -575,8 +593,6 @@
 				4C231CAD188104F800B030F9 /* Song.h */,
 				4C231CAE188104F800B030F9 /* Song.m */,
 				4C231CAF188104F800B030F9 /* Song.xcdatamodeld */,
-				4C231CB1188104F800B030F9 /* XMLParser.h */,
-				4C231CB2188104F800B030F9 /* XMLParser.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -762,10 +778,29 @@
 		4C231DDF18820CA300B030F9 /* SaveListenedMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C231DE6188311CC00B030F9 /* LastFM */,
+				4C231DE9188311CC00B030F9 /* Rdio */,
 				4C231DE018820CC200B030F9 /* SaveMusicEntries.h */,
 				4C231DE118820CC200B030F9 /* SaveMusicEntries.m */,
 			);
 			path = SaveListenedMusic;
+			sourceTree = "<group>";
+		};
+		4C231DE6188311CC00B030F9 /* LastFM */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DE7188311CC00B030F9 /* XMLParser.h */,
+				4C231DE8188311CC00B030F9 /* XMLParser.m */,
+			);
+			path = LastFM;
+			sourceTree = "<group>";
+		};
+		4C231DE9188311CC00B030F9 /* Rdio */ = {
+			isa = PBXGroup;
+			children = (
+				4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */,
+			);
+			path = Rdio;
 			sourceTree = "<group>";
 		};
 		4C31796C18440EA700F7D41B = {
@@ -791,12 +826,15 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C231DF518831A4700B030F9 /* StoreKit.framework */,
+				4C231DF1188316AC00B030F9 /* AudioToolbox.framework */,
 				4C3179C91844107800F7D41B /* AVFoundation.framework */,
 				4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */,
 				4C3179C118440FAA00F7D41B /* CoreData.framework */,
 				4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */,
 				4C31797A18440EA700F7D41B /* CoreGraphics.framework */,
 				4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */,
+				4C231DF31883179D00B030F9 /* CoreMedia.framework */,
 				4C231C04187DF52900B030F9 /* FacebookSDK.framework */,
 				4C31797818440EA700F7D41B /* Foundation.framework */,
 				4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */,
@@ -805,6 +843,8 @@
 				4C3179CB1844107D00F7D41B /* MediaPlayer.framework */,
 				4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */,
 				4C9169DF187DF1B0000AB100 /* Parse.framework */,
+				4C231DEC1883129F00B030F9 /* Rdio.framework */,
+				4C231DEF188316A200B030F9 /* Security.framework */,
 				4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */,
 				4C31797C18440EA700F7D41B /* UIKit.framework */,
 				4C31799718440EA700F7D41B /* XCTest.framework */,
@@ -1046,6 +1086,7 @@
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
+				4C231DEA188311CC00B030F9 /* XMLParser.m in Sources */,
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
@@ -1063,7 +1104,6 @@
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
-				4C231D25188104F800B030F9 /* XMLParser.m in Sources */,
 				4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1185,6 +1225,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework",
+					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1208,6 +1249,7 @@
 					Security,
 					"-framework",
 					SystemConfiguration,
+					"-all_load",
 				);
 				PRODUCT_NAME = Avibe;
 				PROVISIONING_PROFILE = "";
@@ -1227,6 +1269,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework",
+					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1250,6 +1293,7 @@
 					Security,
 					"-framework",
 					SystemConfiguration,
+					"-all_load",
 				);
 				PRODUCT_NAME = Avibe;
 				PROVISIONING_PROFILE = "";
@@ -1269,6 +1313,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"${SRCROOT}/Framework",
+					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";
@@ -1299,6 +1344,7 @@
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"${SRCROOT}/Framework",
+					/Users/Michael/Developer/github/Avibe/Framework,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";

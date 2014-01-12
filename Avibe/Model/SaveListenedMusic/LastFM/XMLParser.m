@@ -18,11 +18,26 @@
 @property NSMutableString *text;
 @property NSMutableString *tempText;
 
-@property (nonatomic, weak) NSMutableArray *data;
+@property (nonatomic, strong) NSMutableArray *data;
 
 @end
 
 @implementation XMLParser
+
+- (id)initWithURL:(NSURL*)url
+{
+    self = [super init];
+    
+    if(self){
+        NSData *scrobllerData = [NSData dataWithContentsOfURL:url];
+        self.parser = [[NSXMLParser alloc] initWithData:scrobllerData];
+        [self.parser setDelegate:self];
+        
+        _data = [[NSMutableArray alloc] init];
+    }
+    
+    return self;
+}
 
 - (id)initWithURL:(NSURL*)url AndData:(NSMutableArray*)data
 {
@@ -34,7 +49,6 @@
         [self.parser setDelegate:self];
         
         self.data = data;
-        
     }
 
     return self;
@@ -98,8 +112,8 @@
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
     //Finish parsing, call delegate
-    if(self.delegate && [self.delegate respondsToSelector:@selector(finishParsing)]){
-        [self.delegate finishParsing];
+    if(self.delegate && [self.delegate respondsToSelector:@selector(finishParsing:)]){
+        [self.delegate finishParsing:_data];
     }
 }
 

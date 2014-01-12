@@ -10,7 +10,7 @@
 
 @protocol XMLParserDelegate <NSObject>
 
-- (void)finishParsing;
+- (void)finishParsing:(NSMutableArray*)result;
 
 @end
 
@@ -18,6 +18,7 @@
 
 @property (nonatomic, weak) id<XMLParserDelegate> delegate;
 
+- (id)initWithURL:(NSURL*)url;
 - (id)initWithURL:(NSURL*)url AndData:(NSMutableArray*)data;
 - (void)startParsing;
 

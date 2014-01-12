@@ -10,7 +10,9 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 
-
+//Rdio
+#import <Rdio/Rdio.h>
+#import "RdioConsumerCredentials.h"
 
 @implementation AppDelegate
 
@@ -20,6 +22,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Rdio
+//    Rdio *rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+
+    
     // Override point for customization after application launch.
     //    NSManagedObjectContext *context = [self managedObjectContext];
     
