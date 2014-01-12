@@ -44,12 +44,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     
     if (self) {
         
-        //Fetch Existing Songs from Parse
-        PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-        [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-        [postQuery orderByDescending:@"updateAt"]; //Get latest song
-        postQuery.limit = 1000;
-        fetechObjects = [postQuery findObjects];
+        
     }
     
     return self;
@@ -57,10 +52,18 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 - (void)saveMusic
 {
-    [self getIPodMusic];
-    [self getRdioMusic];
-    [self getSpotifyMusic];
-    [self getScrobbleMusic];
+    //Fetch Existing Songs from Parse
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    postQuery.limit = 1000;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        fetechObjects = objects;
+        [self getIPodMusic];
+        [self getRdioMusic];
+        [self getSpotifyMusic];
+        [self getScrobbleMusic];
+    }];
 }
 
 #pragma mark - iPod Music
@@ -74,7 +77,6 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
         [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
         
-        NSLog(@"***Saving iPod Music***");
         [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod"];
     }else{
         NSLog(@"No iPod Music Available");
@@ -100,7 +102,6 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     }
     
     //Get rid of duplicated data then save
-    NSLog(@"***Saving LastFM Music***");
     [self filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM"];
 }
 
@@ -134,12 +135,12 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     NSString *title = [lastSongPlayedData objectForKey:@"name"];
     NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
     NSString *album = [lastSongPlayedData objectForKey:@"album"];
-    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
+//    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
     
     PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
     [songRecord setObject:title  forKey:@"title"];
     [songRecord setObject:album forKey:@"album"];
-    [songRecord setObject:album forKey:@"artist"];
+    [songRecord setObject:artist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     
     [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio"];
@@ -175,7 +176,7 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
             if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
                 //Duplicated Object
                 numberOfDuplicated++;
-                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
+//                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
                 songExisted = YES;
                 break;
             }
@@ -205,11 +206,11 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 
 - (void)printMusicToSaveData:(NSMutableArray*)musicToSave
 {
-    NSLog(@"===Saving Music===");
+    NSLog(@"<===Saving Music===");
     for(PFObject *object in musicToSave){
         NSLog(@"%@,%@,%@", [object objectForKey:@"title"], [object objectForKey:@"artist"], [object objectForKey:@"album"]);
     }
-    NSLog(@"==================");
+    NSLog(@"==================>");
 
 }
 

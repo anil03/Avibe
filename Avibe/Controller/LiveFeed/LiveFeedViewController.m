@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
     postQuery.limit = 20;
     //    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updatedAt"];
+    [postQuery orderByDescending:@"updateAt"]; //Get latest song
     // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
