@@ -8,7 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol SampleMusicSourceViewDelegate <NSObject>
+
+- (void)listenSampleMusic:(NSString*)source;
+
+@end
+
 @interface SampleMusicSourceView : UIView
+
+@property (nonatomic, weak) id<SampleMusicSourceViewDelegate> delegate;
 
 - (id)initWithPosition:(CGPoint)position;
 

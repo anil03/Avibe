@@ -21,21 +21,38 @@
 
 - (id)initWithPosition:(CGPoint)position
 {
-    self = [super initWithFrame:CGRectMake(position.x, position.y, 50, 30)];
+    self = [super initWithFrame:CGRectMake(position.x, position.y, 80, 40)];
     if (self) {
-        // Initialization code
-        self.backgroundColor = [UIColor redColor];
+        float icon_width = 30.0f;
+        float icon_height = 30.0f;
+        
+        self.backgroundColor = [UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:0.5];
+        
+        UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 5, icon_width, icon_height)];
+        [iTuneButton setBackgroundImage:[UIImage imageNamed:@"iTuneLogo.png"] forState:UIControlStateNormal];
+        [iTuneButton addTarget:self action:@selector(listeniTuneMusic) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:iTuneButton];
+        
+        UIButton *spotifyButton = [[UIButton alloc] initWithFrame:CGRectMake(40, 5, icon_width, icon_height)];
+        [spotifyButton setBackgroundImage:[UIImage imageNamed:@"spotifyLogo.png"] forState:UIControlStateNormal];
+        [spotifyButton addTarget:self action:@selector(listenSpotifyMusic) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:spotifyButton];
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+- (void)listeniTuneMusic
 {
-    // Drawing code
+    if (self.delegate && [self.delegate respondsToSelector:@selector(listenSampleMusic:)]) {
+        [self.delegate listenSampleMusic:@"iTune"];
+    }
 }
-*/
+
+- (void)listenSpotifyMusic
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(listenSampleMusic:)]) {
+        [self.delegate listenSampleMusic:@"Spotify"];
+    }
+}
 
 @end

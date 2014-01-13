@@ -128,6 +128,9 @@
 		4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF31883179D00B030F9 /* CoreMedia.framework */; };
 		4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF518831A4700B030F9 /* StoreKit.framework */; };
+		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
+		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
+		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -329,6 +332,9 @@
 		4C231DF1188316AC00B030F9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4C231DF31883179D00B030F9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		4C231DF518831A4700B030F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
+		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
+		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Avibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -607,6 +613,7 @@
 		4C231CB3188104F800B030F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C2F0FC518846071006BA932 /* SampleMusic */,
 				4C231CB4188104F800B030F9 /* Archive */,
 				4C231CB7188104F800B030F9 /* icon */,
 				4C231CBB188104F800B030F9 /* Images.xcassets */,
@@ -811,6 +818,24 @@
 			path = Rdio;
 			sourceTree = "<group>";
 		};
+		4C2F0FC518846071006BA932 /* SampleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C2F0FC618846071006BA932 /* Choose */,
+			);
+			path = SampleMusic;
+			sourceTree = "<group>";
+		};
+		4C2F0FC618846071006BA932 /* Choose */ = {
+			isa = PBXGroup;
+			children = (
+				4C2F0FC718846071006BA932 /* iTuneLogo.png */,
+				4C2F0FC91884616E006BA932 /* spotifyLogo.png */,
+				4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */,
+			);
+			path = Choose;
+			sourceTree = "<group>";
+		};
 		4C31796C18440EA700F7D41B = {
 			isa = PBXGroup;
 			children = (
@@ -1013,6 +1038,7 @@
 				4C231D34188104F800B030F9 /* undo-2-24.png in Resources */,
 				4C231D3B188104F800B030F9 /* LogIn.png in Resources */,
 				4C231D53188104F800B030F9 /* side-drum-32.png in Resources */,
+				4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */,
 				4C231D59188104F800B030F9 /* welcome2.pxm in Resources */,
 				4C231D4D188104F800B030F9 /* cornet-32.png in Resources */,
 				4C231D28188104F800B030F9 /* side-drum-120.png in Resources */,
@@ -1024,8 +1050,10 @@
 				4C231D55188104F800B030F9 /* welcome0.pxm in Resources */,
 				4C231D62188104F800B030F9 /* User.storyboard in Resources */,
 				4C231D2D188104F800B030F9 /* dj-24.png in Resources */,
+				4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */,
 				4C231D46188104F800B030F9 /* PasswordForgottenDown.png in Resources */,
 				4C231D33188104F800B030F9 /* undo-2-16.png in Resources */,
+				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
 				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
 				4C231D47188104F800B030F9 /* PasswordForgottenDown.pxm in Resources */,

@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 
 
-@interface LiveFeedViewController()
+@interface LiveFeedViewController() <SampleMusicSourceViewDelegate>
 
 @property (weak, atomic) UIViewController *viewController;
 
@@ -286,9 +286,17 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     CGPoint point = cell.frame.origin;
     
     SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
+    sampleMusicSourceView.delegate = self;
     [self.collectionView addSubview:sampleMusicSourceView];
     [self.collectionView bringSubviewToFront:sampleMusicSourceView];
 }
+
+#pragma mark - SampleMusicSource Delegate
+- (void)listenSampleMusic:(NSString *)source
+{
+    NSLog(@"Source:%@", source);
+}
+
 
 -(void)fetchData:(UIRefreshControl*)refresh
 {
