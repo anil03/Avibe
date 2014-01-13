@@ -140,6 +140,7 @@
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
+		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -342,6 +343,8 @@
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusic_iTune.h; sourceTree = "<group>"; };
 		4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic_iTune.m; sourceTree = "<group>"; };
+		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
+		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -704,6 +707,7 @@
 		4C231CF4188104F800B030F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
 				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
 				4C231CF6188104F800B030F9 /* Main.storyboard */,
 				4C231CF7188104F800B030F9 /* SampleMusic.storyboard */,
@@ -875,6 +879,15 @@
 				4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */,
 			);
 			path = SampleMusic;
+			sourceTree = "<group>";
+		};
+		4CDEF2AF1883A80700CBD40E /* SampleMusicSource */ = {
+			isa = PBXGroup;
+			children = (
+				4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */,
+				4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */,
+			);
+			path = SampleMusicSource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1095,6 +1108,7 @@
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
 				4C231DD61881E51300B030F9 /* SampleMusicViewController.m in Sources */,
+				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,

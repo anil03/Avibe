@@ -36,6 +36,7 @@
 
 
 #import "BackgroundImageView.h"
+#import "SampleMusicSourceView.h"
 
 #import "SaveMusicEntries.h"
 
@@ -60,7 +61,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *PFObjects;
-
 
 @end
 
@@ -99,12 +99,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         
         //BackgroundView
         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.backgroundView.frame];
-//        backgroundView.backgroundColor = [UIColor redColor];
-        self.collectionView.backgroundView = backgroundView;
-//        [self.collectionView setBackgroundColor:[[Setting sharedSetting] sharedBackgroundColor]];
+//        self.collectionView.backgroundView = backgroundView;
+        self.collectionView.backgroundColor = [UIColor grayColor];
         
         self.collectionView.delegate=self;
         self.collectionView.dataSource=self;
+        
+        
     }
     
     return self;
@@ -186,6 +187,17 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	static NSString *identifier = @"Cell";
 	
 	YMGenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+//    UIButton *button = [[UIButton alloc] initWithFrame:cell.frame];
+//    button.backgroundColor = [UIColor greenColor];
+//    [cell addSubview:button];
+//    [cell bringSubviewToFront:button];
+    
+    //Gesture
+//    UITapGestureRecognizer *touchOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchView:)];
+//    [touchOnView setNumberOfTapsRequired:1];
+//    [touchOnView setNumberOfTouchesRequired:1];
+//    [cell addGestureRecognizer:touchOnView];
+    
 	
     //Data source
     int columnNumber = 4;
@@ -230,6 +242,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 
 
+
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
    UICollectionReusableView *reusableview = nil;
@@ -260,6 +274,20 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
    }
 
    return reusableview;
+}
+
+#pragma mark - Touch Item
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Select %d", indexPath.row);
+    
+    YMGenericCollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    NSLog(@"%@", cell.label.text);
+    CGPoint point = cell.frame.origin;
+    
+    SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
+    [self.collectionView addSubview:sampleMusicSourceView];
+    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
 }
 
 -(void)fetchData:(UIRefreshControl*)refresh
