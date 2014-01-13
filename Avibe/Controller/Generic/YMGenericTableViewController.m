@@ -17,6 +17,8 @@
 
 #import "Setting.h"
 
+#import "SampleMusic_iTune.h"
+
 @interface YMGenericTableViewController ()
 
 @property (assign, nonatomic) CATransform3D initialTransformation;
@@ -79,6 +81,7 @@
 {
     SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:SAMPLEMUSIC_STORYBOARD_NAME bundle:nil] instantiateViewControllerWithIdentifier:SAMPLEMUSIC_CONTROLLER_NAME];
     controller.pfObject = [self.PFObjects objectAtIndex:indexPath.row];
+    controller.sampleMusic = [[SampleMusic_iTune alloc] init];
     controller.delegate = self;
     
     MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];

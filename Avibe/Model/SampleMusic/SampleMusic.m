@@ -1,13 +1,13 @@
 //
-//  SampleMusic_iTune.h
+//  SampleMusic.m
 //  Avibe
 //
-//  Created by Yuhua Mai on 1/12/14.
+//  Created by Yuhua Mai on 1/13/14.
 //  Copyright (c) 2014 Yuhua Mai. All rights reserved.
 //
 
 #import "SampleMusic.h"
 
-@interface SampleMusic_iTune : SampleMusic
+@implementation SampleMusic
 
 @end

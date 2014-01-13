@@ -131,6 +131,7 @@
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
+		4C2F0FCF1884781F006BA932 /* SampleMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCE1884781F006BA932 /* SampleMusic.m */; };
 		4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797818440EA700F7D41B /* Foundation.framework */; };
 		4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797A18440EA700F7D41B /* CoreGraphics.framework */; };
 		4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C31797C18440EA700F7D41B /* UIKit.framework */; };
@@ -215,10 +216,10 @@
 		4C231C82188104F800B030F9 /* YMGenericCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMGenericCollectionViewController.m; sourceTree = "<group>"; };
 		4C231C83188104F800B030F9 /* YMGenericCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMGenericCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		4C231C84188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMGenericCollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		4C231C85188104F800B030F9 /* YMGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMGenericTableViewCell.h; sourceTree = "<group>"; };
-		4C231C86188104F800B030F9 /* YMGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMGenericTableViewCell.m; sourceTree = "<group>"; };
-		4C231C87188104F800B030F9 /* YMGenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMGenericTableViewController.h; sourceTree = "<group>"; };
-		4C231C88188104F800B030F9 /* YMGenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMGenericTableViewController.m; sourceTree = "<group>"; };
+		4C231C85188104F800B030F9 /* YMGenericTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewCell.h; path = ../Generic/YMGenericTableViewCell.h; sourceTree = "<group>"; };
+		4C231C86188104F800B030F9 /* YMGenericTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewCell.m; path = ../Generic/YMGenericTableViewCell.m; sourceTree = "<group>"; };
+		4C231C87188104F800B030F9 /* YMGenericTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YMGenericTableViewController.h; path = ../Generic/YMGenericTableViewController.h; sourceTree = "<group>"; };
+		4C231C88188104F800B030F9 /* YMGenericTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YMGenericTableViewController.m; path = ../Generic/YMGenericTableViewController.m; sourceTree = "<group>"; };
 		4C231C8A188104F800B030F9 /* ListenedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ListenedViewController.h; sourceTree = "<group>"; };
 		4C231C8B188104F800B030F9 /* ListenedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ListenedViewController.m; sourceTree = "<group>"; };
 		4C231C8E188104F800B030F9 /* LiveFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveFeedViewController.h; sourceTree = "<group>"; };
@@ -335,6 +336,8 @@
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
+		4C2F0FCD1884781F006BA932 /* SampleMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusic.h; sourceTree = "<group>"; };
+		4C2F0FCE1884781F006BA932 /* SampleMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic.m; sourceTree = "<group>"; };
 		4C31797518440EA700F7D41B /* Avibe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Avibe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C31797818440EA700F7D41B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C31797A18440EA700F7D41B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -497,10 +500,6 @@
 				4C231C82188104F800B030F9 /* YMGenericCollectionViewController.m */,
 				4C231C83188104F800B030F9 /* YMGenericCollectionViewFlowLayout.h */,
 				4C231C84188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m */,
-				4C231C85188104F800B030F9 /* YMGenericTableViewCell.h */,
-				4C231C86188104F800B030F9 /* YMGenericTableViewCell.m */,
-				4C231C87188104F800B030F9 /* YMGenericTableViewController.h */,
-				4C231C88188104F800B030F9 /* YMGenericTableViewController.m */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -508,6 +507,10 @@
 		4C231C89188104F800B030F9 /* Listened */ = {
 			isa = PBXGroup;
 			children = (
+				4C231C85188104F800B030F9 /* YMGenericTableViewCell.h */,
+				4C231C86188104F800B030F9 /* YMGenericTableViewCell.m */,
+				4C231C87188104F800B030F9 /* YMGenericTableViewController.h */,
+				4C231C88188104F800B030F9 /* YMGenericTableViewController.m */,
 				4C231C8A188104F800B030F9 /* ListenedViewController.h */,
 				4C231C8B188104F800B030F9 /* ListenedViewController.m */,
 			);
@@ -900,6 +903,8 @@
 		4CDEF2AA1883997E00CBD40E /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C2F0FCD1884781F006BA932 /* SampleMusic.h */,
+				4C2F0FCE1884781F006BA932 /* SampleMusic.m */,
 				4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */,
 				4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */,
 			);
@@ -1145,6 +1150,7 @@
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
+				4C2F0FCF1884781F006BA932 /* SampleMusic.m in Sources */,
 				4C231D21188104F800B030F9 /* WelcomeViewController.m in Sources */,
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,
 				4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */,

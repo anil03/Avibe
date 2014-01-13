@@ -116,8 +116,6 @@
 
     // custom refresh logic would be placed here...
     [self fetchData:refresh];
-    
-    
 }
 
 -(void)fetchData:(UIRefreshControl*)refresh

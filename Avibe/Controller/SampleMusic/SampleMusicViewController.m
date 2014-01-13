@@ -20,7 +20,7 @@
 #define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&limit=1"]
 //#define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&entity=musicVideo"]
 
-@interface SampleMusicViewController () <AVAudioPlayerDelegate, UIAlertViewDelegate, SampleMusic_iTuneDelegate>
+@interface SampleMusicViewController () <AVAudioPlayerDelegate, UIAlertViewDelegate, SampleMusicDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *songImage;
 
@@ -56,6 +56,7 @@
 @synthesize player; // the player object
 @synthesize theMovie;
 
+@synthesize sampleMusic = _sampleMusic;
 
 -(void)viewDidDisappear:(BOOL)animated
 {
@@ -94,10 +95,9 @@
         NSLog(@"Error setting category! %@", setCategoryError);
 
     //Search Music
-    SampleMusic_iTune *sampleMusic = [[SampleMusic_iTune alloc] init];
-    sampleMusic.delegate = self;
+    _sampleMusic.delegate = self;
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[[_pfObject objectForKey:@"title"]] forKeys:@[@"title"]];
-    [sampleMusic initSearch:dict];
+    [_sampleMusic initSearch:dict];
 }
 
 #pragma mark - Sample Music Data Delegate Method

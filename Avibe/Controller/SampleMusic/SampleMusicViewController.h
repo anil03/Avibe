@@ -10,11 +10,15 @@
 #import "Song.h"
 #import "LiveFeedViewController.h"
 
+#import "SampleMusic.h"
+
 @interface SampleMusicViewController : UIViewController
 
 @property (nonatomic, strong) Song *song;
 @property (nonatomic, strong) PFObject *pfObject;
 
 @property (nonatomic, weak) YMGenericTableViewController *delegate;
+
+@property (nonatomic, strong) SampleMusic * sampleMusic;
 
 @end
