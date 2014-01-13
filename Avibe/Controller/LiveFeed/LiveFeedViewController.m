@@ -99,8 +99,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         
         //BackgroundView
         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.backgroundView.frame];
-//        self.collectionView.backgroundView = backgroundView;
-        self.collectionView.backgroundColor = [UIColor grayColor];
+        self.collectionView.backgroundView = backgroundView;
+//        self.collectionView.backgroundColor = [UIColor grayColor];
         
         self.collectionView.delegate=self;
         self.collectionView.dataSource=self;
