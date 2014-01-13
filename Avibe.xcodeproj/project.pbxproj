@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4C231C05187DF52900B030F9 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231C04187DF52900B030F9 /* FacebookSDK.framework */; };
 		4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */; };
-		4C231CFB188104F800B030F9 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C51188104F800B030F9 /* MMDrawerBarButtonItem.m */; };
-		4C231CFC188104F800B030F9 /* MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C54188104F800B030F9 /* MMDrawerController.m */; };
 		4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */; };
-		4C231CFE188104F800B030F9 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C58188104F800B030F9 /* MMDrawerVisualState.m */; };
 		4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C5A188104F800B030F9 /* MMExampleCenterTableViewController.m */; };
 		4C231D00188104F800B030F9 /* MMExampleDrawerVisualStateManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C5C188104F800B030F9 /* MMExampleDrawerVisualStateManager.m */; };
 		4C231D01188104F800B030F9 /* MMExampleLeftSideDrawerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C5E188104F800B030F9 /* MMExampleLeftSideDrawerViewController.m */; };
@@ -151,6 +147,7 @@
 		4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE32184ADEFC0018ABE0 /* CoreFoundation.framework */; };
 		4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */; };
 		4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */; };
+		777FD48BB390411E99488D82 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFA2DD646E604A8FA61B38FD /* libPods.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -164,18 +161,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		4C231C04187DF52900B030F9 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FacebookSDK.framework; path = Framework/FacebookSDK.framework; sourceTree = "<group>"; };
 		4C231C4E188104F800B030F9 /* MMCenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCenterTableViewCell.h; sourceTree = "<group>"; };
 		4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCenterTableViewCell.m; sourceTree = "<group>"; };
-		4C231C50188104F800B030F9 /* MMDrawerBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerBarButtonItem.h; sourceTree = "<group>"; };
-		4C231C51188104F800B030F9 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
-		4C231C52188104F800B030F9 /* MMDrawerController+Subclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerController+Subclass.h"; sourceTree = "<group>"; };
-		4C231C53188104F800B030F9 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
-		4C231C54188104F800B030F9 /* MMDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerController.m; sourceTree = "<group>"; };
 		4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MMDrawerControllerKitchenSink-Info.plist"; sourceTree = "<group>"; };
 		4C231C56188104F800B030F9 /* MMDrawerControllerKitchenSink-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MMDrawerControllerKitchenSink-Prefix.pch"; sourceTree = "<group>"; };
-		4C231C57188104F800B030F9 /* MMDrawerVisualState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerVisualState.h; sourceTree = "<group>"; };
-		4C231C58188104F800B030F9 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
 		4C231C59188104F800B030F9 /* MMExampleCenterTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleCenterTableViewController.h; sourceTree = "<group>"; };
 		4C231C5A188104F800B030F9 /* MMExampleCenterTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMExampleCenterTableViewController.m; sourceTree = "<group>"; };
 		4C231C5B188104F800B030F9 /* MMExampleDrawerVisualStateManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMExampleDrawerVisualStateManager.h; sourceTree = "<group>"; };
@@ -361,6 +350,7 @@
 		4CEBEE34184ADF0C0018ABE0 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B085EF440F545DD93B4A79C /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		AFA2DD646E604A8FA61B38FD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -369,7 +359,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */,
-				4C231C05187DF52900B030F9 /* FacebookSDK.framework in Frameworks */,
 				4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */,
 				4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */,
 				4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */,
@@ -385,6 +374,7 @@
 				4C31797B18440EA700F7D41B /* CoreGraphics.framework in Frameworks */,
 				4C31797D18440EA700F7D41B /* UIKit.framework in Frameworks */,
 				4C31797918440EA700F7D41B /* Foundation.framework in Frameworks */,
+				777FD48BB390411E99488D82 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,15 +433,8 @@
 			children = (
 				4C231C4E188104F800B030F9 /* MMCenterTableViewCell.h */,
 				4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */,
-				4C231C50188104F800B030F9 /* MMDrawerBarButtonItem.h */,
-				4C231C51188104F800B030F9 /* MMDrawerBarButtonItem.m */,
-				4C231C52188104F800B030F9 /* MMDrawerController+Subclass.h */,
-				4C231C53188104F800B030F9 /* MMDrawerController.h */,
-				4C231C54188104F800B030F9 /* MMDrawerController.m */,
 				4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */,
 				4C231C56188104F800B030F9 /* MMDrawerControllerKitchenSink-Prefix.pch */,
-				4C231C57188104F800B030F9 /* MMDrawerVisualState.h */,
-				4C231C58188104F800B030F9 /* MMDrawerVisualState.m */,
 				4C231C59188104F800B030F9 /* MMExampleCenterTableViewController.h */,
 				4C231C5A188104F800B030F9 /* MMExampleCenterTableViewController.m */,
 				4C231C5B188104F800B030F9 /* MMExampleDrawerVisualStateManager.h */,
@@ -871,7 +854,6 @@
 				4C31797A18440EA700F7D41B /* CoreGraphics.framework */,
 				4CEBEE40184CE16B0018ABE0 /* CoreLocation.framework */,
 				4C231DF31883179D00B030F9 /* CoreMedia.framework */,
-				4C231C04187DF52900B030F9 /* FacebookSDK.framework */,
 				4C31797818440EA700F7D41B /* Foundation.framework */,
 				4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */,
 				4C9169E1187DF38A000AB100 /* libsqlite3.dylib */,
@@ -884,6 +866,7 @@
 				4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */,
 				4C31797C18440EA700F7D41B /* UIKit.framework */,
 				4C31799718440EA700F7D41B /* XCTest.framework */,
+				AFA2DD646E604A8FA61B38FD /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1126,7 +1109,6 @@
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,
-				4C231CFE188104F800B030F9 /* MMDrawerVisualState.m in Sources */,
 				4C231D1E188104F800B030F9 /* UserViewController.m in Sources */,
 				4C231D13188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m in Sources */,
 				4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */,
@@ -1155,14 +1137,12 @@
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,
 				4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4C231D05188104F800B030F9 /* MMLogoView.m in Sources */,
-				4C231CFC188104F800B030F9 /* MMDrawerController.m in Sources */,
 				4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */,
 				4C231D0C188104F800B030F9 /* TableViewController.m in Sources */,
 				4C231D16188104F800B030F9 /* ListenedViewController.m in Sources */,
 				4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */,
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
-				4C231CFB188104F800B030F9 /* MMDrawerBarButtonItem.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
