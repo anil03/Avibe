@@ -100,7 +100,7 @@
 		4C231D59188104F800B030F9 /* welcome2.pxm in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CEC188104F800B030F9 /* welcome2.pxm */; };
 		4C231D5A188104F800B030F9 /* xylophone-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CED188104F800B030F9 /* xylophone-32.png */; };
 		4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */; };
-		4C231D5F188104F800B030F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF6188104F800B030F9 /* Main.storyboard */; };
+		4C231D5F188104F800B030F9 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF6188104F800B030F9 /* Welcome.storyboard */; };
 		4C231D60188104F800B030F9 /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF7188104F800B030F9 /* SampleMusic.storyboard */; };
 		4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */; };
 		4C231D62188104F800B030F9 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF9188104F800B030F9 /* User.storyboard */; };
@@ -292,7 +292,7 @@
 		4C231CEC188104F800B030F9 /* welcome2.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome2.pxm; sourceTree = "<group>"; };
 		4C231CED188104F800B030F9 /* xylophone-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xylophone-32.png"; sourceTree = "<group>"; };
 		4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FindFriendsStoryboard.storyboard; sourceTree = "<group>"; };
-		4C231CF6188104F800B030F9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		4C231CF6188104F800B030F9 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
 		4C231CF7188104F800B030F9 /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
 		4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		4C231CF9188104F800B030F9 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
@@ -702,7 +702,7 @@
 			children = (
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
 				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
-				4C231CF6188104F800B030F9 /* Main.storyboard */,
+				4C231CF6188104F800B030F9 /* Welcome.storyboard */,
 				4C231CF7188104F800B030F9 /* SampleMusic.storyboard */,
 				4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */,
 				4C231CF9188104F800B030F9 /* User.storyboard */,
@@ -1043,7 +1043,7 @@
 				4C231D33188104F800B030F9 /* undo-2-16.png in Resources */,
 				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
-				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
+				4C231D5F188104F800B030F9 /* Welcome.storyboard in Resources */,
 				4C231D47188104F800B030F9 /* PasswordForgottenDown.pxm in Resources */,
 				4C231D2C188104F800B030F9 /* conference-24.png in Resources */,
 				4C231D4A188104F800B030F9 /* SignUpDown.png in Resources */,
