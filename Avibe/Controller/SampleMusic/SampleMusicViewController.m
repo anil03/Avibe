@@ -14,12 +14,13 @@
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
 
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+#import "SampleMusic_iTune.h"
+
 #define kLatestKivaLoansURL [NSURL URLWithString:@"http://api.kivaws.org/v1/loans/search.json?status=fundraising"]
 #define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&limit=1"]
 //#define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&entity=musicVideo"]
 
-@interface SampleMusicViewController () <AVAudioPlayerDelegate, UIAlertViewDelegate>
+@interface SampleMusicViewController () <AVAudioPlayerDelegate, UIAlertViewDelegate, SampleMusic_iTuneDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *songImage;
 
@@ -55,22 +56,11 @@
 @synthesize player; // the player object
 @synthesize theMovie;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 
 -(void)viewDidDisappear:(BOOL)animated
 {
     [self.player stop];
 }
-
-
 
 - (void)viewDidLoad
 {
@@ -95,12 +85,6 @@
     
     //Disable Left to avoid pan by mistake
     self.centerViewController = self.mm_drawerController.centerViewController;
-//    self.leftViewController = self.mm_drawerController.leftDrawerViewController;
-//    [self.mm_drawerController setLeftDrawerViewController:nil];
-    
-//    self.titleLabel.text = [_pfObject objectForKey:@"title"];
-//    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [_pfObject objectForKey:@"album"], [_pfObject objectForKey:@"artist"]];
-    
 
     //Set AVAudioSesson
     [[AVAudioSession sharedInstance] setDelegate: self];
@@ -109,26 +93,39 @@
     if (setCategoryError)
         NSLog(@"Error setting category! %@", setCategoryError);
 
-    
     //Search Music
-    NSString *searchTitle = [[_pfObject objectForKey:@"title"] stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
-    //Download Music
-    dispatch_async(kBgQueue, ^{
-        NSData* data = [NSData dataWithContentsOfURL:
-                        searchURL];
-        [self performSelectorOnMainThread:@selector(fetchedData:)
-                               withObject:data waitUntilDone:YES];
-    });
+    SampleMusic_iTune *sampleMusic = [[SampleMusic_iTune alloc] init];
+    sampleMusic.delegate = self;
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[[_pfObject objectForKey:@"title"]] forKeys:@[@"title"]];
+    [sampleMusic initSearch:dict];
 }
 
+#pragma mark - Sample Music Data Delegate Method
+- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
+{
+    [self updateViewInfo:songInfo];
+    
+    NSError* __autoreleasing audioError = nil;
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
 
-
-
-#pragma mark - JSON
+    if (!audioError) {
+        self.player = newPlayer;
+        self.player.delegate = self;
+        
+        //Update Progress Slider
+        self.progress.maximumValue = self.player.duration;
+        self.progress.userInteractionEnabled = NO;
+        
+        [player prepareToPlay];
+    }else{
+        NSLog(@"Audio Error!");
+    }
+    
+    [_spinner stopAnimating];
+}
 
 - (void)updateViewInfo:(NSDictionary *)result {
-    NSURL *imageUrl = [NSURL URLWithString:[result objectForKey:@"artworkUrl100"]];
+    NSURL *imageUrl = [NSURL URLWithString:[result objectForKey:@"imageURL"]];
     NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
     UIImage *image = [UIImage imageWithData:imageData];
     [self.songImage setImage:image];
@@ -139,72 +136,15 @@
     float imageHeight = image.size.height*scale;
     self.songImage.frame = CGRectMake(self.songImage.center.x-imageWidth/2, self.songImage.center.y-imageHeight/2,imageWidth, imageHeight);
     
-    self.titleLabel.text = [result objectForKey:@"trackName"];
-    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [result objectForKey:@"artistName"], [result objectForKey:@"collectionName"]];
+    self.titleLabel.text = [result objectForKey:@"title"];
+    self.artistAlbumLabel.text = [NSString stringWithFormat:@"%@ - %@", [result objectForKey:@"artist"], [result objectForKey:@"album"]];
     
     self.playedTime.text = @"0:00";
     int min = self.player.duration/60;
     int sec = ceil(self.player.duration-min*60);
     self.leftTime.text = [NSString stringWithFormat:@"%d:%02d", min, sec];
-    
-    self.progress.maximumValue = self.player.duration;
-    self.progress.userInteractionEnabled = NO;
 }
 
-- (void)fetchedData:(NSData *)responseData {
-    //Can't find the song
-    if (!responseData) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
-    
-    //parse out the json data
-    NSError* error = nil;
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          
-                          options:kNilOptions
-                          error:&error];
-    
-    NSArray* results = [json objectForKey:@"results"];
-    
-    NSLog(@"results: %@", results);
-    
-    // 1) Get the latest loan
-    NSDictionary* result = [results objectAtIndex:0];
-    
-    // 2) Get the funded amount and loan amount
-    NSString* type = [result objectForKey:@"wrapperType"];
-    NSString* kind = [result objectForKey:@"kind"];
-    NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"previewUrl"]];
-    
-    
-    //    AVPlayerItem* playerItem = [AVPlayerItem playerItemWithURL:previewUrl];
-    //    AVPlayer* player = [AVPlayer playerWithPlayerItem:playerItem];
-    //    player = [AVPlayer playerWithURL:previewUrl];
-    //    [player play];
-    NSLog(@"URL: %@", previewUrl);
-    
-    if([kind isEqualToString:@"song"]){
-        NSError* __autoreleasing soundFileError = nil;
-        NSError* __autoreleasing audioError = nil;
-        
-        NSData *songFile = [[NSData alloc] initWithContentsOfURL:previewUrl options:NSDataReadingMappedIfSafe error:&soundFileError ];
-        
-        AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:songFile error:nil];
-        
-        self.player = newPlayer;
-        self.player.delegate = self;
-        
-        [player prepareToPlay];
-    }else if([kind isEqualToString:@"music-video"]){
-        [self playMovieAtURL:previewUrl];
-    }
-    
-    [self updateViewInfo:result];
-    [_spinner stopAnimating];
-}
 
 - (IBAction) playOrPause: (id) sender {
     
@@ -234,6 +174,48 @@
     self.progress.value = self.player.currentTime;
 }
 
+
+
+#pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.progressTimer invalidate];
+    [self leftDrawerButtonPress:nil];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+{
+    [self.progressTimer invalidate];
+}
+
+#pragma mark - Button Handlers
+-(void)setupLeftMenuButton{
+//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
+    [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+}
+
+-(void)leftDrawerButtonPress:(id)sender{
+//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
+    
+//    [self.mm_drawerController setCenterViewController:self.centerViewController];
+//    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
+
+}
+
+#pragma mark - UIAlertview delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex == 0) {
+//        NSLog(@"user pressed OK");
+        [self leftDrawerButtonPress:nil];
+    } else {
+        NSLog(@"user pressed Cancel");
+    }
+}
+
+#pragma mark - Movie Method
 //- (IBAction)moviePlay:(id)sender
 //{
 //    [self.view addSubview:theMovie.view];
@@ -285,46 +267,6 @@
      name: MPMoviePlayerDidExitFullscreenNotification
      object: theMovie];
 }
-
-#pragma mark - AVAudioPlayerDelegate
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
-    [self.progressTimer invalidate];
-    [self leftDrawerButtonPress:nil];
-}
-
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
-{
-    [self.progressTimer invalidate];
-}
-
-#pragma mark - Button Handlers
--(void)setupLeftMenuButton{
-//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
-    [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
-}
-
--(void)leftDrawerButtonPress:(id)sender{
-//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
-    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
-    
-//    [self.mm_drawerController setCenterViewController:self.centerViewController];
-//    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
-
-}
-
-#pragma mark - UIAlertview delegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex == 0) {
-//        NSLog(@"user pressed OK");
-        [self leftDrawerButtonPress:nil];
-    } else {
-        NSLog(@"user pressed Cancel");
-    }
-}
-
 
 
 @end
