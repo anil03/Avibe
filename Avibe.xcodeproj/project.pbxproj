@@ -125,6 +125,8 @@
 		4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF518831A4700B030F9 /* StoreKit.framework */; };
 		4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */; };
 		4C23F17A1885A48100D2075A /* SampleMusicYoutubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */; };
+		4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */; };
+		4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1811885D6C800D2075A /* PublicMethod.m */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -325,6 +327,10 @@
 		4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
 		4C23F1781885A48100D2075A /* SampleMusicYoutubeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicYoutubeViewController.h; sourceTree = "<group>"; };
 		4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicYoutubeViewController.m; sourceTree = "<group>"; };
+		4C23F17C1885D5C200D2075A /* ShareMusicEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareMusicEntry.h; sourceTree = "<group>"; };
+		4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMusicEntry.m; sourceTree = "<group>"; };
+		4C23F1801885D6C800D2075A /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
+		4C23F1811885D6C800D2075A /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -587,8 +593,10 @@
 		4C231CAA188104F800B030F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C23F17F1885D6BB00D2075A /* PublicMethod */,
 				4CDEF2AA1883997E00CBD40E /* SampleMusic */,
 				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
+				4C23F17B1885D59E00D2075A /* ShareMusic */,
 				4C231D701881DC1300B030F9 /* BackgroundImage */,
 				4C231CAB188104F800B030F9 /* Setting.h */,
 				4C231CAC188104F800B030F9 /* Setting.m */,
@@ -815,6 +823,24 @@
 				4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */,
 			);
 			path = SampleMusic;
+			sourceTree = "<group>";
+		};
+		4C23F17B1885D59E00D2075A /* ShareMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C23F17C1885D5C200D2075A /* ShareMusicEntry.h */,
+				4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */,
+			);
+			path = ShareMusic;
+			sourceTree = "<group>";
+		};
+		4C23F17F1885D6BB00D2075A /* PublicMethod */ = {
+			isa = PBXGroup;
+			children = (
+				4C23F1801885D6C800D2075A /* PublicMethod.h */,
+				4C23F1811885D6C800D2075A /* PublicMethod.m */,
+			);
+			path = PublicMethod;
 			sourceTree = "<group>";
 		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
@@ -1118,6 +1144,7 @@
 				4C231D01188104F800B030F9 /* MMExampleLeftSideDrawerViewController.m in Sources */,
 				4C231D03188104F800B030F9 /* MMExampleSideDrawerViewController.m in Sources */,
 				4C231D14188104F800B030F9 /* YMGenericTableViewCell.m in Sources */,
+				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
@@ -1129,6 +1156,7 @@
 				4C231D23188104F800B030F9 /* Song.m in Sources */,
 				4C231D00188104F800B030F9 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				4C231D17188104F800B030F9 /* LiveFeedViewController.m in Sources */,
+				4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */,
 				4C231D0D188104F800B030F9 /* UIViewController+MMDrawerController.m in Sources */,
 				4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */,
 				4C231D11188104F800B030F9 /* YMGenericCollectionViewCell.m in Sources */,

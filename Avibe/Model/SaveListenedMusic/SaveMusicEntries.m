@@ -8,6 +8,7 @@
 
 #import "SaveMusicEntries.h"
 #import "XMLParser.h"
+#import "PublicMethod.h"
 
 //Rdio
 #import "Rdio/RdioConsumerCredentials.h"
@@ -77,7 +78,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
         [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
         
-        [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod"];
+        [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod" andFetchObjects:fetechObjects];
+//        [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod"];
     }else{
         NSLog(@"No iPod Music Available");
     }
@@ -102,7 +104,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     }
     
     //Get rid of duplicated data then save
-    [self filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM"];
+    [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM" andFetchObjects:fetechObjects];
+//    [self filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM"];
 }
 
 #pragma mark - Spotify Music
@@ -143,75 +146,12 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     [songRecord setObject:artist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     
-    [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio"];
+    [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
+
+//    [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio"];
 }
 
 
-#pragma mark - TODO Upgrade Duplcated Algorithm
-- (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)musicToSave andSource:(NSString*)sourceName
-{
-    NSLog(@"***Filtering %@ Music***", sourceName);
-    [self printMusicToSaveData:musicToSave];
-    
-    NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
-    __block int numberOfDuplicated = 0;
-    
-    BOOL songExisted = NO;
-    
-    for(PFObject *pfToSave in musicToSave){
-        songExisted = NO;
-        
-        NSString *newTitle = [pfToSave objectForKey:@"title"];
-        NSString *newArtist = [pfToSave objectForKey:@"artist"];
-        NSString *newAlbum = [pfToSave objectForKey:@"album"];
-        
-        for(PFObject *pf in fetechObjects){
-            
-            NSString *existingTitle = [pf objectForKey:@"title"];
-            NSString *existingArtist = [pf objectForKey:@"artist"];
-            NSString *existingAlbum = [pf objectForKey:@"album"];
-            
-//                NSLog(@"%@-%@", newTitle, existingTitle);
 
-            if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
-                //Duplicated Object
-                numberOfDuplicated++;
-//                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
-                songExisted = YES;
-                break;
-            }
-        }
-        
-        
-        if (songExisted) {
-            continue;
-        }
-        [dataToSave addObject:pfToSave];
-    }
-    
-    
-    [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
-        NSLog(@"***Saving %@ Music***", sourceName);
-        if (succeeded) {
-            NSLog(@"Save XML Data succeeded!");
-            NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
-            
-            //Fetch data and Update table view
-//                [self fetchData:self.refreshControl];
-        }else{
-            NSLog(@"Error Saving XML Data: %@", error);
-        }
-    }];
-}
-
-- (void)printMusicToSaveData:(NSMutableArray*)musicToSave
-{
-    NSLog(@"<===Saving Music===");
-    for(PFObject *object in musicToSave){
-        NSLog(@"%@,%@,%@", [object objectForKey:@"title"], [object objectForKey:@"artist"], [object objectForKey:@"album"]);
-    }
-    NSLog(@"==================>");
-
-}
 
 @end

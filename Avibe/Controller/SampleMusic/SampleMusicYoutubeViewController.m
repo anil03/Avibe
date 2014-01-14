@@ -11,6 +11,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 #import "UIViewController+MMDrawerController.h"
+#import "ShareMusicEntry.h"
 
 @interface SampleMusicYoutubeViewController () <UIWebViewDelegate>
 
@@ -35,22 +36,95 @@
 {
     [super viewDidLoad];
 
-    [self setupLeftMenuButton];
-    [self.view setBackgroundColor:[UIColor grayColor]];
+    [self setupNavigationBar];
     
-    //ScrollView
+    UIColor *backgroundColor = [UIColor blackColor];
+    UIColor *textColor = [UIColor whiteColor];
+    UIColor *textHighlightColor = [UIColor grayColor];
+    [self.view setBackgroundColor:backgroundColor];
+    
+    //Size Specification
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
+    float barHeight = 10;
+    float titleLabelHeight = 30;
+    float infoLabelHight = 30;
+    float playerHeight = 200;
+    float buttonHeight = 40;
+    float buttonLeft = 10;
+    float currentHeight = 0;
+    
+    //ScrollView
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 30, 20)];
-    testLabel.text = @"test";
-    [scrollView addSubview:testLabel];
+//    UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 30, 20)];
+//    testLabel.text = @"test";
+//    [scrollView addSubview:testLabel];
     [scrollView setContentSize:CGSizeMake(width, height*2)];
-    [self.view addSubview:scrollView];
+    self.view = scrollView;
     
+    //Song Info
+    currentHeight = barHeight;
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, titleLabelHeight)];
+    titleLabel.backgroundColor = backgroundColor;
+    titleLabel.text = @"Title";
+    titleLabel.textColor = textColor;
+    titleLabel.textAlignment = NSTextAlignmentCenter;
+    [scrollView addSubview:titleLabel];
+    
+    currentHeight += titleLabelHeight;
+    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
+    infoLabel.backgroundColor = backgroundColor;
+    infoLabel.text = @"Song Infomration";
+    infoLabel.textColor = textColor;
+    infoLabel.textAlignment = NSTextAlignmentCenter;
+    [scrollView addSubview:infoLabel];
+    
+    //PlayerView
+    currentHeight += infoLabelHight;
+    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    self.webView.backgroundColor = backgroundColor;
+    self.webView.scrollView.backgroundColor = backgroundColor;
+    [scrollView addSubview:self.webView];
     [self playYoutube];
-//    [self embedYouTube:@"https://www.youtube.com/v/SB-DA6hyuj4?version=3&f=videos&app=youtube_gdata" frame:CGRectMake(10, 100, 300, 450)];
     
+    //Button - Share
+    currentHeight += playerHeight;
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
+    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [shareButton setTitleColor:textColor forState:UIControlStateNormal];
+    [shareButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
+    shareButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    shareButton.backgroundColor = [UIColor blackColor];
+    [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
+    [scrollView addSubview:shareButton];
+    
+    //Button - Buy
+    currentHeight += buttonHeight;
+    UIButton *buyButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
+    [buyButton setTitle:@"Buy in " forState:UIControlStateNormal];
+    [buyButton setTitleColor:textColor forState:UIControlStateNormal];
+    [buyButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
+    buyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    buyButton.backgroundColor = [UIColor blackColor];
+    [scrollView addSubview:buyButton];
+    
+    //Button - Listen
+    currentHeight += buttonHeight;
+    UIButton *listenButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
+    [listenButton setTitle:@"Listen in " forState:UIControlStateNormal];
+    [listenButton setTitleColor:textColor forState:UIControlStateNormal];
+    [listenButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
+    listenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    listenButton.backgroundColor = [UIColor blackColor];
+    [scrollView addSubview:listenButton];
+    
+    //Label - More Like this
+    currentHeight += buttonHeight;
+    UILabel *moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
+    moreLabel.backgroundColor = backgroundColor;
+    moreLabel.text = @"More Like This:";
+    moreLabel.textColor = textColor;
+    [scrollView addSubview:moreLabel];
 }
 
 #pragma mark - Youtube
@@ -83,9 +157,7 @@
                            </head><body style=\"margin:0\">\
                            <iframe width=\"100%%\" height=\"240px\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
                            </body></html>",videoURL];
-    
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, 300, 460)];
-    [self.view addSubview:self.webView];
+
     [self.webView loadHTMLString:embedHTML baseURL:nil];
 }
 
@@ -119,6 +191,20 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"WebView Load Fail:%@", error);
+}
+
+#pragma mark - Button Method
+- (void)shareMusic
+{
+    NSLog(@"Share Music");
+    
+    PFObject *songRecord = [PFObject objectWithClassName:@"Share"];
+    [songRecord setObject:@"share_title"  forKey:@"title"];
+    [songRecord setObject:@"share_album" forKey:@"album"];
+    [songRecord setObject:@"share_artist" forKey:@"artist"];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    
+    [[[ShareMusicEntry alloc] initWithMusic:songRecord] shareMusic];
 }
 
 #pragma mark - Movie
@@ -169,7 +255,18 @@
 }
 
 #pragma mark - Button Handlers
--(void)setupLeftMenuButton{
+-(void)setupNavigationBar{
+    //Navigation Title
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+    titleLabel.text = @"Now Playing";
+    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+                                           green:49.0/255.0
+                                            blue:107.0/255.0
+                                           alpha:1.0];
+    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
+    [titleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = titleLabel;
+    
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
