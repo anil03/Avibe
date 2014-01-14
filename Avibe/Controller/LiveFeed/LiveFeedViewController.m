@@ -394,7 +394,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
 //    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
     
-//    [self.mm_drawerController.navigationItem setRightBarButtonItem:barButton];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
 }
 
 -(void)leftDrawerButtonPress:(id)sender{
