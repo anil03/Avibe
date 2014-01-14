@@ -64,11 +64,11 @@
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
-//    NSLog(@"%d", indexPath.row);
-    
     NSData *imageData = [NSData dataWithContentsOfURL:_images[indexPath.row]];
     UIImage *image = [UIImage imageWithData:imageData];
-    cell.backgroundView = [[UIImageView alloc] initWithImage:image];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.alpha = 0.4;
+    cell.backgroundView = imageView;
     
     return cell;
 }

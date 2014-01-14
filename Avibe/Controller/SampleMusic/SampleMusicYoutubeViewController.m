@@ -12,6 +12,7 @@
 
 #import "UIViewController+MMDrawerController.h"
 #import "ShareMusicEntry.h"
+#import "Setting.h"
 
 @interface SampleMusicYoutubeViewController () <UIWebViewDelegate>
 
@@ -266,6 +267,7 @@
     [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
+    [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [[Setting sharedSetting] barTintColor]];
     
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];

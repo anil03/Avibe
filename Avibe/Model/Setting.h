@@ -12,6 +12,7 @@
 
 @property (nonatomic, strong) NSString *lastFMAccount;
 
+- (UIColor*)barTintColor;
 - (UIColor*)sharedBackgroundColor;
 - (UIColor*)sharedCellColor;
 

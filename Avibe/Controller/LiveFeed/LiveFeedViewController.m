@@ -86,8 +86,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [flowLayout setMinimumInteritemSpacing:5.0f]; //Between items
     [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5); //Between sections
-    flowLayout.headerReferenceSize = CGSizeMake(50, 30); //set header
-//    flowLayout.footerReferenceSize = CGSizeMake(50, 30);
+    flowLayout.headerReferenceSize = CGSizeMake(50, 20); //set header
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -102,6 +101,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         //BackgroundView
         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.backgroundView.frame];
         self.collectionView.backgroundView = backgroundView;
+        
+//        [self.collectionView.backgroundView bringSubviewToFront:mask];
+        
 //        self.collectionView.backgroundColor = [UIColor grayColor];
         
         self.collectionView.delegate=self;
@@ -189,6 +191,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	static NSString *identifier = @"Cell";
 	
 	YMGenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    cell.label.adjustsFontSizeToFitWidth = YES;
+
 //    UIButton *button = [[UIButton alloc] initWithFrame:cell.frame];
 //    button.backgroundColor = [UIColor greenColor];
 //    [cell addSubview:button];
@@ -206,9 +210,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     int index = indexPath.row/columnNumber;
     
     PFObject *song = [self.PFObjects objectAtIndex:index];
-//    dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"user"], @"user", nil];
-    
-    cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
+
+
     
     switch (indexPath.row%columnNumber) {
         case 0:{
@@ -383,6 +386,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
+    [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [[Setting sharedSetting] barTintColor]];
+
     
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];

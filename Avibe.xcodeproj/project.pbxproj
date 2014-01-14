@@ -411,7 +411,6 @@
 				4C231DD31881E51300B030F9 /* SampleMusic */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231C77188104F800B030F9 /* Friends */,
-				4C231C7C188104F800B030F9 /* Generic */,
 				4C231C89188104F800B030F9 /* Listened */,
 				4C231C90188104F800B030F9 /* Setting */,
 				4C231C93188104F800B030F9 /* Share */,
@@ -493,7 +492,8 @@
 				4C231C83188104F800B030F9 /* YMGenericCollectionViewFlowLayout.h */,
 				4C231C84188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m */,
 			);
-			path = Generic;
+			name = Generic;
+			path = ../Generic;
 			sourceTree = "<group>";
 		};
 		4C231C89188104F800B030F9 /* Listened */ = {
@@ -512,6 +512,7 @@
 		4C231C8C188104F800B030F9 /* LiveFeed */ = {
 			isa = PBXGroup;
 			children = (
+				4C231C7C188104F800B030F9 /* Generic */,
 				4C231C8D188104F800B030F9 /* BackgroundView */,
 				4C231C8E188104F800B030F9 /* LiveFeedViewController.h */,
 				4C231C8F188104F800B030F9 /* LiveFeedViewController.m */,
