@@ -263,9 +263,9 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UIViewController *welcomeController;
                 if (IS_IPHONE_5) {
-                    welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+                    welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
                 }else{
-                    welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
+                    welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
                 }
                 
                 //Clear all controller

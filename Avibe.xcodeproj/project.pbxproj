@@ -100,8 +100,7 @@
 		4C231D59188104F800B030F9 /* welcome2.pxm in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CEC188104F800B030F9 /* welcome2.pxm */; };
 		4C231D5A188104F800B030F9 /* xylophone-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CED188104F800B030F9 /* xylophone-32.png */; };
 		4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */; };
-		4C231D5F188104F800B030F9 /* Welcome.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF6188104F800B030F9 /* Welcome.storyboard */; };
-		4C231D60188104F800B030F9 /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF7188104F800B030F9 /* SampleMusic.storyboard */; };
+		4C231D5F188104F800B030F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF6188104F800B030F9 /* Main.storyboard */; };
 		4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */; };
 		4C231D62188104F800B030F9 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF9188104F800B030F9 /* User.storyboard */; };
 		4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231D671881058A00B030F9 /* Avibe-Info.plist */; };
@@ -124,6 +123,8 @@
 		4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF31883179D00B030F9 /* CoreMedia.framework */; };
 		4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF518831A4700B030F9 /* StoreKit.framework */; };
+		4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */; };
+		4C23F17A1885A48100D2075A /* SampleMusicYoutubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -292,8 +293,7 @@
 		4C231CEC188104F800B030F9 /* welcome2.pxm */ = {isa = PBXFileReference; lastKnownFileType = file; path = welcome2.pxm; sourceTree = "<group>"; };
 		4C231CED188104F800B030F9 /* xylophone-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xylophone-32.png"; sourceTree = "<group>"; };
 		4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FindFriendsStoryboard.storyboard; sourceTree = "<group>"; };
-		4C231CF6188104F800B030F9 /* Welcome.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Welcome.storyboard; sourceTree = "<group>"; };
-		4C231CF7188104F800B030F9 /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
+		4C231CF6188104F800B030F9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		4C231CF9188104F800B030F9 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		4C231D671881058A00B030F9 /* Avibe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Avibe-Info.plist"; sourceTree = "<group>"; };
@@ -322,6 +322,9 @@
 		4C231DF1188316AC00B030F9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4C231DF31883179D00B030F9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		4C231DF518831A4700B030F9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SampleMusic.storyboard; sourceTree = "<group>"; };
+		4C23F1781885A48100D2075A /* SampleMusicYoutubeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicYoutubeViewController.h; sourceTree = "<group>"; };
+		4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicYoutubeViewController.m; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -700,10 +703,10 @@
 		4C231CF4188104F800B030F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4C23F1751885A3AB00D2075A /* SampleMusic */,
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
 				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
-				4C231CF6188104F800B030F9 /* Welcome.storyboard */,
-				4C231CF7188104F800B030F9 /* SampleMusic.storyboard */,
+				4C231CF6188104F800B030F9 /* Main.storyboard */,
 				4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */,
 				4C231CF9188104F800B030F9 /* User.storyboard */,
 			);
@@ -772,6 +775,8 @@
 			children = (
 				4C231DD41881E51300B030F9 /* SampleMusicViewController.h */,
 				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
+				4C23F1781885A48100D2075A /* SampleMusicYoutubeViewController.h */,
+				4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */,
 			);
 			path = SampleMusic;
 			sourceTree = "<group>";
@@ -802,6 +807,14 @@
 				4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */,
 			);
 			path = Rdio;
+			sourceTree = "<group>";
+		};
+		4C23F1751885A3AB00D2075A /* SampleMusic */ = {
+			isa = PBXGroup;
+			children = (
+				4C23F1761885A3AB00D2075A /* SampleMusic.storyboard */,
+			);
+			path = SampleMusic;
 			sourceTree = "<group>";
 		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
@@ -999,7 +1012,6 @@
 				4C231D4F188104F800B030F9 /* guitar-32.png in Resources */,
 				4C231D36188104F800B030F9 /* Exit.pxm in Resources */,
 				4C231D42188104F800B030F9 /* MainBG.png in Resources */,
-				4C231D60188104F800B030F9 /* SampleMusic.storyboard in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C231D56188104F800B030F9 /* welcome1.png in Resources */,
 				4C231D41188104F800B030F9 /* Logo.pxm in Resources */,
@@ -1043,7 +1055,8 @@
 				4C231D33188104F800B030F9 /* undo-2-16.png in Resources */,
 				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
-				4C231D5F188104F800B030F9 /* Welcome.storyboard in Resources */,
+				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
+				4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */,
 				4C231D47188104F800B030F9 /* PasswordForgottenDown.pxm in Resources */,
 				4C231D2C188104F800B030F9 /* conference-24.png in Resources */,
 				4C231D4A188104F800B030F9 /* SignUpDown.png in Resources */,
@@ -1144,6 +1157,7 @@
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
+				4C23F17A1885A48100D2075A /* SampleMusicYoutubeViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
 				4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */,

@@ -25,6 +25,8 @@
 
 #import "AppDelegate.h"
 #import "SampleMusicViewController.h"
+#import "SampleMusicYoutubeViewController.h"
+
 #import "Song.h"
 
 #import "YMGenericTableViewCell.h"
@@ -206,7 +208,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     PFObject *song = [self.PFObjects objectAtIndex:index];
 //    dictionary = [[NSDictionary alloc] initWithObjectsAndKeys:[song objectForKey:@"title"], @"title", [song objectForKey:@"album"], @"album", [song objectForKey:@"artist"], @"artist", [song objectForKey:@"user"], @"user", nil];
     
-    cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.5];
+    cell.backgroundColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:0.8];
     
     switch (indexPath.row%columnNumber) {
         case 0:{
@@ -281,14 +283,20 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     NSLog(@"Select %d", indexPath.row);
     
-    YMGenericCollectionViewCell *cell = [collectionView cellForItemAtIndexPath:indexPath];
+    YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     NSLog(@"%@", cell.label.text);
-    CGPoint point = cell.frame.origin;
+//    CGPoint point = cell.frame.origin;
     
-    SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
-    sampleMusicSourceView.delegate = self;
-    [self.collectionView addSubview:sampleMusicSourceView];
-    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
+//    SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
+//    sampleMusicSourceView.delegate = self;
+//    [self.collectionView addSubview:sampleMusicSourceView];
+//    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
+    
+    //Switch to Youtube
+    SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] init];
+    controller.delegate = self;
+    MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
+    [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
 }
 
 #pragma mark - SampleMusicSource Delegate

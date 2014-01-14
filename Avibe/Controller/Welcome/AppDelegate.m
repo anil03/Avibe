@@ -63,9 +63,9 @@
     //Set up Welcome View depending on different device
     UIViewController *welcomeController;
     if (IS_IPHONE_5) {
-        welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
+        welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
     }else{
-        welcomeController = [[UIStoryboard storyboardWithName:@"Welcome" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
+        welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
     }
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     self.window.rootViewController = navigationController;
@@ -222,7 +222,10 @@
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
         PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
+        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
+        title = [title stringByAppendingString:@"Background!"];
+        
+        [songRecord setObject:title  forKey:@"title"];
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
         [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
