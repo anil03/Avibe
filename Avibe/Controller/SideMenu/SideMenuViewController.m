@@ -77,7 +77,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
         friendsViewController = [[FriendsViewController alloc] init];
         self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
 
-        userViewController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateViewControllerWithIdentifier:@"UserViewController"];
+        userViewController = [[UserViewController alloc] init];
+//        userViewController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateViewControllerWithIdentifier:@"UserViewController"];
         userViewController.delegate = self;
         self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
 

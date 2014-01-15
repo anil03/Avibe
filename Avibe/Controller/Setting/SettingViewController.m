@@ -26,49 +26,129 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
     [self setupBarMenuButton];
     
-    //BackgroundView
-    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
-    [self.view addSubview:backgroundView];
-    [self.view sendSubviewToBack:backgroundView];
-//    self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
-    
+    //LastFM
     _lastFMAccountTextField.delegate = self;
     _lastFMAccountTextField.text = [[Setting sharedSetting] lastFMAccount];
     
     //View Parameters
     UIColor *titleBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
     UIColor *titleTextColor = [UIColor whiteColor];
-    UIColor *contentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6];
-    UIColor *contentTextColor = [UIColor whiteColor];
-    float barHeight = 80.0f;
+    UIColor *contentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.3];
+    UIColor *contentTextColor = [UIColor blackColor];
+    float barHeight = 20.0f;
     float width = [[UIScreen mainScreen] bounds].size.width;
-    float height = 0.0f;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float scrollWidth = width;
+    float scrollHeight = height*2;
+    float currentHeight = 0.0f;
     float left = 5.0f;
+    float right = 5.0f;
     float unitHeight = 30.0f;
     int item = 0;
+    UIView *accountView;
+    UILabel *titleLabel;
+    UILabel *contentLabel;
+    UITextField *textField;
     
-    //AccountView
+    //ScrollView
+    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    [scrollView setContentSize:CGSizeMake(scrollWidth, scrollHeight)];
+    scrollView.userInteractionEnabled = YES;
+    self.view = scrollView;
+    
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
+    [scrollView addSubview:backgroundView];
+    [scrollView sendSubviewToBack:backgroundView];
+    
+    /*AccountView*/
     item = 3;
-    height += barHeight;
-    UIView *accountView = [[UIView alloc] initWithFrame:CGRectMake(0, height, width, item*unitHeight)];
+    currentHeight += barHeight;
+    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
     accountView.backgroundColor = contentBackgroundColor;
-    [self.view addSubview:accountView];
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    [scrollView addSubview:accountView];
+    //Title
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
     titleLabel.backgroundColor = titleBackgroundColor;
     titleLabel.text = @" My Avibe Account";
     titleLabel.textColor = titleTextColor;
     titleLabel.textAlignment = NSTextAlignmentNatural;
     [accountView addSubview:titleLabel];
+    //User Name
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight, width/2, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" Username";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:contentLabel];
+    //User Name Description
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2-right, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" myhgew ";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentRight;
+    [accountView addSubview:contentLabel];
+    //Mobile#
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight*2, width/2, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" Mobile#";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:contentLabel];
+    //Mobile# Description
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(width/2, unitHeight*2, width/2-right, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" 9193082709 ";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentRight;
+    [accountView addSubview:contentLabel];
     
-    //OtherAccountView
+    /*OtherAccountView*/
+    currentHeight += item*unitHeight;
+    item = 10;
+    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+    accountView.backgroundColor = contentBackgroundColor;
+    [scrollView addSubview:accountView];
+    //Title
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    titleLabel.backgroundColor = titleBackgroundColor;
+    titleLabel.text = @" My Other Accounts";
+    titleLabel.textColor = titleTextColor;
+    titleLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:titleLabel];
+    //TextField
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2, unitHeight)];
+    [accountView addSubview:textField];
     
-    //Feed Clogging
+    /*Feed Clogging*/
+    currentHeight += item*unitHeight;
+    item = 3;
+    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+    accountView.backgroundColor = contentBackgroundColor;
+    [scrollView addSubview:accountView];
+    //Title
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    titleLabel.backgroundColor = titleBackgroundColor;
+    titleLabel.text = @" Feed Clogging";
+    titleLabel.textColor = titleTextColor;
+    titleLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:titleLabel];
     
-    //Background Art
+    /*Other Setting*/
+    currentHeight += item*unitHeight;
+    item = 3;
+    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+    accountView.backgroundColor = contentBackgroundColor;
+    [scrollView addSubview:accountView];
+    //Title
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    titleLabel.backgroundColor = titleBackgroundColor;
+    titleLabel.text = @" Others";
+    titleLabel.textColor = titleTextColor;
+    titleLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:titleLabel];
 }
 
 #pragma mark - BarMenuButton

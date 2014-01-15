@@ -24,15 +24,6 @@
 
 @implementation UserViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self setupMenuButton];
@@ -42,17 +33,43 @@
 {
     [super viewDidLoad];
     
+    //View Parameters
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float barHeight = 50.0f;
+    float currentHeight = 0.0f;
+
+    //Set up View
     self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
     
-    _lastFMAccountInput.delegate = self;
-
-    self.username.text = [[PFUser currentUser] username];
-    [self updateInfo];
+    currentHeight += barHeight;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, 50)];
+    label.text = @"Profile";
+    label.textColor = [UIColor whiteColor];
+    label.backgroundColor = [UIColor blueColor];
+    [self.view addSubview:label];
+    [self.view bringSubviewToFront:label];
     
-    //Update textfield
-    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
-        _lastFMAccountInput.text = [self.delegate getLastFMAccount];
-    }
+    currentHeight += 50;
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, width, 30)];
+    [button setTitle:@"button" forState:UIControlStateNormal];
+    button.backgroundColor = [UIColor redColor];
+    [self.view addSubview:button];
+    
+    //Delegate
+//    _lastFMAccountInput.delegate = self;
+//
+//    self.username.text = [[PFUser currentUser] username];
+//    [self updateInfo];
+//    
+//    //Update textfield
+//    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
+//        _lastFMAccountInput.text = [self.delegate getLastFMAccount];
+//    }
+    
+    
+    
+ 
 
 }
 
