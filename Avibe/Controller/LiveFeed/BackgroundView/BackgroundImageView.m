@@ -9,7 +9,7 @@
 #import "BackgroundImageView.h"
 
 #import "ImageFetcher.h"
-
+#import "PublicMethod.h"
 #import "YMGenericCollectionViewCell.h"
 
 @interface BackgroundImageView () <UICollectionViewDelegate, UICollectionViewDataSource>
@@ -25,7 +25,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    _row = 6;
+    _row = 8;
     _column = 4;
     
     UICollectionViewFlowLayout *backgroundFlowLayout =[[UICollectionViewFlowLayout alloc] init];
@@ -43,8 +43,11 @@
         [self registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         
         //Load background images
-        ImageFetcher *fetcher = [[ImageFetcher alloc] initWithLimit:_row*_column andTerm:@"*"];
-        _images = [fetcher getAlbumImages];
+//        ImageFetcher *fetcher = [[ImageFetcher alloc] initWithLimit:_row*_column andTerm:@"*"];
+//        ImageFetcher *fetcher = [PublicMethod sharedInstance].imageFetcher;
+        _images = [PublicMethod sharedInstance].backgroundImages;
+        
+        self.userInteractionEnabled = NO;
     }
     
     return self;
@@ -64,9 +67,7 @@
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
-    NSData *imageData = [NSData dataWithContentsOfURL:_images[indexPath.row]];
-    UIImage *image = [UIImage imageWithData:imageData];
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:_images[indexPath.row]];
     imageView.alpha = 0.4;
     cell.backgroundView = imageView;
     

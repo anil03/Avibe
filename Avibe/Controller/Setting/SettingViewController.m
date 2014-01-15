@@ -12,6 +12,8 @@
 #import "UIViewController+MMDrawerController.h"
 
 #import "Setting.h"
+#import "PublicMethod.h"
+#import "BackgroundImageView.h"
 
 @interface SettingViewController () <UITextFieldDelegate>
 
@@ -27,10 +29,46 @@
 
     [self setupBarMenuButton];
     
-    self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:backgroundView];
+    [self.view sendSubviewToBack:backgroundView];
+//    self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
     
     _lastFMAccountTextField.delegate = self;
     _lastFMAccountTextField.text = [[Setting sharedSetting] lastFMAccount];
+    
+    //View Parameters
+    UIColor *titleBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    UIColor *titleTextColor = [UIColor whiteColor];
+    UIColor *contentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6];
+    UIColor *contentTextColor = [UIColor whiteColor];
+    float barHeight = 80.0f;
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = 0.0f;
+    float left = 5.0f;
+    float unitHeight = 30.0f;
+    int item = 0;
+    
+    //AccountView
+    item = 3;
+    height += barHeight;
+    UIView *accountView = [[UIView alloc] initWithFrame:CGRectMake(0, height, width, item*unitHeight)];
+    accountView.backgroundColor = contentBackgroundColor;
+    [self.view addSubview:accountView];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    titleLabel.backgroundColor = titleBackgroundColor;
+    titleLabel.text = @" My Avibe Account";
+    titleLabel.textColor = titleTextColor;
+    titleLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:titleLabel];
+    
+    //OtherAccountView
+    
+    //Feed Clogging
+    
+    //Background Art
 }
 
 #pragma mark - BarMenuButton
@@ -38,10 +76,7 @@
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     titleLabel.text = @"Settings";
-    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
-                                           green:49.0/255.0
-                                            blue:107.0/255.0
-                                           alpha:1.0];
+    titleLabel.textColor = [[Setting sharedSetting] barTintColor];
     [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;

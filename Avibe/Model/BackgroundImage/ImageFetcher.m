@@ -65,7 +65,9 @@ static NSString *const kURLString = @"https://itunes.apple.com/search?";
     for (int i = 0; i < [results count]; i++) {
         NSDictionary* result = [results objectAtIndex:i];
         NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"artworkUrl100"]];
-        [imageURLs addObject:previewUrl];
+        NSData *imageData = [NSData dataWithContentsOfURL:previewUrl];
+        UIImage *image = [UIImage imageWithData:imageData];
+        [imageURLs addObject:image];
     }
     
     return imageURLs;

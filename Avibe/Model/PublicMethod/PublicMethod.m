@@ -7,6 +7,12 @@
 //
 
 #import "PublicMethod.h"
+#import "BackgroundImageView.h"
+
+@interface PublicMethod ()
+
+
+@end
 
 @implementation PublicMethod
 
@@ -16,11 +22,22 @@
     
     @synchronized(self)
     {
-        if (!sharedInstance)
+        if (!sharedInstance){
             sharedInstance = [[PublicMethod alloc] init];
-        
+        }
+            
         return sharedInstance;
     }
+}
+
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:50 andTerm:@"*"];
+        _backgroundImages = [imageFetcher getAlbumImages];
+    }
+    return self;
 }
 
 #pragma mark - TODO Upgrade Duplcated Algorithm

@@ -8,7 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import "ImageFetcher.h"
+
 @interface PublicMethod : NSObject
+
+@property (nonatomic, strong) NSArray *backgroundImages;
 
 + (PublicMethod *)sharedInstance;
 -(void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)musicToSave andSource:(NSString*)sourceName andFetchObjects:(NSArray*)fetechObjects;

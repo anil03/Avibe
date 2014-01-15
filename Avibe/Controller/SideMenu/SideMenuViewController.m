@@ -309,7 +309,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
 {
 //    NSLog(@"Press Setting");
     
-    SettingViewController *settingViewController = [[UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingViewController"];
+//    SettingViewController *settingViewController = [[UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    SettingViewController *settingViewController = [[SettingViewController alloc] init];
     settingViewController.previousViewController = self.mm_drawerController.centerViewController;
     
     MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:settingViewController];

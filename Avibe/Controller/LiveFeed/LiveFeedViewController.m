@@ -35,7 +35,7 @@
 #import "YMGenericCollectionViewFlowLayout.h"
 
 #import "Setting.h"
-
+#import "PublicMethod.h"
 
 #import "BackgroundImageView.h"
 #import "SampleMusicSourceView.h"
@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
         
         //BackgroundView
-        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.backgroundView.frame];
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
         self.collectionView.backgroundView = backgroundView;
         
 //        [self.collectionView.backgroundView bringSubviewToFront:mask];
