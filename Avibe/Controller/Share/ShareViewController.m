@@ -22,8 +22,14 @@
 @interface ShareViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *songs;
+
+@property (nonatomic, strong) NSArray *PFObjects;
+
+@property int column;
+@property int row;
 
 @end
 
@@ -31,11 +37,29 @@
 
 @synthesize songs = _songs;
 
-
-
 - (id)init
 {
-    self = [super initWithCollectionViewLayout:nil];
+    _column = 2;
+    _row = 4;
+    float cellWidth = [UIScreen mainScreen].bounds.size.width/_column-1;
+    float cellHeight = [UIScreen mainScreen].bounds.size.height/_row;
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(cellWidth, cellHeight)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [flowLayout setMinimumInteritemSpacing:0.5f]; //Between items
+    [flowLayout setMinimumLineSpacing:5.5f]; //Between lines
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0); //Between sections
+    
+    self = [super initWithCollectionViewLayout:flowLayout];
+    
+    if (self) {
+        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+        self.collectionView.backgroundColor = [UIColor blackColor];
+    }
     
     return self;
 }
@@ -52,24 +76,32 @@
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-	
+    
+    
     //UICollectionview
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
 	
-	[self setupRefreshControl];
-	[self refreshView:self.refreshControl];
+    //Setup Refresh Control
+    [self setupRefreshControl];
+    [self refreshView:self.refreshControl];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _spinner.center = CGPointMake(160, 240);
+    _spinner.hidesWhenStopped = YES;
+    [self.view addSubview:_spinner];
 }
 
 #pragma mark - UICollection view data source
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-	return 4;
+	return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-	return 5;
- //    return recipeImages.count;
+	return [_PFObjects count];
 }
 
 
@@ -77,8 +109,22 @@
 	static NSString *identifier = @"Cell";
 	
 	UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-	cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
-
+	cell.backgroundColor = [UIColor grayColor];
+    
+    PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
+    NSString *title = [song objectForKey:@"title"];
+    NSString *artist = [song objectForKey:@"artist"];
+    NSString *album = [song objectForKey:@"album"];
+    NSString *user = [song objectForKey:@"user"];
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, cell.frame.size.width, 60)];
+    titleLabel.text = [NSString stringWithFormat:@"\"%@\" by %@", title, artist];
+    titleLabel.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
+    titleLabel.numberOfLines = 2;
+    [cell.contentView addSubview:titleLabel];
+    UIImage *image = [UIImage imageNamed:@"default_album.png"];
+    cell.backgroundView = [[UIImageView alloc] initWithImage:image];
+    
  //Not implement ImageView yet
  //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
  //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
@@ -147,16 +193,15 @@
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     //Create query for all Post object by the current user
-	PFQuery *postQuery = [PFQuery queryWithClassName:@"Favorite"];
-	[postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
+	PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
 	[postQuery orderByDescending:@"updatedAt"];
 
     // Run the query
 	[postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 		if (!error) {
             //Save results and update the table
-//			self.PFObjects = objects;
-//			[self.tableView reloadData];
+			_PFObjects = objects;
+			[self.collectionView reloadData];
 			
 			NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
 			[formatter setDateFormat:@"MMM d, h:mm a"];

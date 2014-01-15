@@ -133,9 +133,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     [super viewDidLoad];
     
-    //UICollectionView
-
-    
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
@@ -331,7 +328,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             [_spinner stopAnimating];
 
             [self.collectionView reloadData];
-//            [self.tableView reloadData];
         }else{
             NSLog(@"Error In Fetch Data: %@", error);
         }
@@ -352,6 +348,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self.refreshControl addTarget:self
         action:@selector(refreshView:)
         forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
 }
 
 

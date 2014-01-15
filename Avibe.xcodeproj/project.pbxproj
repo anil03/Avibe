@@ -127,6 +127,7 @@
 		4C23F17A1885A48100D2075A /* SampleMusicYoutubeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */; };
 		4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */; };
 		4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1811885D6C800D2075A /* PublicMethod.m */; };
+		4C23F185188612FB00D2075A /* default_album.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F184188612FB00D2075A /* default_album.png */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -331,6 +332,7 @@
 		4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareMusicEntry.m; sourceTree = "<group>"; };
 		4C23F1801885D6C800D2075A /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
 		4C23F1811885D6C800D2075A /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
+		4C23F184188612FB00D2075A /* default_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_album.png; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -611,6 +613,7 @@
 		4C231CB3188104F800B030F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C23F183188612FB00D2075A /* Share */,
 				4C2F0FC518846071006BA932 /* SampleMusic */,
 				4C231CB4188104F800B030F9 /* Archive */,
 				4C231CB7188104F800B030F9 /* icon */,
@@ -844,6 +847,14 @@
 			path = PublicMethod;
 			sourceTree = "<group>";
 		};
+		4C23F183188612FB00D2075A /* Share */ = {
+			isa = PBXGroup;
+			children = (
+				4C23F184188612FB00D2075A /* default_album.png */,
+			);
+			path = Share;
+			sourceTree = "<group>";
+		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
@@ -1050,6 +1061,7 @@
 				4C231D40188104F800B030F9 /* Logo.png in Resources */,
 				4C231D35188104F800B030F9 /* Exit.png in Resources */,
 				4C231D3D188104F800B030F9 /* LogInDown.png in Resources */,
+				4C23F185188612FB00D2075A /* default_album.png in Resources */,
 				4C231D2E188104F800B030F9 /* music-record-24.png in Resources */,
 				4C231D52188104F800B030F9 /* saxophone-32.png in Resources */,
 				4C231D30188104F800B030F9 /* settings-32-highlight.png in Resources */,

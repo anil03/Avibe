@@ -12,8 +12,7 @@
 #import "YMGenericTableViewController.h"
 #import "YMGenericCollectionViewController.h"
 
-//@interface ShareViewController : YMGenericTableViewController
-@interface ShareViewController : YMGenericCollectionViewController
+@interface ShareViewController : UICollectionViewController
 
 
 @end

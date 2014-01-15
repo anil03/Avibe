@@ -260,7 +260,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 //log out
                 [PFUser logOut];
                 
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UIViewController *welcomeController;
                 if (IS_IPHONE_5) {
                     welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];

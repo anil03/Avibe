@@ -163,7 +163,7 @@
 }
 
 - (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
-    NSString *embedHTML = @"\
+//    NSString *embedHTML = @"\
     <html><head>\
     <style type=\"text/css\">\
     body {\
@@ -175,7 +175,7 @@
     <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
     width=\"%0.0f\" height=\"%0.0f\"></embed>\
     </body></html>";
-    NSString *html = [NSString stringWithFormat:embedHTML, urlString, frame.size.width, frame.size.height];
+//    NSString *html = [NSString stringWithFormat:embedHTML, urlString, frame.size.width, frame.size.height];
     UIWebView *videoView = [[UIWebView alloc] initWithFrame:frame];
     videoView.delegate = self;
     
