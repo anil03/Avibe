@@ -97,19 +97,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
+        self.collectionView.delegate=self;
+        self.collectionView.dataSource=self;
         
         //BackgroundView
         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
         self.collectionView.backgroundView = backgroundView;
-        
-//        [self.collectionView.backgroundView bringSubviewToFront:mask];
-        
-//        self.collectionView.backgroundColor = [UIColor grayColor];
-        
-        self.collectionView.delegate=self;
-        self.collectionView.dataSource=self;
-        
-        
     }
     
     return self;
@@ -189,7 +182,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	
 	YMGenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     cell.label.adjustsFontSizeToFitWidth = YES;
-
+    cell.label.textColor = [UIColor whiteColor];
+    
 //    UIButton *button = [[UIButton alloc] initWithFrame:cell.frame];
 //    button.backgroundColor = [UIColor greenColor];
 //    [cell addSubview:button];

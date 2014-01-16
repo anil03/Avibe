@@ -42,6 +42,12 @@
         self.dataSource = self;
         [self registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
         
+        float barHeight = 30.0f;
+        UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, frame.size.height+barHeight)];
+        [mask setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8]];
+        [self addSubview:mask];
+        [self bringSubviewToFront:mask];
+        
         //Load background images
 //        ImageFetcher *fetcher = [[ImageFetcher alloc] initWithLimit:_row*_column andTerm:@"*"];
 //        ImageFetcher *fetcher = [PublicMethod sharedInstance].imageFetcher;
@@ -68,7 +74,7 @@
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
     UIImageView *imageView = [[UIImageView alloc] initWithImage:_images[indexPath.row]];
-    imageView.alpha = 0.4;
+//    imageView.alpha = 0.4;
     cell.backgroundView = imageView;
     
     return cell;
