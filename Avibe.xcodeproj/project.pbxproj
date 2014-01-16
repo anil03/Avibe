@@ -488,10 +488,10 @@
 		4C231C77188104F800B030F9 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				4C231C78188104F800B030F9 /* FindFriendsViewController.h */,
-				4C231C79188104F800B030F9 /* FindFriendsViewController.m */,
 				4C231C7A188104F800B030F9 /* FriendsViewController.h */,
 				4C231C7B188104F800B030F9 /* FriendsViewController.m */,
+				4C231C78188104F800B030F9 /* FindFriendsViewController.h */,
+				4C231C79188104F800B030F9 /* FindFriendsViewController.m */,
 			);
 			path = Friends;
 			sourceTree = "<group>";
@@ -1507,6 +1507,7 @@
 				4C23F189188832F500D2075A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Avibe" */ = {
 			isa = XCConfigurationList;

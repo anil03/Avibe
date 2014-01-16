@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "YMGenericTableViewController.h"
 
-@interface FriendsViewController : YMGenericTableViewController
+@interface FriendsViewController : UITableViewController
 
 @end

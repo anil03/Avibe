@@ -17,7 +17,7 @@
 #import "SampleMusicViewController.h"
 
 #import "FindFriendsViewController.h"
-
+#import "BackgroundImageView.h"
 
 
 @interface FriendsViewController () <FindFriendsViewControllerDelegate>
@@ -30,13 +30,18 @@
 
 @implementation FriendsViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)init
 {
-	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-	if (self) {
-        // Custom initialization
-	}
-	return self;
+    self = [super initWithStyle:UITableViewStyleGrouped];
+    if (self) {
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+        
+        //BackgroundView
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+        self.tableView.backgroundView = backgroundView;
+    }
+    return self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -72,20 +77,33 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
-    return 1;
+    return 3;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.friends count];
 }
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"A";
+        case 1:
+            return @"B";
+        case 2:
+            return @"C";
+        default:
+            return nil;
+    }
+}
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     // Configure the cell...
     PFObject *friend = [self.friends objectAtIndex:indexPath.row];
@@ -223,7 +241,8 @@
     
     
     //Pop from bottom
-    FindFriendsViewController *addFriendsViewController = [[UIStoryboard storyboardWithName:@"FindFriendsStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"FindFriends"];
+//    FindFriendsViewController *addFriendsViewController = [[UIStoryboard storyboardWithName:@"FindFriendsStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"FindFriends"];
+    FindFriendsViewController *addFriendsViewController = [[FindFriendsViewController alloc] init];
     addFriendsViewController.delegate = self;
     addFriendsViewController.friendsViewController = self.mm_drawerController.centerViewController;
     

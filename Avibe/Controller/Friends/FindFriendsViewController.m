@@ -10,9 +10,9 @@
 #import "FindFriendsViewController.h"
 
 #import "FriendsViewController.h"
-
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
+#import "BackgroundImageView.h"
 
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -30,6 +30,25 @@
 
 @synthesize contactList = _contactList;
 
+- (id)init
+{
+    self = [super initWithStyle:UITableViewStyleGrouped];
+    if (self) {
+        [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+        
+        //BackgroundView
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+        self.tableView.backgroundView = backgroundView;
+    }
+    return self;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[self setupBarMenuButton];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,7 +56,6 @@
     _registeredUsers = [[NSMutableArray alloc] init];
     _unRegisteredUsers = [[NSMutableArray alloc] init];
     
-    [self setupBarMenuButton];
     [self searchAddressBook];
     [self searchDatabaseForRegisteredUser];
 }
@@ -158,16 +176,29 @@
 #pragma mark - TableView method
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
+}
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+        case 0:
+            return @"A";
+        case 1:
+            return @"B";
+        case 2:
+            return @"C";
+        default:
+            return nil;
+    }
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
         case 0:
-            return [_registeredUsers count];
+            return [_registeredUsers count]+3;
             break;
         case 1:
-            return [_unRegisteredUsers count];
+            return [_unRegisteredUsers count]+2;
             break;
         default:
             return 0;
@@ -178,6 +209,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
+    [cell.textLabel setTextColor:[UIColor whiteColor]];
+    [cell.detailTextLabel setTextColor:[UIColor whiteColor]];
     
     NSMutableDictionary *dictionary = [_contactList objectAtIndex:indexPath.row];
     cell.textLabel.text = [dictionary objectForKey:@"name"];
