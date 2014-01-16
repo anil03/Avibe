@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		4C23F186188832F400D2075A /* Documentation */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4C23F187188832F500D2075A /* Build configuration list for PBXAggregateTarget "Documentation" */;
+			buildPhases = (
+				4C23F18E1888342D00D2075A /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = Documentation;
+			productName = Documentation;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */; };
 		4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */; };
@@ -482,7 +496,7 @@
 			path = Friends;
 			sourceTree = "<group>";
 		};
-		4C231C7C188104F800B030F9 /* Generic */ = {
+		4C231C7C188104F800B030F9 /* LiveFeedCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				4C231C7D188104F800B030F9 /* YMGenericCollectionReusableHeaderView.h */,
@@ -494,7 +508,7 @@
 				4C231C83188104F800B030F9 /* YMGenericCollectionViewFlowLayout.h */,
 				4C231C84188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m */,
 			);
-			name = Generic;
+			name = LiveFeedCollectionView;
 			path = ../Generic;
 			sourceTree = "<group>";
 		};
@@ -514,7 +528,7 @@
 		4C231C8C188104F800B030F9 /* LiveFeed */ = {
 			isa = PBXGroup;
 			children = (
-				4C231C7C188104F800B030F9 /* Generic */,
+				4C231C7C188104F800B030F9 /* LiveFeedCollectionView */,
 				4C231C8D188104F800B030F9 /* BackgroundView */,
 				4C231C8E188104F800B030F9 /* LiveFeedViewController.h */,
 				4C231C8F188104F800B030F9 /* LiveFeedViewController.m */,
@@ -1027,6 +1041,7 @@
 			targets = (
 				4C31797418440EA700F7D41B /* Avibe */,
 				4C31799518440EA700F7D41B /* AvibeTests */,
+				4C23F186188832F400D2075A /* Documentation */,
 			);
 		};
 /* End PBXProject section */
@@ -1115,6 +1130,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4C23F18E1888342D00D2075A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"yuhuamai\";\ncompanyID=\"com.yuhuamai\";\ncompanyURL=\"http://yuhuamai.com\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"~/help\";\n# End constants\n/usr/local/bin/appledoc \\\n--project-name \"${PROJECT_NAME}\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--keep-intermediate-files \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--merge-categories \\\n--exit-threshold 2 \\\n\"${PROJECT_DIR}\"";
+		};
 		6CDA2CEC6AD640D6BC04B000 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1239,6 +1267,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4C23F188188832F500D2075A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4C23F189188832F500D2075A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 		4C3179A518440EA700F7D41B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1402,7 +1444,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/${PROJECT_NAME}.app/${PROJECT_NAME}";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Avibe.app/Avibe";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
@@ -1433,7 +1475,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/${PROJECT_NAME}.app/${PROJECT_NAME}";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Avibe.app/Avibe";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks/**",
 					"$(inherited)",
@@ -1458,6 +1500,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4C23F187188832F500D2075A /* Build configuration list for PBXAggregateTarget "Documentation" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4C23F188188832F500D2075A /* Debug */,
+				4C23F189188832F500D2075A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		4C31797018440EA700F7D41B /* Build configuration list for PBXProject "Avibe" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

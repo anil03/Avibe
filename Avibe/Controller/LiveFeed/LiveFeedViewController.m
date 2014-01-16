@@ -212,25 +212,22 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     switch (indexPath.row%columnNumber) {
         case 0:{
-//            cell.backgroundColor = [[Setting sharedSetting] primary1Color];
-            cell.label.text = [song objectForKey:@"title"];
-            break;
-        }
-        case 1:{
-//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
-            cell.label.text = [song objectForKey:@"album"];
-            break;
-        }
-        case 2:{
-//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
-            cell.label.text = [song objectForKey:@"artist"];
-            break;
-        }
-        case 3:{
-//            cell.backgroundColor = [[Setting sharedSetting] sharedCellColor];
             cell.label.text = [song objectForKey:@"user"];
             break;
         }
+        case 1:{
+            cell.label.text = [song objectForKey:@"title"];
+            break;
+        }
+        case 2:{
+            cell.label.text = [song objectForKey:@"album"];
+            break;
+        }
+        case 3:{
+            cell.label.text = [song objectForKey:@"artist"];
+            break;
+        }
+        
         default:
             break;
     }
