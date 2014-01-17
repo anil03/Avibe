@@ -60,8 +60,6 @@
 		4C231D22188104F800B030F9 /* Setting.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAC188104F800B030F9 /* Setting.m */; };
 		4C231D23188104F800B030F9 /* Song.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAE188104F800B030F9 /* Song.m */; };
 		4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4C231CAF188104F800B030F9 /* Song.xcdatamodeld */; };
-		4C231D26188104F800B030F9 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB5188104F800B030F9 /* background.png */; };
-		4C231D27188104F800B030F9 /* sample_music_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB6188104F800B030F9 /* sample_music_background.jpg */; };
 		4C231D28188104F800B030F9 /* side-drum-120.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB8188104F800B030F9 /* side-drum-120.png */; };
 		4C231D29188104F800B030F9 /* side-drum-58.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CB9188104F800B030F9 /* side-drum-58.png */; };
 		4C231D2A188104F800B030F9 /* side-drum-80.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CBA188104F800B030F9 /* side-drum-80.png */; };
@@ -142,6 +140,8 @@
 		4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */; };
 		4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1811885D6C800D2075A /* PublicMethod.m */; };
 		4C23F185188612FB00D2075A /* default_album.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F184188612FB00D2075A /* default_album.png */; };
+		4C23F1911888A90200D2075A /* sample_music_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F1901888A90200D2075A /* sample_music_background.jpg */; };
+		4C23F1931888A9DC00D2075A /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F1921888A9DC00D2075A /* background.png */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -247,8 +247,8 @@
 		4C231CA2188104F800B030F9 /* UserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewController.m; sourceTree = "<group>"; };
 		4C231CA4188104F800B030F9 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4C231CA5188104F800B030F9 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		4C231CA6188104F800B030F9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		4C231CA7188104F800B030F9 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		4C231CA6188104F800B030F9 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = Welcome/MainViewController.h; sourceTree = "<group>"; };
+		4C231CA7188104F800B030F9 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = Welcome/MainViewController.m; sourceTree = "<group>"; };
 		4C231CA8188104F800B030F9 /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		4C231CA9188104F800B030F9 /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		4C231CAB188104F800B030F9 /* Setting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Setting.h; sourceTree = "<group>"; };
@@ -256,8 +256,6 @@
 		4C231CAD188104F800B030F9 /* Song.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Song.h; sourceTree = "<group>"; };
 		4C231CAE188104F800B030F9 /* Song.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Song.m; sourceTree = "<group>"; };
 		4C231CB0188104F800B030F9 /* Song.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Song.xcdatamodel; sourceTree = "<group>"; };
-		4C231CB5188104F800B030F9 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
-		4C231CB6188104F800B030F9 /* sample_music_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_music_background.jpg; sourceTree = "<group>"; };
 		4C231CB8188104F800B030F9 /* side-drum-120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "side-drum-120.png"; sourceTree = "<group>"; };
 		4C231CB9188104F800B030F9 /* side-drum-58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "side-drum-58.png"; sourceTree = "<group>"; };
 		4C231CBA188104F800B030F9 /* side-drum-80.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "side-drum-80.png"; sourceTree = "<group>"; };
@@ -347,6 +345,8 @@
 		4C23F1801885D6C800D2075A /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
 		4C23F1811885D6C800D2075A /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
 		4C23F184188612FB00D2075A /* default_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_album.png; sourceTree = "<group>"; };
+		4C23F1901888A90200D2075A /* sample_music_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sample_music_background.jpg; sourceTree = "<group>"; };
+		4C23F1921888A9DC00D2075A /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -423,17 +423,17 @@
 		4C231C4B188104F800B030F9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				4C231DD31881E51300B030F9 /* SampleMusic */,
+				4C231CA3188104F800B030F9 /* Welcome */,
+				4C231C9B188104F800B030F9 /* SignInAndSignUp */,
+				4C23F18F1888A49C00D2075A /* Main */,
+				4C231C96188104F800B030F9 /* SideMenu */,
 				4C231C8C188104F800B030F9 /* LiveFeed */,
+				4C231DD31881E51300B030F9 /* SampleMusic */,
 				4C231C93188104F800B030F9 /* Share */,
-				4C231C4C188104F800B030F9 /* Archive */,
 				4C231C77188104F800B030F9 /* Friends */,
 				4C231C89188104F800B030F9 /* Listened */,
 				4C231C90188104F800B030F9 /* Setting */,
-				4C231C96188104F800B030F9 /* SideMenu */,
-				4C231C9B188104F800B030F9 /* SignInAndSignUp */,
 				4C231CA0188104F800B030F9 /* User */,
-				4C231CA3188104F800B030F9 /* Welcome */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -449,7 +449,8 @@
 				4C231C75188104F800B030F9 /* UIViewController+MMDrawerController.h */,
 				4C231C76188104F800B030F9 /* UIViewController+MMDrawerController.m */,
 			);
-			path = Archive;
+			name = Archive;
+			path = Controller/Archive;
 			sourceTree = "<group>";
 		};
 		4C231C4D188104F800B030F9 /* MMController */ = {
@@ -599,8 +600,6 @@
 			children = (
 				4C231CA4188104F800B030F9 /* AppDelegate.h */,
 				4C231CA5188104F800B030F9 /* AppDelegate.m */,
-				4C231CA6188104F800B030F9 /* MainViewController.h */,
-				4C231CA7188104F800B030F9 /* MainViewController.m */,
 				4C231CA8188104F800B030F9 /* WelcomeViewController.h */,
 				4C231CA9188104F800B030F9 /* WelcomeViewController.m */,
 			);
@@ -627,6 +626,7 @@
 		4C231CB3188104F800B030F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C231CDF188104F800B030F9 /* Welcome */,
 				4C23F183188612FB00D2075A /* Share */,
 				4C2F0FC518846071006BA932 /* SampleMusic */,
 				4C231CB4188104F800B030F9 /* Archive */,
@@ -634,7 +634,6 @@
 				4C231CBB188104F800B030F9 /* Images.xcassets */,
 				4C231CBC188104F800B030F9 /* SideMenu */,
 				4C231CC6188104F800B030F9 /* SignInAndSignUp */,
-				4C231CDF188104F800B030F9 /* Welcome */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -642,8 +641,6 @@
 		4C231CB4188104F800B030F9 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
-				4C231CB5188104F800B030F9 /* background.png */,
-				4C231CB6188104F800B030F9 /* sample_music_background.jpg */,
 			);
 			path = Archive;
 			sourceTree = "<group>";
@@ -708,6 +705,8 @@
 		4C231CDF188104F800B030F9 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				4C23F1921888A9DC00D2075A /* background.png */,
+				4C23F1901888A90200D2075A /* sample_music_background.jpg */,
 				4C231CE0188104F800B030F9 /* cornet-32.png */,
 				4C231CE1188104F800B030F9 /* dj-32.png */,
 				4C231CE2188104F800B030F9 /* guitar-32.png */,
@@ -731,8 +730,8 @@
 			children = (
 				4C23F1751885A3AB00D2075A /* SampleMusic */,
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
-				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
 				4C231CF6188104F800B030F9 /* Main.storyboard */,
+				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
 				4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */,
 				4C231CF9188104F800B030F9 /* User.storyboard */,
 			);
@@ -869,6 +868,15 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
+		4C23F18F1888A49C00D2075A /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				4C231CA6188104F800B030F9 /* MainViewController.h */,
+				4C231CA7188104F800B030F9 /* MainViewController.m */,
+			);
+			name = Main;
+			sourceTree = "<group>";
+		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
@@ -942,6 +950,7 @@
 				4C231CAA188104F800B030F9 /* Model */,
 				4C231CF4188104F800B030F9 /* View */,
 				4C231C4B188104F800B030F9 /* Controller */,
+				4C231C4C188104F800B030F9 /* Archive */,
 				4C231CB3188104F800B030F9 /* Resource */,
 				4C231D6C1881063A00B030F9 /* Supporting Files */,
 			);
@@ -1082,7 +1091,6 @@
 				4C231D30188104F800B030F9 /* settings-32-highlight.png in Resources */,
 				4C231D37188104F800B030F9 /* Facebook.png in Resources */,
 				4C231D2B188104F800B030F9 /* Images.xcassets in Resources */,
-				4C231D27188104F800B030F9 /* sample_music_background.jpg in Resources */,
 				4C231D54188104F800B030F9 /* welcome0.png in Resources */,
 				4C231D44188104F800B030F9 /* PasswordForgotten.png in Resources */,
 				4C231D50188104F800B030F9 /* loudspeaker-32.png in Resources */,
@@ -1093,6 +1101,8 @@
 				4C231D3B188104F800B030F9 /* LogIn.png in Resources */,
 				4C231D53188104F800B030F9 /* side-drum-32.png in Resources */,
 				4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */,
+				4C23F1931888A9DC00D2075A /* background.png in Resources */,
+				4C23F1911888A90200D2075A /* sample_music_background.jpg in Resources */,
 				4C231D59188104F800B030F9 /* welcome2.pxm in Resources */,
 				4C231D4D188104F800B030F9 /* cornet-32.png in Resources */,
 				4C231D28188104F800B030F9 /* side-drum-120.png in Resources */,
@@ -1100,7 +1110,6 @@
 				4C231D31188104F800B030F9 /* settings-32.png in Resources */,
 				4C231D58188104F800B030F9 /* welcome2.png in Resources */,
 				4C231D29188104F800B030F9 /* side-drum-58.png in Resources */,
-				4C231D26188104F800B030F9 /* background.png in Resources */,
 				4C231D55188104F800B030F9 /* welcome0.pxm in Resources */,
 				4C231D62188104F800B030F9 /* User.storyboard in Resources */,
 				4C231D2D188104F800B030F9 /* dj-24.png in Resources */,

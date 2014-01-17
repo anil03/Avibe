@@ -34,10 +34,55 @@
 
 @implementation WelcomeViewController
 
+- (void)setUpView
+{
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float buttonWidth = width/2;
+    float buttonHeight = 100.0f;
+    
+    //NavigationBar
+    [self.navigationController setNavigationBarHidden:YES];
+    
+    //BackgroundImage
+    UIImage *image = [UIImage imageNamed:@"background.png"];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    imageView.image = image;
+    [self.view addSubview:imageView];
+    
+    //Button
+    UIButton *logInButton = [[UIButton alloc] initWithFrame:CGRectMake(0, height-buttonHeight, buttonWidth, buttonHeight)];
+    [logInButton setTitle:@"Log In" forState:UIControlStateNormal];
+    [logInButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [logInButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [logInButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
+    [logInButton addTarget:self action:@selector(logInButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:logInButton];
+    
+    UIButton *signUpButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonWidth, height-buttonHeight, buttonWidth, buttonHeight)];
+    [signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
+    [signUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [signUpButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [signUpButton setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
+    [signUpButton addTarget:self action:@selector(SignUpButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:signUpButton];
+    
+    //Avibe Label
+    float labelWidth = 200.0f;
+    float labelHeight = 50.0f;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width/2-labelWidth/2, 60.0f, labelWidth, labelHeight)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"Avibe";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:56.0f];
+    [self.view addSubview:label];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 
+    [self setUpView];
     [self.navigationController setNavigationBarHidden:YES];
 
     

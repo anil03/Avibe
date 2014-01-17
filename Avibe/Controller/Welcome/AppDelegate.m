@@ -10,6 +10,8 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 
+#import "WelcomeViewController.h"
+
 //Rdio
 #import <Rdio/Rdio.h>
 #import "RdioConsumerCredentials.h"
@@ -22,13 +24,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    //Rdio
-//    Rdio *rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
-
-    
     // Override point for customization after application launch.
     //    NSManagedObjectContext *context = [self managedObjectContext];
     
+    //Rdio
+//    Rdio *rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+    
+    //Parse Account
     [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
     [PFFacebookUtils initializeFacebook];
     [PFTwitterUtils initializeWithConsumerKey:@"7RufvU8xSuPj6dr9xPipdw"
@@ -39,34 +41,17 @@
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    //User login
-    //    PFUser *user = [PFUser user];
-    //    user.username = @"myhgew";
-    //    user.password = @"password";
-    //    user.email = @"myhgew@gmail.com";
-    
-    //    user.username = @"myhgew1";
-    //    user.password = @"password";
-    //    user.email = @"myhgew1@gmail.com";
-    //
-    //    [user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-    //        if (!error) {
-    //            // Hooray! Let them use the app now.
-    //        } else {
-    //            [PFUser logInWithUsername:@"myhgew" password:@"password"];
-    //        }
-    //    }];
-    
     //Background
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
     
     //Set up Welcome View depending on different device
-    UIViewController *welcomeController;
+    UIViewController *welcomeController = [[WelcomeViewController alloc] init];
+    /*
     if (IS_IPHONE_5) {
         welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
     }else{
         welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
-    }
+    }*/
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     self.window.rootViewController = navigationController;
     
