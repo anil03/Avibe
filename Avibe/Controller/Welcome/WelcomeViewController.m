@@ -39,7 +39,7 @@
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
     float buttonWidth = width/2;
-    float buttonHeight = 100.0f;
+    float buttonHeight = 80.0f;
     
     //NavigationBar
     [self.navigationController setNavigationBarHidden:YES];

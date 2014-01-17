@@ -35,103 +35,142 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.navigationController setNavigationBarHidden:YES];
-    
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-
-    //Set up View
-    
-    [self.logInView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBG.png"]]];
-    [self.logInView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo.png"]]];
-    
     // Set buttons appearance
 //    [self.logInView.dismissButton setHidden:YES];
-    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
+//    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
 //    [self.logInView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
     
-    [self.logInView.facebookButton setImage:nil forState:UIControlStateNormal];
-    [self.logInView.facebookButton setImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.facebookButton setBackgroundImage:[UIImage imageNamed:@"FacebookDown.png"] forState:UIControlStateHighlighted];
-    [self.logInView.facebookButton setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
-    [self.logInView.facebookButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.facebookButton setTitle:@"" forState:UIControlStateHighlighted];
+//    [self.logInView.facebookButton setImage:nil forState:UIControlStateNormal];
+//    [self.logInView.facebookButton setImage:nil forState:UIControlStateHighlighted];
+//    [self.logInView.facebookButton setBackgroundImage:[UIImage imageNamed:@"FacebookDown.png"] forState:UIControlStateHighlighted];
+//    [self.logInView.facebookButton setBackgroundImage:[UIImage imageNamed:@"Facebook.png"] forState:UIControlStateNormal];
+//    [self.logInView.facebookButton setTitle:@"" forState:UIControlStateNormal];
+//    [self.logInView.facebookButton setTitle:@"" forState:UIControlStateHighlighted];
     
     //Log in
-    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogIn.png"] forState:UIControlStateNormal];
-    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogInDown.png"] forState:UIControlStateHighlighted];
-    [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
+//    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogIn.png"] forState:UIControlStateNormal];
+//    [self.logInView.logInButton setBackgroundImage:[UIImage imageNamed:@"LogInDown.png"] forState:UIControlStateHighlighted];
+//    [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
+//    [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
     
     //Sign up
-    [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"Signup.png"] forState:UIControlStateNormal];
-    [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignupDown.png"] forState:UIControlStateHighlighted];
-    [self.logInView.signUpButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.signUpButton setTitle:@"" forState:UIControlStateHighlighted];
+//    [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"Signup.png"] forState:UIControlStateNormal];
+//    [self.logInView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignupDown.png"] forState:UIControlStateHighlighted];
+//    [self.logInView.signUpButton setTitle:@"" forState:UIControlStateNormal];
+//    [self.logInView.signUpButton setTitle:@"" forState:UIControlStateHighlighted];
     
     //passwordForgottenButton
-    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgotten.png"] forState:UIControlStateNormal];
-    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgottenDown.png"] forState:UIControlStateHighlighted];
-    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateHighlighted];
-    
-    [self.logInView.externalLogInLabel setHidden:YES];
-    [self.logInView.signUpLabel setHidden:YES];
+//    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgotten.png"] forState:UIControlStateNormal];
+//    [self.logInView.passwordForgottenButton setBackgroundImage:[UIImage imageNamed:@"PasswordForgottenDown.png"] forState:UIControlStateHighlighted];
+//    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateNormal];
+//    [self.logInView.passwordForgottenButton setTitle:@"" forState:UIControlStateHighlighted];
+//    
+//    [self.logInView.externalLogInLabel setHidden:YES];
+//    [self.logInView.signUpLabel setHidden:YES];
     
     // Add login field background
-    fieldsBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LoginFieldBG.png"]];
-    [self.logInView addSubview:self.fieldsBackground];
-    [self.logInView sendSubviewToBack:self.fieldsBackground];
+//    fieldsBackground = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"LoginFieldBG.png"]];
+//    [self.logInView addSubview:self.fieldsBackground];
+//    [self.logInView sendSubviewToBack:self.fieldsBackground];
     
     // Remove text shadow
-    CALayer *layer = self.logInView.usernameField.layer;
-    layer.shadowOpacity = 0.0f;
-    layer = self.logInView.passwordField.layer;
-    layer.shadowOpacity = 0.0f;
+//    CALayer *layer = self.logInView.usernameField.layer;
+//    layer.shadowOpacity = 0.0f;
+//    layer = self.logInView.passwordField.layer;
+//    layer.shadowOpacity = 0.0f;
     
-    // Set field text color
-    [self.logInView.usernameField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-    [self.logInView.passwordField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
     
-    //For debug convenience
-    self.logInView.usernameField.text = @"myhgew2";
-    self.logInView.passwordField.text = @"1989723";
+    
     
 }
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    // Set frame for elements
-    float column1 = 35.0f;
-    float column2 = 165.0f;
-    float rowField = 175.0f;
-    float row1 = 330.0f;
-    float row2 = 405.0f;
+    //Variables
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float fieldWidth = width;
+    float fieldHeight = 60.0f;
+    float buttonWidth = width/2;
+    float buttonHeight = fieldHeight;
+    float currentHeight = 0.0f;
     
-    float btnWidth = 120.0f;
-    float btnHeight = 38.0f;
+    //Background Logo
+    UIImage *image = [UIImage imageNamed:@"background.png"];
+    [self.logInView setBackgroundColor:[UIColor colorWithPatternImage:image]];
     
-    [self.logInView.dismissButton setFrame:CGRectMake(0.0f, 15.0f, 87.5f, 45.5f)];
+    //Avibe Label
+    float labelWidth = 200.0f;
+    float labelHeight = 50.0f;
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(width/2-labelWidth/2, 60.0f, labelWidth, labelHeight)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"Avibe";
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont systemFontOfSize:56.0f];
+    [self.view addSubview:label];
+    self.logInView.logo = label;
     
-    [self.logInView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
+    //Input Field
+    UIColor *fieldBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
+    [self.logInView.usernameField setFrame:CGRectMake(0, fieldHeight*3, fieldWidth, fieldHeight)];
+    [self.logInView.usernameField setBackgroundColor:fieldBackgroundColor];
+    [self.logInView.passwordField setFrame:CGRectMake(0, fieldHeight*4, fieldWidth, fieldHeight)];
+    [self.logInView.passwordField setBackgroundColor:fieldBackgroundColor];
+    // Field default text
+    self.logInView.usernameField.text = @"myhgew2";
+    self.logInView.passwordField.text = @"1989723";
+
+
+    //Log In
+    [self.logInView.logInButton setBackgroundColor:[UIColor clearColor]];
+    [self.logInView.logInButton setTitle:@"Log in" forState:UIControlStateNormal];
+    [self.logInView.logInButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [self.logInView.logInButton setFrame:CGRectMake(0, fieldHeight*5, buttonWidth, buttonHeight)];
     
-    [self.logInView.facebookButton setFrame:CGRectMake(column1, row2, btnWidth, btnHeight)];
-    [self.logInView.passwordForgottenButton setFrame:CGRectMake(column2, row2, btnWidth, btnHeight)];
-    
-    [self.logInView.logInButton setFrame:CGRectMake(column1/2+column2/2, row1, btnWidth, btnHeight)];
-    //Clear LogInButton Title
-    [self.logInView.logInButton setTitle:@"" forState:UIControlStateNormal];
-    [self.logInView.logInButton setTitle:@"" forState:UIControlStateHighlighted];
-    
-    [self.logInView.signUpButton setFrame:CGRectMake(column2, row1, btnWidth, btnHeight)];
+    //Facebook
+    [self.logInView.externalLogInLabel setHidden:YES];
+    [self.logInView.facebookButton setBackgroundColor:[UIColor clearColor]];
+    [self.logInView.facebookButton setTitle:@"Facebook" forState:UIControlStateNormal];
+    [self.logInView.facebookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [self.logInView.facebookButton setFrame:CGRectMake(buttonWidth, fieldHeight*5, buttonWidth, buttonHeight)];
 
     
-    [self.logInView.usernameField setFrame:CGRectMake(column1, rowField, 250.0f, 50.0f)];
-    [self.logInView.passwordField setFrame:CGRectMake(column1, rowField+50.0f, 250.0f, 50.0f)];
-    [self.fieldsBackground setFrame:CGRectMake(column1, rowField, 250.0f, 100.0f)];
+    //Fogotton button
+    buttonHeight = 20.0f;
+    float bottom = 35.0f;
+    float fontsize = 14.0f;
+    currentHeight = height-buttonHeight*2-bottom;
+    [self.logInView.passwordForgottenButton setBackgroundColor:[UIColor clearColor]];
+    [self.logInView.passwordForgottenButton setTitle:@"Forgot" forState:UIControlStateNormal];
+    [self.logInView.passwordForgottenButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [self.logInView.passwordForgottenButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [self.logInView.passwordForgottenButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [self.logInView.passwordForgottenButton setFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [self.logInView.passwordForgottenButton.titleLabel setFont:[UIFont systemFontOfSize:fontsize]];
+    
+    //Dismiss
+    currentHeight = height-buttonHeight-bottom;
+    [self.logInView.dismissButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    [self.logInView.dismissButton setBackgroundColor:[UIColor clearColor]];
+    [self.logInView.dismissButton setTitle:@"Cancel" forState:UIControlStateNormal];
+    [self.logInView.dismissButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [self.logInView.dismissButton setImage:nil forState:UIControlStateNormal];
+    [self.logInView.dismissButton setImage:nil forState:UIControlStateHighlighted];
+    [self.logInView.dismissButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [self.logInView.dismissButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [self.logInView.dismissButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
+    [self.logInView.dismissButton.titleLabel setFont:[UIFont systemFontOfSize:fontsize]];
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
