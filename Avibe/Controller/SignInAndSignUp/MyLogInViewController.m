@@ -24,7 +24,6 @@
 {
     self = [super initWithCoder:aDecoder];
     
-    //Set up Property
     self.delegate = self;
     self.facebookPermissions = @[@"friends_about_me"];
     self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten | PFLogInFieldsDismissButton;
@@ -117,10 +116,13 @@
     self.logInView.logo = label;
     
     //Input Field
+    currentHeight = fieldHeight*2 + 30.0f;
     UIColor *fieldBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
-    [self.logInView.usernameField setFrame:CGRectMake(0, fieldHeight*3, fieldWidth, fieldHeight)];
+    [self.logInView.usernameField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.logInView.usernameField setBackgroundColor:fieldBackgroundColor];
-    [self.logInView.passwordField setFrame:CGRectMake(0, fieldHeight*4, fieldWidth, fieldHeight)];
+    
+    currentHeight += fieldHeight;
+    [self.logInView.passwordField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.logInView.passwordField setBackgroundColor:fieldBackgroundColor];
     // Field default text
     self.logInView.usernameField.text = @"myhgew2";
@@ -128,12 +130,14 @@
 
 
     //Log In
+    currentHeight += fieldHeight;
     [self.logInView.logInButton setBackgroundColor:[UIColor clearColor]];
-    [self.logInView.logInButton setTitle:@"Log in" forState:UIControlStateNormal];
+    [self.logInView.logInButton setTitle:@"Log In" forState:UIControlStateNormal];
+    [self.logInView.logInButton setTitle:@"Log In" forState:UIControlStateHighlighted];
     [self.logInView.logInButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateNormal];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.logInButton setFrame:CGRectMake(0, fieldHeight*5, buttonWidth, buttonHeight)];
+    [self.logInView.logInButton setFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
     
     //Facebook
     [self.logInView.externalLogInLabel setHidden:YES];
@@ -142,7 +146,7 @@
     [self.logInView.facebookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateNormal];
     [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.facebookButton setFrame:CGRectMake(buttonWidth, fieldHeight*5, buttonWidth, buttonHeight)];
+    [self.logInView.facebookButton setFrame:CGRectMake(buttonWidth, currentHeight, buttonWidth, buttonHeight)];
 
     
     //Fogotton button
