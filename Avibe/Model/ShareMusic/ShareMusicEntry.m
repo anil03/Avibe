@@ -7,12 +7,14 @@
 //
 
 #import "ShareMusicEntry.h"
-#import "PublicMethod.h"
+#import "FilterAndSaveObjects.h"
 
-@interface ShareMusicEntry ()
+@interface ShareMusicEntry () <FilterAndSaveObjectsDelegate>
 
 @property NSArray *fetechObjects;
 @property PFObject *musicToShare;
+
+@property (nonatomic, strong) FilterAndSaveObjects *filter;
 
 @end
 
@@ -36,9 +38,31 @@
     postQuery.limit = 1000;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         _fetechObjects = objects;
-        [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:_musicToShare] andSource:@"Share" andFetchObjects:_fetechObjects];
+        
+        _filter = [[FilterAndSaveObjects alloc] init];
+        _filter.delegate = self;
+        [_filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:_musicToShare] andSource:@"Share" andFetchObjects:_fetechObjects];
     }];
 }
 
+#pragma mark - FilterAndSaveObjects Delegate Method
+
+- (void)dataSavedSucceed
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Success" message: @"Congrat! Now your friend can see your shared music." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)dataSavedWithDuplicate
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Oops, you have shared this song." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)dataSavedFailed:(NSError*)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't share this song right now." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
 
 @end

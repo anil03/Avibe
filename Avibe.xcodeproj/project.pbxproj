@@ -159,6 +159,7 @@
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
+		4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -368,6 +369,8 @@
 		4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic_iTune.m; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
 		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
+		4CE4F4F7188C61F90013C31C /* FilterAndSaveObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterAndSaveObjects.h; sourceTree = "<group>"; };
+		4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterAndSaveObjects.m; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -842,6 +845,8 @@
 			children = (
 				4C23F1801885D6C800D2075A /* PublicMethod.h */,
 				4C23F1811885D6C800D2075A /* PublicMethod.m */,
+				4CE4F4F7188C61F90013C31C /* FilterAndSaveObjects.h */,
+				4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */,
 			);
 			path = PublicMethod;
 			sourceTree = "<group>";
@@ -1228,6 +1233,7 @@
 				4C231D14188104F800B030F9 /* YMGenericTableViewCell.m in Sources */,
 				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
+				4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */,
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,

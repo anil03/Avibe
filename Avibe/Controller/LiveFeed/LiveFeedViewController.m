@@ -52,6 +52,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 
 @interface LiveFeedViewController() <SampleMusicSourceViewDelegate>
+{
+    int columnNumber;
+}
 
 @property (weak, atomic) UIViewController *viewController;
 
@@ -68,8 +71,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @implementation LiveFeedViewController
 
-
-
 - (id)initWithSelf:(UIViewController*)controller
 {
     self.viewController = controller;
@@ -78,7 +79,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 - (id)init
 {
-//    self = [super init];
+    columnNumber = 4;
     
     UICollectionViewFlowLayout *flowLayout = [[YMGenericCollectionViewFlowLayout alloc] init];
     [flowLayout setItemSize:CGSizeMake(([UIScreen mainScreen].bounds.size.width-25)/4, 30)];
@@ -197,12 +198,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
 	
     //Data source
-    int columnNumber = 4;
     int index = indexPath.row/columnNumber;
     
     PFObject *song = [self.PFObjects objectAtIndex:index];
-
-
     
     switch (indexPath.row%columnNumber) {
         case 0:{
@@ -244,26 +242,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
    if (kind == UICollectionElementKindSectionHeader) {
 
        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-//       footerview.backgroundColor = [UIColor greenColor];
-       
        reusableview = footerview;
-       
-// RecipeCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-// NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
-// headerView.title.text = title;
-// UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
-// headerView.backgroundImage.image = headerImage;
-//
-// reusableview = headerView;
-
    }
-
    if (kind == UICollectionElementKindSectionFooter) {
-
        UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-
        reusableview = footerview;
-
    }
 
    return reusableview;
@@ -272,22 +255,54 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 #pragma mark - Touch Item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Select %d", indexPath.row);
+//    NSLog(@"Select %d", indexPath.row);
     
     YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
-    NSLog(@"%@", cell.label.text);
-//    CGPoint point = cell.frame.origin;
+    
+//    NSLog(@"%@", cell.label.text);
+    
+    MMNavigationController *navigationController;
+    switch (indexPath.row%columnNumber) {
+        case 0:{
+            NSLog(@"User Name");
+            
+            break;
+        }
+        case 1:{
+//            NSLog(@"Title");
+            YMGenericCollectionViewCell *cellTitle = cell;
+            YMGenericCollectionViewCell *cellAlbum = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]];
+            YMGenericCollectionViewCell *cellArtist = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]];
+            
+            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[cellTitle.label.text, cellAlbum.label.text, cellArtist.label.text] forKeys:@[@"title", @"album", @"artist"]];
+            
+            //Switch to Youtube
+            SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] initWithDictionary:dictionary];
+            controller.delegate = self;
+            navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
+            [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
+            break;
+        }
+        case 2:{
+            NSLog(@"Album");
+            break;
+        }
+        case 3:{
+            NSLog(@"Artist");
+            break;
+        }
+        default:
+            break;
+    }
+    
+    
     
 //    SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
 //    sampleMusicSourceView.delegate = self;
 //    [self.collectionView addSubview:sampleMusicSourceView];
 //    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
     
-    //Switch to Youtube
-    SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] init];
-    controller.delegate = self;
-    MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
-    [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
+
 }
 
 #pragma mark - SampleMusicSource Delegate
@@ -395,7 +410,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     {
         [super setEditing:NO animated:NO];
         [self setEditing:NO animated:NO];
-//        [self.tableView reloadData];
         [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Edit"];
         [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStylePlain];
     }
@@ -403,7 +417,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     {
         [super setEditing:YES animated:YES];
         [self setEditing:YES animated:YES];
-//        [self.tableView reloadData];
         [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Done"];
         [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
     }

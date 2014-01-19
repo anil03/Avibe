@@ -15,6 +15,5 @@
 @property (nonatomic, strong) NSArray *backgroundImages;
 
 + (PublicMethod *)sharedInstance;
--(void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)musicToSave andSource:(NSString*)sourceName andFetchObjects:(NSArray*)fetechObjects;
 
 @end

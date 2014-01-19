@@ -21,4 +21,5 @@
 
 @property (nonatomic, strong) SampleMusic * sampleMusic;
 
+
 @end

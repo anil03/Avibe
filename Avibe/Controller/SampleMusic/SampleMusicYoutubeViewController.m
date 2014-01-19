@@ -19,17 +19,27 @@
 @property (strong, nonatomic) MPMoviePlayerController* moviePlayer;
 @property (strong, nonatomic) UIWebView *webView;
 
+@property (nonatomic, strong) NSString *songTitle;
+@property (nonatomic, strong) NSString *songAlbum;
+@property (nonatomic, strong) NSString *songArtist;
+
+@property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
+
 @end
 
 @implementation SampleMusicYoutubeViewController
 @synthesize moviePlayer;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (id)initWithDictionary:(NSDictionary*)dictionary
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    self = [super init];
+    
     if (self) {
-        // Custom initialization
+        _songTitle = [dictionary objectForKey:@"title"];
+        _songAlbum = [dictionary objectForKey:@"album"];
+        _songArtist = [dictionary objectForKey:@"artist"];
     }
+    
     return self;
 }
 
@@ -57,9 +67,6 @@
     
     //ScrollView
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-//    UILabel *testLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 30, 20)];
-//    testLabel.text = @"test";
-//    [scrollView addSubview:testLabel];
     [scrollView setContentSize:CGSizeMake(width, height*2)];
     self.view = scrollView;
     
@@ -67,17 +74,19 @@
     currentHeight = barHeight;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, titleLabelHeight)];
     titleLabel.backgroundColor = backgroundColor;
-    titleLabel.text = @"Title";
+    titleLabel.text = _songTitle;
     titleLabel.textColor = textColor;
     titleLabel.textAlignment = NSTextAlignmentCenter;
+    titleLabel.adjustsFontSizeToFitWidth = YES;
     [scrollView addSubview:titleLabel];
     
     currentHeight += titleLabelHeight;
     UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
     infoLabel.backgroundColor = backgroundColor;
-    infoLabel.text = @"Song Infomration";
+    infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
     infoLabel.textColor = textColor;
     infoLabel.textAlignment = NSTextAlignmentCenter;
+    infoLabel.adjustsFontSizeToFitWidth = YES;
     [scrollView addSubview:infoLabel];
     
     //PlayerView
@@ -200,12 +209,13 @@
     NSLog(@"Share Music");
     
     PFObject *songRecord = [PFObject objectWithClassName:@"Share"];
-    [songRecord setObject:@"share_title"  forKey:@"title"];
-    [songRecord setObject:@"share_album" forKey:@"album"];
-    [songRecord setObject:@"share_artist" forKey:@"artist"];
+    [songRecord setObject:_songTitle  forKey:@"title"];
+    [songRecord setObject:_songAlbum forKey:@"album"];
+    [songRecord setObject:_songArtist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     
-    [[[ShareMusicEntry alloc] initWithMusic:songRecord] shareMusic];
+    _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];
+    [_shareMusicEntry shareMusic];
 }
 
 #pragma mark - Movie

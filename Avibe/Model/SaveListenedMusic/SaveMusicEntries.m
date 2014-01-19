@@ -8,7 +8,7 @@
 
 #import "SaveMusicEntries.h"
 #import "XMLParser.h"
-#import "PublicMethod.h"
+#import "FilterAndSaveObjects.h"
 
 //Rdio
 #import "Rdio/RdioConsumerCredentials.h"
@@ -78,8 +78,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
         [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
         [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
         
-        [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod" andFetchObjects:fetechObjects];
-//        [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod"];
+        FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+        [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod" andFetchObjects:fetechObjects];
     }else{
         NSLog(@"No iPod Music Available");
     }
@@ -104,8 +104,8 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     }
     
     //Get rid of duplicated data then save
-    [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM" andFetchObjects:fetechObjects];
-//    [self filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM"];
+    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM" andFetchObjects:fetechObjects];
 }
 
 #pragma mark - Spotify Music
@@ -146,11 +146,9 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
     [songRecord setObject:artist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     
-    [[PublicMethod sharedInstance] filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
-
-//    [self filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio"];
+    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
 }
-
 
 
 
