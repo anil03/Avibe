@@ -145,10 +145,14 @@ typedef NS_ENUM(NSInteger, BeetRow){
     
     if(section == MMDrawerSectionDrawerWidth)
         return @"Left Drawer Width";
-    else if(section == MMDrawerSectionBeet)
-        return @"Beet";
+    else if(section == MMDrawerSectionAvibe)
+        return @"Avibe";
     else if(section == MMDrawerSectionUser){
-        return [[[PFUser currentUser] username] uppercaseString];
+        NSString *username = [[PFUser currentUser] username];
+        if ([username length] > 10) {
+            username = [[username substringToIndex:8] stringByAppendingString:@"..."];
+        }
+        return username;
     }
     else
         return [super tableView:tableView titleForHeaderInSection:section];
@@ -180,7 +184,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
             [cell setAccessoryType:UITableViewCellAccessoryNone];
         }
         [cell.textLabel setText:[NSString stringWithFormat:@"Width %d",[self.drawerWidths[indexPath.row] intValue]]];
-    }else if(indexPath.section == MMDrawerSectionBeet){
+    }else if(indexPath.section == MMDrawerSectionAvibe){
         switch (indexPath.row) {
             case BeetRow_LiveFeed:
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"dj-24.png"] forState:UIControlStateNormal];
@@ -232,7 +236,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
          }];
         
     }
-    else if(indexPath.section == MMDrawerSectionBeet){
+    else if(indexPath.section == MMDrawerSectionAvibe){
         switch (indexPath.row) {
             case BeetRow_LiveFeed:
                 [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];

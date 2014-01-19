@@ -31,20 +31,10 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
 
-        if(OSVersionIsAtLeastiOS7()){
-            [self setBackgroundColor:[UIColor colorWithRed:30./255.0
-                                                     green:49.0/255.0
-                                                      blue:107.0/255.0
-                                                     alpha:1.0]];
-        }
-        else {
-            [self setBackgroundColor:[UIColor colorWithRed:77.0/255.0
-                                                     green:79.0/255.0
-                                                      blue:80.0/255.0
-                                                     alpha:1.0]];
-        }
+        //Section BackgroundColor
+        [self setBackgroundColor:[UIColor blackColor]];
+
         
         if(OSVersionIsAtLeastiOS7()){
             _label = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.bounds)-28,CGRectGetWidth(self.bounds)-30, 22)];

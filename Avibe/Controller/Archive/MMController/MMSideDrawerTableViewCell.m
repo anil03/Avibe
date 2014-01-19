@@ -31,19 +31,9 @@
 
         UIView * backgroundView = [[UIView alloc] initWithFrame:self.bounds];
         [backgroundView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        UIColor * backgroundColor;
-        if(OSVersionIsAtLeastiOS7()){
-            backgroundColor = [UIColor colorWithRed:63.0/255.0
-                                              green:146.0/255.0
-                                               blue:210.0/255.0
-                                              alpha:1.0];
-        }
-        else {
-            backgroundColor = [UIColor colorWithRed:77.0/255.0
-                                              green:79.0/255.0
-                                               blue:80.0/255.0
-                                              alpha:1.0];
-        }
+        
+        //Background Color
+        UIColor * backgroundColor= [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
         [backgroundView setBackgroundColor:backgroundColor];
 
         [self setBackgroundView:backgroundView];
@@ -85,11 +75,9 @@
         //Custom label
         _label = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 320, 30)];
         [_label setBackgroundColor:[UIColor clearColor]];
-        [_label setTextColor:[UIColor
-                                      colorWithRed:230.0/255.0
-                                      green:236.0/255.0
-                                      blue:242.0/255.0
-                                      alpha:1.0]];
+        //Text Color
+        UIColor *textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        [_label setTextColor:textColor];
         [self addSubview:_label];
         [self bringSubviewToFront:_label];
         

@@ -46,29 +46,17 @@
     [self.view addSubview:self.tableView];
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     
-    UIColor * tableViewBackgroundColor;
-    if(OSVersionIsAtLeastiOS7()){
-        tableViewBackgroundColor = [UIColor colorWithRed:3.0/255.0
-                                                   green:49.0/255.0
-                                                    blue:107.0/255.0
-                                                   alpha:1.0];
-    }
-    else {
-        tableViewBackgroundColor = [UIColor colorWithRed:77.0/255.0
-                                                   green:79.0/255.0
-                                                    blue:80.0/255.0
-                                                   alpha:1.0];
-    }
+    //TableView BackgroundColor
+    UIColor * tableViewBackgroundColor= [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];
     [self.tableView setBackgroundColor:tableViewBackgroundColor];
-    
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    
-    
+    //View BackgroundColor
     [self.view setBackgroundColor:[UIColor colorWithRed:63.0/255.0
                                                   green:146.0/255.0
                                                    blue:210.0/255.0
                                                   alpha:1.0]];
     
+    //BarColor
     UIColor * barColor = [UIColor colorWithRed:63.0/255.0
                                          green:146.0/255.0
                                           blue:210.0/255.0
@@ -82,6 +70,8 @@
 
 
     NSDictionary *navBarTitleDict;
+    
+    //TitleColor
     UIColor * titleColor = [UIColor colorWithRed:55.0/255.0
                                            green:70.0/255.0
                                             blue:77.0/255.0
@@ -92,11 +82,19 @@
     self.drawerWidths = @[@(160),@(200),@(240),@(280),@(320)];
     [self.mm_drawerController setMaximumLeftDrawerWidth:160];
     
-    CGSize logoSize = CGSizeMake(58, 62);
-    MMLogoView * logo = [[MMLogoView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,
-                                                                     -logoSize.height-logoSize.height/4.0,
-                                                                     logoSize.width,
-                                                                     logoSize.height)];
+    //Logo
+    CGSize logoSize = CGSizeMake(150, 40);
+//    MMLogoView * logo = [[MMLogoView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,
+//                                                                     -logoSize.height-logoSize.height/4.0,
+//                                                                     logoSize.width,
+//                                                                     logoSize.height)];
+    UILabel *logo = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,-logoSize.height-logoSize.height/4.0,logoSize.width,logoSize.height)];
+    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:@"By Yuhua Mai & David Perkins"];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,2)];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(13,13)];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(14,14)];
+    logo.attributedText = string;
+    logo.adjustsFontSizeToFitWidth = YES;
     [logo setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
     [self.tableView addSubview:logo];
     [self.view setBackgroundColor:[UIColor clearColor]];
@@ -129,24 +127,10 @@
 {
     // Return the number of rows in the section.
     switch (section) {
-        case MMDrawerSectionBeet:
+        case MMDrawerSectionAvibe:
             return 4;
         case MMDrawerSectionUser:
             return 2;
-//        case MMDrawerSectionViewSelection:
-//            return 2;
-//        case MMDrawerSectionDrawerWidth:
-//            return self.drawerWidths.count;
-//        case MMDrawerSectionShadowToggle:
-//            return 1;
-//        case MMDrawerSectionOpenDrawerGestures:
-//            return 3;
-//        case MMDrawerSectionCloseDrawerGestures:
-//            return 6;
-//        case MMDrawerSectionCenterHiddenInteraction:
-//            return 3;
-//        case MMDrawerSectionStretchDrawer:
-//            return 1;
         default:
             return 0;
     }
@@ -300,7 +284,7 @@
                 [cell setAccessoryType:UITableViewCellAccessoryNone];
             break;
         }
-        case MMDrawerSectionBeet:{
+        case MMDrawerSectionAvibe:{
             //Implement in subclass
             break;
         }

@@ -24,7 +24,7 @@
 #import "MMExampleViewController.h"
 
 typedef NS_ENUM(NSInteger, MMDrawerSection){
-    MMDrawerSectionBeet,
+    MMDrawerSectionAvibe,
     MMDrawerSectionUser,
     
     MMDrawerSectionViewSelection,
