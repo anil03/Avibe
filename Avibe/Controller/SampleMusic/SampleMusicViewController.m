@@ -97,7 +97,7 @@
     //Search Music
     _sampleMusic.delegate = self;
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[[_pfObject objectForKey:@"title"]] forKeys:@[@"title"]];
-    [_sampleMusic initSearch:dict];
+    [_sampleMusic startSearch:dict];
 }
 
 #pragma mark - Sample Music Data Delegate Method

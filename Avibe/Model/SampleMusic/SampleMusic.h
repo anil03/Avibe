@@ -18,6 +18,6 @@
 
 @property (nonatomic, weak) id<SampleMusicDelegate> delegate;
 
--(void)initSearch:(NSDictionary*)searchInfo;
+-(void)startSearch:(NSDictionary*)searchInfo;
 
 @end

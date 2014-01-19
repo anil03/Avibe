@@ -12,7 +12,7 @@
 
 @implementation SampleMusic_iTune
 
-- (void)initSearch:(NSDictionary*)searchInfo
+- (void)startSearch:(NSDictionary*)searchInfo
 {
     NSString *title = [searchInfo objectForKey:@"title"]  ;
     NSString *searchTitle = [title stringByReplacingOccurrencesOfString:@" " withString:@"+"];

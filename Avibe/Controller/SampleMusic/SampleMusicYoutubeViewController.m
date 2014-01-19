@@ -9,16 +9,57 @@
 #import "SampleMusicYoutubeViewController.h"
 
 #import <MediaPlayer/MediaPlayer.h>
+#import <AVFoundation/AVFoundation.h>
 
 #import "UIViewController+MMDrawerController.h"
 #import "ShareMusicEntry.h"
 #import "Setting.h"
+#import "SampleMusic_iTune.h"
 
-@interface SampleMusicYoutubeViewController () <UIWebViewDelegate>
+@interface SampleMusicYoutubeViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate>
+{
+    UIColor *backgroundColor;
+    UIColor *textColor;
+    UIColor *textHighlightColor;
+    
+    float width;
+    float height;
+    float playerHeight;
+    float currentHeight;
+    
+    //iTune View
+    float playerImageWidth;
+    float playerImageHeight;
+    float playerLabelWidth;
+    float playerLabelHeight;
+    float playerProgressWidth;
+    float playerProgressHeight;
+    float playerButtonWidth;
+    float playerButtonHeight;
+}
 
+//View
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *infoLabel;
+
+//Youtube
 @property (strong, nonatomic) MPMoviePlayerController* moviePlayer;
-@property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) UIWebView *sampleMusicWebView;
 
+//iTune
+@property (strong, nonatomic) SampleMusic_iTune *samepleMusic;
+@property (strong, nonatomic) UIView *sampleMusicITuneView;
+@property (strong, nonatomic) UIImageView *sampleMusicImageView;
+@property (strong, nonatomic) UILabel *playedTime;
+@property (strong, nonatomic) UILabel *leftTime;
+//@property (strong, nonatomic) UISlider *progress;
+@property (strong, nonatomic) UIProgressView *progress;
+@property (strong, nonatomic) NSTimer *progressTimer;
+@property (strong, nonatomic) UIButton *playButton;
+@property (nonatomic, retain) AVAudioPlayer *player;
+
+//Song Info
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
@@ -29,6 +70,7 @@
 
 @implementation SampleMusicYoutubeViewController
 @synthesize moviePlayer;
+@synthesize scrollView;
 
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
@@ -38,10 +80,20 @@
         _songTitle = [dictionary objectForKey:@"title"];
         _songAlbum = [dictionary objectForKey:@"album"];
         _songArtist = [dictionary objectForKey:@"artist"];
+        
+        //Youtube
+        // ...
+        
+        //iTune
+        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle] forKeys:@[@"title"]];
+        _samepleMusic = [[SampleMusic_iTune alloc] init];
+        _samepleMusic.delegate = self;
+        [_samepleMusic startSearch:dict];
     }
     
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -49,54 +101,70 @@
 
     [self setupNavigationBar];
     
-    UIColor *backgroundColor = [UIColor blackColor];
-    UIColor *textColor = [UIColor whiteColor];
-    UIColor *textHighlightColor = [UIColor grayColor];
+    backgroundColor = [UIColor blackColor];
+    textColor = [UIColor whiteColor];
+    textHighlightColor = [UIColor grayColor];
     [self.view setBackgroundColor:backgroundColor];
     
     //Size Specification
-    float width = [[UIScreen mainScreen] bounds].size.width;
-    float height = [[UIScreen mainScreen] bounds].size.height;
+    width = [[UIScreen mainScreen] bounds].size.width;
+    height = [[UIScreen mainScreen] bounds].size.height;
     float barHeight = 10;
     float titleLabelHeight = 30;
     float infoLabelHight = 30;
-    float playerHeight = 200;
+    playerHeight = 200;
+    playerImageWidth = width/2;
+    playerImageHeight = playerHeight*2/3;
+    playerProgressWidth = width/2;
+    playerProgressHeight = (playerHeight-playerImageHeight)/2;
+    playerLabelWidth = 30.0f;
+    playerLabelHeight = playerProgressHeight;
+    playerButtonWidth = 30.0f;
+    playerButtonHeight = playerProgressHeight;
     float buttonHeight = 40;
     float buttonLeft = 10;
-    float currentHeight = 0;
+    currentHeight = 0;
     
     //ScrollView
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
     [scrollView setContentSize:CGSizeMake(width, height*2)];
     self.view = scrollView;
     
     //Song Info
     currentHeight = barHeight;
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, titleLabelHeight)];
-    titleLabel.backgroundColor = backgroundColor;
-    titleLabel.text = _songTitle;
-    titleLabel.textColor = textColor;
-    titleLabel.textAlignment = NSTextAlignmentCenter;
-    titleLabel.adjustsFontSizeToFitWidth = YES;
-    [scrollView addSubview:titleLabel];
+    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, titleLabelHeight)];
+    _titleLabel.backgroundColor = backgroundColor;
+    _titleLabel.text = _songTitle;
+    _titleLabel.textColor = textColor;
+    _titleLabel.textAlignment = NSTextAlignmentCenter;
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
+    [scrollView addSubview:_titleLabel];
     
     currentHeight += titleLabelHeight;
-    UILabel *infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
-    infoLabel.backgroundColor = backgroundColor;
-    infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
-    infoLabel.textColor = textColor;
-    infoLabel.textAlignment = NSTextAlignmentCenter;
-    infoLabel.adjustsFontSizeToFitWidth = YES;
-    [scrollView addSubview:infoLabel];
+    _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
+    _infoLabel.backgroundColor = backgroundColor;
+    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
+    _infoLabel.textColor = textColor;
+    _infoLabel.textAlignment = NSTextAlignmentCenter;
+    _infoLabel.adjustsFontSizeToFitWidth = YES;
+    [scrollView addSubview:_infoLabel];
     
     //PlayerView
+    /**
+     Could be Youtube, iTune, ...
+     */
     currentHeight += infoLabelHight;
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
-    self.webView.backgroundColor = backgroundColor;
-    self.webView.scrollView.backgroundColor = backgroundColor;
-    [scrollView addSubview:self.webView];
-    [self playYoutube];
+    //Youtube
+    /*
+    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    self.sampleMusicWebView.backgroundColor = backgroundColor;
+    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
+    [scrollView addSubview:self.sampleMusicWebView];
+    [self playYoutube];*/
+    //iTune
     
+    [self setupITuneMusicView];
+
     //Button - Share
     currentHeight += playerHeight;
     UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
@@ -137,6 +205,12 @@
     [scrollView addSubview:moreLabel];
 }
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_player pause];
+    _player = nil;
+}
+
 #pragma mark - Youtube
 - (void)playYoutube
 {
@@ -168,7 +242,7 @@
                            <iframe width=\"100%%\" height=\"240px\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
                            </body></html>",videoURL];
 
-    [self.webView loadHTMLString:embedHTML baseURL:nil];
+    [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
 }
 
 - (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
@@ -201,6 +275,117 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"WebView Load Fail:%@", error);
+}
+
+#pragma mark - iTune Music
+- (void)setupITuneMusicView
+{
+    _sampleMusicITuneView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    [scrollView addSubview:_sampleMusicITuneView];
+
+    //Progress View
+    _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, playerImageHeight+playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
+    [_progress setProgressViewStyle:UIProgressViewStyleBar];
+//    _progress = [[UISlider alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, playerImageHeight, playerProgressWidth, playerProgressHeight)];
+    [_sampleMusicITuneView addSubview:_progress];
+    _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, playerImageHeight, playerLabelWidth, playerLabelHeight)];
+    _playedTime.textColor = textColor;
+    _playedTime.backgroundColor = backgroundColor;
+    _playedTime.adjustsFontSizeToFitWidth = YES;
+    [_sampleMusicITuneView addSubview:_playedTime];
+    _leftTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2+playerProgressWidth/2, playerImageHeight, playerLabelWidth, playerLabelHeight)];
+    _leftTime.textColor = textColor;
+    _leftTime.backgroundColor = backgroundColor;
+    _leftTime.adjustsFontSizeToFitWidth = YES;
+    [_sampleMusicITuneView addSubview:_leftTime];
+    
+    //Button View
+    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playerButtonWidth/2, playerImageHeight+playerProgressHeight, playerButtonWidth, playerButtonHeight)];
+    [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
+    [_playButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_playButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [_playButton setTitle:@"▶︎" forState:UIControlStateNormal];
+    [_playButton setTitle:@"◼︎" forState:UIControlStateSelected];
+    [_sampleMusicITuneView addSubview:_playButton];
+}
+
+- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
+{
+    
+    //Set Song Title
+    _titleLabel.text = [songInfo objectForKey:@"title"];
+    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", [songInfo objectForKey:@"album"], [songInfo objectForKey:@"artist"]];
+    
+    //Set Album Image
+    NSURL *imageUrl = [NSURL URLWithString:[songInfo objectForKey:@"imageURL"]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+    UIImage *image = [UIImage imageWithData:imageData];
+    
+    _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, 0, playerImageWidth, playerImageHeight)];
+    [_sampleMusicImageView setImage:image];
+    [_sampleMusicITuneView addSubview:_sampleMusicImageView];
+    
+    //Player
+    NSError* __autoreleasing audioError = nil;
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
+    
+    if (!audioError) {
+        _player = newPlayer;
+        _player.delegate = self;
+        
+        //Update Progress Slider
+//        self.progress.maximumValue = self.player.duration;
+        self.progress.userInteractionEnabled = NO;
+        
+        _playedTime.text = @"0:00";
+        int minLeft = self.player.duration/60;
+        int secLeft = ceil(self.player.duration-minLeft*60);
+        _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
+        
+        [_player prepareToPlay];
+    }else{
+        NSLog(@"Audio Error!");
+    }
+
+}
+
+- (void)playOrPause {
+    _playButton.selected = !_playButton.selected;
+    // if already playing, then pause
+    if (_player.playing) {
+        [_player pause];
+        [_progressTimer invalidate];
+    } else {
+        [_player play];
+        _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
+    }
+}
+
+- (void)updateProgress
+{
+    
+    int minPlayed = self.player.currentTime/60;
+    int secPlayed = ceil(self.player.currentTime-minPlayed*60);
+    int minLeft = (self.player.duration-self.player.currentTime)/60;
+    int secLeft = ceil((self.player.duration-self.player.currentTime)-minLeft*60);
+    
+    _playedTime.text = [NSString stringWithFormat:@"%d:%02d", minPlayed, secPlayed];
+    _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
+    
+//    _progress.value = _player.currentTime;
+    [_progress setProgress:_player.currentTime/_player.duration animated:YES];
+}
+
+#pragma mark - AVAudioPlayerDelegate
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self.progressTimer invalidate];
+    [self leftDrawerButtonPress:nil];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+{
+    [self.progressTimer invalidate];
 }
 
 #pragma mark - Button Method
