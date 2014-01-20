@@ -23,7 +23,7 @@
 #import "SampleMusic_iTune.h"
 
 
-@interface ShareViewController () <SampleMusic_iTuneDelegate>
+@interface ShareViewController ()
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
@@ -67,20 +67,14 @@
     
     return self;
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];
-	
-    //Navigation
     [self setupMenuButton];
 }
-
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    
     
     //UICollectionview
     [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
@@ -115,7 +109,7 @@
     PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
     NSString *title = [song objectForKey:@"title"];
     NSString *artist = [song objectForKey:@"artist"];
-    NSString *album = [song objectForKey:@"album"];
+//    NSString *album = [song objectForKey:@"album"];
     NSString *user = [song objectForKey:@"user"];
     PFFile *albumImage = [song objectForKey:@"albumImage"];
     
@@ -151,34 +145,6 @@
     MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
     [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
 }
-
-// - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-// {
-// UICollectionReusableView *reusableview = nil;
-// 
-// if (kind == UICollectionElementKindSectionHeader) {
-// 
-// RecipeCollectionHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-// NSString *title = [[NSString alloc]initWithFormat:@"Recipe Group #%i", indexPath.section + 1];
-// headerView.title.text = title;
-// UIImage *headerImage = [UIImage imageNamed:@"header_banner.png"];
-// headerView.backgroundImage.image = headerImage;
-// 
-// reusableview = headerView;
-// 
-// }
-//
-// if (kind == UICollectionElementKindSectionFooter) {
-// 
-// UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-// 
-// reusableview = footerview;
-// 
-// }
-// 
-// return reusableview;
-// }
-
 
 
 #pragma mark - RefreshControl Method
@@ -254,8 +220,5 @@
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
-
-
-
 
 @end

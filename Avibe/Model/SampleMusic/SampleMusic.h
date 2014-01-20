@@ -11,6 +11,7 @@
 @protocol SampleMusicDelegate <NSObject>
 
 - (void)finishFetchData:(NSData*)song andInfo:(NSDictionary*)songInfo;
+- (void)finishFetchDataWithError:(NSError*)error;
 
 @end
 

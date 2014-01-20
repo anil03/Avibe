@@ -62,7 +62,6 @@
 {
     [self.player stop];
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -77,13 +76,11 @@
     [self.view addSubview:_spinner];
     [_spinner startAnimating];
 
-    
     //View Setup
     UIImageView *backgroundImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.png"]];
     [self.view addSubview:backgroundImage];
     [self.view sendSubviewToBack:backgroundImage];
 
-    
     //Disable Left to avoid pan by mistake
     self.centerViewController = self.mm_drawerController.centerViewController;
 
@@ -123,7 +120,9 @@
     
     [_spinner stopAnimating];
 }
-
+- (void)finishFetchDataWithError:(NSError *)error
+{
+}
 - (void)updateViewInfo:(NSDictionary *)result {
     NSURL *imageUrl = [NSURL URLWithString:[result objectForKey:@"imageURL"]];
     NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
@@ -144,8 +143,6 @@
     int sec = ceil(self.player.duration-min*60);
     self.leftTime.text = [NSString stringWithFormat:@"%d:%02d", min, sec];
 }
-
-
 - (IBAction) playOrPause: (id) sender {
     
     self.playButton.selected = !self.playButton.selected;
@@ -159,7 +156,6 @@
         self.progressTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
     }
 }
-
 - (void)updateProgress
 {
     
@@ -174,15 +170,12 @@
     self.progress.value = self.player.currentTime;
 }
 
-
-
 #pragma mark - AVAudioPlayerDelegate
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     [self.progressTimer invalidate];
-    [self leftDrawerButtonPress:nil];
+    [self leftDrawerButtonPress];
 }
-
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
 {
     [self.progressTimer invalidate];
@@ -190,26 +183,19 @@
 
 #pragma mark - Button Handlers
 -(void)setupLeftMenuButton{
-//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
+    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
 }
 
--(void)leftDrawerButtonPress:(id)sender{
-//    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+-(void)leftDrawerButtonPress{
     [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
-    
-//    [self.mm_drawerController setCenterViewController:self.centerViewController];
-//    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
-
 }
 
 #pragma mark - UIAlertview delegate
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-//        NSLog(@"user pressed OK");
-        [self leftDrawerButtonPress:nil];
+        [self leftDrawerButtonPress];
     } else {
         NSLog(@"user pressed Cancel");
     }

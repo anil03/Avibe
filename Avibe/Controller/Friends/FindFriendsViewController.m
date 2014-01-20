@@ -17,6 +17,10 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
+enum FindFriendTableViewSection {
+    RegisteredUserSection = 0,
+    UnRegisteredUserSection = 1
+};
 
 @interface FindFriendsViewController ()
 
@@ -43,12 +47,10 @@
     }
     return self;
 }
-
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self setupBarMenuButton];
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -65,7 +67,6 @@
 {
     //Address Book
     ABAddressBookRef addressBook = ABAddressBookCreate();
-    
     __block BOOL accessGranted = NO;
     
     if (ABAddressBookRequestAccessWithCompletion != NULL) { // We are on iOS 6
@@ -77,9 +78,7 @@
         });
         
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    }
-    
-    else { // We are on iOS 5 or Older
+    }else { // We are on iOS 5 or Older
         accessGranted = YES;
         [self getContactsWithAddressBook:addressBook];
     }
@@ -95,65 +94,53 @@
     
     _contactList = [[NSMutableArray alloc] init];
     CFArrayRef allPeople = ABAddressBookCopyArrayOfAllPeople(addressBook);
-    CFIndex nPeople = ABAddressBookGetPersonCount(addressBook);
+    CFIndex peopleNumber = ABAddressBookGetPersonCount(addressBook);
     
-    for (int i=0;i < nPeople;i++) {
-        NSMutableDictionary *dOfPerson=[NSMutableDictionary dictionary];
-        
+    for (int i=0;i < peopleNumber;i++) {
+        NSMutableDictionary *person= [NSMutableDictionary dictionary];
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople,i);
         
         //For username and surname
-        
-        
         CFStringRef firstName, lastName;
         firstName = ABRecordCopyValue(ref, kABPersonFirstNameProperty);
         lastName  = ABRecordCopyValue(ref, kABPersonLastNameProperty);
-        
         if (firstName != nil && lastName != nil) {
-            [dOfPerson setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:@"name"];
+            [person setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:kClassUserUsername];
         }else if (firstName != nil){
-            [dOfPerson setObject:[NSString stringWithFormat:@"%@", firstName] forKey:@"name"];
+            [person setObject:[NSString stringWithFormat:@"%@", firstName] forKey:kClassUserUsername];
         }else if (lastName != nil){
-            [dOfPerson setObject:[NSString stringWithFormat:@"%@", lastName] forKey:@"name"];
+            [person setObject:[NSString stringWithFormat:@"%@", lastName] forKey:kClassUserUsername];
         }
         
         //For Email ids
-//        ABMutableMultiValueRef eMail  = ABRecordCopyValue(ref, kABPersonEmailProperty);
-//        if(ABMultiValueGetCount(eMail) > 0) {
-//            [dOfPerson setObject:(__bridge NSString *)ABMultiValueCopyValueAtIndex(eMail, 0) forKey:@"email"];
-//        }
+        ABMutableMultiValueRef eMail  = ABRecordCopyValue(ref, kABPersonEmailProperty);
+        NSMutableArray *emailArray = [[NSMutableArray alloc] init];
+        for(CFIndex i = 0; i < ABMultiValueGetCount(eMail); i++) {
+            NSString *currentEmail = (__bridge NSString*)ABMultiValueCopyValueAtIndex(eMail, i);
+            [emailArray addObject:currentEmail];
+        }
+        [person setObject:emailArray forKey:kClassUserEmail];
         
         //For Phone number
         ABMultiValueRef phones =(__bridge ABMultiValueRef)((__bridge NSString*)ABRecordCopyValue(ref, kABPersonPhoneProperty));
         NSString* mobileLabel;
-        NSString* phoneNumber = @"";
+        NSMutableArray *phoneNumberArray = [[NSMutableArray alloc] init];
         
         for(CFIndex i = 0; i < ABMultiValueGetCount(phones); i++) {
             mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
             NSString *currentPhoneNumber = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i);
-//            NSLog(@"Phone %@ at %ld", (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i), i);
-            phoneNumber = [[phoneNumber stringByAppendingString:currentPhoneNumber] stringByAppendingString:@" "];
-            
-//            if([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMobileLabel])
-//            {
-//            [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"phone"]; //Now just save one phone number
-
-//            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneIPhoneLabel]){
-//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"iPhone"];
-//            }else if ([mobileLabel isEqualToString:(NSString *)kABPersonPhoneMainLabel]){
-//                [dOfPerson setObject:(__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i) forKey:@"Main"];
-//            }
-            
+            [phoneNumberArray addObject:currentPhoneNumber];
         }
-        [dOfPerson setObject:phoneNumber forKey:@"phone"];
+        [person setObject:phoneNumberArray forKey:kClassUserPhoneNumber];
         
-        [_contactList addObject:dOfPerson];
+        //Finsih add to contactList
+        [_contactList addObject:person];
         
     }
     NSLog(@"Contacts = %@",_contactList);
 }
 
-
+#pragma mark - Data Source
 /*
  * Fetch from Parse.com to get all registered username
  * Compared user's contact list
@@ -167,26 +154,51 @@
 - (void)handleUsernameInDatabase:(NSArray *)result error:(NSError *)error
 {
     if (!error) {
-        
+        for(NSMutableDictionary *person in _contactList){
+            NSString *contactUsername = [person objectForKey:kClassUserUsername];
+            NSArray *contactEmailArray = [person objectForKey:kClassUserEmail];
+            NSArray *contactPhoneNumberArray = [person objectForKey:kClassUserPhoneNumber];
+            
+            
+            //Cross Search For Contact List
+            BOOL isRegistered = NO;
+            for(PFObject *object in result){
+                NSString *username = [object objectForKey:kClassUserUsername];
+                NSString *email = [object objectForKey:kClassUserEmail];
+                NSString *phoneNumber = [object objectForKey:kClassUserPhoneNumber];
+            
+                if([contactEmailArray containsObject:email]) isRegistered = YES;
+                if([contactPhoneNumberArray containsObject:phoneNumber]) isRegistered = YES;
+            }
+            
+            /**
+             * Add to registered/unregistered and remove current entry
+             */
+            if(isRegistered){
+                [_registeredUsers addObject:person];
+            }else{
+                [_unRegisteredUsers addObject:person];
+            }
+        }
+        [self.tableView reloadData];
     }else{
         //Handle Error Fetching User List from Parse.com
+        NSLog(@"Error:%@", error);
     }
 }
 
 #pragma mark - TableView method
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-        case 0:
-            return @"A";
-        case 1:
-            return @"B";
-        case 2:
-            return @"C";
+        case RegisteredUserSection:
+            return @"Registered Users";
+        case UnRegisteredUserSection:
+            return @"UnRegistered Users";
         default:
             return nil;
     }
@@ -194,18 +206,17 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case 0:
-            return [_registeredUsers count]+3;
+        case RegisteredUserSection:
+            return [_registeredUsers count];
             break;
-        case 1:
-            return [_unRegisteredUsers count]+2;
+        case UnRegisteredUserSection:
+            return [_unRegisteredUsers count];
             break;
         default:
             return 0;
             break;
     }
 }
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
@@ -213,13 +224,26 @@
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     [cell.detailTextLabel setTextColor:[UIColor whiteColor]];
     
-    NSMutableDictionary *dictionary = [_contactList objectAtIndex:indexPath.row];
-    cell.textLabel.text = [dictionary objectForKey:@"name"];
-    cell.detailTextLabel.text = [dictionary objectForKey:@"phone"];
+    
+    switch (indexPath.section) {
+        case RegisteredUserSection:
+        {
+            NSMutableDictionary *person = [_registeredUsers objectAtIndex:indexPath.row];
+            cell.textLabel.text = [person objectForKey:kClassUserUsername];
+            break;
+        }
+        case UnRegisteredUserSection:
+        {
+            NSMutableDictionary *person = [_unRegisteredUsers objectAtIndex:indexPath.row];
+            cell.textLabel.text = [person objectForKey:kClassUserUsername];
+            break;
+        }
+        default:
+            break;
+    }
     
     return cell;
 }
-
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{
@@ -234,23 +258,18 @@
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
     
-//    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;
-//    [self.mm_drawerController.navigationController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
     UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];    
     [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
 }
-
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
-
 - (void)popCurrentView
 {
     [self.mm_drawerController setCenterViewController:self.friendsViewController];
-//    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
 }
 
 @end

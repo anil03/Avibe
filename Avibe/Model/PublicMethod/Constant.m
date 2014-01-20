@@ -10,6 +10,11 @@
 
 @implementation Constant
 
+#pragma mark - Class User
+NSString *const kClassUser = @"User";
+NSString *const kClassUserUsername = @"username";
+NSString *const kClassUserEmail = @"email";
+NSString *const kClassUserPhoneNumber = @"additional";
 
 #pragma mark - Class Friend
 NSString *const kClassFriend = @"Friend";
