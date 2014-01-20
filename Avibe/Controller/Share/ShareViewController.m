@@ -30,7 +30,6 @@
 
 @property (nonatomic, strong) NSArray *songs;
 
-@property (nonatomic, strong) NSArray *PFObjects;
 
 @property int column;
 @property int row;

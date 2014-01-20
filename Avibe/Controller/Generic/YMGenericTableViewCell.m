@@ -37,7 +37,7 @@
         [self setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(10,10,300,60)];
-        whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
+        whiteRoundedCornerView.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.6];
         whiteRoundedCornerView.layer.masksToBounds = NO;
         whiteRoundedCornerView.layer.cornerRadius = 3.0;
         whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);

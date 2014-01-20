@@ -29,7 +29,7 @@
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
     BeetRow_Share,
-    BeetRow_Listened,
+//    BeetRow_Listened,
 //    BeetRow_User,
     BeetRow_Friends,
 };
@@ -112,6 +112,25 @@ typedef NS_ENUM(NSInteger, BeetRow){
     [self setTitle:@"Left Drawer"];
 }
 
+#pragma mark - TableView Data Source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // Return the number of sections.
+    return 2;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    // Return the number of rows in the section.
+    switch (section) {
+        case MMDrawerSectionAvibe:
+            return 3;
+        case MMDrawerSectionUser:
+            return 2;
+        default:
+            return 0;
+    }
+}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     //custom user section
@@ -194,10 +213,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"sharethis-3-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Share"];
                 break;
-            case BeetRow_Listened:
-                [cell.button setBackgroundImage:[UIImage imageNamed:@"music-record-24.png"] forState:UIControlStateNormal];
-                [cell.label setText:@"Listened"];
-                break;
+//            case BeetRow_Listened:
+//                [cell.button setBackgroundImage:[UIImage imageNamed:@"music-record-24.png"] forState:UIControlStateNormal];
+//                [cell.label setText:@"Listened"];
+//                break;
             case BeetRow_Friends:
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"conference-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Friends"];
@@ -245,9 +264,9 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
                 break;
             }
-            case BeetRow_Listened:
-                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
-                break;
+//            case BeetRow_Listened:
+//                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
+//                break;
             case BeetRow_Friends:
                 [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
                 break;

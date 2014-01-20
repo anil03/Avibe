@@ -83,6 +83,7 @@
     controller.pfObject = [self.PFObjects objectAtIndex:indexPath.row];
     controller.sampleMusic = [[SampleMusic_iTune alloc] init];
     controller.delegate = self;
+    controller.previousViewController = self;
     
     MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
     

@@ -10,9 +10,12 @@
 #import "UserViewController.h"
 
 #import "MMDrawerBarButtonItem.h"
+#import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
-
+#import "ListenedViewController.h"
+#import "UserShareViewController.h"
 #import "Setting.h"
+#import "BackgroundImageView.h"
 
 @interface UserViewController () <UITextFieldDelegate>
 
@@ -20,9 +23,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *numberOfSongs;
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountInput;
 
+@property (nonatomic, strong) ListenedViewController *listenedViewController;
+@property (nonatomic, strong) UserShareViewController *userShareViewController;
 @end
 
 @implementation UserViewController
+@synthesize listenedViewController;
+@synthesize userShareViewController;
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -36,25 +43,41 @@
     //View Parameters
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
-    float barHeight = 50.0f;
+    float barHeight = 80.0f;
     float currentHeight = 0.0f;
+    float buttonWidth = width;
+    float buttonHeight = 30.0f;
 
     //Set up View
     self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
+    UIColor *componentBackgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
+    UIColor *componentTextColor = [UIColor whiteColor];
+    UIColor *componentTextHighlightColor = [UIColor grayColor];
+
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:backgroundView];
+    [self.view sendSubviewToBack:backgroundView];
     
+    //Recent History
     currentHeight += barHeight;
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, 50)];
-    label.text = @"Profile";
-    label.textColor = [UIColor whiteColor];
-    label.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:label];
-    [self.view bringSubviewToFront:label];
+    UIButton *recentHistoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
+    [recentHistoryButton setTitle:@"Recent History" forState:UIControlStateNormal];
+    [recentHistoryButton setTitleColor:componentTextColor forState:UIControlStateNormal];
+    [recentHistoryButton setTitleColor:componentTextHighlightColor forState:UIControlStateHighlighted];
+    recentHistoryButton.backgroundColor = componentBackgroundColor;
+    [recentHistoryButton addTarget:self action:@selector(recentHistoryButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:recentHistoryButton];
     
-    currentHeight += 50;
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, width, 30)];
-    [button setTitle:@"button" forState:UIControlStateNormal];
-    button.backgroundColor = [UIColor redColor];
-    [self.view addSubview:button];
+    currentHeight += buttonHeight;
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
+    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
+    [shareButton setTitleColor:componentTextColor forState:UIControlStateNormal];
+    [shareButton setTitleColor:componentTextHighlightColor forState:UIControlStateHighlighted];
+    shareButton.backgroundColor = componentBackgroundColor;
+    [shareButton addTarget:self action:@selector(shareButtonPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:shareButton];
+    
     
     //Delegate
 //    _lastFMAccountInput.delegate = self;
@@ -66,11 +89,23 @@
 //    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
 //        _lastFMAccountInput.text = [self.delegate getLastFMAccount];
 //    }
-    
-    
-    
- 
+}
 
+- (void)recentHistoryButtonPressed
+{
+    listenedViewController = [[ListenedViewController alloc] init];
+    listenedViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+- (void)shareButtonPressed
+{
+    userShareViewController = [[UserShareViewController alloc] init];
+    userShareViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:userShareViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 
 - (void)updateInfo{

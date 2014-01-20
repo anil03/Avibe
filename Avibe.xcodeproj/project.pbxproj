@@ -157,6 +157,7 @@
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
 		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
+		4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
@@ -323,8 +324,8 @@
 		4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestNSXMLParser.m; sourceTree = "<group>"; };
 		4C231DC91881DF3700B030F9 /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestXMLParser.m; sourceTree = "<group>"; };
 		4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageTest.m; sourceTree = "<group>"; };
-		4C231DD41881E51300B030F9 /* SampleMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicViewController.h; sourceTree = "<group>"; };
-		4C231DD51881E51300B030F9 /* SampleMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicViewController.m; sourceTree = "<group>"; };
+		4C231DD41881E51300B030F9 /* SampleMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SampleMusicViewController.h; path = ../SampleMusic/SampleMusicViewController.h; sourceTree = "<group>"; };
+		4C231DD51881E51300B030F9 /* SampleMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SampleMusicViewController.m; path = ../SampleMusic/SampleMusicViewController.m; sourceTree = "<group>"; };
 		4C231DD71881E88500B030F9 /* ImageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFetcher.h; sourceTree = "<group>"; };
 		4C231DD81881E88500B030F9 /* ImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetcher.m; sourceTree = "<group>"; };
 		4C231DDA1881F1A300B030F9 /* BackgroundImageViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageViewTest.m; sourceTree = "<group>"; };
@@ -368,6 +369,8 @@
 		4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareCollectionViewCell.m; sourceTree = "<group>"; };
 		4C8F74EA188D825D00B91651 /* Constant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constant.h; sourceTree = "<group>"; };
 		4C8F74EB188D825D00B91651 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
+		4C8F74ED188DC1AB00B91651 /* UserShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserShareViewController.h; sourceTree = "<group>"; };
+		4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShareViewController.m; sourceTree = "<group>"; };
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -440,7 +443,6 @@
 				4C231DD31881E51300B030F9 /* SampleMusic */,
 				4C231C93188104F800B030F9 /* Share */,
 				4C231C77188104F800B030F9 /* Friends */,
-				4C231C89188104F800B030F9 /* Listened */,
 				4C231C90188104F800B030F9 /* Setting */,
 				4C231CA0188104F800B030F9 /* User */,
 			);
@@ -513,8 +515,11 @@
 				4C231C88188104F800B030F9 /* YMGenericTableViewController.m */,
 				4C231C8A188104F800B030F9 /* ListenedViewController.h */,
 				4C231C8B188104F800B030F9 /* ListenedViewController.m */,
+				4C231DD41881E51300B030F9 /* SampleMusicViewController.h */,
+				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
 			);
-			path = Listened;
+			name = Listened;
+			path = ../Listened;
 			sourceTree = "<group>";
 		};
 		4C231C8C188104F800B030F9 /* LiveFeed */ = {
@@ -553,6 +558,8 @@
 				4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */,
 				4C231C94188104F800B030F9 /* ShareViewController.h */,
 				4C231C95188104F800B030F9 /* ShareViewController.m */,
+				4C8F74ED188DC1AB00B91651 /* UserShareViewController.h */,
+				4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -586,6 +593,7 @@
 		4C231CA0188104F800B030F9 /* User */ = {
 			isa = PBXGroup;
 			children = (
+				4C231C89188104F800B030F9 /* Listened */,
 				4C231CA1188104F800B030F9 /* UserViewController.h */,
 				4C231CA2188104F800B030F9 /* UserViewController.m */,
 			);
@@ -793,8 +801,6 @@
 		4C231DD31881E51300B030F9 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
-				4C231DD41881E51300B030F9 /* SampleMusicViewController.h */,
-				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
 				4C23F1781885A48100D2075A /* SampleMusicYoutubeViewController.h */,
 				4C23F1791885A48100D2075A /* SampleMusicYoutubeViewController.m */,
 			);
@@ -1273,6 +1279,7 @@
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
+				4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */,
 				4C2F0FCF1884781F006BA932 /* SampleMusic.m in Sources */,
 				4C231D21188104F800B030F9 /* WelcomeViewController.m in Sources */,
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,

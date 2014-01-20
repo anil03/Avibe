@@ -14,5 +14,6 @@
 
 @interface ShareViewController : UICollectionViewController
 
+@property (nonatomic, strong) NSArray *PFObjects;
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic, strong) PFObject *pfObject;
 
 @property (nonatomic, weak) YMGenericTableViewController *delegate;
+@property (nonatomic, weak) UIViewController *previousViewController;
 
 @property (nonatomic, strong) SampleMusic * sampleMusic;
 

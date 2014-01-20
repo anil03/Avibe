@@ -47,10 +47,8 @@
         [self.tableView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1]];
         
         //BackgroundView
-        /*
          UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
         self.tableView.backgroundView = backgroundView;
-         */
     }
     return self;
 }

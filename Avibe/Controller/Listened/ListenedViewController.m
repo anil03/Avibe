@@ -13,7 +13,7 @@
 #import "UIViewController+MMDrawerController.h"
 
 #import "SampleMusicViewController.h"
-
+#import "BackgroundImageView.h"
 #import "YMGenericCollectionViewCell.h"
 #import "PublicMethod.h"
 #import "Setting.h"
@@ -31,37 +31,28 @@
 
 @synthesize songs = _songs;
 
-//- (id)initWithCollectionViewLayout:(UICollectionViewLayout *)layout
-//{
-//    self = [super initWithCollectionViewLayout:layout];
-//    
-//    if(self){
-//        // setup
-//    }
-//    
-//    return self;
-//}
+- (id)init
+{
+    self = [super init];
+    if (self) {
+        //BackgroundView
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+        self.tableView.backgroundView = backgroundView;
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    
-
     [self setupMenuButton];
 }
 
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    
-    
-    
-    
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
-    
-    
-
 }
 
 #pragma mark - Table view data source
@@ -136,7 +127,7 @@
 -(void)setupMenuButton{
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"Listened";
+    titleLabel.text = @"Listen History";
     titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
                                            green:49.0/255.0
                                             blue:107.0/255.0
@@ -145,17 +136,23 @@
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
     
-    
+    /*
 	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
+    */
+    UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
+    self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;
     
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+    UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
 }
-
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
-
+- (void)popCurrentView
+{
+    [self.mm_drawerController setCenterViewController:self.previousViewController];
+}
 
 
 @end

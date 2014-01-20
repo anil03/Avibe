@@ -189,7 +189,9 @@
 }
 
 -(void)leftDrawerButtonPress{
-    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
+//    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.previousViewController];
+
 }
 
 #pragma mark - UIAlertview delegate

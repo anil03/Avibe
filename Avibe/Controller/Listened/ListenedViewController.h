@@ -9,8 +9,9 @@
 #import <UIKit/UIKit.h>
 
 #import "YMGenericTableViewController.h"
-//#import "YMGenericCollectionViewController.h"
 
 @interface ListenedViewController : YMGenericTableViewController
+
+@property (nonatomic, weak) UIViewController *previousViewController;
 
 @end
