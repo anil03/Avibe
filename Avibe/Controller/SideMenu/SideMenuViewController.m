@@ -67,61 +67,21 @@ typedef NS_ENUM(NSInteger, BeetRow){
         
         self.navigationLiveFeedViewController = controller;
 
-        shareViewController = [[ShareViewController alloc] init];
-        self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
-
-        listenedViewController = [[ListenedViewController alloc] init];
-//        listenedViewController = [[ListenedViewController alloc] initWithCollectionViewLayout:nil];
-        self.navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
         
-        friendsViewController = [[FriendsViewController alloc] init];
-        self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
 
-        userViewController = [[UserViewController alloc] init];
-//        userViewController = [[UIStoryboard storyboardWithName:@"User" bundle:nil] instantiateViewControllerWithIdentifier:@"UserViewController"];
-        userViewController.delegate = self;
-        self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
-
-
+//        listenedViewController = [[ListenedViewController alloc] init];
+//        self.navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
     }
     return self;
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    [super viewWillAppear:animated];
-    NSLog(@"Left will appear");
-}
-
--(void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    NSLog(@"Left did appear");
-}
-
--(void)viewWillDisappear:(BOOL)animated{
-    [super viewWillDisappear:animated];
-    NSLog(@"Left will disappear");
-}
-
--(void)viewDidDisappear:(BOOL)animated{
-    [super viewDidDisappear:animated];
-    NSLog(@"Left did disappear");
-}
-
--(void)viewDidLoad{
-    [super viewDidLoad];
-    [self setTitle:@"Left Drawer"];
 }
 
 #pragma mark - TableView Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 2;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     switch (section) {
         case MMDrawerSectionAvibe:
             return 3;
@@ -149,7 +109,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
         [button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"settings-32-highlight.png"] forState:UIControlStateHighlighted];
         [button addTarget:self
-                     action:@selector(setting)
+                     action:@selector(settingButtonPressed)
            forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:button];
         [headerView bringSubviewToFront:button];
@@ -159,7 +119,6 @@ typedef NS_ENUM(NSInteger, BeetRow){
      return [super tableView:tableView viewForHeaderInSection:section];
     }
 }
-
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if(section == MMDrawerSectionDrawerWidth)
@@ -176,17 +135,6 @@ typedef NS_ENUM(NSInteger, BeetRow){
     else
         return [super tableView:tableView titleForHeaderInSection:section];
 }
-
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-//    cell.backgroundColor = ([indexPath row]%2)?[UIColor lightGrayColor]:[UIColor whiteColor];
-    
-//    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-//    [button setBackgroundColor:[UIColor redColor]];
-//    button.enabled = NO;
-//    [cell addSubview:button];
-}
-
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier = @"Cell";
 
@@ -261,36 +209,39 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
                 break;
             case BeetRow_Share:{
+                shareViewController = [[ShareViewController alloc] init];
+                self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
                 [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
                 break;
             }
 //            case BeetRow_Listened:
 //                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
 //                break;
-            case BeetRow_Friends:
+            case BeetRow_Friends:{
+                friendsViewController = [[FriendsViewController alloc] init];
+                self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
                 [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
                 break;
+            }
             default:
                 break;
         }
     }
     else if(indexPath.section == MMDrawerSectionUser){
         switch (indexPath.row) {
-            case 0:
+            case 0:{
+                userViewController = [[UserViewController alloc] init];
+                userViewController.delegate = self;
+                self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
                 [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
                 break;
+            }
             case 1:
             {
                 //log out
                 [PFUser logOut];
                 
-//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 UIViewController *welcomeController = [[WelcomeViewController alloc] init];
-//                if (IS_IPHONE_5) {
-//                    welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
-//                }else{
-//                    welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
-//                }
                 
                 //Clear all controller
                 liveFeedViewController = nil;
@@ -329,11 +280,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
 }
 
 #pragma mark - Setting
-- (void)setting
+- (void)settingButtonPressed
 {
-//    NSLog(@"Press Setting");
-    
-//    SettingViewController *settingViewController = [[UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"SettingViewController"];
     SettingViewController *settingViewController = [[SettingViewController alloc] init];
     settingViewController.previousViewController = self.mm_drawerController.centerViewController;
     

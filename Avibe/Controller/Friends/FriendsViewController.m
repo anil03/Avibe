@@ -58,6 +58,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self setupMenuButton];
+    //Clear cache
+    _userViewControllerForFriend = nil;
 }
 - (void)viewDidLoad
 {

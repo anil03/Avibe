@@ -45,6 +45,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self setupMenuButton];
+    //Clear cache
+    listenedViewController = nil;
+    userShareViewController = nil;
 }
 - (void)viewDidLoad
 {
