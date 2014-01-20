@@ -18,13 +18,18 @@
 
 #import "FindFriendsViewController.h"
 #import "BackgroundImageView.h"
+#import "PublicMethod.h"
 
 
 @interface FriendsViewController () <FindFriendsViewControllerDelegate>
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
-@property (nonatomic, strong) NSArray *friends;
+//@property (nonatomic, strong) NSMutableArray *friends;
+@property (nonatomic, strong) NSMutableDictionary *friendsDictionary;
+@property (nonatomic, strong) NSArray *alphabet;
+@property (nonatomic, strong) NSString *others;
+@property (nonatomic, strong) NSMutableArray *titleForSection;
 
 @end
 
@@ -34,12 +39,18 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
+        _friendsDictionary = [[NSMutableDictionary alloc] init];
+        _others = @"Others";
+        _alphabet = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", _others];
+        
         [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
-        [self.tableView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5]];
+        [self.tableView setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1]];
         
         //BackgroundView
-        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+        /*
+         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
         self.tableView.backgroundView = backgroundView;
+         */
     }
     return self;
 }
@@ -48,56 +59,35 @@
 {
 	[self setupMenuButton];
 }
-
 - (void)viewDidLoad
 {
 	[super viewDidLoad];
-    
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
 }
 
-#pragma mark Bar Button
-- (IBAction)addFriend:(id)sender {
-   PFObject *songRecord = [PFObject objectWithClassName:@"Friend"];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-    [songRecord setObject:@"myhgew3" forKey:@"friend"];
-    [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSLog(@"Save Friends Succeed!");
-        }
-    }];
-    
-    [self.tableView reloadData];
-    [self refreshView:self.refreshControl];
-    
-}
-
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return [self.friends count];
+    _titleForSection = [[NSMutableArray alloc] init];
+    int numberOfSections = 0;
+    for(NSString *key in _alphabet){
+        NSArray *array = [_friendsDictionary objectForKey:key];
+        if ([array count] > 0) {
+            numberOfSections++;
+            [_titleForSection addObject:key];
+        }
+    }
+    return numberOfSections;
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    switch (section) {
-        case 0:
-            return @"A";
-        case 1:
-            return @"B";
-        case 2:
-            return @"C";
-        default:
-            return nil;
-    }
+    return _titleForSection[section];
 }
-
-
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [[_friendsDictionary objectForKey:_titleForSection[section]] count];
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
@@ -106,21 +96,12 @@
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     
     // Configure the cell...
-    PFObject *friend = [self.friends objectAtIndex:indexPath.row];
-    cell.textLabel.text = [friend objectForKey:@"friend"];
+    cell.textLabel.text = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
     
     return cell;
 }
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"SampleMusicViewController"];
-//    controller.pfObject = [self.friends objectAtIndex:indexPath.row];
-//    //    controller.delegate = self;
-//    
-//    [self.mm_drawerController setCenterViewController:controller withFullCloseAnimation:YES completion:nil];
-    
-    //    [self performSegueWithIdentifier:@"SampleMusicSegue" sender:[_songs objectAtIndex:indexPath.row]];
 }
 
 #pragma mark - RefreshControl Method
@@ -128,7 +109,7 @@
 {
     // Inside a Table View Controller's viewDidLoad method
 	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshBeginString];
 	[refresh addTarget:self
                 action:@selector(refreshView:)
       forControlEvents:UIControlEventValueChanged];
@@ -138,39 +119,48 @@
                             action:@selector(refreshView:)
                   forControlEvents:UIControlEventValueChanged];
 }
-
-
 -(void)refreshView:(UIRefreshControl *)refresh {
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
-    
-    // custom refresh logic would be placed here...
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
     [self fetchData:refresh];
-    
-    
 }
-
 -(void)fetchData:(UIRefreshControl*)refresh
 {
-    //Create query for all Post object by the current user
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Friend"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    // Run the query
+    PFQuery *postQuery = [PFQuery queryWithClassName:kClassFriend];
+    [postQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            //Save results and update the table
-            self.friends = objects;
-            [self.tableView reloadData];
-            
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMM d, h:mm a"];
-            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
-            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+            [self sortFriend:objects];
+            refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [refresh endRefreshing];
+            [self.tableView reloadData];
         }
     }];
 }
-
-
+-(void)sortFriend:(NSArray *)objects
+{
+    NSMutableArray *friends = [[NSMutableArray alloc] init];
+    
+    
+    for(PFObject *object in objects){
+        [friends addObject:[object objectForKey:@"friend"]];
+    }
+    [friends sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    
+    //Separate into Different Alphabet
+    for(NSString *firstChar in _alphabet){
+        NSMutableArray *array = [[NSMutableArray alloc] init];
+        for(NSString *string in friends){
+            NSString *firstCharInString = [string substringToIndex:1];
+            
+            //Match "Others" or Alphabet char
+            if([firstChar isEqualToString:_others] || [firstChar isEqualToString:firstCharInString] || [firstChar isEqualToString:[firstCharInString capitalizedString]]){
+                [array addObject:string];
+            }
+        }
+        [friends removeObjectsInArray:array];
+        [_friendsDictionary setObject:array forKey:firstChar];
+    }
+}
 
 #pragma mark - Button Handlers
 -(void)setupMenuButton{
@@ -191,71 +181,33 @@
     UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addFriendButtonPress)];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
 }
-
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
-
 -(void)addFriendButtonPress{
-    //Add friend
-    /*
-    PFObject *friend = [PFObject objectWithClassName:@"Friend"];
-//    BOOL friendNotExisted = YES;
-    
-    NSString *userToSave = [[PFUser currentUser] username];
-    NSString *friendToSave = @"DemoFriend2";
-    [friend setObject:userToSave forKey:@"user"];
-    [friend setObject:friendToSave forKey:@"friend"];
-    
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Friend"];
-    [postQuery whereKey:@"user" equalTo:userToSave];
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        //Fetch Objects
-        for(PFObject *pf in objects){
-            NSString *existingUser = [pf objectForKey:@"user"];
-            NSString *existingFriend = [pf objectForKey:@"friend"];
-            
-            if ([existingUser isEqualToString:userToSave] && [existingFriend isEqualToString:friendToSave]) {
-                NSLog(@"Duplicated friend");
-                
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, the friend you add already exists" delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
-                
-                return;
-            }
-        }
-        
-        //No duplicate, save
-        [friend saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Save Friend!");
-                [self refreshView:self.refreshControl];
-                [self.tableView reloadData];
-            }else{
-                NSLog(@"Erorr:%@", error);
-            }
-            
-        }];
-    }];
-*/
-    
-    
-    //Pop from bottom
-//    FindFriendsViewController *addFriendsViewController = [[UIStoryboard storyboardWithName:@"FindFriendsStoryboard" bundle:nil] instantiateViewControllerWithIdentifier:@"FindFriends"];
     FindFriendsViewController *addFriendsViewController = [[FindFriendsViewController alloc] init];
     addFriendsViewController.delegate = self;
     addFriendsViewController.friendsViewController = self.mm_drawerController.centerViewController;
     
     MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:addFriendsViewController];
-
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+
+#pragma mark Bar Button
+- (IBAction)addFriend:(id)sender {
+    PFObject *songRecord = [PFObject objectWithClassName:@"Friend"];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    [songRecord setObject:@"myhgew3" forKey:@"friend"];
+    [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            NSLog(@"Save Friends Succeed!");
+        }
+    }];
     
-//    [self.mm_drawerController.navigationController pushViewController:addFriendsViewController animated:NO];
-    
-//    [self presentViewController:navigationAddFriendsViewController animated:YES completion:nil];
+    [self.tableView reloadData];
+    [self refreshView:self.refreshControl];
     
 }
- 
 
 @end
 
