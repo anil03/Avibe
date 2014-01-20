@@ -12,14 +12,41 @@
 
 @interface UserShareViewController ()
 
+
 @end
 
 @implementation UserShareViewController
 
+- (id)initWithUsername:(NSString*)username
+{
+    self.username = username;
+    
+    self.column = 2;
+    self.row = 4;
+    float cellWidth = [UIScreen mainScreen].bounds.size.width/self.column-1;
+    float cellHeight = [UIScreen mainScreen].bounds.size.height/self.row;
+    
+    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
+    [flowLayout setItemSize:CGSizeMake(cellWidth, cellHeight)];
+    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    [flowLayout setMinimumInteritemSpacing:0.5f]; //Between items
+    [flowLayout setMinimumLineSpacing:5.5f]; //Between lines
+    flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0); //Between sections
+    
+    self = [super initWithCollectionViewLayout:flowLayout];
+    if(self){
+        [self.collectionView registerClass:[ShareCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        
+        self.collectionView.delegate = self;
+        self.collectionView.dataSource = self;
+        self.collectionView.backgroundColor = [UIColor blackColor];
+    }
+    return self;
+}
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-    [postQuery whereKey:kClassShareUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery whereKey:kClassShareUsername equalTo:self.username];
     [postQuery orderByDescending:@"updatedAt"];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {

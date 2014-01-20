@@ -12,4 +12,6 @@
 
 @property (nonatomic, weak) UIViewController *previousViewController;
 
+- (id)initWithUsername:(NSString*)username;
+
 @end

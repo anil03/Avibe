@@ -11,9 +11,17 @@
 #import "SideMenuRowViewController.h"
 #import "YMGenericTableViewController.h"
 #import "YMGenericCollectionViewController.h"
+#import "ShareCollectionViewCell.h"
 
 @interface ShareViewController : UICollectionViewController
 
 @property (nonatomic, strong) NSArray *PFObjects;
+@property (nonatomic, strong) NSString *username;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property int column;
+@property int row;
+
+- (void)setupRefreshControl;
+-(void)refreshView:(UIRefreshControl *)refresh;
 
 @end

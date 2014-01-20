@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) NSArray *songs;
+@property (nonatomic, strong) NSString *username;
 
 @end
 
@@ -33,11 +34,19 @@
 
 - (id)init
 {
-    self = [super init];
+    self = [self initWithUsername:[[PFUser currentUser] username]];
     if (self) {
         //BackgroundView
         UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
         self.tableView.backgroundView = backgroundView;
+    }
+    return self;
+}
+- (id)initWithUsername:(NSString*)username
+{
+    self = [super init];
+    if(self){
+        _username = username;
     }
     return self;
 }
@@ -110,7 +119,7 @@
     //Create query for all Post object by the current user
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
     postQuery.limit = 15;
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+    [postQuery whereKey:@"user" equalTo:self.username];
     [postQuery orderByDescending:@"updatedAt"];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {

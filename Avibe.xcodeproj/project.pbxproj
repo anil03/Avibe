@@ -158,6 +158,7 @@
 		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
 		4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */; };
+		4C8F74F2188DC8AE00B91651 /* UserViewControllerForFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
@@ -371,6 +372,8 @@
 		4C8F74EB188D825D00B91651 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		4C8F74ED188DC1AB00B91651 /* UserShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserShareViewController.h; sourceTree = "<group>"; };
 		4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShareViewController.m; sourceTree = "<group>"; };
+		4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewControllerForFriend.h; sourceTree = "<group>"; };
+		4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewControllerForFriend.m; sourceTree = "<group>"; };
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -513,10 +516,10 @@
 				4C231C86188104F800B030F9 /* YMGenericTableViewCell.m */,
 				4C231C87188104F800B030F9 /* YMGenericTableViewController.h */,
 				4C231C88188104F800B030F9 /* YMGenericTableViewController.m */,
-				4C231C8A188104F800B030F9 /* ListenedViewController.h */,
-				4C231C8B188104F800B030F9 /* ListenedViewController.m */,
 				4C231DD41881E51300B030F9 /* SampleMusicViewController.h */,
 				4C231DD51881E51300B030F9 /* SampleMusicViewController.m */,
+				4C231C8A188104F800B030F9 /* ListenedViewController.h */,
+				4C231C8B188104F800B030F9 /* ListenedViewController.m */,
 			);
 			name = Listened;
 			path = ../Listened;
@@ -596,6 +599,8 @@
 				4C231C89188104F800B030F9 /* Listened */,
 				4C231CA1188104F800B030F9 /* UserViewController.h */,
 				4C231CA2188104F800B030F9 /* UserViewController.m */,
+				4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */,
+				4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1250,6 +1255,7 @@
 				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
 				4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */,
+				4C8F74F2188DC8AE00B91651 /* UserViewControllerForFriend.m in Sources */,
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,

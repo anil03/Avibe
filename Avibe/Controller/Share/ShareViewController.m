@@ -17,7 +17,6 @@
 
 #import "SampleMusicViewController.h"
 #import "SampleMusicYoutubeViewController.h"
-#import "ShareCollectionViewCell.h"
 #import "Setting.h"
 #import "PublicMethod.h"
 #import "SampleMusic_iTune.h"
@@ -25,14 +24,11 @@
 
 @interface ShareViewController ()
 
-@property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *songs;
 
 
-@property int column;
-@property int row;
 
 @end
 
@@ -42,6 +38,8 @@
 
 - (id)init
 {
+    _username = [[PFUser currentUser] username];
+    
     _column = 2;
     _row = 4;
     float cellWidth = [UIScreen mainScreen].bounds.size.width/_column-1;
@@ -66,6 +64,7 @@
     
     return self;
 }
+
 - (void)viewWillAppear:(BOOL)animated
 {
 	[super viewWillAppear:animated];

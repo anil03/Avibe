@@ -19,7 +19,7 @@
 #import "FindFriendsViewController.h"
 #import "BackgroundImageView.h"
 #import "PublicMethod.h"
-
+#import "UserViewControllerForFriend.h"
 
 @interface FriendsViewController () <FindFriendsViewControllerDelegate>
 
@@ -30,6 +30,8 @@
 @property (nonatomic, strong) NSArray *alphabet;
 @property (nonatomic, strong) NSString *others;
 @property (nonatomic, strong) NSMutableArray *titleForSection;
+
+@property (nonatomic, strong) UserViewControllerForFriend *userViewControllerForFriend;
 
 @end
 
@@ -100,6 +102,19 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    static NSString *CellIdentifier = @"Cell";
+//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+//    [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
+//    [cell.textLabel setTextColor:[UIColor whiteColor]];
+//    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
+    
+    NSString *username = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
+    
+    _userViewControllerForFriend = [[UserViewControllerForFriend alloc] initWithUsername:username];
+    _userViewControllerForFriend.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewControllerForFriend];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 
 #pragma mark - RefreshControl Method

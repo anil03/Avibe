@@ -12,30 +12,40 @@
 #import "MMDrawerBarButtonItem.h"
 #import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
-#import "ListenedViewController.h"
-#import "UserShareViewController.h"
+
 #import "Setting.h"
 #import "BackgroundImageView.h"
 
 @interface UserViewController () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *username;
-@property (weak, nonatomic) IBOutlet UILabel *numberOfSongs;
-@property (weak, nonatomic) IBOutlet UITextField *lastFMAccountInput;
+//@property (weak, nonatomic) IBOutlet UILabel *username;
+//@property (weak, nonatomic) IBOutlet UILabel *numberOfSongs;
+//@property (weak, nonatomic) IBOutlet UITextField *lastFMAccountInput;
 
-@property (nonatomic, strong) ListenedViewController *listenedViewController;
-@property (nonatomic, strong) UserShareViewController *userShareViewController;
+
+
 @end
 
 @implementation UserViewController
 @synthesize listenedViewController;
 @synthesize userShareViewController;
 
+- (id)init
+{
+    return [self initWithUsername:[[PFUser currentUser] username]];
+}
+- (id)initWithUsername:(NSString*)username
+{
+    self = [super init];
+    if(self){
+        _username = username;
+    }
+    return self;
+}
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self setupMenuButton];
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,22 +118,14 @@
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 
-- (void)updateInfo{
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    // Run the query
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            self.numberOfSongs.text = [NSString stringWithFormat:@"Own: %lu songs.", (unsigned long)[objects count]];
-        }
-    }];
-}
-
 #pragma mark - Button Handlers
 -(void)setupMenuButton{
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"Profile";
+    NSString *titleText = _username;
+    int titleLength = 8;
+    if([titleText length] > titleLength) titleText = [[titleText substringToIndex:titleLength]  stringByAppendingString:@"..."];
+    titleLabel.text = [NSString stringWithFormat:@"%@'s Profile", titleText];
     titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
                                            green:49.0/255.0
                                             blue:107.0/255.0
