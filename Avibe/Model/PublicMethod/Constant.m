@@ -17,4 +17,12 @@ NSString *const kClassFriendFromUsername = @"user";
 NSString *const kClassFriendToUsername = @"friend";
 
 
+#pragma mark - Class Share
+NSString *const kClassShare = @"Share";
+NSString *const kClassShareUsername = @"user";
+NSString *const kClassShareTitle = @"title";
+NSString *const kClassShareAlbum = @"album";
+NSString *const kClassShareArtist = @"artist";
+NSString *const kClassShareAlbumImage = @"albumImage";
+
 @end

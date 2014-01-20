@@ -10,11 +10,18 @@
 
 @interface Constant : NSObject
 
-
-
 #pragma mark - Class Friend
 extern NSString *const kClassFriend;
 extern NSString *const kClassFriendFromUsername;
 extern NSString *const kClassFriendToUsername;
+
+#pragma mark - Class Share
+
+extern NSString *const kClassShare;
+extern NSString *const kClassShareUsername;
+extern NSString *const kClassShareTitle;
+extern NSString *const kClassShareAlbum;
+extern NSString *const kClassShareArtist;
+extern NSString *const kClassShareAlbumImage;
 
 @end

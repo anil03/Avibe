@@ -119,7 +119,7 @@
     NSString *user = [song objectForKey:@"user"];
     PFFile *albumImage = [song objectForKey:@"albumImage"];
     
-    cell.titleLabel.text = [NSString stringWithFormat:@"\"%@\" by %@", title, artist];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@ share \"%@\" by %@", user, title, artist];
 
     NSData *imageData = [albumImage getData];
     UIImage *image = [[UIImage alloc] initWithData:imageData];
@@ -201,21 +201,34 @@
 	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
 	[self fetchData:refresh];
 }
+/**
+ * Query Friend Array for current user
+ * Query Share music for current user's friend, not include current user
+ */
 -(void)fetchData:(UIRefreshControl*)refresh
 {
-    //Create query for all Post object by the current user
-	PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-	[postQuery orderByDescending:@"updatedAt"];
-	[postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-		if (!error) {
-            //Save results and update the table
-			_PFObjects = objects;
-			[self.collectionView reloadData];
-			
-			refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
-			[refresh endRefreshing];
-		}
-	}];
+    PFQuery *friendQuery = [PFQuery queryWithClassName:@"Friend"];
+    [friendQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
+    [friendQuery findObjectsInBackgroundWithBlock:^(NSArray *friendArray, NSError *error) {
+        NSMutableArray *friendUsernameArray = [[NSMutableArray alloc] init];
+        for(PFObject *object in friendArray){
+            NSString *friendUsername = [object objectForKey:kClassFriendToUsername];
+            [friendUsernameArray addObject:friendUsername];
+        }
+        
+        PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
+        [postQuery whereKey:kClassShareUsername notEqualTo:[[PFUser currentUser] username]];
+        [postQuery whereKey:kClassShareUsername containedIn:friendUsernameArray];
+        [postQuery orderByDescending:@"updatedAt"];
+        [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                _PFObjects = objects;
+                refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
+                [self.collectionView reloadData];
+                [refresh endRefreshing];
+            }
+        }];
+    }];
 }
 
 #pragma mark - Button Handlers
