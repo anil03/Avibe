@@ -12,9 +12,11 @@
 #import "YMGenericCollectionViewCell.h"
 
 #import "MMDrawerBarButtonItem.h"
+#import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
 
 #import "SampleMusicViewController.h"
+#import "SampleMusicYoutubeViewController.h"
 #import "ShareCollectionViewCell.h"
 #import "Setting.h"
 #import "PublicMethod.h"
@@ -101,12 +103,9 @@
 {
 	return 1;
 }
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 	return [_PFObjects count];
 }
-
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
 	
@@ -129,39 +128,29 @@
     }
     cell.backgroundView = [[UIImageView alloc] initWithImage:image];
     
-    //SetUp BackgroundView
-    /*
-    SampleMusic_iTune *sampleMusic = [[SampleMusic_iTune alloc] initWithIndexPath:indexPath];
-    sampleMusic.delegateForIndexPath = self;
-    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[title] forKeys:@[@"title"]];
-    [sampleMusic startSearch:dict];
-    */
-     
- //Not implement ImageView yet
- //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
- //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
- //    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
 	
 	return cell;
 }
-
-/*
-#pragma mark - BackgroundImage Delegate
-- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo andIndexPath:(NSIndexPath *)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *identifier = @"Cell";
-    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSLog(@"%d", indexPath.row);
     
-    NSURL *imageUrl = [NSURL URLWithString:[songInfo objectForKey:@"imageURL"]];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
-    UIImage *image = [UIImage imageWithData:imageData];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.backgroundView.frame];
-    [imageView setImage:image];
+    PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
+    NSString *title = [song objectForKey:@"title"];
+    NSString *album = [song objectForKey:@"album"];
+    NSString *artist = [song objectForKey:@"artist"];
+    if(!title) title = @"N/A";
+    if(!album) album = @"N/A";
+    if(!artist) artist = @"N/A";
+
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
     
-    cell.backgroundView = imageView;
-    [self.collectionView reloadData];
+    //Switch to Youtube
+    SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] initWithDictionary:dictionary];
+    controller.delegate = self;
+    MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
+    [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
 }
-*/
 
 // - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 // {

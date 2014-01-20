@@ -261,8 +261,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
    return reusableview;
 }
-
-#pragma mark - Touch Item
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
 //    NSLog(@"Select %d", indexPath.row);
