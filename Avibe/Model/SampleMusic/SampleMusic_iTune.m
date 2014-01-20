@@ -10,7 +10,23 @@
 
 #define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
+
+@interface SampleMusic_iTune()
+
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
+@end
+
 @implementation SampleMusic_iTune
+
+- (id)initWithIndexPath:(NSIndexPath*)indexPath
+{
+    self = [super init];
+    if (self) {
+        _indexPath = indexPath;
+    }
+    return self;
+}
 
 - (void)startSearch:(NSDictionary*)searchInfo
 {
@@ -37,6 +53,8 @@
         return;
     }
     
+    
+    
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization
                           JSONObjectWithData:responseData
@@ -50,13 +68,6 @@
     
     NSDictionary* result = [results objectAtIndex:0];
     
-    //Prepare Song Info
-    NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
-    [songInfo setObject:[result objectForKey:@"artworkUrl100"] forKey:@"imageURL"];
-    [songInfo setObject:[result objectForKey:@"trackName"] forKey:@"title"];
-    [songInfo setObject:[result objectForKey:@"artistName"] forKey:@"artist"];
-    [songInfo setObject:[result objectForKey:@"collectionName"] forKey:@"album"];
-    
     
     NSString* kind = [result objectForKey:@"kind"];
     
@@ -64,6 +75,28 @@
         NSLog(@"Not Song File");
         return;
     }
+    
+    //Prepare Song Info
+    NSMutableDictionary *songInfo = [[NSMutableDictionary alloc] init];
+    NSString *artworkUrl100 = [result objectForKey:@"artworkUrl100"];
+    if (artworkUrl100) {
+        [songInfo setObject:artworkUrl100 forKey:@"imageURL"];
+    }
+    NSString *trackName = [result objectForKey:@"trackName"];
+    if (trackName) {
+        [songInfo setObject:trackName forKey:@"title"];
+    }
+    NSString *artistName = [result objectForKey:@"artistName"];
+    if (artistName) {
+        [songInfo setObject:artistName forKey:@"artist"];
+    }
+    NSString *collectionName = [result objectForKey:@"collectionName"];
+    if (collectionName) {
+        [songInfo setObject:collectionName forKey:@"album"];
+    }
+    
+    
+    
     
     NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"previewUrl"]];
     NSError* __autoreleasing soundFileError = nil;
@@ -75,6 +108,11 @@
     }
     
     
+    //Background Image For UICollectionView
+    if (self.delegateForIndexPath && [self.delegateForIndexPath respondsToSelector:@selector(finishFetchData:andInfo:andIndexPath:)]) {
+        [self.delegateForIndexPath finishFetchData:songFile andInfo:songInfo andIndexPath:_indexPath];
+    }
+    //Other Call Back
     if (self.delegate && [self.delegate respondsToSelector:@selector(finishFetchData:andInfo:)]){
         [self.delegate finishFetchData:songFile andInfo:songInfo];
     }

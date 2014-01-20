@@ -40,6 +40,32 @@
     return self;
 }
 
+- (NSMutableAttributedString*)refreshBeginString
+{
+    NSString *lastUpdated = @"Pull to Refresh";
+    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:lastUpdated];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,[lastUpdated length])];
+    
+    return string;
+}
+- (NSMutableAttributedString*)refreshUpdatingString
+{
+    NSString *lastUpdated = @"Refreshing data...";
+    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:lastUpdated];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,[lastUpdated length])];
+    
+    return string;
+}
+- (NSMutableAttributedString*)refreshFinsihedString
+{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
+    NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:lastUpdated];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,[lastUpdated length])];
+    
+    return string;
+}
 
 
 @end

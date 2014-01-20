@@ -127,14 +127,19 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     [super viewDidLoad];
     
+    //Variable
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
 
+    
     //Spinner
     _spinner = [[UIActivityIndicatorView alloc]
-     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    _spinner.center = CGPointMake(160, 240);
+     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _spinner.center = CGPointMake(width/2, height/2);
     _spinner.hidesWhenStopped = YES;
     [self.view addSubview:_spinner];
 }
@@ -222,6 +227,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         
         default:
             break;
+    }
+    
+    //Deal with NULL text
+    if (!cell.label.text) {
+        cell.label.text = @"N/A";
     }
     
     //Not implement ImageView yet
@@ -325,10 +335,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             //Save results and update the table
             self.PFObjects = objects;
             
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMM d, h:mm a"];
-            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
-            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+            refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [refresh endRefreshing];
             
             [_spinner stopAnimating];
@@ -343,9 +350,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {
-    // Inside a Table View Controller's viewDidLoad method
 	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshBeginString];
 	[refresh addTarget:self
         action:@selector(refreshView:)
         forControlEvents:UIControlEventValueChanged];
@@ -356,10 +362,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         forControlEvents:UIControlEventValueChanged];
     [self.collectionView addSubview:self.refreshControl];
 }
-
-
 -(void)refreshView:(UIRefreshControl *)refresh {
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
     refresh.tintColor = [UIColor whiteColor];
     
     // custom refresh logic would be placed here...
@@ -369,13 +373,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     [self fetchData:self.refreshControl];
 //    [self updateSongInParse];
-    
 }
-
-
-
-
-
 
 #pragma mark - Button Handlers
 -(void)setupBarMenuButton{

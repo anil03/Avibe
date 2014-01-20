@@ -58,6 +58,7 @@
 @property (strong, nonatomic) NSTimer *progressTimer;
 @property (strong, nonatomic) UIButton *playButton;
 @property (nonatomic, retain) AVAudioPlayer *player;
+@property (nonatomic, strong) UIImage *albumImage;
 
 //Song Info
 @property (nonatomic, strong) NSString *songTitle;
@@ -320,9 +321,12 @@
     NSURL *imageUrl = [NSURL URLWithString:[songInfo objectForKey:@"imageURL"]];
     NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
     UIImage *image = [UIImage imageWithData:imageData];
+    if (image) {
+        _albumImage = image;
+    }
     
     _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, 0, playerImageWidth, playerImageHeight)];
-    [_sampleMusicImageView setImage:image];
+    [_sampleMusicImageView setImage:_albumImage];
     [_sampleMusicITuneView addSubview:_sampleMusicImageView];
     
     //Player
@@ -398,6 +402,13 @@
     [songRecord setObject:_songAlbum forKey:@"album"];
     [songRecord setObject:_songArtist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    
+    if (!_albumImage) {
+        _albumImage = [UIImage imageNamed:@"default_album.png"];
+    }
+    NSData *imageData = UIImageJPEGRepresentation(_albumImage, 0.05f);
+    PFFile *imageFile = [PFFile fileWithName:_songAlbum data:imageData];
+    [songRecord setObject:imageFile forKey:@"albumImage"];
     
     _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];
     [_shareMusicEntry shareMusic];

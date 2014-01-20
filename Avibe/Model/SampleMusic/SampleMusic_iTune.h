@@ -8,6 +8,16 @@
 
 #import "SampleMusic.h"
 
+@protocol SampleMusic_iTuneDelegate <NSObject>
+
+- (void)finishFetchData:(NSData*)song andInfo:(NSDictionary*)songInfo andIndexPath:(NSIndexPath*)indexPath;
+
+@end
+
 @interface SampleMusic_iTune : SampleMusic
+
+@property (nonatomic, weak) id<SampleMusic_iTuneDelegate> delegateForIndexPath;
+
+- (id)initWithIndexPath:(NSIndexPath*)indexPath;
 
 @end

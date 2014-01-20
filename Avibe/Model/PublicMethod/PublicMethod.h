@@ -16,4 +16,8 @@
 
 + (PublicMethod *)sharedInstance;
 
+- (NSMutableAttributedString*)refreshBeginString;
+- (NSMutableAttributedString*)refreshUpdatingString;
+- (NSMutableAttributedString*)refreshFinsihedString;
+
 @end

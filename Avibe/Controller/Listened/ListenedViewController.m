@@ -15,7 +15,7 @@
 #import "SampleMusicViewController.h"
 
 #import "YMGenericCollectionViewCell.h"
-
+#import "PublicMethod.h"
 #import "Setting.h"
 
 
@@ -97,9 +97,8 @@
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {
- // Inside a Table View Controller's viewDidLoad method
 	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshBeginString];
 	[refresh addTarget:self
 		action:@selector(refreshView:)
 		forControlEvents:UIControlEventValueChanged];
@@ -110,11 +109,8 @@
                            forControlEvents:UIControlEventValueChanged];
 }
 
-
 -(void)refreshView:(UIRefreshControl *)refresh {
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
-
-    // custom refresh logic would be placed here...
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
     [self fetchData:refresh];
 }
 
@@ -125,19 +121,12 @@
     postQuery.limit = 15;
     [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
     [postQuery orderByDescending:@"updatedAt"];
-    
-    // Run the query
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            //Save results and update the table
-            
             self.PFObjects = objects;
             [self.tableView reloadData];
             
-            NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-            [formatter setDateFormat:@"MMM d, h:mm a"];
-            NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
-            refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+            refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [refresh endRefreshing];
         }
     }];

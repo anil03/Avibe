@@ -15,11 +15,13 @@
 #import "UIViewController+MMDrawerController.h"
 
 #import "SampleMusicViewController.h"
-
+#import "ShareCollectionViewCell.h"
 #import "Setting.h"
+#import "PublicMethod.h"
+#import "SampleMusic_iTune.h"
 
 
-@interface ShareViewController ()
+@interface ShareViewController () <SampleMusic_iTuneDelegate>
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
@@ -54,7 +56,7 @@
     self = [super initWithCollectionViewLayout:flowLayout];
     
     if (self) {
-        [self.collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+        [self.collectionView registerClass:[ShareCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
@@ -108,7 +110,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
 	
-	UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+	ShareCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 	cell.backgroundColor = [UIColor grayColor];
     
     PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
@@ -116,15 +118,25 @@
     NSString *artist = [song objectForKey:@"artist"];
     NSString *album = [song objectForKey:@"album"];
     NSString *user = [song objectForKey:@"user"];
+    PFFile *albumImage = [song objectForKey:@"albumImage"];
     
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, cell.frame.size.width, 60)];
-    titleLabel.text = [NSString stringWithFormat:@"\"%@\" by %@", title, artist];
-    titleLabel.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.5];
-    titleLabel.numberOfLines = 2;
-    [cell.contentView addSubview:titleLabel];
-    UIImage *image = [UIImage imageNamed:@"default_album.png"];
+    cell.titleLabel.text = [NSString stringWithFormat:@"\"%@\" by %@", title, artist];
+
+    NSData *imageData = [albumImage getData];
+    UIImage *image = [[UIImage alloc] initWithData:imageData];
+    if (!image) {
+        image = [UIImage imageNamed:@"default_album.png"];
+    }
     cell.backgroundView = [[UIImageView alloc] initWithImage:image];
     
+    //SetUp BackgroundView
+    /*
+    SampleMusic_iTune *sampleMusic = [[SampleMusic_iTune alloc] initWithIndexPath:indexPath];
+    sampleMusic.delegateForIndexPath = self;
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[title] forKeys:@[@"title"]];
+    [sampleMusic startSearch:dict];
+    */
+     
  //Not implement ImageView yet
  //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
  //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
@@ -132,6 +144,24 @@
 	
 	return cell;
 }
+
+/*
+#pragma mark - BackgroundImage Delegate
+- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo andIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *identifier = @"Cell";
+    UICollectionViewCell *cell = [self.collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    NSURL *imageUrl = [NSURL URLWithString:[songInfo objectForKey:@"imageURL"]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
+    UIImage *image = [UIImage imageWithData:imageData];
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:cell.backgroundView.frame];
+    [imageView setImage:image];
+    
+    cell.backgroundView = imageView;
+    [self.collectionView reloadData];
+}
+*/
 
 // - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 // {
@@ -165,9 +195,8 @@
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {
-    // Inside a Table View Controller's viewDidLoad method
 	UIRefreshControl *refresh = [[UIRefreshControl alloc] init];
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh"];
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshBeginString];
 	[refresh addTarget:self
 		action:@selector(refreshView:)
 		forControlEvents:UIControlEventValueChanged];
@@ -178,35 +207,23 @@
 		forControlEvents:UIControlEventValueChanged];
     
     [self.collectionView addSubview:self.refreshControl];
-//    self.collectionView.alwaysBounceVertical = YES;
 }
-
 -(void)refreshView:(UIRefreshControl *)refresh {
-	refresh.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing data..."];
-	
-    // custom refresh logic would be placed here...
+	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
 	[self fetchData:refresh];
-	
-	
 }
-
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     //Create query for all Post object by the current user
 	PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
 	[postQuery orderByDescending:@"updatedAt"];
-
-    // Run the query
 	[postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
 		if (!error) {
             //Save results and update the table
 			_PFObjects = objects;
 			[self.collectionView reloadData];
 			
-			NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-			[formatter setDateFormat:@"MMM d, h:mm a"];
-			NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];
-			refresh.attributedTitle = [[NSAttributedString alloc] initWithString:lastUpdated];
+			refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
 			[refresh endRefreshing];
 		}
 	}];
@@ -235,6 +252,7 @@
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
+
 
 
 

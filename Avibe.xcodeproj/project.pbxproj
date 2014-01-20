@@ -155,6 +155,7 @@
 		4C3179C218440FAA00F7D41B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C118440FAA00F7D41B /* CoreData.framework */; };
 		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
+		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
@@ -362,6 +363,8 @@
 		4C3179C118440FAA00F7D41B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4C8F74E7188CC4F900B91651 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
+		4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareCollectionViewCell.m; sourceTree = "<group>"; };
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -543,6 +546,8 @@
 		4C231C93188104F800B030F9 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				4C8F74E7188CC4F900B91651 /* ShareCollectionViewCell.h */,
+				4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */,
 				4C231C94188104F800B030F9 /* ShareViewController.h */,
 				4C231C95188104F800B030F9 /* ShareViewController.m */,
 			);
@@ -1248,6 +1253,7 @@
 				4C231D0D188104F800B030F9 /* UIViewController+MMDrawerController.m in Sources */,
 				4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */,
 				4C231D11188104F800B030F9 /* YMGenericCollectionViewCell.m in Sources */,
+				4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */,
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
