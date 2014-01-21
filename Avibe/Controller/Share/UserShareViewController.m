@@ -40,6 +40,10 @@
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         self.collectionView.backgroundColor = [UIColor blackColor];
+        
+        //BackgroundView
+        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
+        self.collectionView.backgroundView = backgroundView;
     }
     return self;
 }

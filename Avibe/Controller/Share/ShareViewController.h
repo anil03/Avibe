@@ -12,6 +12,7 @@
 #import "YMGenericTableViewController.h"
 #import "YMGenericCollectionViewController.h"
 #import "ShareCollectionViewCell.h"
+#import "BackgroundImageView.h"
 
 @interface ShareViewController : UICollectionViewController
 
