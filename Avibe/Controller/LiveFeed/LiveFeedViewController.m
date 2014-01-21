@@ -322,27 +322,38 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 -(void)fetchData:(UIRefreshControl*)refresh
 {
-    //Create query for all Post object by the current user
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    postQuery.limit = 20;
-    //    [postQuery whereKey:@"author" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updateAt"]; //Get latest song
-    // Run the query
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            //Save results and update the table
-            self.PFObjects = objects;
-            
-            refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
-            [refresh endRefreshing];
-            
-            [_spinner stopAnimating];
-
-            [self.collectionView reloadData];
-        }else{
-            NSLog(@"Error In Fetch Data: %@", error);
+    PFQuery *friendQuery = [PFQuery queryWithClassName:kClassFriend];
+    [friendQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
+    [friendQuery findObjectsInBackgroundWithBlock:^(NSArray *friendObjects, NSError *error) {
+        NSMutableArray *friendArray = [[NSMutableArray alloc] init];
+        for(PFObject *friendObject in friendObjects){
+            NSString *friend = [friendObject objectForKey:kClassFriendToUsername];
+            if(friend){
+                [friendArray addObject:friend];
+            }
         }
+        
+        PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
+        songQuery.limit = 20;
+        [songQuery whereKey:kClassSongUsername containedIn:friendArray];
+        [songQuery orderByDescending:@"updateAt"]; //Get latest song
+        [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            if (!error) {
+                self.PFObjects = objects;
+                
+                refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
+                [refresh endRefreshing];
+                
+                [_spinner stopAnimating];
+                
+                [self.collectionView reloadData];
+            }else{
+                NSLog(@"Error In Fetch Data: %@", error);
+            }
+        }];
     }];
+    
+    
 }
 
 #pragma mark - RefreshControl Method

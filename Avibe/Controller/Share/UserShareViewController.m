@@ -66,7 +66,10 @@
 -(void)setupMenuButton{
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"My Shared Music";
+    NSString *titleText = self.username;
+    int titleLength = 8;
+    if([titleText length] > titleLength) titleText = [[titleText substringToIndex:titleLength]  stringByAppendingString:@"..."];
+    titleLabel.text = [NSString stringWithFormat:@"%@'s Share", titleText];
     titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
                                            green:49.0/255.0
                                             blue:107.0/255.0

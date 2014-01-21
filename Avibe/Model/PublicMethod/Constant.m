@@ -45,4 +45,11 @@ NSString *const kClassShareAlbum = @"album";
 NSString *const kClassShareArtist = @"artist";
 NSString *const kClassShareAlbumImage = @"albumImage";
 
+#pragma mark - Class Song
+NSString *const kClassSong = @"Song";
+NSString *const kClassSongUsername = @"user";
+NSString *const kClassSongTitle = @"title";
+NSString *const kClassSongAlbum = @"album";
+NSString *const kClassSongArtist = @"artist";
+
 @end
