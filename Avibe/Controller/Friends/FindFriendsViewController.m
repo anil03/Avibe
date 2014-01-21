@@ -23,13 +23,15 @@ enum FindFriendTableViewSection {
     UnRegisteredUserSection = 1
 };
 
-@interface FindFriendsViewController ()
+@interface FindFriendsViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contactList;
 @property (nonatomic, strong) NSMutableArray *registeredFollowingUsers;
 @property (nonatomic, strong) NSMutableArray *registeredNotFollowedUsers;
 @property (nonatomic, strong) NSMutableArray *unRegisteredUsers;
 
+@property (nonatomic, strong) UIAlertView *alertForUnFollow;
+@property (nonatomic, strong) FindFriendButton *currentButtonSender;
 @end
 
 @implementation FindFriendsViewController
@@ -324,22 +326,32 @@ enum FindFriendTableViewSection {
 #pragma mark - Follow Button Method
 - (void)unFollowButtonPressed:(FindFriendButton*)sender
 {
-    PFQuery *unFriend = [PFQuery queryWithClassName:kClassFriend];
-    [unFriend getObjectInBackgroundWithId:sender.friendObjectId block:^(PFObject *object, NSError *error) {
-        if (object) {
-            [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [_registeredNotFollowedUsers addObject:sender.person];
-                    [_registeredFollowingUsers removeObject:sender.person];
-                    [self.tableView reloadData];
-                    
-                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have unFollowed %@.", sender.username_contact] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    
-                }
-            }];
-        }
-    }];
+    _currentButtonSender = sender;
     
+    _alertForUnFollow = [[UIAlertView alloc] initWithTitle: @"Warning" message: [NSString stringWithFormat:@"Are you sure to unFollowed %@?", sender.username_contact] delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+    [_alertForUnFollow show];
+    
+    
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([alertView isEqual:_alertForUnFollow] && buttonIndex == 0) {
+        PFQuery *unFriend = [PFQuery queryWithClassName:kClassFriend];
+        [unFriend getObjectInBackgroundWithId:_currentButtonSender.friendObjectId block:^(PFObject *object, NSError *error) {
+            if (object) {
+                [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [_registeredNotFollowedUsers addObject:_currentButtonSender.person];
+                        [_registeredFollowingUsers removeObject:_currentButtonSender.person];
+                        [self.tableView reloadData];
+                        
+                        [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have unFollowed %@.", _currentButtonSender.username_contact] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        
+                    }
+                }];
+            }
+        }];
+    }
 }
 - (void)followButtonPressed:(FindFriendButton*)sender
 
