@@ -22,6 +22,7 @@ extern NSString *const kClassUserUsername;
 extern NSString *const kClassUserEmail;
 extern NSString *const kClassUserPhoneNumber;
 extern NSString *const kClassUserLastFM;
+extern NSString *const kClassUserRdio;
 
 #pragma mark - Class Friend
 extern NSString *const kClassFriend;

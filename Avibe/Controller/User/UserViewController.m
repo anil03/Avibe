@@ -59,7 +59,7 @@
     float barHeight = 80.0f;
     float currentHeight = 0.0f;
     float buttonWidth = width;
-    float buttonHeight = 30.0f;
+    float buttonHeight = 100.0f;
 
     //Set up View
     self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];

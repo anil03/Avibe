@@ -47,7 +47,7 @@
     UIColor *titleTextColor = [UIColor whiteColor];
     UIColor *contentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.3];
     UIColor *contentTextColor = [UIColor blackColor];
-    float barHeight = 20.0f;
+    float barHeight = 15.0f;
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
     float scrollWidth = width;
@@ -137,7 +137,7 @@
     
     /*OtherAccountView*/
     currentHeight += item*unitHeight;
-    item = 10;
+    item = 3;
     accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
     accountView.backgroundColor = contentBackgroundColor;
     [scrollView addSubview:accountView];
@@ -163,40 +163,60 @@
     textField.delegate = self;
     [textField addTarget:self action:@selector(changeLastFM:) forControlEvents:UIControlEventEditingDidEnd];
     [accountView addSubview:textField];
+    //Rdio
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight*2, width/2, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" Rdio Account";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:contentLabel];
+    //Rdio TextField
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight*2, width/2-right, unitHeight)];
+    textField.text = [[PFUser currentUser] objectForKey:kClassUserRdio];
+    textField.backgroundColor = contentBackgroundColor;
+    textField.textAlignment = NSTextAlignmentRight;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(changeRdio:) forControlEvents:UIControlEventEditingDidEnd];
+    [accountView addSubview:textField];
     
-    /*Feed Clogging*/
-    currentHeight += item*unitHeight;
-    item = 3;
-    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-    accountView.backgroundColor = contentBackgroundColor;
-    [scrollView addSubview:accountView];
-    //Title
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-    titleLabel.backgroundColor = titleBackgroundColor;
-    titleLabel.text = @" Feed Clogging";
-    titleLabel.textColor = titleTextColor;
-    titleLabel.textAlignment = NSTextAlignmentNatural;
-    [accountView addSubview:titleLabel];
-    
-    /*Other Setting*/
-    currentHeight += item*unitHeight;
-    item = 3;
-    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-    accountView.backgroundColor = contentBackgroundColor;
-    [scrollView addSubview:accountView];
-    //Title
-    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-    titleLabel.backgroundColor = titleBackgroundColor;
-    titleLabel.text = @" Others";
-    titleLabel.textColor = titleTextColor;
-    titleLabel.textAlignment = NSTextAlignmentNatural;
-    [accountView addSubview:titleLabel];
+
+//    /*Feed Clogging*/
+//    currentHeight += item*unitHeight;
+//    item = 3;
+//    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+//    accountView.backgroundColor = contentBackgroundColor;
+//    [scrollView addSubview:accountView];
+//    //Title
+//    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+//    titleLabel.backgroundColor = titleBackgroundColor;
+//    titleLabel.text = @" Feed Clogging";
+//    titleLabel.textColor = titleTextColor;
+//    titleLabel.textAlignment = NSTextAlignmentNatural;
+//    [accountView addSubview:titleLabel];
+//    
+//    /*Other Setting*/
+//    currentHeight += item*unitHeight;
+//    item = 3;
+//    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+//    accountView.backgroundColor = contentBackgroundColor;
+//    [scrollView addSubview:accountView];
+//    //Title
+//    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+//    titleLabel.backgroundColor = titleBackgroundColor;
+//    titleLabel.text = @" Others";
+//    titleLabel.textColor = titleTextColor;
+//    titleLabel.textAlignment = NSTextAlignmentNatural;
+//    [accountView addSubview:titleLabel];
+//    
     
     /*Finally*/
     currentHeight += item*unitHeight;
     [scrollView setContentSize:CGSizeMake(scrollWidth, currentHeight)];
 
     //BackgroundView
+    if (currentHeight < height) {
+        currentHeight = height;
+    }
     UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, currentHeight)];
     [scrollView addSubview:backgroundView];
     [scrollView sendSubviewToBack:backgroundView];
@@ -213,10 +233,21 @@
             if(object){
                 [object setObject:_currentValueToChange forKey:_currentKey];
                 [object saveEventually:^(BOOL succeeded, NSError *error) {
+                    NSString *warningString;
                     if (succeeded) {
-                        [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed %@ to %@.  Please sign in again to see the update.", _currentType, _currentValueToChange] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        warningString = [NSString stringWithFormat:@"You have successfully changed %@ to %@.  Please log in again to see the update.", _currentType, _currentValueToChange];
+                        if([_currentValueToChange length] == 0){
+                            warningString = [NSString stringWithFormat:@"You have successfully deleted %@. Please log in again to see the update.", _currentType];
+                        }
+
+                        [[[UIAlertView alloc] initWithTitle: @"Success" message: warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     }else if(error){
-                        [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change %@ to %@, please try another one", _currentType,_currentValueToChange] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        warningString = [NSString stringWithFormat:@"You can't change %@ to %@, please try another one.", _currentType,_currentValueToChange];
+                        if([_currentValueToChange length] == 0){
+                            warningString = [NSString stringWithFormat:@"You can't deleted %@.", _currentType];
+                        }
+                        
+                        [[[UIAlertView alloc] initWithTitle: @"Error" message:warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                         _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
                     }
                 }];
@@ -236,13 +267,18 @@
 }
 - (void)changeTextField
 {
-    //Ignore if user not change and change to nil
-    if([_currentValueToChange length] == 0 || [_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
+    //Ignore if user not change
+    if([_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
         _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
         return;
     }
+    //Change to nil
+    NSString *warningString = [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange];
+    if([_currentValueToChange length] == 0){
+        warningString = [NSString stringWithFormat:@"Are you sure to delete %@?", _currentType];
+    }
     
-    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message: [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange] delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message:warningString  delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
     [_currentAlertView show];
 }
 - (void)changeUsername:(UITextField*)sender
@@ -275,6 +311,14 @@
     _currentKey = kClassUserLastFM;
     _currentSender = sender;
     _currentType = @"LastFM Account";
+    [self changeTextField];
+}
+- (void)changeRdio:(UITextField*)sender
+{
+    _currentValueToChange = sender.text;
+    _currentKey = kClassUserRdio;
+    _currentSender = sender;
+    _currentType = @"Rdio Account";
     [self changeTextField];
 }
 

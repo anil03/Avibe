@@ -453,7 +453,7 @@
 				4C231C93188104F800B030F9 /* Share */,
 				4C231C77188104F800B030F9 /* Friends */,
 				4C231C90188104F800B030F9 /* Setting */,
-				4C231CA0188104F800B030F9 /* User */,
+				4C231CA0188104F800B030F9 /* Profile */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -603,7 +603,7 @@
 			path = SignInAndSignUp;
 			sourceTree = "<group>";
 		};
-		4C231CA0188104F800B030F9 /* User */ = {
+		4C231CA0188104F800B030F9 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
 				4C231C89188104F800B030F9 /* Listened */,
@@ -612,6 +612,7 @@
 				4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */,
 				4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */,
 			);
+			name = Profile;
 			path = User;
 			sourceTree = "<group>";
 		};
