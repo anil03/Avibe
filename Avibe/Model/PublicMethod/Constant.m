@@ -8,6 +8,10 @@
 
 #import "Constant.h"
 
+/**
+ * Constants class for the project.
+ */
+
 @implementation Constant
 
 
@@ -22,6 +26,8 @@ NSString *const kClassUser = @"User";
 NSString *const kClassUserUsername = @"username";
 NSString *const kClassUserEmail = @"email";
 NSString *const kClassUserPhoneNumber = @"additional";
+NSString *const kClassUserLastFM = @"lastFM";
+
 
 #pragma mark - Class Friend
 NSString *const kClassFriend = @"Friend";

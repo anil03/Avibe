@@ -46,7 +46,9 @@
     float left = 5.0f;
     float right = 5.0f;
     float unitHeight = 30.0f;
-    int item = 0;
+    int item = 15;
+    float totalHeight = unitHeight*item;
+
     UIView *accountView;
     UILabel *titleLabel;
     UILabel *contentLabel;
@@ -59,10 +61,7 @@
     self.view = scrollView;
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard)]];
     
-    //BackgroundView
-    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
-    [scrollView addSubview:backgroundView];
-    [scrollView sendSubviewToBack:backgroundView];
+
     
     /*AccountView*/
     item = 4;
@@ -139,8 +138,20 @@
     titleLabel.textColor = titleTextColor;
     titleLabel.textAlignment = NSTextAlignmentNatural;
     [accountView addSubview:titleLabel];
-    //TextField
-    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2, unitHeight)];
+    //LastFM#
+    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight, width/2, unitHeight)];
+    contentLabel.backgroundColor = contentBackgroundColor;
+    contentLabel.text = @" LastFM Account";
+    contentLabel.textColor = contentTextColor;
+    contentLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:contentLabel];
+    //LastFM TextField
+    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2-right, unitHeight)];
+    textField.text = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+    textField.backgroundColor = contentBackgroundColor;
+    textField.textAlignment = NSTextAlignmentRight;
+    textField.delegate = self;
+    [textField addTarget:self action:@selector(changeLastFM:) forControlEvents:UIControlEventEditingDidEnd];
     [accountView addSubview:textField];
     
     /*Feed Clogging*/
@@ -170,6 +181,15 @@
     titleLabel.textColor = titleTextColor;
     titleLabel.textAlignment = NSTextAlignmentNatural;
     [accountView addSubview:titleLabel];
+    
+    /*Finally*/
+    currentHeight += item*unitHeight;
+    [scrollView setContentSize:CGSizeMake(scrollWidth, currentHeight)];
+
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, currentHeight)];
+    [scrollView addSubview:backgroundView];
+    [scrollView sendSubviewToBack:backgroundView];
 }
 
 #pragma mark - Textfield Method
@@ -230,7 +250,25 @@
         }
     }];
 }
-
+- (void)changeLastFM:(UITextField*)sender
+{
+    NSString *string = sender.text;
+    
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if(object){
+            [object setObject:string forKey:kClassUserLastFM];
+            [object saveEventually:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed LastFM account to %@. Please sign in again to see the update.", string] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                }else if(error){
+                    [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change LastFM account to %@, please try another one", string] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    sender.text = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+                }
+            }];
+        }
+    }];
+}
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{

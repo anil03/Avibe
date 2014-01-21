@@ -25,7 +25,7 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    _row = 8;
+    _row = 10;
     _column = 4;
     
     UICollectionViewFlowLayout *backgroundFlowLayout =[[UICollectionViewFlowLayout alloc] init];

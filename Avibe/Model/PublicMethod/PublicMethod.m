@@ -34,7 +34,7 @@
 {
     self = [super init];
     if (self) {
-        ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:50 andTerm:@"*"];
+        ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:100 andTerm:@"*"];
         _backgroundImages = [imageFetcher getAlbumImages];
     }
     return self;

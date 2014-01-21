@@ -19,7 +19,6 @@
 
 
 
-static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
 
 
 @interface SaveMusicEntries () <XMLParserDelegate, RDAPIRequestDelegate>
@@ -88,6 +87,12 @@ static NSString *kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.ge
 #pragma mark - LastFM Music
 - (void)getScrobbleMusic
 {
+    NSString *lastFMUsername = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+    
+    if(!lastFMUsername) return;
+    
+    NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", lastFMUsername];
+
     //Save Scrobbler Music from XML Parser
     NSURL *url = [NSURL URLWithString:kURLString];
     _parser = [[XMLParser alloc] initWithURL:url];

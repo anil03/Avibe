@@ -1,6 +1,6 @@
 //
 //  ShareViewController.m
-//  Beet
+//  Avibe
 //
 //  Created by Yuhua Mai on 12/7/13.
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
@@ -21,6 +21,10 @@
 #import "PublicMethod.h"
 #import "SampleMusic_iTune.h"
 
+/**
+ * Share view fetch all shared musics of all friends.
+ * Music can be shared within sample music view.
+ */
 
 @interface ShareViewController ()
 
