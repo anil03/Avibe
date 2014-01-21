@@ -159,6 +159,8 @@
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
 		4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */; };
 		4C8F74F2188DC8AE00B91651 /* UserViewControllerForFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */; };
+		4C8F74F5188DD8DA00B91651 /* FindFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */; };
+		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
@@ -374,6 +376,10 @@
 		4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShareViewController.m; sourceTree = "<group>"; };
 		4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewControllerForFriend.h; sourceTree = "<group>"; };
 		4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewControllerForFriend.m; sourceTree = "<group>"; };
+		4C8F74F3188DD8DA00B91651 /* FindFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendTableViewCell.h; sourceTree = "<group>"; };
+		4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendTableViewCell.m; sourceTree = "<group>"; };
+		4C8F74F6188DE90B00B91651 /* FindFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendButton.h; sourceTree = "<group>"; };
+		4C8F74F7188DE90B00B91651 /* FindFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendButton.m; sourceTree = "<group>"; };
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
@@ -487,6 +493,10 @@
 			children = (
 				4C231C7A188104F800B030F9 /* FriendsViewController.h */,
 				4C231C7B188104F800B030F9 /* FriendsViewController.m */,
+				4C8F74F6188DE90B00B91651 /* FindFriendButton.h */,
+				4C8F74F7188DE90B00B91651 /* FindFriendButton.m */,
+				4C8F74F3188DD8DA00B91651 /* FindFriendTableViewCell.h */,
+				4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */,
 				4C231C78188104F800B030F9 /* FindFriendsViewController.h */,
 				4C231C79188104F800B030F9 /* FindFriendsViewController.m */,
 			);
@@ -1247,6 +1257,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C8F74F5188DD8DA00B91651 /* FindFriendTableViewCell.m in Sources */,
 				4C231D15188104F800B030F9 /* YMGenericTableViewController.m in Sources */,
 				4C231D02188104F800B030F9 /* MMExampleRightSideDrawerViewController.m in Sources */,
 				4C231D01188104F800B030F9 /* MMExampleLeftSideDrawerViewController.m in Sources */,
@@ -1274,6 +1285,7 @@
 				4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */,
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
+				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
 				4C231DD61881E51300B030F9 /* SampleMusicViewController.m in Sources */,
 				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,

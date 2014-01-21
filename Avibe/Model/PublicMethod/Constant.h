@@ -10,6 +10,12 @@
 
 @interface Constant : NSObject
 
+#pragma mark - Class Contact
+extern NSString *const kClassContact;
+extern NSString *const kClassContactUsername;
+extern NSString *const kClassContactEmail;
+extern NSString *const kClassContactPhoneNumber;
+
 #pragma mark - Class User
 extern NSString *const kClassUser;
 extern NSString *const kClassUserUsername;
@@ -20,6 +26,7 @@ extern NSString *const kClassUserPhoneNumber;
 extern NSString *const kClassFriend;
 extern NSString *const kClassFriendFromUsername;
 extern NSString *const kClassFriendToUsername;
+extern NSString *const kClassFriendObjectId;
 
 #pragma mark - Class Share
 

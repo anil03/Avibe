@@ -10,6 +10,13 @@
 
 @implementation Constant
 
+
+#pragma mark - Class Contact
+NSString *const kClassContact = @"Contact";
+NSString *const kClassContactUsername = @"username_contact";
+NSString *const kClassContactEmail = @"email_contact";
+NSString *const kClassContactPhoneNumber = @"phoneNumber_contact";
+
 #pragma mark - Class User
 NSString *const kClassUser = @"User";
 NSString *const kClassUserUsername = @"username";
@@ -20,6 +27,7 @@ NSString *const kClassUserPhoneNumber = @"additional";
 NSString *const kClassFriend = @"Friend";
 NSString *const kClassFriendFromUsername = @"user";
 NSString *const kClassFriendToUsername = @"friend";
+NSString *const kClassFriendObjectId = @"objectId";
 
 
 #pragma mark - Class Share
