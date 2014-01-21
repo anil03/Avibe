@@ -8,7 +8,6 @@
 
 #import "SampleMusic_iTune.h"
 
-#define kBgQueue dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
 
 
 @interface SampleMusic_iTune()

@@ -27,7 +27,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *songs;
-
+@property (nonatomic, strong) NSMutableArray *albumImages;
 
 
 @end
@@ -62,9 +62,10 @@
         self.collectionView.backgroundColor = [UIColor blackColor];
         
         //BackgroundView
-        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
-        self.collectionView.backgroundView = backgroundView;
-
+        dispatch_async(kBgQueue, ^{
+            UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
+            self.collectionView.backgroundView = backgroundView;
+        });
     }
     
     return self;
@@ -114,12 +115,11 @@
     NSString *artist = [song objectForKey:@"artist"];
 //    NSString *album = [song objectForKey:@"album"];
     NSString *user = [song objectForKey:@"user"];
-    PFFile *albumImage = [song objectForKey:@"albumImage"];
+    
     
     cell.titleLabel.text = [NSString stringWithFormat:@"%@ share \"%@\" by %@", user, title, artist];
 
-    NSData *imageData = [albumImage getData];
-    UIImage *image = [[UIImage alloc] initWithData:imageData];
+    UIImage *image = [_albumImages objectAtIndex:indexPath.row];
     if (!image) {
         image = [UIImage imageNamed:@"default_album.png"];
     }
@@ -192,6 +192,18 @@
         [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 _PFObjects = objects;
+                _albumImages = [[NSMutableArray alloc] init];
+                for(PFObject *object in objects){
+                    PFFile *albumImage = [object objectForKey:@"albumImage"];
+                    NSData *imageData = [albumImage getData];
+                    UIImage *image = [[UIImage alloc] initWithData:imageData];
+                    if(!image){
+                        image = [UIImage imageNamed:@"default_album.png"];
+                    }
+                    [_albumImages addObject:image];
+                }
+                
+                
                 refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
                 [self.collectionView reloadData];
                 [refresh endRefreshing];
