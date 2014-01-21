@@ -15,9 +15,19 @@
 #import "PublicMethod.h"
 #import "BackgroundImageView.h"
 
-@interface SettingViewController () <UITextFieldDelegate>
+@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
+@property (nonatomic, strong) UIBarButtonItem * rightDrawerButton;
+
+/**
+ * Change textfield value
+ */
+@property (nonatomic, strong) UITextField *currentSender;
+@property (nonatomic, strong) UIAlertView *currentAlertView;
+@property (nonatomic, strong) NSString *currentValueToChange;
+@property (nonatomic, strong) NSString *currentKey;
+@property (nonatomic, strong) NSString *currentType;
 
 @end
 
@@ -89,7 +99,7 @@
     textField.backgroundColor = contentBackgroundColor;
     textField.textAlignment = NSTextAlignmentRight;
     textField.delegate = self;
-//    [textField addTarget:self action:@selector(changeUsername:) forControlEvents:UIControlEventEditingDidEnd];
+    [textField addTarget:self action:@selector(changeUsername:) forControlEvents:UIControlEventEditingDidEnd];
     [accountView addSubview:textField];
     
     //Email
@@ -193,81 +203,79 @@
 }
 
 #pragma mark - Textfield Method
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if ([alertView isEqual:_currentAlertView] && buttonIndex == 0) {
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+            if(object){
+                [object setObject:_currentValueToChange forKey:_currentKey];
+                [object saveEventually:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed %@ to %@.  Please sign in again to see the update.", _currentType, _currentValueToChange] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }else if(error){
+                        [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change %@ to %@, please try another one", _currentType,_currentValueToChange] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+                    }
+                }];
+            }
+        }];
+    }else if([alertView isEqual:_currentAlertView] && buttonIndex == 1){
+        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+    }
+    
+    //Restore DONE action
+    _rightDrawerButton.action = @selector(popCurrentView);
+}
+- (void)disableBarItem
+{
+    //Disable DONE to avoid killing current controller by mistake
+    _rightDrawerButton.action = nil;
+}
+- (void)changeTextField
+{
+    //Ignore if user not change and change to nil
+    if([_currentValueToChange length] == 0 || [_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
+        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+        return;
+    }
+    
+    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message: [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange] delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+    [_currentAlertView show];
+}
 - (void)changeUsername:(UITextField*)sender
 {
-    NSString *username = sender.text;
-    
-    PFQuery *query = [PFUser query];
-    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-        if(object){
-            [object setObject:username forKey:kClassUserUsername];
-            [object saveEventually:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed username to %@.  Please sign in again to see the update.", username] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }else if(error){
-                    [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change to %@, please try another one", username] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    sender.text = [[PFUser currentUser] username];
-                }
-            }];
-        }
-    }];
+    _currentValueToChange = sender.text;
+    _currentKey = kClassUserUsername;
+    _currentSender = sender;
+    _currentType = @"User Name";
+    [self changeTextField];
 }
 - (void)changeEmail:(UITextField*)sender
 {
-    NSString *email = sender.text;
-    
-    PFQuery *query = [PFUser query];
-    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-        if(object){
-            [object setObject:email forKey:kClassUserEmail];
-            [object saveEventually:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed email address to %@. Please sign in again to see the update.", email] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }else if(error){
-                    [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change email address to %@, please try another one", email] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    sender.text = [[PFUser currentUser] objectForKey:kClassUserEmail];
-                }
-            }];
-        }
-    }];
+    _currentValueToChange = sender.text;
+    _currentKey = kClassUserEmail;
+    _currentSender = sender;
+    _currentType = @"Email";
+    [self changeTextField];
 }
 - (void)changePhoneNumber:(UITextField*)sender
 {
-    NSString *phoneNumber = sender.text;
-    
-    PFQuery *query = [PFUser query];
-    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-        if(object){
-            [object setObject:phoneNumber forKey:kClassUserPhoneNumber];
-            [object saveEventually:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed phone number to %@. Please sign in again to see the update.", phoneNumber] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }else if(error){
-                    [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change phone number to %@, please try another one", phoneNumber] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    sender.text = [[PFUser currentUser] objectForKey:kClassUserPhoneNumber];
-                }
-            }];
-        }
-    }];
+    _currentValueToChange = sender.text;
+    _currentKey = kClassUserPhoneNumber;
+    _currentSender = sender;
+    _currentType = @"Phone Number";
+    [self changeTextField];
 }
 - (void)changeLastFM:(UITextField*)sender
 {
-    NSString *string = sender.text;
-    
-    PFQuery *query = [PFUser query];
-    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-        if(object){
-            [object setObject:string forKey:kClassUserLastFM];
-            [object saveEventually:^(BOOL succeeded, NSError *error) {
-                if (succeeded) {
-                    [[[UIAlertView alloc] initWithTitle: @"Success" message: [NSString stringWithFormat:@"You have changed LastFM account to %@. Please sign in again to see the update.", string] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                }else if(error){
-                    [[[UIAlertView alloc] initWithTitle: @"Error" message:[NSString stringWithFormat:@"You can't change LastFM account to %@, please try another one", string] delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    sender.text = [[PFUser currentUser] objectForKey:kClassUserLastFM];
-                }
-            }];
-        }
-    }];
+    _currentValueToChange = sender.text;
+    _currentKey = kClassUserLastFM;
+    _currentSender = sender;
+    _currentType = @"LastFM Account";
+    [self changeTextField];
 }
 
 #pragma mark - BarMenuButton
@@ -284,8 +292,8 @@
     UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
     self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;
     
-    UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
+    _rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:_rightDrawerButton];
 }
 
 
@@ -295,30 +303,26 @@
 }
 
 #pragma mark - UITextField Delegate
-
-- (void)setLastFMAccount:(NSString*)account{
-    [[Setting sharedSetting] setLastFMAccount:account];
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self disableBarItem];
 }
-
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     [textField resignFirstResponder];
+    //Restore DONE action
+    _rightDrawerButton.action = @selector(popCurrentView);
 }
-
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //hide the keyboard
-    if (textField == _lastFMAccountTextField) {
-        [self setLastFMAccount:textField.text];
-    }
-    
     [textField resignFirstResponder];
     
     //return NO or YES, it doesn't matter
     return YES;
 }
 
-#pragma mark - Touch
+
 - (void)hideKeyBoard
 {
     for (UIView *view1 in self.view.subviews){
