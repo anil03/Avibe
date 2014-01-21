@@ -40,6 +40,19 @@
     return self;
 }
 
+- (NSArray *)backgroundImages
+{
+    NSMutableArray *shuffleBackGroundImages = [[NSMutableArray alloc] initWithArray:_backgroundImages];
+    NSUInteger count = [shuffleBackGroundImages count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        // Select a random element between i and end of array to swap with.
+        NSInteger nElements = count - i;
+        NSInteger n = arc4random_uniform(nElements) + i;
+        [shuffleBackGroundImages exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+    return shuffleBackGroundImages;
+}
+
 - (NSMutableAttributedString*)refreshBeginString
 {
     NSString *lastUpdated = @"Pull to Refresh";
