@@ -444,6 +444,7 @@
 		4C231C4B188104F800B030F9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4C231C8D188104F800B030F9 /* BackgroundView */,
 				4C231CA3188104F800B030F9 /* Welcome */,
 				4C231C9B188104F800B030F9 /* SignInAndSignUp */,
 				4C23F18F1888A49C00D2075A /* Main */,
@@ -539,7 +540,6 @@
 			isa = PBXGroup;
 			children = (
 				4C231C7C188104F800B030F9 /* LiveFeedCollectionView */,
-				4C231C8D188104F800B030F9 /* BackgroundView */,
 				4C231C8E188104F800B030F9 /* LiveFeedViewController.h */,
 				4C231C8F188104F800B030F9 /* LiveFeedViewController.m */,
 			);
@@ -552,7 +552,8 @@
 				4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */,
 				4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */,
 			);
-			path = BackgroundView;
+			name = BackgroundView;
+			path = LiveFeed/BackgroundView;
 			sourceTree = "<group>";
 		};
 		4C231C90188104F800B030F9 /* Setting */ = {

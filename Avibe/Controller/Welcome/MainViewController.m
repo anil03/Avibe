@@ -25,7 +25,10 @@
 
 @interface MainViewController ()
 
-//@property (weak, nonatomic) UIViewController *centerViewController;
+@property (nonatomic, strong) LiveFeedViewController *liveFeedViewController;
+@property (nonatomic, strong) SideMenuViewController *leftSideDrawerViewController;
+@property (nonatomic, strong) UINavigationController *centerNavigationController;
+@property (nonatomic, strong) UINavigationController *leftSideNavController;
 
 @end
 
@@ -35,26 +38,24 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-//    UIViewController *centerViewController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"TableViewController"];
-    LiveFeedViewController *centerViewController = [[LiveFeedViewController alloc] init];
-    UINavigationController * navigationController = [[MMNavigationController alloc] initWithRootViewController:centerViewController];
-//    [navigationController setRestorationIdentifier:@"MMExampleCenterNavigationControllerRestorationKey"];
+    //Live Feed
+    _liveFeedViewController = [[LiveFeedViewController alloc] init]; //Should before initWithDefaultCenterView
+    _centerNavigationController = [[MMNavigationController alloc] initWithRootViewController:_liveFeedViewController];
+
+    //Side Menu
+    _leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:_liveFeedViewController];
+    _leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:_leftSideDrawerViewController];
+    [_leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
     
-    SideMenuViewController * leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:centerViewController];
-    centerViewController.delegate = leftSideDrawerViewController;
+    
+    _liveFeedViewController.delegate = _leftSideDrawerViewController; //Should after _leftSideDrawerViewController
 
     
-    
-//    if(OSVersionIsAtLeastiOS7()){
-        UINavigationController * leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:leftSideDrawerViewController];
-		[leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
-        
-        self = [super initWithCenterViewController:navigationController
-                                 leftDrawerViewController:leftSideNavController];
-        [self setShowsShadow:NO];
-//    }
+    self = [super initWithCenterViewController:_centerNavigationController
+                             leftDrawerViewController:_leftSideNavController];
+    [self setShowsShadow:NO];
 
-    
+    //Set Side Menu Parameters
     [self setRestorationIdentifier:@"MMDrawer"];
     [self setMaximumLeftDrawerWidth:160.0];
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];

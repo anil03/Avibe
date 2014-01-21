@@ -73,7 +73,7 @@
 {
     UICollectionViewCell *cell=[collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier" forIndexPath:indexPath];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:_images[indexPath.row]];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:_images[indexPath.row%[_images count]]];
 //    imageView.alpha = 0.4;
     cell.backgroundView = imageView;
     

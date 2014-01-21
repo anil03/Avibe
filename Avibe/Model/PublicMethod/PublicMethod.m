@@ -34,11 +34,23 @@
 {
     self = [super init];
     if (self) {
-        ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:100 andTerm:@"*"];
-        _backgroundImages = [imageFetcher getAlbumImages];
+        _backgroundImages = [[NSMutableArray alloc] init];
+
+        NSArray *artistArray = @[@"Justin+Timberlake", @"Katy+Perry", @"Pitbull", @"OneRepublic", @"Eminem", @"One+Direction", @"Passenger", @"Lorde", @"Avicii", @"Imagine+Dragons", @"Beyonce", @"Miley+Cyrus", @"Rihanna", @"Lady+Gaga", @"Calvin+Harris", @"Rihanna", @"Daft+Punk", @"Bastille", @"Drake", @"Jason+Derulo", @"Lana+Del+Rey", @"Martin+Garrix", @"Britney+Spears", @"Robin+Thicke", @"Macklemore", @"Ryan+Lewis", @"Michael+Buble", @"Stromae", @"Arctic+Moneys", @"Pharrell", @"Justin+Bieber", @"John+Newman", @"Demi+Lovato", @"Ed+Sheeran", @"Kid+Ink", @"Lily+Allen", @"Adele", @"Beatles", @"Killers", @"Leona", @"Greenday", @"Ariana+Grande", @"Westlife"];
+        for(NSString *artist in artistArray){
+            [self searchForImages:1 andTerm:artist];
+        }
     }
     return self;
 }
+- (void)searchForImages:(NSInteger)limit andTerm:(NSString*)term
+{
+    ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:limit andTerm:term];
+    for(UIImage *image in [imageFetcher getAlbumImages]){
+        [_backgroundImages addObject:image];
+    }
+}
+
 
 - (NSArray *)backgroundImages
 {

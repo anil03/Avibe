@@ -29,6 +29,7 @@
 @property (nonatomic, strong) MyLogInViewController *logInViewController;
 @property (nonatomic, strong) MySignUpViewController *signUpViewController;
 
+@property (nonatomic, strong) MainViewController *mainViewController;
 
 @end
 
@@ -143,24 +144,17 @@
 
 - (void) SwipeRecognizer:(UISwipeGestureRecognizer *)sender {
     if ( sender.direction == UISwipeGestureRecognizerDirectionRight){
-//        NSLog(@" *** SWIPE LEFT ***");
-        
         currentImageIndex--;
         if (currentImageIndex < 0) {
             currentImageIndex = 0;
         }
     }
     if ( sender.direction == UISwipeGestureRecognizerDirectionLeft ){
-//        NSLog(@" *** SWIPE RIGHT ***");
-        
         currentImageIndex++;
         if (currentImageIndex >= numberOfImage) {
             currentImageIndex = numberOfImage-1;
         }
     }
-    
-//    NSLog(@"%d", currentImageIndex);
-    
     _pageControl.currentPage = currentImageIndex;
     _imageView.image = [UIImage imageNamed:[NSString stringWithFormat: @"welcome%d.png", currentImageIndex]];
 }
@@ -180,11 +174,10 @@
 #pragma mark - Handle SignIn & SignUp evenet
 - (void)finishVerification
 {
-    //    [self performSegueWithIdentifier:@"MainViewSegue" sender:nil];
     [self.navigationController setNavigationBarHidden:NO];
     
-    MainViewController *mainViewController = [[MainViewController alloc] initWithCoder:nil];
-    [self.navigationController pushViewController:mainViewController animated:YES];
+    _mainViewController = [[MainViewController alloc] initWithCoder:nil];
+    [self.navigationController pushViewController:_mainViewController animated:YES];
 }
 
 - (void)failToLogIn

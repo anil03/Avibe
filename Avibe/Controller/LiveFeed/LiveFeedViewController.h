@@ -19,6 +19,6 @@
 
 @interface LiveFeedViewController : UICollectionViewController
 
-@property (nonatomic, weak) id<LiveFeedViewControllerDelegate> delegate;
+@property (nonatomic, weak) UIViewController *delegate;
 
 @end

@@ -102,8 +102,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         self.collectionView.dataSource=self;
         
         //BackgroundView
-        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
-        self.collectionView.backgroundView = backgroundView;
+        dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+        dispatch_apply(1, queue, ^(size_t i) {
+            UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.collectionView.frame];
+            self.collectionView.backgroundView = backgroundView;
+        });
+        
     }
     
     return self;
@@ -115,12 +119,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self setupBarMenuButton];
     
     //Setup Scrobbler URL
-    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
-        if ([self.delegate getLastFMAccount] == nil) {
-            return;
-        }
-//        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
-    }
+//    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
+//        if ([self.delegate getLastFMAccount] == nil) {
+//            return;
+//        }
+////        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
+//    }
 }
 
 - (void)viewDidLoad

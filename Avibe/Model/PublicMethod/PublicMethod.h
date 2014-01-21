@@ -12,7 +12,7 @@
 
 @interface PublicMethod : NSObject
 
-@property (nonatomic, strong) NSArray *backgroundImages;
+@property (nonatomic, strong) NSMutableArray *backgroundImages;
 
 + (PublicMethod *)sharedInstance;
 
