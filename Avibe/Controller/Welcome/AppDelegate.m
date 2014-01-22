@@ -55,11 +55,40 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     self.window.rootViewController = navigationController;
     
-   
+
+    
+    
+    /*Notification*/
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    MPMusicPlayerController *player = [MPMusicPlayerController iPodMusicPlayer];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(nowPlayingItemChanged:)
+                               name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                             object:player];
+    [player beginGeneratingPlaybackNotifications];
     
     return YES;
 }
 
+
+-(void) nowPlayingItemChanged:(NSNotification *)notification {
+    MPMusicPlayerController *player = (MPMusicPlayerController *)notification.object;
+    
+    MPMediaItem *song = [player nowPlayingItem];
+    
+    if (song) {
+        NSString *title = [song valueForProperty:MPMediaItemPropertyTitle];
+        NSString *album = [song valueForProperty:MPMediaItemPropertyAlbumTitle];
+        NSString *artist = [song valueForProperty:MPMediaItemPropertyArtist];
+        NSString *playCount = [song valueForProperty:MPMediaItemPropertyPlayCount];
+        
+        NSLog(@"title: %@", title);
+        NSLog(@"album: %@", album);
+        NSLog(@"artist: %@", artist);
+        NSLog(@"playCount: %@", playCount);
+    }
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
