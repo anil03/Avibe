@@ -17,11 +17,12 @@
 //iPod
 #import <MediaPlayer/MediaPlayer.h>
 
+//Facebook
+#import "FaceBookListenedMusic.h"
 
 
 
-
-@interface SaveMusicEntries () <XMLParserDelegate, RDAPIRequestDelegate>
+@interface SaveMusicEntries () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
 
 @property (nonatomic, strong) XMLParser *parser;
 
@@ -61,6 +62,7 @@
         fetechObjects = objects;
         [self getIPodMusic];
         [self getRdioMusic];
+        [self getFaceBookMusic];
         [self getSpotifyMusic];
         [self getScrobbleMusic];
     }];
@@ -111,6 +113,19 @@
     //Get rid of duplicated data then save
     FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
     [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM" andFetchObjects:fetechObjects];
+}
+
+#pragma mark - Facebook with Spotify Music
+- (void)getFaceBookMusic
+{
+    FaceBookListenedMusic *listenedMusic = [[FaceBookListenedMusic alloc] init];
+    listenedMusic.delegate = self;
+}
+- (void)finishGetListenedMusic:(NSMutableArray *)musicArray
+{
+    //Get rid of duplicated data then save
+    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"Facebook" andFetchObjects:fetechObjects];
 }
 
 #pragma mark - Spotify Music
