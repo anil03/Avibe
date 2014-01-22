@@ -66,7 +66,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *PFObjects;
-
+@property (nonatomic, strong) SaveMusicEntries *saveMusicEntries;
 @end
 
 @implementation LiveFeedViewController
@@ -382,7 +382,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     // custom refresh logic would be placed here...
     [_spinner startAnimating];
     
-    [[[SaveMusicEntries alloc] init] saveMusic];
+    _saveMusicEntries = [[SaveMusicEntries alloc] init];
+    [_saveMusicEntries saveMusic];
     
     [self fetchData:self.refreshControl];
 //    [self updateSongInParse];

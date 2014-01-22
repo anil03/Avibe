@@ -33,6 +33,9 @@
 @property (readonly) Rdio *rdio;
 @property NSString *rdio_userkey;
 
+//Facebook
+@property (nonatomic, strong) FaceBookListenedMusic *listenedMusic;
+
 @end
 
 @implementation SaveMusicEntries
@@ -118,8 +121,8 @@
 #pragma mark - Facebook with Spotify Music
 - (void)getFaceBookMusic
 {
-    FaceBookListenedMusic *listenedMusic = [[FaceBookListenedMusic alloc] init];
-    listenedMusic.delegate = self;
+    _listenedMusic = [[FaceBookListenedMusic alloc] init];
+    _listenedMusic.delegate = self;
 }
 - (void)finishGetListenedMusic:(NSMutableArray *)musicArray
 {
