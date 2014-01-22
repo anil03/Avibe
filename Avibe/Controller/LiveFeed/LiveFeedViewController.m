@@ -338,7 +338,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }
         
         PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
-        songQuery.limit = 20;
+        songQuery.limit = 100;
         [songQuery whereKey:kClassSongUsername containedIn:friendArray];
         [songQuery orderByDescending:@"updateAt"]; //Get latest song
         [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

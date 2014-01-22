@@ -54,42 +54,68 @@
     [super viewDidLoad];
     
     //View Parameters
+    UIColor *titleBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
+    UIColor *titleTextColor = [UIColor whiteColor];
+    UIColor *componentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.3];
+    UIColor *componentTextColor = [UIColor whiteColor];
+    UIColor *componentTextHighlightColor = [UIColor grayColor];
+    
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
     float barHeight = 80.0f;
     float currentHeight = 0.0f;
     float buttonWidth = width;
     float buttonHeight = 100.0f;
+    float unitHeight = 30.0f;
+    int item = 15;
+    UIView *accountView;
+    UILabel *titleLabel;
+    UILabel *contentLabel;
+    UITextField *textField;
 
     //Set up View
     self.view.backgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
-    UIColor *componentBackgroundColor = [[Setting sharedSetting] sharedBackgroundColor];
-    UIColor *componentTextColor = [UIColor whiteColor];
-    UIColor *componentTextHighlightColor = [UIColor grayColor];
+
 
     //BackgroundView
     UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
     [self.view addSubview:backgroundView];
     [self.view sendSubviewToBack:backgroundView];
     
-    //Recent History
+
+    /*AccountView*/
+    item = 3;
     currentHeight += barHeight;
-    UIButton *recentHistoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
+    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
+    accountView.backgroundColor = componentBackgroundColor;
+    [self.view addSubview:accountView];
+    
+    //Title
+    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
+    titleLabel.backgroundColor = titleBackgroundColor;
+    titleLabel.text = @" Profile";
+    titleLabel.textColor = titleTextColor;
+    titleLabel.textAlignment = NSTextAlignmentNatural;
+    [accountView addSubview:titleLabel];
+
+    
+    //Recent History Button
+    UIButton *recentHistoryButton = [[UIButton alloc] initWithFrame:CGRectMake(0, unitHeight, buttonWidth, unitHeight)];
     [recentHistoryButton setTitle:@"Recent History" forState:UIControlStateNormal];
     [recentHistoryButton setTitleColor:componentTextColor forState:UIControlStateNormal];
     [recentHistoryButton setTitleColor:componentTextHighlightColor forState:UIControlStateHighlighted];
     recentHistoryButton.backgroundColor = componentBackgroundColor;
     [recentHistoryButton addTarget:self action:@selector(recentHistoryButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:recentHistoryButton];
+    [accountView addSubview:recentHistoryButton];
     
-    currentHeight += buttonHeight;
-    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
+    //Share Button
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(0, unitHeight*2, buttonWidth, unitHeight)];
     [shareButton setTitle:@"Share" forState:UIControlStateNormal];
     [shareButton setTitleColor:componentTextColor forState:UIControlStateNormal];
     [shareButton setTitleColor:componentTextHighlightColor forState:UIControlStateHighlighted];
     shareButton.backgroundColor = componentBackgroundColor;
     [shareButton addTarget:self action:@selector(shareButtonPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:shareButton];
+    [accountView addSubview:shareButton];
     
     
     //Delegate
