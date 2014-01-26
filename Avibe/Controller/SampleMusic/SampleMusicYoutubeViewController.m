@@ -79,8 +79,11 @@
     
     if (self) {
         _songTitle = [dictionary objectForKey:@"title"];
+        _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
         _songAlbum = [dictionary objectForKey:@"album"];
+        _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
         _songArtist = [dictionary objectForKey:@"artist"];
+        _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
         
         //Youtube
         // ...
@@ -99,6 +102,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.view.userInteractionEnabled = NO;
 
     [self setupNavigationBar];
     
@@ -312,6 +317,13 @@
 
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
+    //Enable User interaction
+    self.view.userInteractionEnabled = YES;
+    
+    //Update origin song
+    _songTitle = [songInfo objectForKey:@"title"];
+    _songAlbum = [songInfo objectForKey:@"album"];
+    _songArtist = [songInfo objectForKey:@"artist"];
     
     //Set Song Title
     _titleLabel.text = [songInfo objectForKey:@"title"];
@@ -351,6 +363,13 @@
         NSLog(@"Audio Error!");
     }
 
+}
+- (void)finishFetchDataWithError:(NSError *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    //Enable User interaction
+    self.view.userInteractionEnabled = YES;
 }
 
 - (void)playOrPause {
@@ -407,7 +426,12 @@
         _albumImage = [UIImage imageNamed:@"default_album.png"];
     }
     NSData *imageData = UIImageJPEGRepresentation(_albumImage, 0.05f);
-    PFFile *imageFile = [PFFile fileWithName:_songAlbum data:imageData];
+    /*ImageFile Name should be Error code indicating an invalid channel name. A channel name is either an empty string (the broadcast channel) or contains only a-zA-Z0-9_ characters and starts with a letter.*/
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM_d_h_mm_a"];
+    NSString *lastUpdated = [formatter stringFromDate:[NSDate date]];
+    NSString *imageFileName = [NSString stringWithFormat:@"%@_%@", [[PFUser currentUser] username],lastUpdated];
+    PFFile *imageFile = [PFFile fileWithName:imageFileName data:imageData];
     [songRecord setObject:imageFile forKey:@"albumImage"];
     
     _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];

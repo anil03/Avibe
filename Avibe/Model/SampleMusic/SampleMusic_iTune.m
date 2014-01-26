@@ -51,8 +51,11 @@
 {
     //Can't find the song
     if (!responseData) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(finishFetchDataWithError:)]) {
+            [self.delegate finishFetchDataWithError:nil];
+        }
         return;
     }
     
@@ -68,8 +71,9 @@
     
     NSArray* results = [json objectForKey:@"results"];
     if([results count] == 0){
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(finishFetchDataWithError:)]) {
+            [self.delegate finishFetchDataWithError:nil];
+        }
         return;
     }
     

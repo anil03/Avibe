@@ -17,6 +17,8 @@
 @interface ShareViewController : UICollectionViewController
 
 @property (nonatomic, strong) NSArray *PFObjects;
+@property (nonatomic, strong) NSMutableArray *albumImages;
+
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property int column;

@@ -55,6 +55,18 @@
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
             self.PFObjects = objects;
+            
+            self.albumImages = [[NSMutableArray alloc] init];
+            for(PFObject *object in objects){
+                PFFile *albumImage = [object objectForKey:@"albumImage"];
+                NSData *imageData = [albumImage getData];
+                UIImage *image = [[UIImage alloc] initWithData:imageData];
+                if(!image){
+                    image = [UIImage imageNamed:@"default_album.png"];
+                }
+                [self.albumImages addObject:image];
+            }
+            
             refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [self.collectionView reloadData];
             [refresh endRefreshing];

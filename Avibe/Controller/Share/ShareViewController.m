@@ -31,7 +31,6 @@
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *songs;
-@property (nonatomic, strong) NSMutableArray *albumImages;
 
 
 @end
