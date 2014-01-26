@@ -42,7 +42,8 @@
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
     //Background
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalMinimum];
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:60.0];
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //Set up Welcome View depending on different device
     UIViewController *welcomeController = [[WelcomeViewController alloc] init];
@@ -100,6 +101,16 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    /*Notification*/
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    MPMusicPlayerController *player = [MPMusicPlayerController iPodMusicPlayer];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(nowPlayingItemChanged:)
+                               name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification
+                             object:player];
+    [player beginGeneratingPlaybackNotifications];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -228,38 +239,52 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     
+    //Increase Badge Number
+    [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    
     //Tutorial Chapter17 - Adding background fetching
     //Run your app in simulator. In XCode Menu, Go to “Debug” => “Simulate Background Fetch”.
     NSLog(@"########### Received Background Fetch ###########");
     //Download  the Content .
     
+    //Test Background Fetch in Parse
+    NSDateFormatter *formatter;
+    NSString        *dateString;
+    formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+    dateString = [formatter stringFromDate:[NSDate date]];
     
+    PFObject *testObject = [PFObject objectWithClassName:kClassFriend];
+    [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
+    [testObject setObject:@"test" forKey:kClassFriendToUsername];
+    [testObject save];
+    completionHandler(UIBackgroundFetchResultNewData);
     
-    //iPod Music
-    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    if (currentPlayingSong){
-        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
-        title = [title stringByAppendingString:@"Background!"];
-        
-        [songRecord setObject:title  forKey:@"title"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-        
-        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Save In Background Mode successfully.");
-                
-                //Tell the system that you ar done.
-                completionHandler(UIBackgroundFetchResultNewData);
-            }else{
-                completionHandler(UIBackgroundFetchResultFailed);
-            }
-        }];
-    }else{
-        completionHandler(UIBackgroundFetchResultNoData);
-    }
+//    //iPod Music
+//    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+//    if (currentPlayingSong){
+//        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+//        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
+//        title = [title stringByAppendingString:@"Background!"];
+//        
+//        [songRecord setObject:title  forKey:@"title"];
+//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
+//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+//        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+//        
+//        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//            if (succeeded) {
+//                NSLog(@"Save In Background Mode successfully.");
+//                
+//                //Tell the system that you ar done.
+//                completionHandler(UIBackgroundFetchResultNewData);
+//            }else{
+//                completionHandler(UIBackgroundFetchResultFailed);
+//            }
+//        }];
+//    }else{
+//        completionHandler(UIBackgroundFetchResultNoData);
+//    }
     
     NSLog(@"########### End Background Fetch ###########");
     

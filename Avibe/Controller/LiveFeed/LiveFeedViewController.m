@@ -296,10 +296,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             break;
         }
         case 2:{
+            [self openiTuneStore:cell.label.text];
             NSLog(@"Album");
             break;
         }
         case 3:{
+            [self openiTuneStore:cell.label.text];
             NSLog(@"Artist");
             break;
         }
@@ -315,6 +317,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 //    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
     
 
+}
+
+- (void)openiTuneStore:(NSString*)searchInfo
+{
+    
 }
 
 #pragma mark - SampleMusicSource Delegate
