@@ -31,8 +31,8 @@
 {
     NSString *title = [searchInfo objectForKey:@"title"]  ;
     NSString *searchTitle = [title stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSURL *searchURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=10", searchTitle]];
-    
+    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=1", searchTitle];
+    NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
     //Download Music
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:

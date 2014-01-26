@@ -321,7 +321,38 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 - (void)openiTuneStore:(NSString*)searchInfo
 {
+    NSString *searchTitle = [searchInfo stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=1", searchTitle];
+    NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    //Download Music
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchURL];
+        [self performSelectorOnMainThread:@selector(fetchedData:)
+                               withObject:data waitUntilDone:YES];
+    });
+}
+- (void)fetchedData:(NSData *)responseData
+{
+    //Can't find the song
+    if (!responseData) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:responseData
+                          
+                          options:kNilOptions
+                          error:&error];
+    NSArray* results = [json objectForKey:@"results"];
+    NSLog(@"results: %@", results);
+    
+    NSDictionary* result = [results objectAtIndex:0];
+    NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"collectionViewUrl"]];
+  
 }
 
 #pragma mark - SampleMusicSource Delegate

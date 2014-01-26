@@ -258,33 +258,33 @@
     [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
     [testObject setObject:@"test" forKey:kClassFriendToUsername];
     [testObject save];
-    completionHandler(UIBackgroundFetchResultNewData);
+//    completionHandler(UIBackgroundFetchResultNewData);
     
-//    //iPod Music
-//    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-//    if (currentPlayingSong){
-//        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-//        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
-//        title = [title stringByAppendingString:@"Background!"];
-//        
-//        [songRecord setObject:title  forKey:@"title"];
-//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-//        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-//        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-//        
-//        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            if (succeeded) {
-//                NSLog(@"Save In Background Mode successfully.");
-//                
-//                //Tell the system that you ar done.
-//                completionHandler(UIBackgroundFetchResultNewData);
-//            }else{
-//                completionHandler(UIBackgroundFetchResultFailed);
-//            }
-//        }];
-//    }else{
-//        completionHandler(UIBackgroundFetchResultNoData);
-//    }
+    //iPod Music
+    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+    if (currentPlayingSong){
+        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
+        title = [title stringByAppendingString:@"Background!"];
+        
+        [songRecord setObject:title  forKey:@"title"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
+        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+        
+        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Save In Background Mode successfully.");
+                
+                //Tell the system that you ar done.
+                completionHandler(UIBackgroundFetchResultNewData);
+            }else{
+                completionHandler(UIBackgroundFetchResultFailed);
+            }
+        }];
+    }else{
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
     
     NSLog(@"########### End Background Fetch ###########");
     
