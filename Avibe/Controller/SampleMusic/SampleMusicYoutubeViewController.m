@@ -86,7 +86,7 @@
         // ...
         
         //iTune
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle] forKeys:@[@"title"]];
+        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
         _samepleMusic = [[SampleMusic_iTune alloc] init];
         _samepleMusic.delegate = self;
         [_samepleMusic startSearch:dict];

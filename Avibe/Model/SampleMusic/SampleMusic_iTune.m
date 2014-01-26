@@ -29,10 +29,14 @@
 
 - (void)startSearch:(NSDictionary*)searchInfo
 {
-    NSString *title = [searchInfo objectForKey:@"title"]  ;
-    NSString *searchTitle = [title stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=1", searchTitle];
+    NSString *title = [searchInfo objectForKey:@"title"];
+    NSString *artist = [searchInfo objectForKey:@"artist"];
+    NSString *string = [NSString stringWithFormat:@"%@+%@", title, artist];
+    
+    NSString *searchTitle = [string stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *stringURL = [NSString stringWithFormat:@"https://itunes.apple.com/search?term=%@&limit=5", searchTitle];
     NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    
     //Download Music
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:
@@ -61,7 +65,13 @@
                           options:kNilOptions
                           error:&error];
     
+    
     NSArray* results = [json objectForKey:@"results"];
+    if([results count] == 0){
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     
     NSLog(@"results: %@", results);
     
