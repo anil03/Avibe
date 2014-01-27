@@ -388,9 +388,9 @@
 {
     
     int minPlayed = self.player.currentTime/60;
-    int secPlayed = ceil(self.player.currentTime-minPlayed*60);
+    int secPlayed = round(self.player.currentTime-minPlayed*60);
     int minLeft = (self.player.duration-self.player.currentTime)/60;
-    int secLeft = ceil((self.player.duration-self.player.currentTime)-minLeft*60);
+    int secLeft = round((self.player.duration-self.player.currentTime)-minLeft*60);
     
     _playedTime.text = [NSString stringWithFormat:@"%d:%02d", minPlayed, secPlayed];
     _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
@@ -432,7 +432,7 @@
     NSData *imageData = UIImageJPEGRepresentation(_albumImage, 0.05f);
     /*ImageFile Name should be Error code indicating an invalid channel name. A channel name is either an empty string (the broadcast channel) or contains only a-zA-Z0-9_ characters and starts with a letter.*/
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MMM_d_h_mm_a"];
+    [formatter setDateFormat:@"yyyy_MM_dd_h_mm"];
     NSString *lastUpdated = [formatter stringFromDate:[NSDate date]];
     NSString *imageFileName = [NSString stringWithFormat:@"%@_%@", [[PFUser currentUser] username],lastUpdated];
     PFFile *imageFile = [PFFile fileWithName:imageFileName data:imageData];
