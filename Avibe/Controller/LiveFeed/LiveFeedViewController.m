@@ -356,13 +356,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     NSString *collectionString = [result objectForKey:@"collectionViewUrl"];
     
     /*Remove https://itunes.apple.com/us/album/1901/id315002203?i=315002383&uo=4 & sign*/
-    for(int i = [collectionString length]-1; i >= 0 ; i--){
-        char c = [collectionString characterAtIndex:i];
-        if(c=='&'){
-            collectionString = [collectionString substringToIndex:i];
-            break;
-        }
-    }
+//    for(int i = [collectionString length]-1; i >= 0 ; i--){
+//        char c = [collectionString characterAtIndex:i];
+//        if(c=='&'){
+//            collectionString = [collectionString substringToIndex:i];
+//            break;
+//        }
+//    }
     
     NSURL* previewUrl = [NSURL URLWithString:collectionString];
     NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];

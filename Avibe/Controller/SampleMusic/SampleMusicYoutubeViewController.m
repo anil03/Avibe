@@ -403,12 +403,16 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
     [self.progressTimer invalidate];
-    [self leftDrawerButtonPress:nil];
+    _playButton.selected = !_playButton.selected;
+    
+    //Back to Previous View
+//    [self leftDrawerButtonPress:nil];
 }
 
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
 {
     [self.progressTimer invalidate];
+    _playButton.selected = !_playButton.selected;
 }
 
 #pragma mark - Button Method
