@@ -66,7 +66,7 @@ static NSString *const kURLString = @"https://itunes.apple.com/search?";
         NSDictionary* result = [results objectAtIndex:i];
         //Change image size to speed up download.
         //artworkUrl100, artworkUrl60, artworkUrl30
-        NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"artworkUrl60"]];
+        NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"artworkUrl100"]];
         NSData *imageData = [NSData dataWithContentsOfURL:previewUrl];
         UIImage *image = [UIImage imageWithData:imageData];
         [imageURLs addObject:image];
