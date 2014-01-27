@@ -51,7 +51,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 
 
-@interface LiveFeedViewController() <SampleMusicSourceViewDelegate>
+@interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate>
 {
     int columnNumber;
 }
@@ -334,10 +334,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 - (void)fetchedData:(NSData *)responseData
 {
-    //Can't find the song
     if (!responseData) {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        [self fetchedDataWithError];
         return;
     }
     
@@ -348,12 +346,51 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
                           options:kNilOptions
                           error:&error];
     NSArray* results = [json objectForKey:@"results"];
+    if([results count] == 0){
+        [self fetchedDataWithError];
+        return;
+    }
     NSLog(@"results: %@", results);
     
     NSDictionary* result = [results objectAtIndex:0];
-    NSURL* previewUrl = [NSURL URLWithString:[result objectForKey:@"collectionViewUrl"]];
+    NSString *collectionString = [result objectForKey:@"collectionViewUrl"];
+    
+    /*Remove https://itunes.apple.com/us/album/1901/id315002203?i=315002383&uo=4 & sign*/
+    for(int i = [collectionString length]-1; i >= 0 ; i--){
+        char c = [collectionString characterAtIndex:i];
+        if(c=='&'){
+            collectionString = [collectionString substringToIndex:i];
+            break;
+        }
+    }
+    
+    NSURL* previewUrl = [NSURL URLWithString:collectionString];
+    NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];
+    
+    //Switch Webview
+    [[UIApplication sharedApplication] openURL:previewUrl];
+    
+//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.collectionView.frame];
+//    webView.delegate = self;
+//    [webView loadRequest:request];
+//    webView.hidden = NO;
+//    [self.collectionView addSubview:webView];
   
 }
+- (void)fetchedDataWithError
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
+//#pragma mark - UIWebView Delegate
+//- (void)webViewDidStartLoad:(UIWebView *)webView
+//{
+//    
+//}
+//- (void)webViewDidFinishLoad:(UIWebView *)webView
+//{
+//}
 
 #pragma mark - SampleMusicSource Delegate
 - (void)listenSampleMusic:(NSString *)source
