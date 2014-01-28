@@ -121,6 +121,11 @@
 		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
+		4CC5271818984A2300562CE1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271718984A2300562CE1 /* CoreAudio.framework */; };
+		4CC5271918984A4500562CE1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
+		4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271A18984A4F00562CE1 /* libstdc++.dylib */; };
+		4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */; };
+		4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
 		4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */; };
@@ -300,6 +305,9 @@
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4CC5271718984A2300562CE1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		4CC5271A18984A4F00562CE1 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
 		4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusic_iTune.h; sourceTree = "<group>"; };
 		4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic_iTune.m; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
@@ -321,6 +329,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */,
+				4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */,
+				4CC5271918984A4500562CE1 /* Security.framework in Frameworks */,
+				4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */,
+				4CC5271818984A2300562CE1 /* CoreAudio.framework in Frameworks */,
 				4C231DF618831A4700B030F9 /* StoreKit.framework in Frameworks */,
 				4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */,
 				4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */,
@@ -328,7 +341,6 @@
 				4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */,
 				4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */,
 				4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */,
-				4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */,
 				4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */,
 				4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */,
 				4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */,
@@ -793,6 +805,9 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */,
+				4CC5271A18984A4F00562CE1 /* libstdc++.dylib */,
+				4CC5271718984A2300562CE1 /* CoreAudio.framework */,
 				4C231DF518831A4700B030F9 /* StoreKit.framework */,
 				4C231DF1188316AC00B030F9 /* AudioToolbox.framework */,
 				4C3179C91844107800F7D41B /* AVFoundation.framework */,
@@ -992,6 +1007,7 @@
 			files = (
 				4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */,
 				4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */,
+				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4C23F185188612FB00D2075A /* default_album.png in Resources */,
@@ -1267,31 +1283,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"${SRCROOT}/Framework",
+					"${SRCROOT}/Framework/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/MMDrawerController\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "${PROJECT_NAME}/Avibe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = Avibe;
 				PROVISIONING_PROFILE = "";
@@ -1310,31 +1311,16 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"${SRCROOT}/Framework",
+					"${SRCROOT}/Framework/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					"\"${PODS_ROOT}/Headers\"",
-					"\"${PODS_ROOT}/Headers/AFNetworking\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK\"",
-					"\"${PODS_ROOT}/Headers/Facebook-iOS-SDK/FacebookSDK\"",
-					"\"${PODS_ROOT}/Headers/MMDrawerController\"",
-				);
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "${PROJECT_NAME}/Avibe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = (
-					"-framework",
-					CoreGraphics,
-					"-framework",
-					MobileCoreServices,
-					"-framework",
-					QuartzCore,
-					"-framework",
-					Security,
-					"-framework",
-					SystemConfiguration,
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = Avibe;
 				PROVISIONING_PROFILE = "";
