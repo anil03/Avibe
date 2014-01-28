@@ -24,6 +24,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //Check first run user
+    static NSString* const hasRunAppOnceKey = @"hasRunAppOnceKey";
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:hasRunAppOnceKey] == NO)
+    {
+        [defaults setBool:YES forKey:hasRunAppOnceKey];
+    }
+    
     // Override point for customization after application launch.
     //    NSManagedObjectContext *context = [self managedObjectContext];
     

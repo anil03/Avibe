@@ -36,18 +36,43 @@
     if (self) {
         _backgroundImages = [[NSMutableArray alloc] init];
 
+        /*Online search for background images, but slow*/
         NSArray *artistArray = @[@"Justin+Timberlake", @"Katy+Perry", @"Pitbull", @"OneRepublic", @"Eminem", @"One+Direction", @"Passenger", @"Lorde", @"Avicii", @"Imagine+Dragons", @"Beyonce", @"Miley+Cyrus", @"Rihanna", @"Lady+Gaga", @"Calvin+Harris", @"Rihanna", @"Daft+Punk", @"Bastille", @"Drake", @"Jason+Derulo", @"Lana+Del+Rey", @"Martin+Garrix", @"Britney+Spears", @"Robin+Thicke", @"Macklemore", @"Ryan+Lewis", @"Michael+Buble", @"Stromae", @"Arctic+Moneys", @"Pharrell", @"Justin+Bieber", @"John+Newman", @"Demi+Lovato", @"Ed+Sheeran", @"Kid+Ink", @"Lily+Allen", @"Adele", @"Beatles", @"Killers", @"Leona", @"Greenday", @"Ariana+Grande", @"Westlife"];
         for(NSString *artist in artistArray){
             [self searchForImages:1 andTerm:artist];
         }
+        
+        /*Use predefine images*/
+        
+        
     }
     return self;
 }
+/**
+ * Hugely improve app loading speed for just load image at the frist time, then save locally
+ * Next time, just load local image instead of download images again.
+ */
 - (void)searchForImages:(NSInteger)limit andTerm:(NSString*)term
 {
-    ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:limit andTerm:term];
-    for(UIImage *image in [imageFetcher getAlbumImages]){
-        [_backgroundImages addObject:image];
+    //Paths to Save or Load
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *imageName = [basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", term]];
+    
+    //Check the term image has existed
+    UIImage *imageToLoad = [UIImage imageWithContentsOfFile:imageName];
+    
+    if (imageToLoad) {
+        [_backgroundImages addObject:imageToLoad];
+    }else{
+        ImageFetcher *imageFetcher = [[ImageFetcher alloc] initWithLimit:limit andTerm:term];
+        for(UIImage *image in [imageFetcher getAlbumImages]){
+            [_backgroundImages addObject:image];
+            
+            UIImage * imageToSave = image;
+            NSData * binaryImageData = UIImagePNGRepresentation(imageToSave);
+            [binaryImageData writeToFile:imageName atomically:YES];
+        }
     }
 }
 
