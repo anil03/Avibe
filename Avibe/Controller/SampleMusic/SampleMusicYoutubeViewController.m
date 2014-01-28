@@ -26,6 +26,9 @@
     float height;
     float playerHeight;
     float currentHeight;
+    float buttonLeft;
+    
+    float buttonHeight;
     
     //iTune View
     float playerImageWidth;
@@ -42,6 +45,8 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *infoLabel;
+@property (nonatomic, strong) UIView *listenInView;
+
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 
@@ -100,7 +105,12 @@
     return self;
 }
 
-
+#pragma mark - Set up views
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_player pause];
+    _player = nil;
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -108,8 +118,6 @@
     self.view.userInteractionEnabled = NO;
 
     [self setupNavigationBar];
-    
-   
     
     backgroundColor = [UIColor blackColor];
     textColor = [UIColor whiteColor];
@@ -131,8 +139,8 @@
     playerLabelHeight = playerProgressHeight;
     playerButtonWidth = 30.0f;
     playerButtonHeight = playerProgressHeight;
-    float buttonHeight = 40;
-    float buttonLeft = 10;
+    buttonHeight = 40;
+    buttonLeft = 10;
     currentHeight = 0;
     
     //ScrollView
@@ -165,18 +173,33 @@
      */
     currentHeight += infoLabelHight;
     //Youtube
-    /*
-    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
-    self.sampleMusicWebView.backgroundColor = backgroundColor;
-    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
-    [scrollView addSubview:self.sampleMusicWebView];
-    [self playYoutube];*/
+//    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+//    self.sampleMusicWebView.backgroundColor = backgroundColor;
+//    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
+//    [scrollView addSubview:self.sampleMusicWebView];
+//    [self playYoutube];
+//    [self embedYouTube:@"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata" frame:self.sampleMusicWebView.frame];
     //iTune
-    
     [self setupITuneMusicView];
 
     //Button - Share
     currentHeight += playerHeight;
+    [self addShareView];
+    
+    //Button - Buy
+//    currentHeight += buttonHeight;
+//    [self addBuyInButton];
+    
+    //Button - Listen
+    currentHeight += buttonHeight;
+    [self addListenInView];
+    
+    //Label - More Like this
+//    currentHeight += buttonHeight;
+//    [self addMoreLikeThisView];
+}
+- (void)addShareView
+{
     UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
     [shareButton setTitle:@"Share" forState:UIControlStateNormal];
     [shareButton setTitleColor:textColor forState:UIControlStateNormal];
@@ -185,9 +208,9 @@
     shareButton.backgroundColor = [UIColor blackColor];
     [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
     [scrollView addSubview:shareButton];
-    
-    //Button - Buy
-    currentHeight += buttonHeight;
+}
+- (void)addBuyInView
+{
     UIButton *buyButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
     [buyButton setTitle:@"Buy in " forState:UIControlStateNormal];
     [buyButton setTitleColor:textColor forState:UIControlStateNormal];
@@ -195,40 +218,65 @@
     buyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     buyButton.backgroundColor = [UIColor blackColor];
     [scrollView addSubview:buyButton];
+}
+- (void)addListenInView
+{
+    _listenInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [scrollView addSubview:_listenInView];
     
-    //Button - Listen
-    currentHeight += buttonHeight;
-    UIButton *listenButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
-    [listenButton setTitle:@"Listen in " forState:UIControlStateNormal];
-    [listenButton setTitleColor:textColor forState:UIControlStateNormal];
-    [listenButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
-    listenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+    float buttonWidth = buttonHeight;
+    float labelWidth = 80;
+    float leftOffset = buttonLeft;
+    UILabel *listenButton = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, labelWidth, buttonHeight)];
+    [listenButton setText:@"Listen in: "];
+    [listenButton setTextColor:textColor];
+//    [listenButton setTitle:@"Listen in " forState:UIControlStateNormal];
+//    [listenButton setTitleColor:textColor forState:UIControlStateNormal];
+//    [listenButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
+//    listenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     listenButton.backgroundColor = [UIColor blackColor];
-    [scrollView addSubview:listenButton];
+    [_listenInView addSubview:listenButton];
     
-    //Label - More Like this
-    currentHeight += buttonHeight;
+    leftOffset += labelWidth;
+    UIButton *youtubeButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
+    [youtubeButton setBackgroundImage:[UIImage imageNamed:@"youtube-48.png"] forState:UIControlStateNormal];
+    [youtubeButton setBackgroundImage:[UIImage imageNamed:@"youtube-48-highlight.png"] forState:UIControlStateHighlighted];
+    [youtubeButton addTarget:self action:@selector(listenInYoutube) forControlEvents:UIControlEventTouchUpInside];
+    [_listenInView addSubview:youtubeButton];
+    
+}
+- (void)addMoreLikeThisView
+{
     UILabel *moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
     moreLabel.backgroundColor = backgroundColor;
     moreLabel.text = @"More Like This:";
     moreLabel.textColor = textColor;
     [scrollView addSubview:moreLabel];
-    
-    
-    
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+#pragma mark - ListenIn Button Method
+- (void)listenInYoutube
 {
-    [_player pause];
-    _player = nil;
+    NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
+
+    UIWebView *videoView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
+    videoView.delegate = self;
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:videoURL]];
+    [videoView loadRequest:request];
+    [self.view addSubview:videoView];
+    
+    [_sampleMusicITuneView removeFromSuperview];
+    [scrollView addSubview:videoView];
 }
+
 
 #pragma mark - Youtube
 - (void)playYoutube
 {
-    NSString *videoURL = @"http://www.youtube.com/embed/SB-DA6hyuj4";
-    
+//    NSString *videoURL = @"http://www.youtube.com/embed/SB-DA6hyuj4";
+    NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
+
     // if your url is not in embed format or it is dynamic then you have to convert it in embed format.
 //    videoURL = [videoURL stringByReplacingOccurrencesOfString:@"watch?v=" withString:@"embed/"];
 //    
@@ -272,14 +320,7 @@
     width=\"%0.0f\" height=\"%0.0f\"></embed>\
     </body></html>";
 //    NSString *html = [NSString stringWithFormat:embedHTML, urlString, frame.size.width, frame.size.height];
-    UIWebView *videoView = [[UIWebView alloc] initWithFrame:frame];
-    videoView.delegate = self;
     
-//    [videoView loadHTMLString:urlString baseURL:nil];
-
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [videoView loadRequest:request];
-    [self.view addSubview:videoView];
 }
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {

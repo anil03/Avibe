@@ -1,27 +1,27 @@
 PODS:
   - AFNetworking (1.3.3)
-  - Facebook-iOS-SDK (3.9.0)
-  - MMDrawerController (0.4.0):
+  - Facebook-iOS-SDK (3.11.1)
+  - MMDrawerController (0.5.1):
     - MMDrawerController/Core
     - MMDrawerController/MMDrawerBarButtonItem
     - MMDrawerController/MMDrawerVisualStates
     - MMDrawerController/Subclass
-  - MMDrawerController/Core (0.4.0)
-  - MMDrawerController/MMDrawerBarButtonItem (0.4.0):
+  - MMDrawerController/Core (0.5.1)
+  - MMDrawerController/MMDrawerBarButtonItem (0.5.1):
     - MMDrawerController/Core
-  - MMDrawerController/MMDrawerVisualStates (0.4.0):
+  - MMDrawerController/MMDrawerVisualStates (0.5.1):
     - MMDrawerController/Core
-  - MMDrawerController/Subclass (0.4.0):
+  - MMDrawerController/Subclass (0.5.1):
     - MMDrawerController/Core
 
 DEPENDENCIES:
-  - AFNetworking (~> 1.0)
-  - Facebook-iOS-SDK (~> 3.9.0)
-  - MMDrawerController (~> 0.4.0)
+  - AFNetworking (> 1.0)
+  - Facebook-iOS-SDK (> 3.9.0)
+  - MMDrawerController (> 0.4.0)
 
 SPEC CHECKSUMS:
   AFNetworking: 61fdd49e2ffe6380378df37b3b6e70630bb9dd66
-  Facebook-iOS-SDK: 5e1416dbdfc17b2620c2ca31c02e6feec042f2c1
-  MMDrawerController: 44baaee6b79487b4681eb61597fb790586909c0c
+  Facebook-iOS-SDK: 42a1de39170b858d675c2453d8aace55c51be2bb
+  MMDrawerController: 3e22aec684dbee5307ff9d1e76523003a3303a2d
 
 COCOAPODS: 0.29.0

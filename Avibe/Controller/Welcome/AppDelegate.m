@@ -16,6 +16,8 @@
 #import <Rdio/Rdio.h>
 #import "RdioConsumerCredentials.h"
 
+
+
 @implementation AppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
