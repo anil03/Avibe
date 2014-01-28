@@ -310,6 +310,10 @@
         return;
     }
     NSArray* entry = [feed objectForKey:@"entry"];
+    if(!entry){
+        [self fetchedDataWithError];
+        return;
+    }
     NSLog(@"results: %@", entry);
     
     NSArray *link = [entry[0] objectForKey:@"link"];
