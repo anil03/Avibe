@@ -92,9 +92,6 @@
         _songArtist = [dictionary objectForKey:@"artist"];
         _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
         
-        //Youtube
-        // ...
-        
         //iTune
         NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
         _samepleMusic = [[SampleMusic_iTune alloc] init];
@@ -173,12 +170,7 @@
      */
     currentHeight += infoLabelHight;
     //Youtube
-//    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
-//    self.sampleMusicWebView.backgroundColor = backgroundColor;
-//    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
-//    [scrollView addSubview:self.sampleMusicWebView];
-//    [self playYoutube];
-//    [self embedYouTube:@"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata" frame:self.sampleMusicWebView.frame];
+
     //iTune
     [self setupITuneMusicView];
 
@@ -257,8 +249,9 @@
 #pragma mark - ListenIn Button Method
 - (void)listenInYoutube
 {
+    /*Youtube Embeded in Webview*/
+    /*
     NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
-
     UIWebView *videoView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
     videoView.delegate = self;
     
@@ -268,28 +261,89 @@
     
     [_sampleMusicITuneView removeFromSuperview];
     [scrollView addSubview:videoView];
+     */
+
+    /*Youtbe Embeded Fully in View*/
+    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
+    self.sampleMusicWebView.backgroundColor = backgroundColor;
+    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
+    [_sampleMusicITuneView removeFromSuperview];
+    [scrollView addSubview:self.sampleMusicWebView];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _spinner.center = CGPointMake(_sampleMusicWebView.frame.size.width/2, _sampleMusicWebView.frame.size.height/2);
+    _spinner.hidesWhenStopped = YES;
+    [_sampleMusicWebView addSubview:_spinner];
+    [_spinner startAnimating];
+
+    //Search on Youtube
+    NSString *searchInfo = [NSString stringWithFormat:@"%@+%@", _songTitle, _songArtist];
+    NSString *searchTitle = [searchInfo stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *stringURL = [NSString stringWithFormat:@"https://gdata.youtube.com/feeds/api/videos?q=%@&alt=json&fields=entry(title,link,author)&max-results=1&prettyprint=true", searchTitle];
+    NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+    //Download Music
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchURL];
+        [self performSelectorOnMainThread:@selector(fetchedDataFromYoutube:)
+                               withObject:data waitUntilDone:YES];
+    });
 }
-
-
-#pragma mark - Youtube
-- (void)playYoutube
+- (void)fetchedDataFromYoutube:(NSData *)responseData
 {
+    if (!responseData) {
+        [self fetchedDataWithError];
+        return;
+    }
+    
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:responseData
+                          
+                          options:kNilOptions
+                          error:&error];
+    NSDictionary* feed = [json objectForKey:@"feed"];
+    if([feed count] == 0){
+        [self fetchedDataWithError];
+        return;
+    }
+    NSArray* entry = [feed objectForKey:@"entry"];
+    NSLog(@"results: %@", entry);
+    
+    NSArray *link = [entry[0] objectForKey:@"link"];
+    NSString *href = [link[0] objectForKey:@"href"];
+    
+    NSString *title = [[entry[0] objectForKey:@"title"] objectForKey:@"$t"];
+    _infoLabel.text = title;
+    
+    [_spinner stopAnimating];
+    [self playYoutube:href];
+}
+- (void)fetchedDataWithError
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't listen in Youtube right now. Please try later." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+- (void)playYoutube:(NSString*)videoURL
+{
+    //URL Example
 //    NSString *videoURL = @"http://www.youtube.com/embed/SB-DA6hyuj4";
-    NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
+//    videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
 
     // if your url is not in embed format or it is dynamic then you have to convert it in embed format.
-//    videoURL = [videoURL stringByReplacingOccurrencesOfString:@"watch?v=" withString:@"embed/"];
-//    
-//    NSRange range = [videoURLString rangeOfString:@"&"];
-//    @try {
-//        videoURLString = [videoURLString substringToIndex:range.location];
-//    }
-//    @catch (NSException *exception) {
-//        
-//    }
+    videoURL = [videoURL stringByReplacingOccurrencesOfString:@"watch?v=" withString:@"embed/"];
+    
+    NSRange range = [videoURL rangeOfString:@"&"];
+    @try {
+        videoURL = [videoURL substringToIndex:range.location];
+    }
+    @catch (NSException *exception) {
+        
+    }
     
     // here your link is converted in embed format.
-    
     NSString* embedHTML = [NSString stringWithFormat:@"\
                            <html><head>\
                            <style type=\"text/css\">\
@@ -302,26 +356,9 @@
                            </head><body style=\"margin:0\">\
                            <iframe width=\"100%%\" height=\"240px\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
                            </body></html>",videoURL];
-
     [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
 }
 
-- (void)embedYouTube:(NSString *)urlString frame:(CGRect)frame {
-//    NSString *embedHTML = @"\
-    <html><head>\
-    <style type=\"text/css\">\
-    body {\
-    background-color: transparent;\
-    color: white;\
-    }\
-    </style>\
-    </head><body style=\"margin:0\">\
-    <embed id=\"yt\" src=\"%@\" type=\"application/x-shockwave-flash\" \
-    width=\"%0.0f\" height=\"%0.0f\"></embed>\
-    </body></html>";
-//    NSString *html = [NSString stringWithFormat:embedHTML, urlString, frame.size.width, frame.size.height];
-    
-}
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     NSLog(@"Log Finish.");
