@@ -63,7 +63,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 @property (nonatomic, strong) NSMutableArray *XMLData;
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
-@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *PFObjects;
 @property (nonatomic, strong) SaveMusicEntries *saveMusicEntries;
@@ -117,35 +116,19 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     [super viewWillAppear:animated];
     [self setupBarMenuButton];
-    
-    //Setup Scrobbler URL
-//    if(self.delegate && [self.delegate respondsToSelector:@selector(getLastFMAccount)]){
-//        if ([self.delegate getLastFMAccount] == nil) {
-//            return;
-//        }
-////        kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", [self.delegate getLastFMAccount]];
-//    }
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    //Variable
-    float width = [[UIScreen mainScreen] bounds].size.width;
-    float height = [[UIScreen mainScreen] bounds].size.height;
+
     
     //Setup Refresh Control
     [self setupRefreshControl];
     [self refreshView:self.refreshControl];
 
-    
-    //Spinner
-    _spinner = [[UIActivityIndicatorView alloc]
-     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _spinner.center = CGPointMake(width/2, height/2);
-    _spinner.hidesWhenStopped = YES;
-    [self.view addSubview:_spinner];
+
 }
 
 #pragma mark - Table view data source
@@ -423,7 +406,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
                 refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
                 [refresh endRefreshing];
                 
-                [_spinner stopAnimating];
                 
                 [self.collectionView reloadData];
             }else{
@@ -455,7 +437,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     refresh.tintColor = [UIColor whiteColor];
     
     // custom refresh logic would be placed here...
-    [_spinner startAnimating];
     
     _saveMusicEntries = [[SaveMusicEntries alloc] init];
     [_saveMusicEntries saveMusic];

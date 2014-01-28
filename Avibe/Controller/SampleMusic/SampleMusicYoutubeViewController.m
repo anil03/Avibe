@@ -42,6 +42,8 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *infoLabel;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
+
 
 //Youtube
 @property (strong, nonatomic) MPMoviePlayerController* moviePlayer;
@@ -106,6 +108,8 @@
     self.view.userInteractionEnabled = NO;
 
     [self setupNavigationBar];
+    
+   
     
     backgroundColor = [UIColor blackColor];
     textColor = [UIColor whiteColor];
@@ -209,6 +213,9 @@
     moreLabel.text = @"More Like This:";
     moreLabel.textColor = textColor;
     [scrollView addSubview:moreLabel];
+    
+    
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -313,12 +320,21 @@
     [_playButton setTitle:@"▶︎" forState:UIControlStateNormal];
     [_playButton setTitle:@"◼︎" forState:UIControlStateSelected];
     [_sampleMusicITuneView addSubview:_playButton];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _spinner.center = CGPointMake(_sampleMusicITuneView.frame.size.width/2, _sampleMusicITuneView.frame.size.height/2);
+    _spinner.hidesWhenStopped = YES;
+    [_sampleMusicITuneView addSubview:_spinner];
+    [_spinner startAnimating];
 }
 
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
     //Enable User interaction
     self.view.userInteractionEnabled = YES;
+    [_spinner stopAnimating];
     
     //Update origin song
     _songTitle = [songInfo objectForKey:@"title"];
@@ -370,6 +386,8 @@
     [alert show];
     //Enable User interaction
     self.view.userInteractionEnabled = YES;
+    [_spinner stopAnimating];
+
 }
 
 - (void)playOrPause {
