@@ -39,7 +39,7 @@
 
 #import "BackgroundImageView.h"
 #import "SampleMusicSourceView.h"
-
+#import "UserViewControllerForFriend.h"
 #import "SaveMusicEntries.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
@@ -51,14 +51,19 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 
 
-@interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate>
+@interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate, UIAlertViewDelegate>
 {
     int columnNumber;
 }
 
 @property (weak, atomic) UIViewController *viewController;
+@property (nonatomic, strong) UserViewControllerForFriend *userViewControllerForFriend;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
+
+//Switch To iTune
+@property (nonatomic, strong) UIAlertView *alertBeforeSwitchToITune;
+@property (nonatomic, strong) NSURL* iTuneUrl;
 
 @property (nonatomic, strong) NSMutableArray *XMLData;
 
@@ -259,8 +264,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMNavigationController *navigationController;
     switch (indexPath.row%columnNumber) {
         case 0:{
-            NSLog(@"User Name");
+//            NSLog(@"User Name");
+            _userViewControllerForFriend = [[UserViewControllerForFriend alloc] initWithUsername:cell.label.text];
+            _userViewControllerForFriend.previousViewController = self;
             
+            MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewControllerForFriend];
+            [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
             break;
         }
         case 1:{
@@ -291,17 +300,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         default:
             break;
     }
-    
-    
-    
-//    SampleMusicSourceView *sampleMusicSourceView = [[SampleMusicSourceView alloc] initWithPosition:point];
-//    sampleMusicSourceView.delegate = self;
-//    [self.collectionView addSubview:sampleMusicSourceView];
-//    [self.collectionView bringSubviewToFront:sampleMusicSourceView];
-    
-
 }
 
+#pragma mark - Switch To iTune Store
 - (void)openiTuneStore:(NSString*)searchInfo
 {
     NSString *searchTitle = [searchInfo stringByReplacingOccurrencesOfString:@" " withString:@"+"];
@@ -337,7 +338,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     NSDictionary* result = [results objectAtIndex:0];
     NSString *collectionString = [result objectForKey:@"collectionViewUrl"];
-    
+    NSString *artistName = [result objectForKey:@"artistName"];
+    NSString *collectionName = [result objectForKey:@"collectionName"];
+    NSString *trackName = [result objectForKey:@"trackName"];
+
     /*Remove https://itunes.apple.com/us/album/1901/id315002203?i=315002383&uo=4 & sign*/
 //    for(int i = [collectionString length]-1; i >= 0 ; i--){
 //        char c = [collectionString characterAtIndex:i];
@@ -347,11 +351,15 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 //        }
 //    }
     
-    NSURL* previewUrl = [NSURL URLWithString:collectionString];
-    NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];
+    _iTuneUrl = [NSURL URLWithString:collectionString];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];
+    NSString *alertString = [NSString stringWithFormat:@"You are about to switch to iTune for the song %@ in %@ by %@.", trackName, collectionName, artistName];
     
-    //Switch Webview
-    [[UIApplication sharedApplication] openURL:previewUrl];
+    //Before Switch Webview
+    _alertBeforeSwitchToITune = [[UIAlertView alloc] initWithTitle: @"Reminder" message:alertString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+    [_alertBeforeSwitchToITune show];
+    
+    
     
 //    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.collectionView.frame];
 //    webView.delegate = self;
@@ -365,7 +373,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Switch Webview
+    if([alertView isEqual:alertView] && buttonIndex == 0){
+        [[UIApplication sharedApplication] openURL:_iTuneUrl];
+    }
+}
 //#pragma mark - UIWebView Delegate
 //- (void)webViewDidStartLoad:(UIWebView *)webView
 //{
