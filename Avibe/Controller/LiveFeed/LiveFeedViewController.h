@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "SideMenuRowViewController.h"
-#import "YMGenericTableViewController.h"
+#import "YMTableViewController.h"
 
 @protocol LiveFeedViewControllerDelegate <NSObject>
 

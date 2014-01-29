@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "SideMenuRowViewController.h"
-#import "YMGenericTableViewController.h"
+#import "YMTableViewController.h"
 #import "YMGenericCollectionViewController.h"
 #import "ShareCollectionViewCell.h"
 #import "BackgroundImageView.h"

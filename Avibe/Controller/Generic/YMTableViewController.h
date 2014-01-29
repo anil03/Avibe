@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface YMGenericTableViewController : UITableViewController
+@interface YMTableViewController : UITableViewController
 
 @property (nonatomic, strong) NSArray *PFObjects;
 

@@ -15,8 +15,8 @@
 #import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
 
+#import "ITuneMusicViewController.h"
 #import "SampleMusicViewController.h"
-#import "SampleMusicYoutubeViewController.h"
 #import "Setting.h"
 #import "PublicMethod.h"
 #import "SampleMusic_iTune.h"
@@ -146,7 +146,7 @@
     NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
     
     //Switch to Youtube
-    SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] initWithDictionary:dictionary];
+    SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
     controller.delegate = self;
     MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
     [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];

@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
 
-#import "YMGenericTableViewCell.h"
+#import "YMTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface YMGenericTableViewCell ()
+@interface YMTableViewCell ()
 {
     NSString *website;
     NSString *twitter;
@@ -17,16 +17,13 @@
 }
 
 
-@property (strong, nonatomic) UILabel *titleLabel;
-@property (strong, nonatomic) UILabel *albumLabel;
-@property (strong, nonatomic) UILabel *artistLabel;
-@property (strong, nonatomic) UILabel *userLabel;
+
 
 @property (strong, nonatomic) UIImageView *albumImage;
 
 @end
 
-@implementation YMGenericTableViewCell
+@implementation YMTableViewCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

@@ -11,7 +11,7 @@
 #import <Parse/Parse.h>
 
 #import "AppDelegate.h"
-#import "SampleMusicViewController.h"
+#import "ITuneMusicViewController.h"
 #import "Song.h"
 
 
@@ -114,7 +114,7 @@
     if ([[segue identifier] isEqualToString:@"SampleMusicSegue"])
     {
         // Get reference to the destination view controller
-        SampleMusicViewController *controller = [segue destinationViewController];
+        ITuneMusicViewController *controller = [segue destinationViewController];
 //        controller.song = [[Song alloc] init];
         controller.pfObject = sender;
         

@@ -10,14 +10,15 @@
 #import "ListenedViewController.h"
 
 #import "MMDrawerBarButtonItem.h"
+#import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
-
 #import "SampleMusicViewController.h"
+#import "ITuneMusicViewController.h"
 #import "BackgroundImageView.h"
 #import "YMGenericCollectionViewCell.h"
 #import "PublicMethod.h"
 #import "Setting.h"
-
+#import "YMTableViewCell.h"
 
 @interface ListenedViewController ()
 
@@ -34,13 +35,7 @@
 
 - (id)init
 {
-    self = [self initWithUsername:[[PFUser currentUser] username]];
-    if (self) {
-        //BackgroundView
-        UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
-        self.tableView.backgroundView = backgroundView;
-    }
-    return self;
+    return [self initWithUsername:[[PFUser currentUser] username]];
 }
 - (id)initWithUsername:(NSString*)username
 {
@@ -62,37 +57,37 @@
 	[super viewDidLoad];
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+    self.tableView.backgroundView = backgroundView;
 }
 
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // Return the number of sections.
     return 1;
 }
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    // Return the number of rows in the section.
     return [self.PFObjects count];
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    YMTableViewCell *cell = (YMTableViewCell*)[tableView cellForRowAtIndexPath:indexPath];
+    NSString *title = cell.titleLabel.text ? cell.titleLabel.text : @"N/A";
+    NSString *album = cell.albumLabel.text ? cell.albumLabel.text : @"N/A";
+    NSString *artist = cell.artistLabel.text ? cell.artistLabel.text : @"N/A";
 
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//    
-//    // Configure the cell...
-//    PFObject *song = [_songs objectAtIndex:indexPath.row];
-//    cell.textLabel.text = [song objectForKey:@"title"];
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@", [song objectForKey:@"title"], [song objectForKey:@"album"]];
-//    
-//    return cell;
-//}
-
-
-
+    
+    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
+    
+    SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
+    controller.delegate = self;
+    MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
+    [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
+}
 
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl

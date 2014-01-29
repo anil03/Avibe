@@ -14,7 +14,7 @@
 
 #import "MMNavigationController.h"
 
-#import "SampleMusicViewController.h"
+#import "ITuneMusicViewController.h"
 
 #import "FindFriendsViewController.h"
 #import "BackgroundImageView.h"

@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
 
-#import "YMGenericTableViewController.h"
-#import "YMGenericTableViewCell.h"
+#import "YMTableViewController.h"
+#import "YMTableViewCell.h"
 
 #import "UIViewController+MMDrawerController.h"
 
-#import "SampleMusicViewController.h"
+#import "ITuneMusicViewController.h"
 #import "MMNavigationController.h"
 #import "MMDrawerBarButtonItem.h"
 
@@ -19,14 +19,15 @@
 
 #import "SampleMusic_iTune.h"
 
-@interface YMGenericTableViewController ()
+@interface YMTableViewController ()
 
 @property (assign, nonatomic) CATransform3D initialTransformation;
 @property (nonatomic, strong) NSMutableSet *shownIndexes;
 
 @end
 
-@implementation YMGenericTableViewController
+@implementation YMTableViewController
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -62,7 +63,7 @@
     transform = CATransform3DTranslate(transform, offsetPositioning.x, offsetPositioning.y, 0.0);
     _initialTransformation = transform;
     
-    [self.tableView registerClass:[YMGenericTableViewCell class] forCellReuseIdentifier:@"Cell"];
+    [self.tableView registerClass:[YMTableViewCell class] forCellReuseIdentifier:@"Cell"];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -79,7 +80,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    SampleMusicViewController *controller = [[UIStoryboard storyboardWithName:SAMPLEMUSIC_STORYBOARD_NAME bundle:nil] instantiateViewControllerWithIdentifier:SAMPLEMUSIC_CONTROLLER_NAME];
+    ITuneMusicViewController *controller = [[UIStoryboard storyboardWithName:SAMPLEMUSIC_STORYBOARD_NAME bundle:nil] instantiateViewControllerWithIdentifier:SAMPLEMUSIC_CONTROLLER_NAME];
     controller.pfObject = [self.PFObjects objectAtIndex:indexPath.row];
     controller.sampleMusic = [[SampleMusic_iTune alloc] init];
     controller.delegate = self;
@@ -93,18 +94,6 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.layer.opacity = 0.7;
 
-//    [cell setSelectionStyle:UITableViewCellSelectionStyleBlue];
-
-////    cell.backgroundColor = [UIColor colorWithRed:1.0 green:0.0 blue:0.0 alpha:0.0];
-//    UIView *whiteRoundedCornerView = [[UIView alloc] initWithFrame:CGRectMake(10,10,300,60)];
-//    whiteRoundedCornerView.backgroundColor = [UIColor whiteColor];
-//    whiteRoundedCornerView.layer.masksToBounds = NO;
-//    whiteRoundedCornerView.layer.cornerRadius = 3.0;
-//    whiteRoundedCornerView.layer.shadowOffset = CGSizeMake(-1, 1);
-//    whiteRoundedCornerView.layer.shadowOpacity = 0.5;
-//    [cell.contentView addSubview:whiteRoundedCornerView];
-//    [cell.contentView sendSubviewToBack:whiteRoundedCornerView];
-    
 }
 
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -154,7 +143,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * CellIdentifier = @"Cell";
-    YMGenericTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    YMTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
     PFObject *song = [self.PFObjects objectAtIndex:indexPath.row];

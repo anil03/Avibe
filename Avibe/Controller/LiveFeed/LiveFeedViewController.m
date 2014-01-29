@@ -24,12 +24,12 @@
 #import <Parse/Parse.h>
 
 #import "AppDelegate.h"
+#import "ITuneMusicViewController.h"
 #import "SampleMusicViewController.h"
-#import "SampleMusicYoutubeViewController.h"
 
 #import "Song.h"
 
-#import "YMGenericTableViewCell.h"
+#import "YMTableViewCell.h"
 #import "YMGenericCollectionViewCell.h"
 #import "YMGenericCollectionReusableHeaderView.h"
 #import "YMGenericCollectionViewFlowLayout.h"
@@ -281,7 +281,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[cellTitle.label.text, cellAlbum.label.text, cellArtist.label.text] forKeys:@[@"title", @"album", @"artist"]];
             
             //Switch to Youtube
-            SampleMusicYoutubeViewController *controller = [[SampleMusicYoutubeViewController alloc] initWithDictionary:dictionary];
+            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
             controller.delegate = self;
             navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
             [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
