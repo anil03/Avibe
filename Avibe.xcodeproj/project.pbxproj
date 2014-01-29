@@ -116,7 +116,6 @@
 		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
 		4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */; };
-		4C8F74F2188DC8AE00B91651 /* UserViewControllerForFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */; };
 		4C8F74F5188DD8DA00B91651 /* FindFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */; };
 		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
@@ -299,8 +298,6 @@
 		4C8F74EB188D825D00B91651 /* Constant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constant.m; sourceTree = "<group>"; };
 		4C8F74ED188DC1AB00B91651 /* UserShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserShareViewController.h; sourceTree = "<group>"; };
 		4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShareViewController.m; sourceTree = "<group>"; };
-		4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserViewControllerForFriend.h; sourceTree = "<group>"; };
-		4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserViewControllerForFriend.m; sourceTree = "<group>"; };
 		4C8F74F3188DD8DA00B91651 /* FindFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendTableViewCell.h; sourceTree = "<group>"; };
 		4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendTableViewCell.m; sourceTree = "<group>"; };
 		4C8F74F6188DE90B00B91651 /* FindFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendButton.h; sourceTree = "<group>"; };
@@ -546,8 +543,6 @@
 				4C231C89188104F800B030F9 /* Listened */,
 				4C231CA1188104F800B030F9 /* UserViewController.h */,
 				4C231CA2188104F800B030F9 /* UserViewController.m */,
-				4C8F74F0188DC8AE00B91651 /* UserViewControllerForFriend.h */,
-				4C8F74F1188DC8AE00B91651 /* UserViewControllerForFriend.m */,
 			);
 			name = Profile;
 			path = User;
@@ -1113,7 +1108,6 @@
 				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
 				4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */,
-				4C8F74F2188DC8AE00B91651 /* UserViewControllerForFriend.m in Sources */,
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,

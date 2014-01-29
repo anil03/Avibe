@@ -19,7 +19,7 @@
 #import "FindFriendsViewController.h"
 #import "BackgroundImageView.h"
 #import "PublicMethod.h"
-#import "UserViewControllerForFriend.h"
+#import "UserViewController.h"
 
 @interface FriendsViewController () <FindFriendsViewControllerDelegate>
 
@@ -31,7 +31,7 @@
 @property (nonatomic, strong) NSString *others;
 @property (nonatomic, strong) NSMutableArray *titleForSection;
 
-@property (nonatomic, strong) UserViewControllerForFriend *userViewControllerForFriend;
+@property (nonatomic, strong) UserViewController *userViewController;
 
 @end
 
@@ -59,7 +59,7 @@
 {
 	[self setupMenuButton];
     //Clear cache
-    _userViewControllerForFriend = nil;
+    _userViewController = nil;
 }
 - (void)viewDidLoad
 {
@@ -112,10 +112,10 @@
     
     NSString *username = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
     
-    _userViewControllerForFriend = [[UserViewControllerForFriend alloc] initWithUsername:username];
-    _userViewControllerForFriend.previousViewController = self;
+    _userViewController = [[UserViewController alloc] initWithUsername:username];
+    _userViewController.previousViewController = self;
     
-    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewControllerForFriend];
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewController];
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 

@@ -39,7 +39,7 @@
 
 #import "BackgroundImageView.h"
 #import "SampleMusicSourceView.h"
-#import "UserViewControllerForFriend.h"
+#import "UserViewController.h"
 #import "SaveMusicEntries.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 
 @property (weak, atomic) UIViewController *viewController;
-@property (nonatomic, strong) UserViewControllerForFriend *userViewControllerForFriend;
+@property (nonatomic, strong) UserViewController *userViewController;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *CurrPlaying;
 
@@ -265,10 +265,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     switch (indexPath.row%columnNumber) {
         case 0:{
 //            NSLog(@"User Name");
-            _userViewControllerForFriend = [[UserViewControllerForFriend alloc] initWithUsername:cell.label.text];
-            _userViewControllerForFriend.previousViewController = self;
+            _userViewController = [[UserViewController alloc] initWithUsername:cell.label.text];
+            _userViewController.previousViewController = self;
             
-            MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewControllerForFriend];
+            MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewController];
             [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
             break;
         }

@@ -132,7 +132,7 @@
 
 - (void)recentHistoryButtonPressed
 {
-    listenedViewController = [[ListenedViewController alloc] init];
+    listenedViewController = [[ListenedViewController alloc] initWithUsername:_username];
     listenedViewController.previousViewController = self;
     
     MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
@@ -140,7 +140,7 @@
 }
 - (void)shareButtonPressed
 {
-    userShareViewController = [[UserShareViewController alloc] init];
+    userShareViewController = [[UserShareViewController alloc] initWithUsername:_username];
     userShareViewController.previousViewController = self;
     
     MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:userShareViewController];
