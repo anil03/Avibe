@@ -9,7 +9,7 @@
 #import "MyLogInViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-
+#import "BackgroundImageView.h"
 #import "SubclassConfigViewController.h"
 
 @interface MyLogInViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
@@ -101,8 +101,14 @@
     float currentHeight = 0.0f;
     
     //Background Logo
-    UIImage *image = [UIImage imageNamed:@"background.png"];
-    [self.logInView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+//    UIImage *image = [UIImage imageNamed:@"background.png"];
+//    [self.logInView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+    [self.logInView setBackgroundColor:[UIColor clearColor]];
+    
+    //BackgroundImageView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
+    [self.logInView addSubview:backgroundView];
+    [self.logInView sendSubviewToBack:backgroundView];
     
     //Avibe Label
     float labelWidth = 200.0f;
@@ -115,12 +121,14 @@
     [self.view addSubview:label];
     self.logInView.logo = label;
     
+    
     //Input Field
     currentHeight = fieldHeight*2 + 30.0f;
     UIColor *fieldBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
     [self.logInView.usernameField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.logInView.usernameField setBackgroundColor:fieldBackgroundColor];
-    
+    [self.logInView.usernameField setBackground:nil];
+
     currentHeight += fieldHeight;
     [self.logInView.passwordField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.logInView.passwordField setBackgroundColor:fieldBackgroundColor];

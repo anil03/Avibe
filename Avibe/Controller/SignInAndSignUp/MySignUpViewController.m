@@ -9,6 +9,8 @@
 #import "MySignUpViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
+#import "BackgroundImageView.h"
+
 @interface MySignUpViewController ()
 @property (nonatomic, strong) UIImageView *fieldsBackground;
 @end
@@ -73,8 +75,14 @@
     float fontsize = 14.0f;
     
     //Background Logo
-    UIImage *image = [UIImage imageNamed:@"background.png"];
-    [self.signUpView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+//    UIImage *image = [UIImage imageNamed:@"background.png"];
+//    [self.signUpView setBackgroundColor:[UIColor colorWithPatternImage:image]];
+    [self.signUpView setBackgroundColor:[UIColor clearColor]];
+
+    //BackgroundImageView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
+    [self.signUpView addSubview:backgroundView];
+    [self.signUpView sendSubviewToBack:backgroundView];
     
     //Avibe Label
     float labelWidth = 200.0f;

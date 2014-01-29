@@ -9,7 +9,7 @@
 #import "WelcomeViewController.h"
 
 #import "MainViewController.h"
-
+#import "BackgroundImageView.h"
 #import "MyLogInViewController.h"
 #import "MySignUpViewController.h"
 
@@ -46,10 +46,15 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     //BackgroundImage
-    UIImage *image = [UIImage imageNamed:@"background.png"];
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
-    imageView.image = image;
-    [self.view addSubview:imageView];
+//    UIImage *image = [UIImage imageNamed:@"background.png"];
+//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+//    imageView.image = image;
+//    [self.view addSubview:imageView];
+    
+    //BackgroundImageView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.view.frame];
+    [self.view addSubview:backgroundView];
+    
     
     //Button
     UIButton *logInButton = [[UIButton alloc] initWithFrame:CGRectMake(0, height-buttonHeight, buttonWidth, buttonHeight)];
