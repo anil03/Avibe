@@ -25,8 +25,11 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    _row = 10;
-    _column = 4;
+    float imageHeight = 80.0f;
+    float imageWidth = 80.0f;
+    
+    _row = 10;//frame.size.height/imageHeight; //10;
+    _column = 4;//frame.size.width/imageWidth; //4;
     
     UICollectionViewFlowLayout *backgroundFlowLayout =[[UICollectionViewFlowLayout alloc] init];
     [backgroundFlowLayout setItemSize:CGSizeMake([UIScreen mainScreen].bounds.size.width/_column, [UIScreen mainScreen].bounds.size.height/_row)];

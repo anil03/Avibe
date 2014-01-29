@@ -96,7 +96,7 @@
     width = [[UIScreen mainScreen] bounds].size.width;
     height = [[UIScreen mainScreen] bounds].size.height;
     scrollWidth = width;
-    scrollHeight = height*2;
+    scrollHeight = height*3;
     currentHeight = 0.0f;
 
     barHeight = 80.0f;
@@ -115,10 +115,7 @@
     _scrollView.userInteractionEnabled = YES;
     self.view = _scrollView;
     
-    //BackgroundView
-    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
-    [self.view addSubview:backgroundView];
-    [self.view sendSubviewToBack:backgroundView];
+
     
     /*Header View*/
     currentHeight = 0;
@@ -141,6 +138,12 @@
     _tableViewRowHeight = 50.0f;
     historyViewHeight = item*unitHeight+_tableViewRows*_tableViewRowHeight;
     [self addHistoryView];
+    
+    
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, headerViewHeight)];
+    [_scrollView addSubview:backgroundView];
+    [_scrollView sendSubviewToBack:backgroundView];
     
     [self rearrangeView];
 }
@@ -310,9 +313,10 @@
     [_historyView addSubview:recentHistoryButton];
     
     //TableView
-    
     UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, unitHeight, width, _tableViewRows*_tableViewRowHeight) style:UITableViewStylePlain];
-    tableView.backgroundColor = [UIColor clearColor];
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
+    [tableView setBackgroundView:backgroundView];
+    
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableView.dataSource = self;
     tableView.delegate = self;
