@@ -137,7 +137,7 @@
     /*HistoryView*/
     currentHeight += shareViewHeight+unitHeight;
     item = 1;
-    _tableViewRows = 5;
+    _tableViewRows = 8;
     _tableViewRowHeight = 50.0f;
     historyViewHeight = item*unitHeight+_tableViewRows*_tableViewRowHeight;
     [self addHistoryView];
@@ -148,6 +148,7 @@
 {
     [_shareView setFrame:CGRectMake(0, headerViewHeight, width, shareViewHeight)];
     [_historyView setFrame:CGRectMake(0, headerViewHeight+shareViewHeight, width, historyViewHeight)];
+    [_scrollView setContentSize:CGSizeMake(scrollWidth, headerViewHeight+shareViewHeight+historyViewHeight)];
 }
 - (void)addHeaderView
 {
