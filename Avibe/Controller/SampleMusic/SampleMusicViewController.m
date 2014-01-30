@@ -92,11 +92,7 @@
         _songArtist = [dictionary objectForKey:@"artist"];
         _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
         
-        //iTune
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
-        _samepleMusic = [[SampleMusic_iTune alloc] init];
-        _samepleMusic.delegate = self;
-        [_samepleMusic startSearch:dict];
+        
     }
     
     return self;
@@ -112,7 +108,7 @@
 {
     [super viewDidLoad];
     
-    self.view.userInteractionEnabled = NO;
+//    self.view.userInteractionEnabled = NO;
 
     [self setupNavigationBar];
     
@@ -172,7 +168,9 @@
     //Youtube
 
     //iTune
-    [self setupITuneMusicView];
+    _sampleMusicITuneView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    [self listenInItune];
+    
 
     //Button - Share
     currentHeight += playerHeight;
@@ -236,6 +234,12 @@
     [youtubeButton addTarget:self action:@selector(listenInYoutube) forControlEvents:UIControlEventTouchUpInside];
     [_listenInView addSubview:youtubeButton];
     
+    leftOffset += buttonWidth*4/3;
+    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
+    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"iTunes-10-icon.png"] forState:UIControlStateNormal];
+    [iTuneButton addTarget:self action:@selector(listenInItune) forControlEvents:UIControlEventTouchUpInside];
+    [_listenInView addSubview:iTuneButton];
+    
 }
 - (void)addMoreLikeThisView
 {
@@ -247,49 +251,56 @@
 }
 
 #pragma mark - ListenIn Button Method
+
 - (void)listenInYoutube
 {
-    /*Youtube Embeded in Webview*/
-    /*
-    NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
-    UIWebView *videoView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
-    videoView.delegate = self;
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:videoURL]];
-    [videoView loadRequest:request];
-    [self.view addSubview:videoView];
-    
+    [_player stop];
     [_sampleMusicITuneView removeFromSuperview];
-    [scrollView addSubview:videoView];
-     */
-
-    /*Youtbe Embeded Fully in View*/
-    self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
-    self.sampleMusicWebView.backgroundColor = backgroundColor;
-    self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
-    [_sampleMusicITuneView removeFromSuperview];
-    [scrollView addSubview:self.sampleMusicWebView];
     
-    //Spinner
-    _spinner = [[UIActivityIndicatorView alloc]
-                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _spinner.center = CGPointMake(_sampleMusicWebView.frame.size.width/2, _sampleMusicWebView.frame.size.height/2);
-    _spinner.hidesWhenStopped = YES;
-    [_sampleMusicWebView addSubview:_spinner];
-    [_spinner startAnimating];
-
-    //Search on Youtube
-    NSString *searchInfo = [NSString stringWithFormat:@"%@+%@", _songTitle, _songArtist];
-    NSString *searchTitle = [searchInfo stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *stringURL = [NSString stringWithFormat:@"https://gdata.youtube.com/feeds/api/videos?q=%@&alt=json&fields=entry(title,link,author)&max-results=1&prettyprint=true", searchTitle];
-    NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
-    //Download Music
-    dispatch_async(kBgQueue, ^{
-        NSData* data = [NSData dataWithContentsOfURL:
-                        searchURL];
-        [self performSelectorOnMainThread:@selector(fetchedDataFromYoutube:)
-                               withObject:data waitUntilDone:YES];
-    });
+    if (_sampleMusicWebView) {
+        [scrollView addSubview:self.sampleMusicWebView];
+    }else{
+        /*Youtube Embeded in Webview*/
+        /*
+         NSString *videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
+         UIWebView *videoView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
+         videoView.delegate = self;
+         
+         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:videoURL]];
+         [videoView loadRequest:request];
+         [self.view addSubview:videoView];
+         
+         [_sampleMusicITuneView removeFromSuperview];
+         [scrollView addSubview:videoView];
+         */
+        
+        /*Youtbe Embeded Fully in View*/
+        self.sampleMusicWebView = [[UIWebView alloc] initWithFrame:_sampleMusicITuneView.frame];
+        self.sampleMusicWebView.backgroundColor = backgroundColor;
+        self.sampleMusicWebView.scrollView.backgroundColor = backgroundColor;
+        [scrollView addSubview:self.sampleMusicWebView];
+        
+        //Spinner
+        _spinner = [[UIActivityIndicatorView alloc]
+                    initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+        _spinner.center = CGPointMake(_sampleMusicWebView.frame.size.width/2, _sampleMusicWebView.frame.size.height/2);
+        _spinner.hidesWhenStopped = YES;
+        [_sampleMusicWebView addSubview:_spinner];
+        [_spinner startAnimating];
+        
+        //Search on Youtube
+        NSString *searchInfo = [NSString stringWithFormat:@"%@+%@", _songTitle, _songArtist];
+        NSString *searchTitle = [searchInfo stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+        NSString *stringURL = [NSString stringWithFormat:@"https://gdata.youtube.com/feeds/api/videos?q=%@&alt=json&fields=entry(title,link,author)&max-results=1&prettyprint=true", searchTitle];
+        NSURL *searchURL = [NSURL URLWithString:[stringURL stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]];
+        //Download Music
+        dispatch_async(kBgQueue, ^{
+            NSData* data = [NSData dataWithContentsOfURL:
+                            searchURL];
+            [self performSelectorOnMainThread:@selector(fetchedDataFromYoutube:)
+                                   withObject:data waitUntilDone:YES];
+        });
+    }
 }
 - (void)fetchedDataFromYoutube:(NSData *)responseData
 {
@@ -373,9 +384,24 @@
 }
 
 #pragma mark - iTune Music
+- (void)listenInItune
+{
+    [_sampleMusicWebView removeFromSuperview];
+
+    if (_player) {
+        [_spinner stopAnimating];
+        [scrollView addSubview:_sampleMusicITuneView];
+    }else{
+        [self setupITuneMusicView];
+        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
+        _samepleMusic = [[SampleMusic_iTune alloc] init];
+        _samepleMusic.delegate = self;
+        [_samepleMusic startSearch:dict];
+    }
+}
 - (void)setupITuneMusicView
 {
-    _sampleMusicITuneView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    
     [scrollView addSubview:_sampleMusicITuneView];
 
     //Progress View
@@ -395,6 +421,7 @@
     [_sampleMusicITuneView addSubview:_leftTime];
     
     //Button View
+    [_playButton removeFromSuperview];
     _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playerButtonWidth/2, playerImageHeight+playerProgressHeight, playerButtonWidth, playerButtonHeight)];
     [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
     [_playButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
@@ -411,11 +438,10 @@
     [_sampleMusicITuneView addSubview:_spinner];
     [_spinner startAnimating];
 }
-
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
     //Enable User interaction
-    self.view.userInteractionEnabled = YES;
+//    self.view.userInteractionEnabled = YES;
     [_spinner stopAnimating];
     
     //Update origin song
@@ -467,11 +493,10 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
     //Enable User interaction
-    self.view.userInteractionEnabled = YES;
+//    self.view.userInteractionEnabled = YES;
     [_spinner stopAnimating];
 
 }
-
 - (void)playOrPause {
     _playButton.selected = !_playButton.selected;
     // if already playing, then pause
@@ -483,7 +508,6 @@
         _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
     }
 }
-
 - (void)updateProgress
 {
     
@@ -504,9 +528,6 @@
 {
     [self.progressTimer invalidate];
     _playButton.selected = !_playButton.selected;
-    
-    //Back to Previous View
-//    [self leftDrawerButtonPress:nil];
 }
 
 - (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
@@ -542,53 +563,6 @@
     [_shareMusicEntry shareMusic];
 }
 
-#pragma mark - Movie
--(void) playMovieAtURL: (NSURL*) theURL {
-    
-    moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL: theURL];
-    
-    [moviePlayer.view setFrame:self.view.bounds];
-    
-    //    theMovie.scalingMode = MPMovieScalingModeAspectFill;
-    moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
-    //    theMovie.fullscreen=NO;
-    //    theMovie.allowsAirPlay=YES;
-    //    theMovie.shouldAutoplay=NO;
-    //    theMovie.controlStyle=MPMovieControlStyleEmbedded;
-    
-    // Register for the playback finished notification
-    [[NSNotificationCenter defaultCenter]
-     addObserver: self
-     selector: @selector(myMovieFinishedCallback:)
-     name: MPMoviePlayerPlaybackDidFinishNotification
-     object: moviePlayer];
-    [[NSNotificationCenter defaultCenter]
-     addObserver: self
-     selector: @selector(myMovieFinishedCallback:)
-     name: MPMoviePlayerDidExitFullscreenNotification
-     object: moviePlayer];
-    
-    [moviePlayer prepareToPlay];
-    
-    // Movie playback is asynchronous, so this method returns immediately.
-    //    [theMovie play];
-}
-
-// When the movie is done, release the controller.
--(void) myMovieFinishedCallback: (NSNotification*) aNotification
-{
-    [moviePlayer.view removeFromSuperview];
-    
-    [[NSNotificationCenter defaultCenter]
-     removeObserver: self
-     name: MPMoviePlayerPlaybackDidFinishNotification
-     object: moviePlayer];
-    [[NSNotificationCenter defaultCenter]
-     removeObserver: self
-     name: MPMoviePlayerDidExitFullscreenNotification
-     object: moviePlayer];
-}
-
 #pragma mark - Button Handlers
 -(void)setupNavigationBar{
     //Navigation Title
@@ -604,18 +578,61 @@
     [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [[Setting sharedSetting] barTintColor]];
     
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
-    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress:)];
+    UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
 }
-
--(void)leftDrawerButtonPress:(id)sender{
-    //    [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+-(void)leftDrawerButtonPress{
     [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
-    
-    //    [self.mm_drawerController setCenterViewController:self.centerViewController];
-    //    [self.mm_drawerController.navigationController popViewControllerAnimated:YES];
-    
 }
+
+//
+//#pragma mark - Movie
+//-(void) playMovieAtURL: (NSURL*) theURL {
+//
+//    moviePlayer = [[MPMoviePlayerController alloc] initWithContentURL: theURL];
+//
+//    [moviePlayer.view setFrame:self.view.bounds];
+//
+//    //    theMovie.scalingMode = MPMovieScalingModeAspectFill;
+//    moviePlayer.controlStyle = MPMovieControlStyleFullscreen;
+//    //    theMovie.fullscreen=NO;
+//    //    theMovie.allowsAirPlay=YES;
+//    //    theMovie.shouldAutoplay=NO;
+//    //    theMovie.controlStyle=MPMovieControlStyleEmbedded;
+//
+//    // Register for the playback finished notification
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver: self
+//     selector: @selector(myMovieFinishedCallback:)
+//     name: MPMoviePlayerPlaybackDidFinishNotification
+//     object: moviePlayer];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver: self
+//     selector: @selector(myMovieFinishedCallback:)
+//     name: MPMoviePlayerDidExitFullscreenNotification
+//     object: moviePlayer];
+//
+//    [moviePlayer prepareToPlay];
+//
+//    // Movie playback is asynchronous, so this method returns immediately.
+//    //    [theMovie play];
+//}
+//
+//// When the movie is done, release the controller.
+//-(void) myMovieFinishedCallback: (NSNotification*) aNotification
+//{
+//    [moviePlayer.view removeFromSuperview];
+//
+//    [[NSNotificationCenter defaultCenter]
+//     removeObserver: self
+//     name: MPMoviePlayerPlaybackDidFinishNotification
+//     object: moviePlayer];
+//    [[NSNotificationCenter defaultCenter]
+//     removeObserver: self
+//     name: MPMoviePlayerDidExitFullscreenNotification
+//     object: moviePlayer];
+//}
+
 
 @end

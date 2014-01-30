@@ -112,6 +112,7 @@
 		4C3179C218440FAA00F7D41B /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C118440FAA00F7D41B /* CoreData.framework */; };
 		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
+		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
 		4C8B5807188F64BE00430CF9 /* FaceBookListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8B5806188F64BE00430CF9 /* FaceBookListenedMusic.m */; };
 		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
@@ -290,6 +291,7 @@
 		4C3179C118440FAA00F7D41B /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes-10-icon.png"; sourceTree = "<group>"; };
 		4C8B5805188F64BE00430CF9 /* FaceBookListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceBookListenedMusic.h; path = Facebook/FaceBookListenedMusic.h; sourceTree = "<group>"; };
 		4C8B5806188F64BE00430CF9 /* FaceBookListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceBookListenedMusic.m; path = Facebook/FaceBookListenedMusic.m; sourceTree = "<group>"; };
 		4C8F74E7188CC4F900B91651 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
@@ -769,6 +771,7 @@
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */,
 				4CC5272418985EFF00562CE1 /* youtube-48.png */,
 				4CC527281898603600562CE1 /* youtube-48-highlight.png */,
 				4C2F0FC618846071006BA932 /* Choose */,
@@ -1017,6 +1020,7 @@
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4C23F185188612FB00D2075A /* default_album.png in Resources */,
+				4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */,
 				4C231D2E188104F800B030F9 /* music-record-24.png in Resources */,
 				4C231D30188104F800B030F9 /* settings-32-highlight.png in Resources */,
 				4C231D2B188104F800B030F9 /* Images.xcassets in Resources */,
