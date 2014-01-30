@@ -351,6 +351,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 //        }
 //    }
     
+    collectionString = [collectionString stringByAppendingString:@"&at=1l3v6A8"];
+    NSLog(@"iTuneUrl:%@", collectionString);
+    
     _iTuneUrl = [NSURL URLWithString:collectionString];
 //    NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];
     NSString *alertString = [NSString stringWithFormat:@"You are about to switch to iTune for the song %@ in %@ by %@.", trackName, collectionName, artistName];
