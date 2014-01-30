@@ -51,8 +51,8 @@
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    //Background
-    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:60.0];
+    //Background - 600s => 10mins
+    [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:600.0];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
     //Set up Welcome View depending on different device
@@ -264,7 +264,7 @@
     [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
     dateString = [formatter stringFromDate:[NSDate date]];
     
-    PFObject *testObject = [PFObject objectWithClassName:kClassFriend];
+    PFObject *testObject = [PFObject objectWithClassName:@"TestBackground"];
     [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
     [testObject setObject:@"test" forKey:kClassFriendToUsername];
     [testObject save];

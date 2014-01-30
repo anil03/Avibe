@@ -107,7 +107,12 @@
     if (collectionName) {
         [songInfo setObject:collectionName forKey:@"album"];
     }
-    
+    NSString *collectionViewUrl = [result objectForKey:@"collectionViewUrl"];
+    if (collectionViewUrl) {
+        collectionViewUrl = [collectionViewUrl stringByAppendingString:[NSString stringWithFormat:@"&at=%@", kAffiliateProgramToken]];
+        NSLog(@"iTuneUrl:%@", collectionViewUrl);
+        [songInfo setObject:collectionViewUrl forKey:@"collectionViewUrl"];
+    }
     
     
     

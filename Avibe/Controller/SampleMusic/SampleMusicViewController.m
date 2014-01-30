@@ -46,6 +46,8 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic, strong) UIView *listenInView;
+@property (nonatomic, strong) UIView *buyInView;
+@property (nonatomic, strong) UIAlertView *alertBeforeSwitchToITune;
 
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
@@ -71,6 +73,7 @@
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
+@property (nonatomic, strong) NSString *collectionViewUrl;
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
 
@@ -177,8 +180,8 @@
     [self addShareView];
     
     //Button - Buy
-//    currentHeight += buttonHeight;
-//    [self addBuyInButton];
+    currentHeight += buttonHeight;
+    [self addBuyInView];
     
     //Button - Listen
     currentHeight += buttonHeight;
@@ -201,13 +204,38 @@
 }
 - (void)addBuyInView
 {
-    UIButton *buyButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
-    [buyButton setTitle:@"Buy in " forState:UIControlStateNormal];
-    [buyButton setTitleColor:textColor forState:UIControlStateNormal];
-    [buyButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
-    buyButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    buyButton.backgroundColor = [UIColor blackColor];
-    [scrollView addSubview:buyButton];
+    _buyInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [scrollView addSubview:_buyInView];
+    
+    float leftOffset = buttonLeft;
+    float labelWidth = 80;
+    float buttonWidth = buttonHeight;
+    
+    UILabel *buyLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, labelWidth, buttonHeight)];
+    [buyLabel setText:@"Buy in: "];
+    [buyLabel setTextColor:textColor];
+    buyLabel.backgroundColor = [UIColor blackColor];
+    [_buyInView addSubview:buyLabel];
+    
+    leftOffset += labelWidth;
+    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
+    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"iTunes-10-icon.png"] forState:UIControlStateNormal];
+    [iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];
+    [_buyInView addSubview:iTuneButton];
+}
+- (void)buyInItune
+{
+    NSString *alertString = [NSString stringWithFormat:@"You are about to switch to iTune for the song %@ in %@ by %@.", _songTitle, _songAlbum, _songArtist];
+    _alertBeforeSwitchToITune = [[UIAlertView alloc] initWithTitle: @"Reminder" message:alertString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
+    [_alertBeforeSwitchToITune show];
+
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Switch Webview
+    if([alertView isEqual:_alertBeforeSwitchToITune] && buttonIndex == 0){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_collectionViewUrl]];
+    }
 }
 - (void)addListenInView
 {
@@ -449,6 +477,7 @@
     _songTitle = [songInfo objectForKey:@"title"];
     _songAlbum = [songInfo objectForKey:@"album"];
     _songArtist = [songInfo objectForKey:@"artist"];
+    _collectionViewUrl = [songInfo objectForKey:@"collectionViewUrl"];
     
     //Set Song Title
     _titleLabel.text = [songInfo objectForKey:@"title"];

@@ -14,6 +14,8 @@
 
 @implementation Constant
 
+#pragma mark - Affiliate Token
+NSString *const kAffiliateProgramToken = @"1l3v6A8";
 
 #pragma mark - Class Contact
 NSString *const kClassContact = @"Contact";

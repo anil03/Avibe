@@ -351,7 +351,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 //        }
 //    }
     
-    collectionString = [collectionString stringByAppendingString:@"&at=1l3v6A8"];
+    collectionString = [collectionString stringByAppendingString:[NSString stringWithFormat:@"&at=%@", kAffiliateProgramToken]];
     NSLog(@"iTuneUrl:%@", collectionString);
     
     _iTuneUrl = [NSURL URLWithString:collectionString];
@@ -379,7 +379,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Switch Webview
-    if([alertView isEqual:alertView] && buttonIndex == 0){
+    if([alertView isEqual:_alertBeforeSwitchToITune] && buttonIndex == 0){
         [[UIApplication sharedApplication] openURL:_iTuneUrl];
     }
 }

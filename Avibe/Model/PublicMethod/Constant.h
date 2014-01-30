@@ -10,6 +10,10 @@
 
 @interface Constant : NSObject
 
+#pragma mark - Affiliate Token
+extern NSString *const kAffiliateProgramToken;
+
+
 #pragma mark - Class Contact
 extern NSString *const kClassContact;
 extern NSString *const kClassContactUsername;
