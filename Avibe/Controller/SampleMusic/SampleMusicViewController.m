@@ -359,6 +359,7 @@
     }
     
     // here your link is converted in embed format.
+//    NSString *embedHTML = [NSString stringWithFormat:@"<iframe id=\"ytplayer\" type=\"text/html\" width=\"640\" height=\"390\" src=\"%@\" frameborder=\"0\"/>", videoURL];
     NSString* embedHTML = [NSString stringWithFormat:@"\
                            <html><head>\
                            <style type=\"text/css\">\
