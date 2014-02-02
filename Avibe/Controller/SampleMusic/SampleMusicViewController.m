@@ -16,6 +16,11 @@
 #import "Setting.h"
 #import "SampleMusic_iTune.h"
 
+
+//Rdio
+#import "RdioConsumerCredentials.h"
+#import <Rdio/Rdio.h>
+
 @interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate>
 {
     UIColor *backgroundColor;
@@ -76,6 +81,11 @@
 @property (nonatomic, strong) NSString *collectionViewUrl;
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
+
+
+//Rdio
+@property (readonly) Rdio *rdio;
+@property NSString *rdio_userkey;
 
 @end
 
@@ -190,7 +200,53 @@
     //Label - More Like this
 //    currentHeight += buttonHeight;
 //    [self addMoreLikeThisView];
+    
+    //Test Rdio Image
+//    [self getRdioMusic];
 }
+
+
+#pragma mark - Rdio Music
+- (void)getRdioMusic
+{
+    _rdio_userkey = @"s12187116";
+    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+//    [_rdio callAPIMethod:@"get"
+//          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
+//                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+    [_rdio callAPIMethod:@"search"
+          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"rolling", @"track", nil] forKeys:[NSArray arrayWithObjects:@"query",@"types", nil]]
+                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+}
+
+#pragma mark - Rdio delegate method
+- (void)rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error
+{
+    NSLog(@"No Rdio Music Available with error: %@", error);
+}
+
+- (void)rdioRequest:(RDAPIRequest *)request didLoadData:(id)data
+{
+    NSDictionary *userdata = [data objectForKey:_rdio_userkey];
+    NSDictionary *lastSongPlayedData = [userdata objectForKey:@"lastSongPlayed"];
+    
+    NSString *title = [lastSongPlayedData objectForKey:@"name"];
+    NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
+    NSString *album = [lastSongPlayedData objectForKey:@"album"];
+    //    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
+    
+    PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+    [songRecord setObject:title  forKey:@"title"];
+    [songRecord setObject:album forKey:@"album"];
+    [songRecord setObject:artist forKey:@"artist"];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    
+//    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+//    [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
+}
+
+
+#pragma mark - Add SubView
 - (void)addShareView
 {
     UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
