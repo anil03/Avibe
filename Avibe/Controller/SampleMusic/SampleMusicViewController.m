@@ -457,8 +457,16 @@
                            <iframe width=\"100%%\" height=\"240px\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
                            </body></html>",videoURL];
     [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
+    _sampleMusicWebView.delegate = self;
 }
-
+-(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
+    if ( inType == UIWebViewNavigationTypeLinkClicked ) {
+        [[UIApplication sharedApplication] openURL:[inRequest URL]];
+        return NO;
+    }
+    
+    return YES;
+}
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     NSLog(@"Log Finish.");
