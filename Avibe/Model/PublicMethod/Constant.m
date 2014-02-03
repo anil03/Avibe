@@ -53,5 +53,7 @@ NSString *const kClassSongUsername = @"user";
 NSString *const kClassSongTitle = @"title";
 NSString *const kClassSongAlbum = @"album";
 NSString *const kClassSongArtist = @"artist";
+NSString *const kClassSongSource = @"source";
+
 
 @end

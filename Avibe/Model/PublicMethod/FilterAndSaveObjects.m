@@ -24,15 +24,15 @@
     for(PFObject *pfToSave in musicToSave){
         songExisted = NO;
         
-        NSString *newTitle = [pfToSave objectForKey:@"title"];
-        NSString *newArtist = [pfToSave objectForKey:@"artist"];
-        NSString *newAlbum = [pfToSave objectForKey:@"album"];
+        NSString *newTitle = [pfToSave objectForKey:kClassSongTitle];
+        NSString *newArtist = [pfToSave objectForKey:kClassSongArtist];
+        NSString *newAlbum = [pfToSave objectForKey:kClassSongAlbum];
         
         for(PFObject *pf in fetechObjects){
             
-            NSString *existingTitle = [pf objectForKey:@"title"];
-            NSString *existingArtist = [pf objectForKey:@"artist"];
-            NSString *existingAlbum = [pf objectForKey:@"album"];
+            NSString *existingTitle = [pf objectForKey:kClassSongTitle];
+            NSString *existingArtist = [pf objectForKey:kClassSongArtist];
+            NSString *existingAlbum = [pf objectForKey:kClassSongAlbum];
             
             //                NSLog(@"%@-%@", newTitle, existingTitle);
             
@@ -49,6 +49,8 @@
         if (songExisted) {
             continue;
         }
+        //Add source info
+        [pfToSave setObject:sourceName forKey:kClassSongSource];
         [dataToSave addObject:pfToSave];
     }
     
