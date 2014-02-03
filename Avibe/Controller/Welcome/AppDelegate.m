@@ -16,7 +16,12 @@
 #import <Rdio/Rdio.h>
 #import "RdioConsumerCredentials.h"
 
+//FilterAndSave
+#import "FilterAndSaveObjects.h"
 
+@interface AppDelegate() <FilterAndSaveObjectsDelegate>
+
+@end
 
 @implementation AppDelegate
 
@@ -98,6 +103,8 @@
         NSLog(@"album: %@", album);
         NSLog(@"artist: %@", artist);
         NSLog(@"playCount: %@", playCount);
+        
+        [self saveIPodMusic:@"iPodItemChanged"];
     }
 }
 
@@ -249,56 +256,53 @@
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
     
-    //Increase Badge Number
-    [UIApplication sharedApplication].applicationIconBadgeNumber++;
-    
-    //Tutorial Chapter17 - Adding background fetching
-    //Run your app in simulator. In XCode Menu, Go to “Debug” => “Simulate Background Fetch”.
     NSLog(@"########### Received Background Fetch ###########");
-    //Download  the Content .
     
     //Test Background Fetch in Parse
-    NSDateFormatter *formatter;
-    NSString        *dateString;
-    formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
-    dateString = [formatter stringFromDate:[NSDate date]];
-    
-    PFObject *testObject = [PFObject objectWithClassName:@"TestBackground"];
-    [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
-    [testObject setObject:@"test" forKey:kClassFriendToUsername];
-    [testObject save];
+//    NSDateFormatter *formatter;
+//    NSString        *dateString;
+//    formatter = [[NSDateFormatter alloc] init];
+//    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
+//    dateString = [formatter stringFromDate:[NSDate date]];
+//    
+//    PFObject *testObject = [PFObject objectWithClassName:@"TestBackground"];
+//    [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
+//    [testObject setObject:@"test" forKey:kClassFriendToUsername];
+//    [testObject save];
 //    completionHandler(UIBackgroundFetchResultNewData);
     
     //iPod Music
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
-        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        NSString *title = [currentPlayingSong valueForProperty:MPMediaItemPropertyTitle];
-        title = [title stringByAppendingString:@"Background!"];
-        
-        [songRecord setObject:title  forKey:@"title"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-        
-        [songRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSLog(@"Save In Background Mode successfully.");
-                
-                //Tell the system that you ar done.
-                completionHandler(UIBackgroundFetchResultNewData);
-            }else{
-                completionHandler(UIBackgroundFetchResultFailed);
-            }
-        }];
+        [self saveIPodMusic:@"iPodBackground"];
+        completionHandler(UIBackgroundFetchResultNewData);
     }else{
         completionHandler(UIBackgroundFetchResultNoData);
     }
     
     NSLog(@"########### End Background Fetch ###########");
+}
+- (void)saveIPodMusic:(NSString*)source
+{
+    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+    PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:kClassSongTitle];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassUser];
     
+    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    filter.delegate = self;
     
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    postQuery.limit = 1000;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:source andFetchObjects:objects];
+        //Increase Badge Number
+        [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    }];
 
 }
 
@@ -309,6 +313,8 @@
     //fetch the latest content
    
 }
+
+
 
 
 @end
