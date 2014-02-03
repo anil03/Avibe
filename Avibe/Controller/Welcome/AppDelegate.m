@@ -289,7 +289,7 @@
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:kClassSongTitle];
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassUser];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
     
     FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
     filter.delegate = self;
