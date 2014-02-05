@@ -16,6 +16,7 @@
 
 //iPod
 #import <MediaPlayer/MediaPlayer.h>
+#import "iPodListenedMusic.h"
 
 //Facebook
 #import "FaceBookListenedMusic.h"
@@ -64,16 +65,23 @@
 #pragma mark - iPod Music
 - (void)getIPodMusic
 {
-    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    if (currentPlayingSong){
-        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:@"title"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:@"album"];
-        [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    NSMutableArray *musicArray = [[NSMutableArray alloc] init];
+    NSArray *playedMusicArray = [IPodListenedMusic iPodPlayedMusic];
+    
+    if (playedMusicArray) {
+        for(NSDictionary *dict in playedMusicArray){
+            PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+            [songRecord setObject:[dict objectForKey:kClassSongTitle]  forKey:kClassSongTitle];
+            [songRecord setObject:[dict objectForKey:kClassSongAlbum] forKey:kClassSongAlbum];
+            [songRecord setObject:[dict objectForKey:kClassSongArtist] forKey:kClassSongArtist];
+            [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+            [songRecord setObject:@"iPod" forKey:kClassSongSource];
+
+//            NSLog(@"=====iPod Music: Title:%@, Album:%@, Artist%@", [dict objectForKey:kClassSongTitle], [dict objectForKey:kClassSongAlbum], [dict objectForKey:kClassSongArtist]);
+        }
         
         FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
-        [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"iPod" andFetchObjects:fetechObjects];
+        [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"iPod" andFetchObjects:fetechObjects];
     }else{
         NSLog(@"No iPod Music Available");
     }

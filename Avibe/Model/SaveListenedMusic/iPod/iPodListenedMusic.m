@@ -11,19 +11,37 @@
 
 @implementation IPodListenedMusic
 
-- (NSDictionary *)iPodPlayedMusic
+/**
+ * Return array of dictionary, each dictionary contains title, album, artist.
+ */
++ (NSArray *)iPodPlayedMusic
 {
-    //    MPMediaQuery *songsQuery =  [[MPMediaQuery alloc] initWithFilterPredicates: predicates];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
+
     MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
     for(MPMediaItem *item in [songsQuery items]){
-        NSString *title = [item valueForProperty:[MPMediaItem titlePropertyForGroupingType:MPMediaGroupingTitle]];
-        NSNumber *count = [item valueForKey:MPMediaItemPropertyPlayCount];
-        NSString *lastPlayedDate = [item valueForKey:MPMediaItemPropertyLastPlayedDate];
+        NSString *title = [item valueForProperty:MPMediaItemPropertyTitle];
+        NSString *album = [item valueForProperty:MPMediaItemPropertyAlbumTitle];
+        NSString *artist = [item valueForProperty:MPMediaItemPropertyArtist];
+
+//        NSNumber *count = [item valueForKey:MPMediaItemPropertyPlayCount];
+        NSDate *lastPlayedDate = [item valueForKey:MPMediaItemPropertyLastPlayedDate];
         
-        NSLog(@"%@, %d, %@", title, [count unsignedIntegerValue], lastPlayedDate);
+        if ([lastPlayedDate compare:lastUpdatedDate] == NSOrderedDescending) {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+            [dict setObject:title forKey:kClassSongTitle];
+            [dict setObject:album forKey:kClassSongAlbum];
+            [dict setObject:artist forKey:kClassSongArtist];
+            [array addObject:dict];
+            
+//            NSLog(@"===*****====%@, %@, %@, %lu, lastPlayed: %@, lastUpdated: %@", title, album, artist, (unsigned long)[count unsignedIntegerValue], lastPlayedDate, lastUpdatedDate);
+        }
     }
 
-    return nil;
+    return array;
 }
 
 @end

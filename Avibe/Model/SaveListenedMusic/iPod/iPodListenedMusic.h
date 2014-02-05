@@ -10,6 +10,9 @@
 
 @interface IPodListenedMusic : NSObject
 
-@property (nonatomic, strong, readonly) NSDictionary *iPodPlayedMusic;
+//@property (nonatomic, strong, readonly) NSArray *iPodPlayedMusic;
+
++ (NSArray *)iPodPlayedMusic;
+
 
 @end

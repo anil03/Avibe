@@ -14,6 +14,9 @@
 
 @implementation Constant
 
+#pragma mark - LastUpdatedDate
+NSString *const kKeyLastUpdatedDate = @"lastUpdatedDate";
+
 #pragma mark - Affiliate Token
 NSString *const kAffiliateProgramToken = @"1l3v6A8";
 

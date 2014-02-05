@@ -13,6 +13,7 @@
 @interface PublicMethod : NSObject
 
 @property (nonatomic, strong) NSMutableArray *backgroundImages;
+//@property (nonatomic, strong) NSDate *lastUpdatedDate;
 
 + (PublicMethod *)sharedInstance;
 

@@ -106,8 +106,17 @@
     
     return string;
 }
+/**
+ * When finish update, update the lastUpdatedDate
+ */
 - (NSMutableAttributedString*)refreshFinsihedString
 {
+    //update lastUpdateDate
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdatedDate = [NSDate date];
+    [defaults setObject:lastUpdatedDate forKey:kKeyLastUpdatedDate];
+    
+    
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
     NSString *lastUpdated = [NSString stringWithFormat:@"Last updated on %@",[formatter stringFromDate:[NSDate date]]];

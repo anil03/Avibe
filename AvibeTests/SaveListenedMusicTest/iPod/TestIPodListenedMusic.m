@@ -9,9 +9,14 @@
 #import <XCTest/XCTest.h>
 
 #import "IPodListenedMusic.h"
+#import "PublicMethod.h"
+
+/**
+ * Test whether getting songs played after lastUpdatedDate from iPod library.
+ */
 
 @interface TestIPodListenedMusic : XCTestCase
-@property (nonatomic, strong) IPodListenedMusic *music;
+
 @end
 
 @implementation TestIPodListenedMusic
@@ -19,21 +24,31 @@
 - (void)setUp
 {
     [super setUp];
-    // Put setup code here; it will be run once, before the first test case.
-    _music = [[IPodListenedMusic alloc] init];
+    
+    // Manually set the update date
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdatedDate = [NSDate date];
+    lastUpdatedDate = [lastUpdatedDate addTimeInterval:-1000000]; //Near past
+    [defaults setObject:lastUpdatedDate forKey:kKeyLastUpdatedDate];
 }
 
 - (void)tearDown
 {
-    // Put teardown code here; it will be run once, after the last test case.
     [super tearDown];
 }
 
 - (void)testExample
 {
-    NSDictionary *musicDict = [_music iPodPlayedMusic];
-    XCTAssertNil(musicDict, @"iPodPlayedMusic should be nil");
-    //    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
+    NSLog(@"============%@===============", lastUpdatedDate);
+    
+    NSArray *musicArray = [IPodListenedMusic iPodPlayedMusic];
+    //Following codes fail the test?
+    for(NSDictionary *dict in musicArray){
+        NSLog(@"Title:%@, Album:%@, Artist%@", [dict objectForKey:kClassSongTitle], [dict objectForKey:kClassSongAlbum], [dict objectForKey:kClassSongArtist]);
+    }
+    XCTAssert([musicArray count] >= 0, @"iPodPlayedMusic may have dict.");
 }
 
 @end

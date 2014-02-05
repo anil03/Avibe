@@ -10,6 +10,9 @@
 
 @interface Constant : NSObject
 
+#pragma mark - LastUpdatedDate
+extern NSString *const kKeyLastUpdatedDate;
+
 #pragma mark - Affiliate Token
 extern NSString *const kAffiliateProgramToken;
 
