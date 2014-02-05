@@ -93,16 +93,7 @@
 //    
 //    NSSet *predicates = [NSSet setWithObjects: artistPredicate, nil];
     
-//    MPMediaQuery *songsQuery =  [[MPMediaQuery alloc] initWithFilterPredicates: predicates];
-    MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
-    for(MPMediaItem *item in [songsQuery items]){
-        NSString *title = [item valueForProperty:[MPMediaItem titlePropertyForGroupingType:MPMediaGroupingTitle]];
-        NSNumber *count = [item valueForKey:MPMediaItemPropertyPlayCount];
-        NSString *lastPlayedDate = [item valueForKey:MPMediaItemPropertyLastPlayedDate];
-        
-        NSLog(@"%@, %d, %@", title, [count unsignedIntegerValue], lastPlayedDate);
-    }
-//    NSLog(@"%@", [songsQuery items]);
+
     return YES;
 }
 

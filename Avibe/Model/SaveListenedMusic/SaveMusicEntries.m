@@ -21,7 +21,9 @@
 #import "FaceBookListenedMusic.h"
 
 
-
+/**
+ * Fetch songs from different song, compare to exisiting songs on server and then save.
+ */
 @interface SaveMusicEntries () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
 
 @property (nonatomic, strong) XMLParser *parser;
@@ -41,18 +43,6 @@
 @implementation SaveMusicEntries
 
 @synthesize fetechObjects;
-
-- (id)init
-{
-    self = [super init];
-    
-    if (self) {
-        
-        
-    }
-    
-    return self;
-}
 
 - (void)saveMusic
 {
