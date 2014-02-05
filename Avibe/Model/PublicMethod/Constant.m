@@ -35,6 +35,8 @@ NSString *const kClassUserEmail = @"email";
 NSString *const kClassUserPhoneNumber = @"additional";
 NSString *const kClassUserLastFM = @"lastFM";
 NSString *const kClassUserRdio = @"rdio";
+NSString *const kClassUserRdioKey = @"rdioKey";
+
 
 
 #pragma mark - Class Friend

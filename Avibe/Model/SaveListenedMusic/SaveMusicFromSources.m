@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Yuhua Mai. All rights reserved.
 //
 
-#import "SaveMusicEntries.h"
+#import "SaveMusicFromSources.h"
 #import "XMLParser.h"
 #import "FilterAndSaveObjects.h"
 
@@ -25,7 +25,7 @@
 /**
  * Fetch songs from different song, compare to exisiting songs on server and then save.
  */
-@interface SaveMusicEntries () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
+@interface SaveMusicFromSources () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
 
 @property (nonatomic, strong) XMLParser *parser;
 
@@ -41,7 +41,7 @@
 
 @end
 
-@implementation SaveMusicEntries
+@implementation SaveMusicFromSources
 
 @synthesize fetechObjects;
 
@@ -91,15 +91,15 @@
 {
     NSString *lastFMUsername = [[PFUser currentUser] objectForKey:kClassUserLastFM];
     
-    if(!lastFMUsername) return;
-    
-    NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", lastFMUsername];
-
-    //Save Scrobbler Music from XML Parser
-    NSURL *url = [NSURL URLWithString:kURLString];
-    _parser = [[XMLParser alloc] initWithURL:url];
-    _parser.delegate = self;
-    [self.parser startParsing];
+    if(lastFMUsername){
+        NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", lastFMUsername];
+        
+        //Save Scrobbler Music from XML Parser
+        NSURL *url = [NSURL URLWithString:kURLString];
+        _parser = [[XMLParser alloc] initWithURL:url];
+        _parser.delegate = self;
+        [self.parser startParsing];
+    }
 }
 
 - (void)finishParsing:(NSMutableArray*)result
@@ -131,14 +131,18 @@
 #pragma mark - Rdio Music
 - (void)getRdioMusic
 {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:@"s12187116" forKey:kKeyRdioUserKey];
-    _rdio_userkey = [defaults objectForKey:kKeyRdioUserKey];
+    NSString *username = [[PFUser currentUser] objectForKey:kClassUserRdioKey];
     
-    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
-    [_rdio callAPIMethod:@"get"
-         withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
-               delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults setObject:@"s12187116" forKey:kKeyRdioUserKey];
+//    _rdio_userkey = [defaults objectForKey:kKeyRdioUserKey];
+    
+    if (username) {
+        _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+        [_rdio callAPIMethod:@"get"
+              withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:username, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
+                    delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+    }
 }
 
 #pragma mark - Rdio delegate method

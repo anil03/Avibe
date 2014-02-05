@@ -85,7 +85,7 @@
 		4C231DD61881E51300B030F9 /* ITuneMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD51881E51300B030F9 /* ITuneMusicViewController.m */; };
 		4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD81881E88500B030F9 /* ImageFetcher.m */; };
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
-		4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicEntries.m */; };
+		4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */; };
 		4C231DEA188311CC00B030F9 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE8188311CC00B030F9 /* XMLParser.m */; };
 		4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
 		4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
@@ -259,8 +259,8 @@
 		4C231DD81881E88500B030F9 /* ImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetcher.m; sourceTree = "<group>"; };
 		4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundImageView.h; sourceTree = "<group>"; };
 		4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageView.m; sourceTree = "<group>"; };
-		4C231DE018820CC200B030F9 /* SaveMusicEntries.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveMusicEntries.h; sourceTree = "<group>"; };
-		4C231DE118820CC200B030F9 /* SaveMusicEntries.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveMusicEntries.m; sourceTree = "<group>"; };
+		4C231DE018820CC200B030F9 /* SaveMusicFromSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveMusicFromSources.h; sourceTree = "<group>"; };
+		4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveMusicFromSources.m; sourceTree = "<group>"; };
 		4C231DE7188311CC00B030F9 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
 		4C231DE8188311CC00B030F9 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
 		4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioConsumerCredentials.h; sourceTree = "<group>"; };
@@ -694,10 +694,10 @@
 		4C231DDF18820CA300B030F9 /* SaveListenedMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C231DE018820CC200B030F9 /* SaveMusicFromSources.h */,
+				4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */,
 				4CE4F4F7188C61F90013C31C /* FilterAndSaveObjects.h */,
 				4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */,
-				4C231DE018820CC200B030F9 /* SaveMusicEntries.h */,
-				4C231DE118820CC200B030F9 /* SaveMusicEntries.m */,
 				4C4184D018A1C83600999660 /* iPod */,
 				4C8B5804188F646900430CF9 /* Facebook */,
 				4C231DE6188311CC00B030F9 /* LastFM */,
@@ -1197,7 +1197,7 @@
 				4C23F17A1885A48100D2075A /* SampleMusicViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
-				4C231DE218820CC200B030F9 /* SaveMusicEntries.m in Sources */,
+				4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

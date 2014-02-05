@@ -40,7 +40,7 @@
 #import "BackgroundImageView.h"
 #import "SampleMusicSourceView.h"
 #import "UserViewController.h"
-#import "SaveMusicEntries.h"
+#import "SaveMusicFromSources.h"
 
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionLeftViewState,
@@ -70,7 +70,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @property (nonatomic, strong) NSArray *PFObjects;
-@property (nonatomic, strong) SaveMusicEntries *saveMusicEntries;
+@property (nonatomic, strong) SaveMusicFromSources *saveMusicEntries;
 @end
 
 @implementation LiveFeedViewController
@@ -455,7 +455,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     // custom refresh logic would be placed here...
     
-    _saveMusicEntries = [[SaveMusicEntries alloc] init];
+    _saveMusicEntries = [[SaveMusicFromSources alloc] init];
     [_saveMusicEntries saveMusic];
     
     [self fetchData:self.refreshControl];

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SaveMusicEntries : NSObject
+@interface SaveMusicFromSources : NSObject
 
 - (void)saveMusic;
 
