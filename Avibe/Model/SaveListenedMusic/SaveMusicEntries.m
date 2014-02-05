@@ -57,7 +57,6 @@
         [self getIPodMusic];
         [self getRdioMusic];
         [self getFaceBookMusic];
-        [self getSpotifyMusic];
         [self getScrobbleMusic];
     }];
 }
@@ -129,16 +128,13 @@
     [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"Facebook" andFetchObjects:fetechObjects];
 }
 
-#pragma mark - Spotify Music
-- (void)getSpotifyMusic
-{
-    NSLog(@"No Spotify Music Available");
-}
-
 #pragma mark - Rdio Music
 - (void)getRdioMusic
 {
-    _rdio_userkey = @"s12187116";
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:@"s12187116" forKey:kKeyRdioUserKey];
+    _rdio_userkey = [defaults objectForKey:kKeyRdioUserKey];
+    
     _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
     [_rdio callAPIMethod:@"get"
          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]

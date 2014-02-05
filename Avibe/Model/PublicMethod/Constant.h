@@ -13,9 +13,9 @@
 #pragma mark - LastUpdatedDate
 extern NSString *const kKeyLastUpdatedDate;
 
-#pragma mark - Affiliate Token
+#pragma mark - Affiliate Token & Rdio Key
 extern NSString *const kAffiliateProgramToken;
-
+extern NSString *const kKeyRdioUserKey;
 
 #pragma mark - Class Contact
 extern NSString *const kClassContact;

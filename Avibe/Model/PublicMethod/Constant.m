@@ -19,6 +19,8 @@ NSString *const kKeyLastUpdatedDate = @"lastUpdatedDate";
 
 #pragma mark - Affiliate Token
 NSString *const kAffiliateProgramToken = @"1l3v6A8";
+NSString *const kKeyRdioUserKey = @"kKeyRdioUserKey";
+
 
 #pragma mark - Class Contact
 NSString *const kClassContact = @"Contact";
