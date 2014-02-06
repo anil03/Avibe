@@ -489,13 +489,15 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
-//    UIBarButtonItem *barButton = [[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStyleBordered target:self action:@selector(editSong)];
-    
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+//    MMDrawerBarButtonItem *rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
+    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightDrawerButtonPress:)];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
 }
-
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+-(void)rightDrawerButtonPress:(id)sender{
+    [self refreshView:_refreshControl];
 }
 
 -(void)editSong

@@ -61,6 +61,8 @@
             NSLog(@"Number of songs to save: %d", [dataToSave count]);
             NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
             
+//            [UIApplication sharedApplication].applicationIconBadgeNumber += ([dataToSave count]-numberOfDuplicated);
+            
             if (numberOfDuplicated > 0) {
                 [self callSavedDuplicate];
             }else{
