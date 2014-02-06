@@ -138,13 +138,14 @@
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+    [songRecord setObject:@"iPod Background" forKey:kClassSongSource];
     
     FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
 //    filter.delegate = self;
     
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
     postQuery.limit = 1000;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:source andFetchObjects:objects];
