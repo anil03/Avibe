@@ -16,11 +16,12 @@
 #import <Rdio/Rdio.h>
 #import "RdioConsumerCredentials.h"
 
-//FilterAndSave
-#import "FilterAndSaveObjects.h"
+//SaveMusic
+#import "SaveMusicFromSources.h"
+#import "FilterAndSaveMusic.h"
 
-@interface AppDelegate() <FilterAndSaveObjectsDelegate>
-
+@interface AppDelegate()
+@property (nonatomic, strong) SaveMusicFromSources *saveMusic;
 @end
 
 @implementation AppDelegate
@@ -28,6 +29,14 @@
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+
+- (SaveMusicFromSources *)saveMusic
+{
+    if (!_saveMusic) {
+        _saveMusic = [[SaveMusicFromSources alloc] init];
+    }
+    return _saveMusic;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -40,10 +49,8 @@
     }
     
     // Override point for customization after application launch.
-    //    NSManagedObjectContext *context = [self managedObjectContext];
-    
-    //Rdio
-//    Rdio *rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+//    NSManagedObjectContext *context = [self managedObjectContext];
+
     
     //Parse Account
     [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
@@ -62,17 +69,8 @@
     
     //Set up Welcome View depending on different device
     UIViewController *welcomeController = [[WelcomeViewController alloc] init];
-    /*
-    if (IS_IPHONE_5) {
-        welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewController"];
-    }else{
-        welcomeController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"WelComeViewControllerFor3.5"];
-    }*/
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     self.window.rootViewController = navigationController;
-    
-
-    
     
     /*Notification*/
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -84,23 +82,36 @@
                              object:player];
     [player beginGeneratingPlaybackNotifications];
     
-    
-    //MPMediaQuery
-//    MPMediaPropertyPredicate *artistPredicate =
-//    [MPMediaPropertyPredicate predicateWithValue:@"test"
-//                                     forProperty:MPMediaItemPropertyTitle
-//                                  comparisonType:MPMediaPredicateComparisonContains];
-//    
-//    NSSet *predicates = [NSSet setWithObjects: artistPredicate, nil];
-    
-
     return YES;
 }
 
 
--(void) nowPlayingItemChanged:(NSNotification *)notification {
-    MPMusicPlayerController *player = (MPMusicPlayerController *)notification.object;
+#pragma mark - Background Method
+- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    NSLog(@"########### Received Background Fetch ###########");
     
+    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+    if (currentPlayingSong){
+        [_saveMusic saveMusic];
+        completionHandler(UIBackgroundFetchResultNewData);
+    }else{
+        completionHandler(UIBackgroundFetchResultNoData);
+    }
+    
+    NSLog(@"########### End Background Fetch ###########");
+}
+
+
+- (void) application : (UIApplication *)application didReceiveRemoteNotification:
+(NSDictionary *)userInfo performFetchWithCompletionHandler:(void(^)
+                                                            (UIBackgroundFetchResult))completionHandler
+{
+    //fetch the latest content
+}
+
+-(void)nowPlayingItemChanged:(NSNotification *)notification {
+    MPMusicPlayerController *player = (MPMusicPlayerController *)notification.object;
     MPMediaItem *song = [player nowPlayingItem];
     
     if (song) {
@@ -116,6 +127,29 @@
         
         [self saveIPodMusic:@"iPodItemChanged"];
     }
+}
+- (void)saveIPodMusic:(NSString*)source
+{
+    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
+    PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:kClassSongTitle];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
+    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+    
+    FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
+//    filter.delegate = self;
+    
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
+    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    postQuery.limit = 1000;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:source andFetchObjects:objects];
+        //Increase Badge Number
+        [UIApplication sharedApplication].applicationIconBadgeNumber++;
+    }];
+    
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
@@ -156,7 +190,6 @@
 }
 
 #pragma mark - Core Data
-
 - (void)saveContext
 {
     NSError *error = nil;
@@ -172,7 +205,6 @@
 }
 
 #pragma mark - Core Data stack
-
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
 - (NSManagedObjectContext *)managedObjectContext
@@ -188,7 +220,6 @@
     }
     return _managedObjectContext;
 }
-
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
 - (NSManagedObjectModel *)managedObjectModel
@@ -200,7 +231,6 @@
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
-
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
@@ -245,7 +275,6 @@
 }
 
 #pragma mark - Application's Documents directory
-
 // Returns the URL to the application's Documents directory.
 - (NSURL *)applicationDocumentsDirectory
 {
@@ -256,75 +285,9 @@
 - (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
     return [PFFacebookUtils handleOpenURL:url];
 }
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [PFFacebookUtils handleOpenURL:url];
 }
-
-#pragma mark - Background Method
-- (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
-{
-    
-    NSLog(@"########### Received Background Fetch ###########");
-    
-    //Test Background Fetch in Parse
-//    NSDateFormatter *formatter;
-//    NSString        *dateString;
-//    formatter = [[NSDateFormatter alloc] init];
-//    [formatter setDateFormat:@"dd-MM-yyyy HH:mm"];
-//    dateString = [formatter stringFromDate:[NSDate date]];
-//    
-//    PFObject *testObject = [PFObject objectWithClassName:@"TestBackground"];
-//    [testObject setObject:[NSString stringWithFormat:@"test, %@", dateString] forKey:kClassFriendFromUsername];
-//    [testObject setObject:@"test" forKey:kClassFriendToUsername];
-//    [testObject save];
-//    completionHandler(UIBackgroundFetchResultNewData);
-    
-    //iPod Music
-    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    if (currentPlayingSong){
-        [self saveIPodMusic:@"iPodBackground"];
-        completionHandler(UIBackgroundFetchResultNewData);
-    }else{
-        completionHandler(UIBackgroundFetchResultNoData);
-    }
-    
-    NSLog(@"########### End Background Fetch ###########");
-}
-- (void)saveIPodMusic:(NSString*)source
-{
-    MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
-    PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
-    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyTitle]  forKey:kClassSongTitle];
-    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
-    [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
-    
-    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
-    filter.delegate = self;
-    
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updateAt"]; //Get latest song
-    postQuery.limit = 1000;
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:source andFetchObjects:objects];
-        //Increase Badge Number
-        [UIApplication sharedApplication].applicationIconBadgeNumber++;
-    }];
-
-}
-
-- (void) application : (UIApplication *)application didReceiveRemoteNotification:
-(NSDictionary *)userInfo performFetchWithCompletionHandler:(void(^)
-                                                            (UIBackgroundFetchResult))completionHandler
-{
-    //fetch the latest content
-   
-}
-
-
-
 
 @end

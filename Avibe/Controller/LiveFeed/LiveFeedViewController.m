@@ -196,24 +196,33 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	
     //Data source
     int index = indexPath.row/columnNumber;
+    cell.label.numberOfLines = 1;
     
     PFObject *song = [self.PFObjects objectAtIndex:index];
     
     switch (indexPath.row%columnNumber) {
         case 0:{
-            cell.label.text = [song objectForKey:@"user"];
+            NSString *info = [song objectForKey:kClassSongUsername];
+//            info = [info stringByAppendingString:[NSString stringWithFormat:@"%@", [song createdAt]]];
+            NSString *source = [song objectForKey:kClassSongSource];
+            if (source) {
+                info = [info stringByAppendingFormat:@"\n%@", source];
+            }
+            cell.label.text = info;
+            cell.label.lineBreakMode = NSLineBreakByWordWrapping;
+            cell.label.numberOfLines = 2;
             break;
         }
         case 1:{
-            cell.label.text = [song objectForKey:@"title"];
+            cell.label.text = [song objectForKey:kClassSongTitle];
             break;
         }
         case 2:{
-            cell.label.text = [song objectForKey:@"album"];
+            cell.label.text = [song objectForKey:kClassSongAlbum];
             break;
         }
         case 3:{
-            cell.label.text = [song objectForKey:@"artist"];
+            cell.label.text = [song objectForKey:kClassSongArtist];
             break;
         }
         
@@ -415,7 +424,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
         songQuery.limit = 100;
         [songQuery whereKey:kClassSongUsername containedIn:friendArray];
-        [songQuery orderByDescending:@"updateAt"]; //Get latest song
+        [songQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
         [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
                 self.PFObjects = objects;

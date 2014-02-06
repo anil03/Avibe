@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol FilterAndSaveObjectsDelegate <NSObject>
+@protocol FilterAndSaveMusicDelegate <NSObject>
 
 - (void)dataSavedSucceed;
 - (void)dataSavedWithDuplicate;
@@ -16,9 +16,9 @@
 
 @end
 
-@interface FilterAndSaveObjects : NSObject
+@interface FilterAndSaveMusic : NSObject
 
-@property (nonatomic, weak) id<FilterAndSaveObjectsDelegate> delegate;
+@property (nonatomic, weak) id<FilterAndSaveMusicDelegate> delegate;
 
 -(void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)musicToSave andSource:(NSString*)sourceName andFetchObjects:(NSArray*)fetechObjects;
 

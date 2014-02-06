@@ -74,7 +74,7 @@
 
 - (void)makeMusicHistoryRequest
 {
-    [FBRequestConnection startWithGraphPath:@"/me/music.listens"
+    [FBRequestConnection startWithGraphPath:@"/me/music.listens?fields=data,application"
                                  parameters:nil
                                  HTTPMethod:@"GET"
                           completionHandler:^(
@@ -95,6 +95,9 @@
                           }];
     
 }
+/**
+ * No album & artist from facebook source
+ */
 - (void)handleResult:(id)result
 {
     _musicArray = [[NSMutableArray alloc] init];
@@ -104,15 +107,15 @@
         NSMutableDictionary *data = [dataDict objectForKey:@"data"];
         NSMutableDictionary *song = [data objectForKey:@"song"];
         NSString *title = [song objectForKey:@"title"];
-        NSString *album = @"N/A";
-        NSString *artist = @"N/A";
-        
-        PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-        [songRecord setObject:title  forKey:@"title"];
-        [songRecord setObject:album forKey:@"album"];
-        [songRecord setObject:artist forKey:@"artist"];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-        
+
+        NSMutableDictionary *application = [dataDict objectForKey:@"application"];
+        NSString *sourceName = [application objectForKey:@"name"];
+
+        PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+        [songRecord setObject:title  forKey:kClassSongTitle];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+        [songRecord setObject:sourceName forKey:kClassSongSource];
+
         [_musicArray addObject:songRecord];
     }
     

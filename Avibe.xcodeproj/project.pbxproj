@@ -86,7 +86,7 @@
 		4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD81881E88500B030F9 /* ImageFetcher.m */; };
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
 		4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */; };
-		4C231DEA188311CC00B030F9 /* XMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE8188311CC00B030F9 /* XMLParser.m */; };
+		4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE8188311CC00B030F9 /* ScrobbleListenedMusic.m */; };
 		4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
 		4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
 		4C231DF0188316A300B030F9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
@@ -132,7 +132,7 @@
 		4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC527281898603600562CE1 /* youtube-48-highlight.png */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
-		4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */; };
+		4CE4F4F9188C61F90013C31C /* FilterAndSaveMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
 		4CEBEE2F184ADEDF0018ABE0 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */; };
 		4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */; };
@@ -261,8 +261,8 @@
 		4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageView.m; sourceTree = "<group>"; };
 		4C231DE018820CC200B030F9 /* SaveMusicFromSources.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SaveMusicFromSources.h; sourceTree = "<group>"; };
 		4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SaveMusicFromSources.m; sourceTree = "<group>"; };
-		4C231DE7188311CC00B030F9 /* XMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XMLParser.h; sourceTree = "<group>"; };
-		4C231DE8188311CC00B030F9 /* XMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLParser.m; sourceTree = "<group>"; };
+		4C231DE7188311CC00B030F9 /* ScrobbleListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrobbleListenedMusic.h; sourceTree = "<group>"; };
+		4C231DE8188311CC00B030F9 /* ScrobbleListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrobbleListenedMusic.m; sourceTree = "<group>"; };
 		4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioConsumerCredentials.h; sourceTree = "<group>"; };
 		4C231DEC1883129F00B030F9 /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rdio.framework; path = Framework/Rdio.framework; sourceTree = "<group>"; };
 		4C231DEF188316A200B030F9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -320,8 +320,8 @@
 		4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic_iTune.m; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
 		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
-		4CE4F4F7188C61F90013C31C /* FilterAndSaveObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterAndSaveObjects.h; path = ../PublicMethod/FilterAndSaveObjects.h; sourceTree = "<group>"; };
-		4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterAndSaveObjects.m; path = ../PublicMethod/FilterAndSaveObjects.m; sourceTree = "<group>"; };
+		4CE4F4F7188C61F90013C31C /* FilterAndSaveMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterAndSaveMusic.h; path = ../PublicMethod/FilterAndSaveMusic.h; sourceTree = "<group>"; };
+		4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterAndSaveMusic.m; path = ../PublicMethod/FilterAndSaveMusic.m; sourceTree = "<group>"; };
 		4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CEBEE2E184ADEDF0018ABE0 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
@@ -568,7 +568,7 @@
 			isa = PBXGroup;
 			children = (
 				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
-				4C23F17F1885D6BB00D2075A /* PublicMethod */,
+				4C23F17F1885D6BB00D2075A /* ShareMethod */,
 				4CDEF2AA1883997E00CBD40E /* SampleMusic */,
 				4C23F17B1885D59E00D2075A /* ShareMusic */,
 				4C231D701881DC1300B030F9 /* BackgroundImage */,
@@ -696,22 +696,23 @@
 			children = (
 				4C231DE018820CC200B030F9 /* SaveMusicFromSources.h */,
 				4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */,
-				4CE4F4F7188C61F90013C31C /* FilterAndSaveObjects.h */,
-				4CE4F4F8188C61F90013C31C /* FilterAndSaveObjects.m */,
+				4CE4F4F7188C61F90013C31C /* FilterAndSaveMusic.h */,
+				4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */,
 				4C4184D018A1C83600999660 /* iPod */,
 				4C8B5804188F646900430CF9 /* Facebook */,
-				4C231DE6188311CC00B030F9 /* LastFM */,
+				4C231DE6188311CC00B030F9 /* Scrobble */,
 				4C231DE9188311CC00B030F9 /* Rdio */,
 			);
 			path = SaveListenedMusic;
 			sourceTree = "<group>";
 		};
-		4C231DE6188311CC00B030F9 /* LastFM */ = {
+		4C231DE6188311CC00B030F9 /* Scrobble */ = {
 			isa = PBXGroup;
 			children = (
-				4C231DE7188311CC00B030F9 /* XMLParser.h */,
-				4C231DE8188311CC00B030F9 /* XMLParser.m */,
+				4C231DE7188311CC00B030F9 /* ScrobbleListenedMusic.h */,
+				4C231DE8188311CC00B030F9 /* ScrobbleListenedMusic.m */,
 			);
+			name = Scrobble;
 			path = LastFM;
 			sourceTree = "<group>";
 		};
@@ -740,7 +741,7 @@
 			path = ShareMusic;
 			sourceTree = "<group>";
 		};
-		4C23F17F1885D6BB00D2075A /* PublicMethod */ = {
+		4C23F17F1885D6BB00D2075A /* ShareMethod */ = {
 			isa = PBXGroup;
 			children = (
 				4C23F1801885D6C800D2075A /* PublicMethod.h */,
@@ -750,6 +751,7 @@
 				4C8F74EA188D825D00B91651 /* Constant.h */,
 				4C8F74EB188D825D00B91651 /* Constant.m */,
 			);
+			name = ShareMethod;
 			path = PublicMethod;
 			sourceTree = "<group>";
 		};
@@ -1148,7 +1150,7 @@
 				4C231D14188104F800B030F9 /* YMTableViewCell.m in Sources */,
 				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,
 				4C231D08188104F800B030F9 /* MMSideDrawerTableViewCell.m in Sources */,
-				4CE4F4F9188C61F90013C31C /* FilterAndSaveObjects.m in Sources */,
+				4CE4F4F9188C61F90013C31C /* FilterAndSaveMusic.m in Sources */,
 				4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */,
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,
@@ -1177,7 +1179,7 @@
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
-				4C231DEA188311CC00B030F9 /* XMLParser.m in Sources */,
+				4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */,
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,

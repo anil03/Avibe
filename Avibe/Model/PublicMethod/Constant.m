@@ -21,6 +21,8 @@ NSString *const kKeyLastUpdatedDate = @"lastUpdatedDate";
 NSString *const kAffiliateProgramToken = @"1l3v6A8";
 NSString *const kKeyRdioUserKey = @"kKeyRdioUserKey";
 
+#pragma mark - Class General
+NSString *const kClassGeneralCreatedAt = @"createdAt";
 
 #pragma mark - Class Contact
 NSString *const kClassContact = @"Contact";

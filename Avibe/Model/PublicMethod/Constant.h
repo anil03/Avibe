@@ -17,6 +17,9 @@ extern NSString *const kKeyLastUpdatedDate;
 extern NSString *const kAffiliateProgramToken;
 extern NSString *const kKeyRdioUserKey;
 
+#pragma mark - Class General
+extern NSString *const kClassGeneralCreatedAt;
+
 #pragma mark - Class Contact
 extern NSString *const kClassContact;
 extern NSString *const kClassContactUsername;

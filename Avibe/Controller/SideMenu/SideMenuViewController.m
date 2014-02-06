@@ -64,13 +64,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
     self = [super init];
     if(self){
         [self setRestorationIdentifier:@"MMExampleLeftSideDrawerController"];
-        
         self.navigationLiveFeedViewController = controller;
-
-        
-
-//        listenedViewController = [[ListenedViewController alloc] init];
-//        self.navigationListenedViewController = [[MMNavigationController alloc] initWithRootViewController:listenedViewController];
     }
     return self;
 }
@@ -86,7 +80,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
         case MMDrawerSectionAvibe:
             return 3;
         case MMDrawerSectionUser:
-            return 2;
+            return 3;
         default:
             return 0;
     }
@@ -104,15 +98,16 @@ typedef NS_ENUM(NSInteger, BeetRow){
         }
         [headerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
         [headerView setTitle:[tableView.dataSource tableView:tableView titleForHeaderInSection:section]];
-        
-        UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(100, 20, 32, 32)];
-        [button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"settings-32-highlight.png"] forState:UIControlStateHighlighted];
-        [button addTarget:self
-                     action:@selector(settingButtonPressed)
-           forControlEvents:UIControlEventTouchUpInside];
-        [headerView addSubview:button];
-        [headerView bringSubviewToFront:button];
+
+        //Setting View
+//        UIButton *button =[[UIButton alloc] initWithFrame:CGRectMake(100, 20, 32, 32)];
+//        [button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
+//        [button setBackgroundImage:[UIImage imageNamed:@"settings-32-highlight.png"] forState:UIControlStateHighlighted];
+//        [button addTarget:self
+//                     action:@selector(settingButtonPressed)
+//           forControlEvents:UIControlEventTouchUpInside];
+//        [headerView addSubview:button];
+//        [headerView bringSubviewToFront:button];
         
         return headerView;
     }else{
@@ -161,10 +156,6 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"sharethis-3-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Share"];
                 break;
-//            case BeetRow_Listened:
-//                [cell.button setBackgroundImage:[UIImage imageNamed:@"music-record-24.png"] forState:UIControlStateNormal];
-//                [cell.label setText:@"Listened"];
-//                break;
             case BeetRow_Friends:
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"conference-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Friends"];
@@ -177,10 +168,13 @@ typedef NS_ENUM(NSInteger, BeetRow){
         switch (indexPath.row) {
             case 0:
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"newspaper-10-24.png"] forState:UIControlStateNormal];
-
                 [cell.label setText:@"Profile"];
                 break;
             case 1:
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
+                [cell.label setText:@"Setting"];
+                break;
+            case 2:
                 [cell.button setBackgroundImage:[UIImage imageNamed:@"undo-2-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Sign out"];
                 break;
@@ -190,7 +184,6 @@ typedef NS_ENUM(NSInteger, BeetRow){
     }
     return cell;
 }
-
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if(indexPath.section == MMDrawerSectionDrawerWidth){
         [self.mm_drawerController
@@ -206,21 +199,14 @@ typedef NS_ENUM(NSInteger, BeetRow){
     else if(indexPath.section == MMDrawerSectionAvibe){
         switch (indexPath.row) {
             case BeetRow_LiveFeed:
-                [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
+                [self livefeedButtonPressed];
                 break;
             case BeetRow_Share:{
-                shareViewController = [[ShareViewController alloc] init];
-                self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
-                [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
+                [self shareButtonPressed];
                 break;
             }
-//            case BeetRow_Listened:
-//                [self.mm_drawerController setCenterViewController:self.navigationListenedViewController withFullCloseAnimation:YES completion:nil];
-//                break;
             case BeetRow_Friends:{
-                friendsViewController = [[FriendsViewController alloc] init];
-                self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
-                [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
+                [self friendsButtonPressed];
                 break;
             }
             default:
@@ -230,33 +216,16 @@ typedef NS_ENUM(NSInteger, BeetRow){
     else if(indexPath.section == MMDrawerSectionUser){
         switch (indexPath.row) {
             case 0:{
-                userViewController = [[UserViewController alloc] init];
-                userViewController.delegate = self;
-                self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
-                [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
+                [self userButtonPressed];
                 break;
             }
-            case 1:
+            case 1:{
+                [self settingButtonPressed];
+                break;
+            }
+            case 2:
             {
-                //log out
-                [PFUser logOut];
-                
-                UIViewController *welcomeController = [[WelcomeViewController alloc] init];
-                
-                //Clear all controller
-                liveFeedViewController = nil;
-                shareViewController = nil;
-                listenedViewController = nil;
-                friendsViewController = nil;
-                userViewController = nil;
-                
-                self.navigationLiveFeedViewController = nil;
-                self.navigationShareViewController = nil;
-                self.navigationListenedViewController = nil;
-                self.navigationFriendsViewController = nil;
-                self.navigationUserViewController = nil;
-                
-                [self.mm_drawerController.navigationController pushViewController:welcomeController animated:YES];
+                [self logoutButtonPressed];
                 break;
             }
             default:
@@ -268,6 +237,56 @@ typedef NS_ENUM(NSInteger, BeetRow){
     }
 }
 
+#pragma mark - Button pressed
+- (void)livefeedButtonPressed {
+    [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
+}
+- (void)shareButtonPressed {
+    shareViewController = [[ShareViewController alloc] init];
+    self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
+    [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
+}
+- (void)friendsButtonPressed {
+    friendsViewController = [[FriendsViewController alloc] init];
+    self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
+    [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
+}
+- (void)userButtonPressed {
+    userViewController = [[UserViewController alloc] init];
+    userViewController.delegate = self;
+    self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
+    [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
+}
+- (void)settingButtonPressed
+{
+    SettingViewController *settingViewController = [[SettingViewController alloc] init];
+    settingViewController.previousViewController = self.mm_drawerController.centerViewController;
+    
+    MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:settingViewController];
+    
+    [self.mm_drawerController setCenterViewController:navigationSettingViewController withCloseAnimation:YES completion:nil];
+}
+- (void)logoutButtonPressed {
+    //log out
+    [PFUser logOut];
+    
+    UIViewController *welcomeController = [[WelcomeViewController alloc] init];
+    
+    //Clear all controller
+    liveFeedViewController = nil;
+    shareViewController = nil;
+    listenedViewController = nil;
+    friendsViewController = nil;
+    userViewController = nil;
+    
+    self.navigationLiveFeedViewController = nil;
+    self.navigationShareViewController = nil;
+    self.navigationListenedViewController = nil;
+    self.navigationFriendsViewController = nil;
+    self.navigationUserViewController = nil;
+    
+    [self.mm_drawerController.navigationController pushViewController:welcomeController animated:YES];
+}
 
 #pragma mark - UserViewController Delegate
 - (void)setLastFMAccount:(NSString*)account
@@ -277,17 +296,6 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (NSString*)getLastFMAccount
 {
     return _lastFMAccountUsername;
-}
-
-#pragma mark - Setting
-- (void)settingButtonPressed
-{
-    SettingViewController *settingViewController = [[SettingViewController alloc] init];
-    settingViewController.previousViewController = self.mm_drawerController.centerViewController;
-    
-    MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:settingViewController];
-    
-    [self.mm_drawerController setCenterViewController:navigationSettingViewController withCloseAnimation:YES completion:nil];
 }
 
 @end

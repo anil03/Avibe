@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Yuhua Mai. All rights reserved.
 //
 
-#import "FilterAndSaveObjects.h"
+#import "FilterAndSaveMusic.h"
 
-@implementation FilterAndSaveObjects
+@implementation FilterAndSaveMusic
 
 #pragma mark - TODO Upgrade Duplcated Algorithm
 - (void)filterDuplicatedDataToSaveInParse:(NSMutableArray*)musicToSave andSource:(NSString*)sourceName andFetchObjects:(NSArray*)fetechObjects
 {
-    NSLog(@"***Filtering %@ Music***", sourceName);
-    [self printMusicToSaveData:musicToSave];
+//    NSLog(@"***Filtering %@ Music***", sourceName);
+//    [self printMusicToSaveData:musicToSave];
     
     NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
     __block int numberOfDuplicated = 0;
@@ -36,7 +36,9 @@
             
             //                NSLog(@"%@-%@", newTitle, existingTitle);
             
-            if ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]) {
+            BOOL duplicated = [newTitle isEqualToString:existingTitle] ||
+            ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]);
+            if (duplicated) {
                 //Duplicated Object
                 numberOfDuplicated++;
                 //                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
@@ -45,12 +47,10 @@
             }
         }
         
-        
         if (songExisted) {
             continue;
         }
-        //Add source info
-        [pfToSave setObject:sourceName forKey:kClassSongSource];
+
         [dataToSave addObject:pfToSave];
     }
     
@@ -58,7 +58,7 @@
     [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
         NSLog(@"***Saving %@ Music***", sourceName);
         if (succeeded) {
-            NSLog(@"Save XML Data succeeded!");
+            NSLog(@"Number of songs to save: %d", [dataToSave count]);
             NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
             
             if (numberOfDuplicated > 0) {
@@ -81,7 +81,6 @@
         NSLog(@"%@,%@,%@", [object objectForKey:@"title"], [object objectForKey:@"artist"], [object objectForKey:@"album"]);
     }
     NSLog(@"==================>");
-    
 }
 
 #pragma mark - call delegate method

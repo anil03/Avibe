@@ -7,14 +7,14 @@
 //
 
 #import "ShareMusicEntry.h"
-#import "FilterAndSaveObjects.h"
+#import "FilterAndSaveMusic.h"
 
-@interface ShareMusicEntry () <FilterAndSaveObjectsDelegate>
+@interface ShareMusicEntry () <FilterAndSaveMusicDelegate>
 
 @property NSArray *fetechObjects;
 @property PFObject *musicToShare;
 
-@property (nonatomic, strong) FilterAndSaveObjects *filter;
+@property (nonatomic, strong) FilterAndSaveMusic *filter;
 
 @end
 
@@ -39,7 +39,7 @@
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         _fetechObjects = objects;
         
-        _filter = [[FilterAndSaveObjects alloc] init];
+        _filter = [[FilterAndSaveMusic alloc] init];
         _filter.delegate = self;
         [_filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:_musicToShare] andSource:@"Share" andFetchObjects:_fetechObjects];
     }];

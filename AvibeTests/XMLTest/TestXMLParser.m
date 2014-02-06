@@ -8,13 +8,13 @@
 
 #import <XCTest/XCTest.h>
 
-#import "XMLParser.h"
+#import "ScrobbleListenedMusic.h"
 
 static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=myhgew&api_key=55129edf3dc293c4192639caedef0c2e&limit=10";
 
 @interface TestXMLParser : XCTestCase<XMLParserDelegate>
 
-@property (nonatomic, strong) XMLParser *parser;
+@property (nonatomic, strong) ScrobbleListenedMusic *parser;
 @property (nonatomic, strong) NSMutableArray *data;
 
 @end
@@ -28,7 +28,7 @@ static NSString *const kURLString = @"http://ws.audioscrobbler.com/2.0/?method=u
     self.data = [[NSMutableArray alloc] init];
     
     NSURL *url = [NSURL URLWithString:kURLString];
-    self.parser = [[XMLParser alloc] initWithURL:url AndData:self.data];
+    self.parser = [[ScrobbleListenedMusic alloc] initWithURL:url AndData:self.data];
     self.parser.delegate = self;
 }
 

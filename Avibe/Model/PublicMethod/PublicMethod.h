@@ -17,6 +17,7 @@
 
 + (PublicMethod *)sharedInstance;
 
+#pragma mark - Refresh Control
 - (NSMutableAttributedString*)refreshBeginString;
 - (NSMutableAttributedString*)refreshUpdatingString;
 - (NSMutableAttributedString*)refreshFinsihedString;

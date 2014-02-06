@@ -7,11 +7,11 @@
 //
 
 #import "SaveMusicFromSources.h"
-#import "XMLParser.h"
-#import "FilterAndSaveObjects.h"
+#import "ScrobbleListenedMusic.h"
+#import "FilterAndSaveMusic.h"
 
 //Rdio
-#import "Rdio/RdioConsumerCredentials.h"
+#import "RdioConsumerCredentials.h"
 #import <Rdio/Rdio.h>
 
 //iPod
@@ -27,7 +27,7 @@
  */
 @interface SaveMusicFromSources () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
 
-@property (nonatomic, strong) XMLParser *parser;
+@property (nonatomic, strong) ScrobbleListenedMusic *parser;
 
 //Parse
 @property NSArray *fetechObjects;
@@ -48,9 +48,9 @@
 - (void)saveMusic
 {
     //Fetch Existing Songs from Parse
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Song"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
+    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
     postQuery.limit = 1000;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         fetechObjects = objects;
@@ -69,7 +69,7 @@
     
     if (playedMusicArray) {
         for(NSDictionary *dict in playedMusicArray){
-            PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
+            PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
             [songRecord setObject:[dict objectForKey:kClassSongTitle]  forKey:kClassSongTitle];
             [songRecord setObject:[dict objectForKey:kClassSongAlbum] forKey:kClassSongAlbum];
             [songRecord setObject:[dict objectForKey:kClassSongArtist] forKey:kClassSongArtist];
@@ -79,7 +79,7 @@
 //            NSLog(@"=====iPod Music: Title:%@, Album:%@, Artist%@", [dict objectForKey:kClassSongTitle], [dict objectForKey:kClassSongAlbum], [dict objectForKey:kClassSongArtist]);
         }
         
-        FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+        FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
         [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"iPod" andFetchObjects:fetechObjects];
     }else{
         NSLog(@"No iPod Music Available");
@@ -96,12 +96,11 @@
         
         //Save Scrobbler Music from XML Parser
         NSURL *url = [NSURL URLWithString:kURLString];
-        _parser = [[XMLParser alloc] initWithURL:url];
+        _parser = [[ScrobbleListenedMusic alloc] initWithURL:url];
         _parser.delegate = self;
         [self.parser startParsing];
     }
 }
-
 - (void)finishParsing:(NSMutableArray*)result
 {
     NSMutableArray *musicToSave = [[NSMutableArray alloc] init];
@@ -111,9 +110,12 @@
     }
     
     //Get rid of duplicated data then save
-    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
-    [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"LastFM" andFetchObjects:fetechObjects];
+    FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
+    [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"Scrobble" andFetchObjects:fetechObjects];
 }
+
+
+
 
 #pragma mark - Facebook with Spotify Music
 - (void)getFaceBookMusic
@@ -124,9 +126,12 @@
 - (void)finishGetListenedMusic:(NSMutableArray *)musicArray
 {
     //Get rid of duplicated data then save
-    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
     [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"Facebook" andFetchObjects:fetechObjects];
 }
+
+
+
 
 #pragma mark - Rdio Music
 - (void)getRdioMusic
@@ -144,7 +149,6 @@
                     delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
     }
 }
-
 #pragma mark - Rdio delegate method
 - (void)rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error
 {
@@ -161,13 +165,14 @@
     NSString *album = [lastSongPlayedData objectForKey:@"album"];
 //    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
     
-    PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-    [songRecord setObject:title  forKey:@"title"];
-    [songRecord setObject:album forKey:@"album"];
-    [songRecord setObject:artist forKey:@"artist"];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
+    PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+    [songRecord setObject:title  forKey:kClassSongTitle];
+    [songRecord setObject:album forKey:kClassSongAlbum];
+    [songRecord setObject:artist forKey:kClassSongArtist];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+    [songRecord setObject:@"Rdio" forKey:kClassSongSource];
     
-    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
+    FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
     [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
 }
 

@@ -6,11 +6,11 @@
 //  Copyright (c) 2013 Yuhua Mai. All rights reserved.
 //
 
-#import "XMLParser.h"
+#import "ScrobbleListenedMusic.h"
 
 #import "Song.h"
 
-@interface XMLParser() <NSXMLParserDelegate>
+@interface ScrobbleListenedMusic() <NSXMLParserDelegate>
 
 @property (nonatomic, strong) NSXMLParser *parser;
 
@@ -22,7 +22,7 @@
 
 @end
 
-@implementation XMLParser
+@implementation ScrobbleListenedMusic
 
 - (id)initWithURL:(NSURL*)url
 {
@@ -38,7 +38,6 @@
     
     return self;
 }
-
 - (id)initWithURL:(NSURL*)url AndData:(NSMutableArray*)data
 {
     self = [super init];
@@ -75,7 +74,6 @@
 //    NSLog(@"%@ %@ %@", elementName, namespaceURI, qName);
     
 }
-
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
     if(!self.tempText){
@@ -84,8 +82,6 @@
         [self.tempText appendString:string];
     }
 }
-
-
 - (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
 {
     if(!self.tempText){
@@ -96,19 +92,21 @@
     if ([elementName isEqualToString:@"track"]) {
         //End of the element, store song
         NSString *currentUsername = [[PFUser currentUser] username];
-        [self.tempSong setObject:currentUsername forKey:@"user"];
+        [self.tempSong setObject:currentUsername forKey:kClassSongUsername];
+        [self.tempSong setObject:@"Scrobble" forKey:kClassSongSource];
         [self.data addObject:self.tempSong];
     }else if([elementName isEqualToString:@"artist"]){
-        [self.tempSong setObject:self.tempText forKey:@"artist"];
+        [self.tempSong setObject:self.tempText forKey:kClassSongArtist];
     }else if([elementName isEqualToString:@"name"]){
-        [self.tempSong setObject:self.tempText forKey:@"title"];
+        [self.tempSong setObject:self.tempText forKey:kClassSongTitle];
     }else if([elementName isEqualToString:@"album"]){
-        [self.tempSong setObject:self.tempText forKey:@"album"];
+        [self.tempSong setObject:self.tempText forKey:kClassSongAlbum];
     }
     self.tempText = nil;
     
 }
 
+#pragma mark - ScrobbleXMLParser delegate method
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
     //Finish parsing, call delegate

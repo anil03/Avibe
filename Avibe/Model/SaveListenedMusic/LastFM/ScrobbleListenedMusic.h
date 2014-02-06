@@ -14,7 +14,7 @@
 
 @end
 
-@interface XMLParser : NSObject
+@interface ScrobbleListenedMusic : NSObject
 
 @property (nonatomic, weak) id<XMLParserDelegate> delegate;
 

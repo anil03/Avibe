@@ -19,7 +19,7 @@
         float width = [UIScreen mainScreen].bounds.size.width/4;
         float height = 20.0f;
         UIButton *button1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-        [button1 setTitle:@"friend" forState:UIControlStateNormal];
+        [button1 setTitle:@"friend/source" forState:UIControlStateNormal];
         button1.titleLabel.font = [UIFont fontWithName:@"Helvetica Neue" size:12.0f];
         
         UIButton *button2 = [[UIButton alloc] initWithFrame:CGRectMake(width, 0, width, height)];

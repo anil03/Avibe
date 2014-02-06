@@ -48,6 +48,8 @@
     }
     return self;
 }
+
+#pragma mark - Fetch images
 /**
  * Hugely improve app loading speed for just load image at the frist time, then save locally
  * Next time, just load local image instead of download images again.
@@ -75,8 +77,6 @@
         }
     }
 }
-
-
 - (NSArray *)backgroundImages
 {
     NSMutableArray *shuffleBackGroundImages = [[NSMutableArray alloc] initWithArray:_backgroundImages];
@@ -90,6 +90,8 @@
     return shuffleBackGroundImages;
 }
 
+
+#pragma mark - Refresh Control
 - (NSMutableAttributedString*)refreshBeginString
 {
     NSString *lastUpdated = @"Pull to Refresh";
