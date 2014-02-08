@@ -137,7 +137,7 @@
     
     /*OtherAccountView*/
     currentHeight += item*unitHeight;
-    item = 3;
+    item = 4;
     accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
     accountView.backgroundColor = contentBackgroundColor;
     [scrollView addSubview:accountView];
@@ -179,7 +179,17 @@
     [textField addTarget:self action:@selector(changeRdio:) forControlEvents:UIControlEventEditingDidEnd];
     [accountView addSubview:textField];
     
-
+    //Youtube Fetch
+    UIButton *youtubeAccessButton = [[UIButton alloc] initWithFrame:CGRectMake(0,unitHeight*3,width/2,unitHeight)];
+    [youtubeAccessButton setBackgroundColor:contentBackgroundColor];
+    [youtubeAccessButton setTitle:@"Access Youtube" forState:UIControlStateNormal];
+    [youtubeAccessButton addTarget:self action:@selector(youtubeFetch) forControlEvents:UIControlEventTouchUpInside];
+    [accountView addSubview:youtubeAccessButton];
+    UIButton *youtubeRevokeButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2,unitHeight*3,width/2,unitHeight)];
+    [youtubeRevokeButton setBackgroundColor:contentBackgroundColor];
+    [youtubeRevokeButton setTitle:@"Revoke Youtube" forState:UIControlStateNormal];
+    [youtubeRevokeButton addTarget:self action:@selector(youtubeRevoke) forControlEvents:UIControlEventTouchUpInside];
+    [accountView addSubview:youtubeRevokeButton];
 //    /*Feed Clogging*/
 //    currentHeight += item*unitHeight;
 //    item = 3;
@@ -220,6 +230,15 @@
     UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, currentHeight)];
     [scrollView addSubview:backgroundView];
     [scrollView sendSubviewToBack:backgroundView];
+}
+
+- (void)youtubeFetch
+{
+    [[PublicMethod sharedInstance] authorizeGoogle:self.view];
+}
+- (void)youtubeRevoke
+{
+    [[PublicMethod sharedInstance] revokeAccess];
 }
 
 #pragma mark - Textfield Method

@@ -196,7 +196,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	
     //Data source
     int index = indexPath.row/columnNumber;
-    cell.label.numberOfLines = 1;
+    cell.label.numberOfLines = 2;
     
     PFObject *song = [self.PFObjects objectAtIndex:index];
     
@@ -214,6 +214,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             break;
         }
         case 1:{
+            cell.label.numberOfLines = 2;
             cell.label.text = [song objectForKey:kClassSongTitle];
             break;
         }
@@ -490,14 +491,16 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
 //    MMDrawerBarButtonItem *rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
-    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightDrawerButtonPress:)];
+//    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightDrawerButtonPress:)];
+    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Youtube" style:UIBarButtonItemStyleBordered target:self action:@selector(rightDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
 }
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 -(void)rightDrawerButtonPress:(id)sender{
-    [self refreshView:_refreshControl];
+//    [self refreshView:_refreshControl];
+    [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
 }
 
 -(void)editSong

@@ -22,4 +22,8 @@
 - (NSMutableAttributedString*)refreshUpdatingString;
 - (NSMutableAttributedString*)refreshFinsihedString;
 
+#pragma mark - Google OAuth
+- (void)authorizeGoogle:(UIView*)view;
+- (void)revokeAccess;
+
 @end

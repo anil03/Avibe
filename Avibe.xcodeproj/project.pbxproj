@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */; };
+		4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17610618A5B18500B58F42 /* GoogleOAuth.m */; };
 		4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */; };
 		4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */; };
 		4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C5A188104F800B030F9 /* MMExampleCenterTableViewController.m */; };
@@ -153,6 +155,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestYoutubeOAuth.m; path = SaveListenedMusicTest/Youtube/TestYoutubeOAuth.m; sourceTree = "<group>"; };
+		4C17610518A5B18500B58F42 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
+		4C17610618A5B18500B58F42 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
 		4C231C4E188104F800B030F9 /* MMCenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCenterTableViewCell.h; sourceTree = "<group>"; };
 		4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCenterTableViewCell.m; sourceTree = "<group>"; };
 		4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MMDrawerControllerKitchenSink-Info.plist"; sourceTree = "<group>"; };
@@ -379,6 +384,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4C1058F018A3E7A20050D327 /* Youtube */ = {
+			isa = PBXGroup;
+			children = (
+				4C17610518A5B18500B58F42 /* GoogleOAuth.h */,
+				4C17610618A5B18500B58F42 /* GoogleOAuth.m */,
+			);
+			name = Youtube;
+			sourceTree = "<group>";
+		};
+		4C1760B718A537D700B58F42 /* Youtube */ = {
+			isa = PBXGroup;
+			children = (
+				4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */,
+			);
+			name = Youtube;
+			sourceTree = "<group>";
+		};
 		4C231C4B188104F800B030F9 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -699,6 +721,7 @@
 				4CE4F4F7188C61F90013C31C /* FilterAndSaveMusic.h */,
 				4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */,
 				4C4184D018A1C83600999660 /* iPod */,
+				4C1058F018A3E7A20050D327 /* Youtube */,
 				4C8B5804188F646900430CF9 /* Facebook */,
 				4C231DE6188311CC00B030F9 /* Scrobble */,
 				4C231DE9188311CC00B030F9 /* Rdio */,
@@ -868,6 +891,7 @@
 		4C4184D418A1CBFC00999660 /* SaveListenedMusicTest */ = {
 			isa = PBXGroup;
 			children = (
+				4C1760B718A537D700B58F42 /* Youtube */,
 				4C4184D518A1CC0A00999660 /* iPod */,
 			);
 			name = SaveListenedMusicTest;
@@ -1195,6 +1219,7 @@
 				4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */,
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
+				4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
 				4C23F17A1885A48100D2075A /* SampleMusicViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
@@ -1208,6 +1233,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C231DCC1881DF3700B030F9 /* MusicTests.m in Sources */,
+				4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */,
 				4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */,
 				4C231DCE1881DF3700B030F9 /* TestXMLParser.m in Sources */,
 				4C231DCD1881DF3700B030F9 /* TestNSXMLParser.m in Sources */,
@@ -1335,6 +1361,7 @@
 					"$(inherited)",
 					"${SRCROOT}/Framework/**",
 					/Users/Michael/Developer/github/Avibe/Framework,
+					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1364,6 +1391,7 @@
 					"$(inherited)",
 					"${SRCROOT}/Framework/**",
 					/Users/Michael/Developer/github/Avibe/Framework,
+					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1393,6 +1421,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"${SRCROOT}/Framework",
 					/Users/Michael/Developer/github/Avibe/Framework,
+					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";
@@ -1424,6 +1453,7 @@
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 					"${SRCROOT}/Framework",
 					/Users/Michael/Developer/github/Avibe/Framework,
+					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/${PROJECT_NAME}-Prefix.pch";

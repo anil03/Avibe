@@ -177,5 +177,30 @@
 }
 
 
+#pragma mark - Youtube
++(void)saveYoutubeEntry:(NSArray*)array
+{
+    NSMutableArray *youtubeArray = [[NSMutableArray alloc] init];
+    for(NSDictionary *dict in array){
+        NSString *title = [dict objectForKey:@"title"];
+//        NSString *thumbnailUrl = [dict objectForKey:@"url"];
+        
+        PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+        [songRecord setObject:title  forKey:kClassSongTitle];
+        [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+        [songRecord setObject:@"Youtube" forKey:kClassSongSource];
 
+        [youtubeArray addObject:songRecord];
+    }
+    
+    //Fetch Existing Songs from Parse
+    PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
+    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
+    postQuery.limit = 1000;
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
+        [filter filterDuplicatedDataToSaveInParse:youtubeArray andSource:@"Youtube" andFetchObjects:objects];
+    }];
+}
 @end
