@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property (nonatomic, strong) ListenedViewController *listenedViewController;
 @property (nonatomic, strong) FriendsViewController *friendsViewController;
 @property (nonatomic, strong) UserViewController *userViewController;
+@property SettingViewController *settingViewController;
 
 @property (nonatomic, strong) MMNavigationController *navigationLiveFeedViewController;
 @property (nonatomic, strong) MMNavigationController *navigationShareViewController;
@@ -259,10 +260,16 @@ typedef NS_ENUM(NSInteger, BeetRow){
 }
 - (void)settingButtonPressed
 {
-    SettingViewController *settingViewController = [[SettingViewController alloc] init];
-    settingViewController.previousViewController = self.mm_drawerController.centerViewController;
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"SettingStoryboard" bundle:nil];
+//    assert(storyboard != nil);
+//    UIViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+//    
+//    assert(viewController != nil);
+//    _settingViewController = (SettingViewController*)viewController;
+    _settingViewController = [[SettingViewController alloc] init];
+    _settingViewController.previousViewController = self.mm_drawerController.centerViewController;
     
-    MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:settingViewController];
+    MMNavigationController *navigationSettingViewController = [[MMNavigationController alloc] initWithRootViewController:_settingViewController];
     
     [self.mm_drawerController setCenterViewController:navigationSettingViewController withCloseAnimation:YES completion:nil];
 }

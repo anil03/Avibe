@@ -8,12 +8,13 @@
 // CustomViewController
 
 #import "SettingViewController.h"
-
+#import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
-
+#import "YoutubeAuthorizeViewController.h"
 #import "Setting.h"
 #import "PublicMethod.h"
 #import "BackgroundImageView.h"
+#import "MMDrawerBarButtonItem.h"
 
 @interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate>
 
@@ -29,14 +30,20 @@
 @property (nonatomic, strong) NSString *currentKey;
 @property (nonatomic, strong) NSString *currentType;
 
+//Authorization Sources
+@property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
+
 @end
 
 @implementation SettingViewController
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setupBarMenuButton];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setupBarMenuButton];
+    
     
     //LastFM
     _lastFMAccountTextField.delegate = self;
@@ -66,8 +73,9 @@
     
     //ScrollView
     UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    [scrollView setContentSize:CGSizeMake(scrollWidth, scrollHeight)];
+    [scrollView setContentSize:CGSizeMake(320, 920)];
     scrollView.userInteractionEnabled = YES;
+    [scrollView setScrollEnabled:YES];
     self.view = scrollView;
     [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard)]];
     
@@ -134,7 +142,7 @@
     textField.delegate = self;
     [textField addTarget:self action:@selector(changePhoneNumber:) forControlEvents:UIControlEventEditingDidEnd];
     [accountView addSubview:textField];
-    
+
     /*OtherAccountView*/
     currentHeight += item*unitHeight;
     item = 4;
@@ -190,6 +198,7 @@
     [youtubeRevokeButton setTitle:@"Revoke Youtube" forState:UIControlStateNormal];
     [youtubeRevokeButton addTarget:self action:@selector(youtubeRevoke) forControlEvents:UIControlEventTouchUpInside];
     [accountView addSubview:youtubeRevokeButton];
+    
 //    /*Feed Clogging*/
 //    currentHeight += item*unitHeight;
 //    item = 3;
@@ -217,7 +226,7 @@
 //    titleLabel.textColor = titleTextColor;
 //    titleLabel.textAlignment = NSTextAlignmentNatural;
 //    [accountView addSubview:titleLabel];
-//    
+//
     
     /*Finally*/
     currentHeight += item*unitHeight;
@@ -234,7 +243,14 @@
 
 - (void)youtubeFetch
 {
-    [[PublicMethod sharedInstance] authorizeGoogle:self.view];
+    _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
+    _youtubeAuthorizeViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_youtubeAuthorizeViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+    
+    //    [[PublicMethod sharedInstance] authorizeGoogle:self.view];
+
 }
 - (void)youtubeRevoke
 {
@@ -352,18 +368,16 @@
     self.mm_drawerController.navigationItem.titleView = titleLabel;
     
     
-    UIBarButtonItem * leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:self action:nil];
-    self.mm_drawerController.navigationItem.leftBarButtonItem = leftDrawerButton;
+    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
+	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
-    _rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(popCurrentView)];
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:_rightDrawerButton];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+}
+-(void)leftDrawerButtonPress:(id)sender{
+	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 
-- (void)popCurrentView
-{
-    [self.mm_drawerController setCenterViewController:self.previousViewController];
-}
 
 #pragma mark - UITextField Delegate
 - (void)textFieldDidBeginEditing:(UITextField *)textField

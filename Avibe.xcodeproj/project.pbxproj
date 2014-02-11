@@ -116,6 +116,7 @@
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
 		4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
+		4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */; };
 		4C8B5807188F64BE00430CF9 /* FaceBookListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8B5806188F64BE00430CF9 /* FaceBookListenedMusic.m */; };
 		4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74E8188CC4F900B91651 /* ShareCollectionViewCell.m */; };
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
@@ -300,6 +301,8 @@
 		4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPodListenedMusic.m; path = iPod/iPodListenedMusic.m; sourceTree = "<group>"; };
 		4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestIPodListenedMusic.m; path = SaveListenedMusicTest/iPod/TestIPodListenedMusic.m; sourceTree = "<group>"; };
 		4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes-10-icon.png"; sourceTree = "<group>"; };
+		4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoutubeAuthorizeViewController.h; path = Sources/YoutubeAuthorizeViewController.h; sourceTree = "<group>"; };
+		4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoutubeAuthorizeViewController.m; path = Sources/YoutubeAuthorizeViewController.m; sourceTree = "<group>"; };
 		4C8B5805188F64BE00430CF9 /* FaceBookListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FaceBookListenedMusic.h; path = Facebook/FaceBookListenedMusic.h; sourceTree = "<group>"; };
 		4C8B5806188F64BE00430CF9 /* FaceBookListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FaceBookListenedMusic.m; path = Facebook/FaceBookListenedMusic.m; sourceTree = "<group>"; };
 		4C8F74E7188CC4F900B91651 /* ShareCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareCollectionViewCell.h; sourceTree = "<group>"; };
@@ -516,6 +519,7 @@
 		4C231C90188104F800B030F9 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				4C716EAE18A9B63A00816A62 /* Sources */,
 				4C231C91188104F800B030F9 /* SettingViewController.h */,
 				4C231C92188104F800B030F9 /* SettingViewController.m */,
 			);
@@ -905,6 +909,15 @@
 			name = iPod;
 			sourceTree = "<group>";
 		};
+		4C716EAE18A9B63A00816A62 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */,
+				4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
 		4C8B5804188F646900430CF9 /* Facebook */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,8 +931,8 @@
 			isa = PBXGroup;
 			children = (
 				4C231CAA188104F800B030F9 /* Model */,
-				4C231C4B188104F800B030F9 /* Controller */,
 				4C231CF4188104F800B030F9 /* View */,
+				4C231C4B188104F800B030F9 /* Controller */,
 				4C231CB3188104F800B030F9 /* Resource */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231D6C1881063A00B030F9 /* Supporting Files */,
@@ -1218,6 +1231,7 @@
 				4C231D16188104F800B030F9 /* ListenedViewController.m in Sources */,
 				4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */,
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
+				4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
 				4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
