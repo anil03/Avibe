@@ -369,8 +369,38 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
     return cell;
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == AvibeAccount) {
+        switch (indexPath.row) {
+            case Username:
+                break;
+            case Email:
+                break;
+            case PhoneNumber:
+                break;
+            default:
+                break;
+        }
+    }else if (indexPath.section == LinkedAccount){
+        switch (indexPath.row) {
+            case Scrobble:
+                break;
+            case Rdio:
+                break;
+            case Youtube:
+                [self youtubeFetch];
+                break;
+            case Facebook:
+                break;
+            default:
+                break;
+        }
+        
+    }
+}
 
-
+#pragma mark - TableViewcell selected method
 - (void)youtubeFetch
 {
     _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
