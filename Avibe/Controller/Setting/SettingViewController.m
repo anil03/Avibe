@@ -316,8 +316,12 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     cell.backgroundColor = [UIColor clearColor];
     cell.textLabel.textColor = [UIColor whiteColor];
     
+    UIColor *uicolor = [UIColor lightGrayColor];
+    CGColorRef color = [uicolor CGColor];
     UIView *bgColorView = [[UIView alloc] init];
-    bgColorView.backgroundColor = [UIColor lightGrayColor];
+    bgColorView.backgroundColor = [UIColor clearColor];
+    bgColorView.layer.borderColor = color;
+    bgColorView.layer.borderWidth = 1;
     bgColorView.layer.cornerRadius = 7;
     bgColorView.layer.masksToBounds = YES;
     [cell setSelectedBackgroundView:bgColorView];
