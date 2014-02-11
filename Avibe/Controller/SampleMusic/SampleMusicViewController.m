@@ -167,7 +167,7 @@
     currentHeight += titleLabelHeight;
     _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
     _infoLabel.backgroundColor = backgroundColor;
-    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
+//    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
     _infoLabel.textColor = textColor;
     _infoLabel.textAlignment = NSTextAlignmentCenter;
     _infoLabel.adjustsFontSizeToFitWidth = YES;

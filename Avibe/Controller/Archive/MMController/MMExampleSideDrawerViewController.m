@@ -47,20 +47,12 @@
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     
     //TableView BackgroundColor
-    UIColor * tableViewBackgroundColor= [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];
+    UIColor * tableViewBackgroundColor= [UIColor whiteColor];
     [self.tableView setBackgroundColor:tableViewBackgroundColor];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    //View BackgroundColor
-    [self.view setBackgroundColor:[UIColor colorWithRed:63.0/255.0
-                                                  green:146.0/255.0
-                                                   blue:210.0/255.0
-                                                  alpha:1.0]];
     
     //BarColor
-    UIColor * barColor = [UIColor colorWithRed:63.0/255.0
-                                         green:146.0/255.0
-                                          blue:210.0/255.0
-                                         alpha:1.0];
+    UIColor * barColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];;
     if([self.navigationController.navigationBar respondsToSelector:@selector(setBarTintColor:)]){
         [self.navigationController.navigationBar setBarTintColor:barColor];
     }
@@ -97,7 +89,6 @@
     logo.adjustsFontSizeToFitWidth = YES;
     [logo setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];
     [self.tableView addSubview:logo];
-    [self.view setBackgroundColor:[UIColor clearColor]];
 }
 
 -(void)viewWillAppear:(BOOL)animated{

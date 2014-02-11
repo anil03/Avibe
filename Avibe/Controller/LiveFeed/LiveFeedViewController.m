@@ -232,9 +232,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     }
     
     //Deal with NULL text
-    if (!cell.label.text) {
-        cell.label.text = @"N/A";
-    }
+//    if (!cell.label.text) {
+//        cell.label.text = @"N/A";
+//    }
     
     //Not implement ImageView yet
     //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
@@ -270,6 +270,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     
 //    NSLog(@"%@", cell.label.text);
+    //Deal with NULL text
+    if (!cell.label.text) {
+        return;
+    }
+    
     
     MMNavigationController *navigationController;
     switch (indexPath.row%columnNumber) {
@@ -287,8 +292,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             YMGenericCollectionViewCell *cellTitle = cell;
             YMGenericCollectionViewCell *cellAlbum = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]];
             YMGenericCollectionViewCell *cellArtist = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]];
+            NSString *title = cellTitle.label.text? cellTitle.label.text:@" ";
+            NSString *album = cellAlbum.label.text? cellAlbum.label.text:@" ";
+            NSString *artist = cellArtist.label.text? cellArtist.label.text:@" ";
             
-            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[cellTitle.label.text, cellAlbum.label.text, cellArtist.label.text] forKeys:@[@"title", @"album", @"artist"]];
+            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
             
             //Switch to Youtube
             SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
@@ -492,8 +500,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
 //    MMDrawerBarButtonItem *rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
 //    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightDrawerButtonPress:)];
-    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Youtube" style:UIBarButtonItemStyleBordered target:self action:@selector(rightDrawerButtonPress:)];
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
+//    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Youtube" style:UIBarButtonItemStyleBordered target:self action:@selector(rightDrawerButtonPress:)];
+//    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
 }
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
