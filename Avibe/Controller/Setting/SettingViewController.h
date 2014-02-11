@@ -10,7 +10,7 @@
 
 
 
-@interface SettingViewController : UIViewController
+@interface SettingViewController : UITableViewController
 
 @property (nonatomic, strong) UIViewController *previousViewController;
 
