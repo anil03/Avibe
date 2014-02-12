@@ -367,7 +367,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.text = [[PFUser currentUser] username];
                 break;
             case DisplayName:
-                cell.textLabel.text = @"Display Name";
+                cell.textLabel.text = @"Full Name";
                 cell.detailTextLabel.text = [[PFUser currentUser] objectForKey:kClassUserDisplayname];
                 break;
             case Email:
@@ -450,7 +450,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 #pragma mark - Cell selected method for Avibe account
 - (void)displaynameSelected
 {
-    _displayNameAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the display name you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    _displayNameAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the full name you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
     _displayNameAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [_displayNameAlertView show];
 }
@@ -481,7 +481,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         _valueToChange = string;
         
         
-        _displayNameConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:[@"Are you sure to change display name to: " stringByAppendingString:string] delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _displayNameConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:[@"Are you sure to change full name to: " stringByAppendingString:string] delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
         _displayNameConfirmAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [_displayNameConfirmAlertView show];
     }
