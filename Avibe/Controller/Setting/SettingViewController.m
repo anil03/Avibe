@@ -10,7 +10,12 @@
 #import "SettingViewController.h"
 #import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
+
+#import "ScrobbleAuthorizeViewController.h"
+#import "RdioAuthorizeViewController.h"
 #import "YoutubeAuthorizeViewController.h"
+#import "FacebookAuthorizeViewController.h"
+
 #import "Setting.h"
 #import "PublicMethod.h"
 #import "BackgroundImageView.h"
@@ -48,7 +53,10 @@
 
 
 //Authorization Sources
+@property (nonatomic, strong) ScrobbleAuthorizeViewController *scrobbleAuthorizeViewController;
+@property (nonatomic, strong) RdioAuthorizeViewController *rdioAuthorizeViewController;
 @property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
+@property (nonatomic, strong) FacebookAuthorizeViewController *facebookAuthorizeViewController;
 
 @end
 
@@ -410,13 +418,16 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }else if (indexPath.section == LinkedAccount){
         switch (indexPath.row) {
             case Scrobble:
+                [self scrobbleAuthorize];
                 break;
             case Rdio:
+                [self rdioAuthorize];
                 break;
             case Youtube:
-                [self youtubeFetch];
+                [self youtubeAuthorize];
                 break;
             case Facebook:
+                [self facebookAuthorize];
                 break;
             default:
                 break;
@@ -424,7 +435,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         
     }
 }
-#pragma mark - Cell selected method
+#pragma mark - Cell selected method for Avibe account
 - (void)displaynameSelected
 {
     _displayNameAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the display name you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
@@ -538,8 +549,24 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
 }
 
-#pragma mark - TableViewcell selected method
-- (void)youtubeFetch
+#pragma mark - TableViewcell selected method for linked account
+- (void)scrobbleAuthorize
+{
+    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
+    _scrobbleAuthorizeViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+- (void)rdioAuthorize
+{
+    _rdioAuthorizeViewController = [[RdioAuthorizeViewController alloc] init];
+    _rdioAuthorizeViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_rdioAuthorizeViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+- (void)youtubeAuthorize
 {
     _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
     _youtubeAuthorizeViewController.previousViewController = self;
@@ -548,8 +575,17 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
     
     //    [[PublicMethod sharedInstance] authorizeGoogle:self.view];
-
+    
 }
+- (void)facebookAuthorize
+{
+    _facebookAuthorizeViewController = [[FacebookAuthorizeViewController alloc] init];
+    _facebookAuthorizeViewController.previousViewController = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_facebookAuthorizeViewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+
 - (void)youtubeRevoke
 {
     [[PublicMethod sharedInstance] revokeAccess];

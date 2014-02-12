@@ -21,6 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4C09E18918AAF65400847DEF /* ScrobbleAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */; };
+		4C09E18A18AAF65400847DEF /* RdioAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */; };
+		4C09E18B18AAF65400847DEF /* FacebookAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */; };
 		4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */; };
 		4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17610618A5B18500B58F42 /* GoogleOAuth.m */; };
 		4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */; };
@@ -156,6 +159,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4C09E18318AAF65400847DEF /* ScrobbleAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrobbleAuthorizeViewController.h; path = Sources/ScrobbleAuthorizeViewController.h; sourceTree = "<group>"; };
+		4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrobbleAuthorizeViewController.m; path = Sources/ScrobbleAuthorizeViewController.m; sourceTree = "<group>"; };
+		4C09E18518AAF65400847DEF /* RdioAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RdioAuthorizeViewController.h; path = Sources/RdioAuthorizeViewController.h; sourceTree = "<group>"; };
+		4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RdioAuthorizeViewController.m; path = Sources/RdioAuthorizeViewController.m; sourceTree = "<group>"; };
+		4C09E18718AAF65400847DEF /* FacebookAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookAuthorizeViewController.h; path = Sources/FacebookAuthorizeViewController.h; sourceTree = "<group>"; };
+		4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookAuthorizeViewController.m; path = Sources/FacebookAuthorizeViewController.m; sourceTree = "<group>"; };
 		4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestYoutubeOAuth.m; path = SaveListenedMusicTest/Youtube/TestYoutubeOAuth.m; sourceTree = "<group>"; };
 		4C17610518A5B18500B58F42 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
 		4C17610618A5B18500B58F42 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
@@ -912,6 +921,12 @@
 		4C716EAE18A9B63A00816A62 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				4C09E18318AAF65400847DEF /* ScrobbleAuthorizeViewController.h */,
+				4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */,
+				4C09E18518AAF65400847DEF /* RdioAuthorizeViewController.h */,
+				4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */,
+				4C09E18718AAF65400847DEF /* FacebookAuthorizeViewController.h */,
+				4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */,
 				4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */,
 				4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */,
 			);
@@ -931,8 +946,8 @@
 			isa = PBXGroup;
 			children = (
 				4C231CAA188104F800B030F9 /* Model */,
-				4C231CF4188104F800B030F9 /* View */,
 				4C231C4B188104F800B030F9 /* Controller */,
+				4C231CF4188104F800B030F9 /* View */,
 				4C231CB3188104F800B030F9 /* Resource */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231D6C1881063A00B030F9 /* Supporting Files */,
@@ -1192,6 +1207,7 @@
 				4C231D12188104F800B030F9 /* YMGenericCollectionViewController.m in Sources */,
 				4C231D1A188104F800B030F9 /* SideMenuRowViewController.m in Sources */,
 				4C231D1E188104F800B030F9 /* UserViewController.m in Sources */,
+				4C09E18918AAF65400847DEF /* ScrobbleAuthorizeViewController.m in Sources */,
 				4C231D13188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m in Sources */,
 				4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */,
 				4C231D09188104F800B030F9 /* MMTableViewCell.m in Sources */,
@@ -1222,6 +1238,7 @@
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
 				4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */,
 				4C2F0FCF1884781F006BA932 /* SampleMusic.m in Sources */,
+				4C09E18B18AAF65400847DEF /* FacebookAuthorizeViewController.m in Sources */,
 				4C231D21188104F800B030F9 /* WelcomeViewController.m in Sources */,
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,
 				4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */,
@@ -1235,6 +1252,7 @@
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
 				4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
+				4C09E18A18AAF65400847DEF /* RdioAuthorizeViewController.m in Sources */,
 				4C23F17A1885A48100D2075A /* SampleMusicViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
