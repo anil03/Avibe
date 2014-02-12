@@ -21,7 +21,7 @@
 #import "BackgroundImageView.h"
 #import "MMDrawerBarButtonItem.h"
 
-@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate>
+@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
 @property (nonatomic, strong) UIBarButtonItem * rightDrawerButton;
@@ -48,7 +48,8 @@
 //UIAlertview - Linked Account
 @property UIAlertView *scrobbleAlertView;
 @property UIAlertView *rdioAlertView;
-@property UIAlertView *youtubeAlertView;
+@property UIAlertView *youtubeConfirmAlertView;
+@property BOOL youtubeAuthorized;
 @property UIAlertView *facebookAlertView;
 
 
@@ -72,6 +73,13 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; //eliminate lines after last cell
+    
+    //Youtube
+    _youtubeAuthorized = NO;
+    _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
+    _youtubeAuthorizeViewController.previousViewController = self;
+    [_youtubeAuthorizeViewController setGOAuthDelegate:self];
+    [self authorizeGoogle:nil];
     
 //    //LastFM
 //    _lastFMAccountTextField.delegate = self;
@@ -376,18 +384,22 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }else if (indexPath.section == LinkedAccount){
         switch (indexPath.row) {
             case Scrobble:
+                cell.backgroundColor = [UIColor grayColor];
                 cell.textLabel.text = @"Scrobble";
                 cell.detailTextLabel.text = @"detail";
                 break;
             case Rdio:
+                cell.backgroundColor = [UIColor grayColor];
                 cell.textLabel.text = @"Rdio";
                 cell.detailTextLabel.text = @"detail";
                 break;
             case Youtube:
                 cell.textLabel.text = @"Youtube";
-                cell.detailTextLabel.text = @"detail";
+                cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
+                cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
             case Facebook:
+                cell.backgroundColor = [UIColor grayColor];
                 cell.textLabel.text = @"Facebook";
                 cell.detailTextLabel.text = @"detail";
                 break;
@@ -522,6 +534,11 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
     
     
+    //Youtube
+    if ([alertView isEqual:_youtubeConfirmAlertView] && buttonIndex == 0){
+        [self revokeAccess];
+    }
+    
 }
 - (void)warnEmptyInput
 {
@@ -568,13 +585,22 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 - (void)youtubeAuthorize
 {
-    _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
-    _youtubeAuthorizeViewController.previousViewController = self;
+    if (!_youtubeAuthorized) {
+        _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
+        _youtubeAuthorizeViewController.previousViewController = self;
+        [_youtubeAuthorizeViewController setGOAuthDelegate:self];
+    }
     
-    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_youtubeAuthorizeViewController];
-    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
-    
-    //    [[PublicMethod sharedInstance] authorizeGoogle:self.view];
+    if (!_youtubeAuthorized) {
+        MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_youtubeAuthorizeViewController];
+        [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+        
+        
+        [self authorizeGoogle:nil];
+    }else{
+        _youtubeConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Youtube authorization" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        [_youtubeConfirmAlertView show];
+    }
     
 }
 - (void)facebookAuthorize
@@ -589,6 +615,104 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 - (void)youtubeRevoke
 {
     [[PublicMethod sharedInstance] revokeAccess];
+}
+
+#pragma mark - Google OAuth
+- (void)authorizeGoogle:(UIView*)view {
+    //    [_googleOAuth authorizeUserWithClienID:@"746869634473-hl2v6kv6e65r1ak0u6uvajdl5grrtsgb.apps.googleusercontent.com"
+    //                           andClientSecret:@"_FsYBVXMeUD9BGzNmmBvE9Q4"
+    //                             andParentView:self.view
+    //                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
+    //     ];
+    [self.youtubeAuthorizeViewController authorizeUserWithClienID:@"4881560502-uteihtgcnas28bcjmnh0hfrbk4chlmsa.apps.googleusercontent.com"
+                               andClientSecret:@"R02t8Pk-59eEYy-B359-gvOY"
+                                 andParentView:view
+                                     andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/youtube", @"https://www.googleapis.com/auth/youtube.readonly",@"https://www.googleapis.com/auth/youtubepartner",@"https://www.googleapis.com/auth/youtubepartner-channel-audit", nil]
+     ];
+}
+- (void)revokeAccess{
+    [self.youtubeAuthorizeViewController revokeAccessToken];
+}
+
+-(void)authorizationWasSuccessful{
+    _youtubeAuthorized = YES;
+    [self.tableView reloadData];
+    
+//    [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/channels"
+//               withHttpMethod:httpMethod_GET
+//           postParameterNames:[NSArray arrayWithObjects:@"part",@"mine",nil] postParameterValues:[NSArray arrayWithObjects:@"contentDetails",@"true",nil]];
+    
+    //    [_googleOAuth callAPI:@"https://www.googleapis.com/oauth2/v1/userinfo"
+    //           withHttpMethod:httpMethod_GET
+    //       postParameterNames:nil postParameterValues:nil];
+}
+-(void)accessTokenWasRevoked{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
+                                                    message:@"Your access was revoked!"
+                                                   delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
+    [alert show];
+    
+    _youtubeAuthorized = NO;
+    [self.tableView reloadData];
+}
+-(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
+    NSLog(@"%@", errorShortDescription);
+    NSLog(@"%@", errorDetails);
+}
+-(void)errorInResponseWithBody:(NSString *)errorMessage{
+    NSLog(@"%@", errorMessage);
+}
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    NSError *error;
+    NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
+                                                                      options:NSJSONReadingMutableContainers
+                                                                        error:&error];
+    if (error) {
+        NSLog(@"An error occured while converting JSON data to dictionary.");
+        return;
+    }
+    NSLog(@"%@", dictionary);
+    
+    NSString *kind = [dictionary objectForKey:@"kind"];
+    if ([kind rangeOfString:@"channelListResponse"].location != NSNotFound){
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        NSMutableDictionary *contentDetails = [items[0] objectForKey:@"contentDetails"];
+        NSMutableDictionary *relatedPlaylists = [contentDetails objectForKey:@"relatedPlaylists"];
+        //likes, uploads, watchHistory, favorites, watchLater
+        NSString *watchHistory = [relatedPlaylists objectForKey:@"watchHistory"];
+        NSLog(@"WatchHistory playListID:%@", watchHistory);
+        
+        //Get playlist items
+        [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/playlistItems"
+                   withHttpMethod:httpMethod_GET
+               postParameterNames:[NSArray arrayWithObjects:@"part",@"playlistId",nil] postParameterValues:[NSArray arrayWithObjects:@"snippet",watchHistory,nil]];
+        
+    }
+    
+    if ([kind rangeOfString:@"playlistItemListResponse"].location != NSNotFound) {
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        NSMutableArray *entries = [[NSMutableArray alloc] init];
+        
+        for(NSMutableDictionary *item in items){
+            NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
+            //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
+            NSString *title = [snippet objectForKey:@"title"];
+            //Thumbnails
+            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
+            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
+            NSString *thumbnailHighURL = [high objectForKey:@"url"];
+            
+            NSLog(@"Title:%@, ThumbnailUrl:%@", title, thumbnailHighURL);
+            
+            //Save to Parse
+            NSMutableDictionary *entry = [[NSMutableDictionary alloc] init];
+            [entry setObject:title forKey:@"title"];
+            [entry setObject:thumbnailHighURL forKey:@"url"];
+            [entries addObject:entry];
+        }
+        
+//        [SaveMusicFromSources saveYoutubeEntry:entries];
+    }
 }
 
 #pragma mark - Textfield Method
