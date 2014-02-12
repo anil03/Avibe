@@ -33,6 +33,7 @@ NSString *const kClassContactPhoneNumber = @"phoneNumber_contact";
 #pragma mark - Class User
 NSString *const kClassUser = @"User";
 NSString *const kClassUserUsername = @"username";
+NSString *const kClassUserDisplayname = @"displayname";
 NSString *const kClassUserEmail = @"email";
 NSString *const kClassUserPhoneNumber = @"additional";
 NSString *const kClassUserLastFM = @"lastFM";

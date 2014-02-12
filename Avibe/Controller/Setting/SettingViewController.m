@@ -30,6 +30,23 @@
 @property (nonatomic, strong) NSString *currentKey;
 @property (nonatomic, strong) NSString *currentType;
 
+//UIAlertview - Avibe Account
+@property NSString *valueToChange;
+@property NSString *classToChange;
+
+@property UIAlertView *displayNameAlertView;
+@property UIAlertView *displayNameConfirmAlertView;
+@property UIAlertView *emailAlertView;
+@property UIAlertView *emailConfirmAlertView;
+@property UIAlertView *phoneNumberAlertView;
+@property UIAlertView *phoneNumberConfirmAlertView;
+//UIAlertview - Linked Account
+@property UIAlertView *scrobbleAlertView;
+@property UIAlertView *rdioAlertView;
+@property UIAlertView *youtubeAlertView;
+@property UIAlertView *facebookAlertView;
+
+
 //Authorization Sources
 @property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
 
@@ -252,6 +269,7 @@ typedef NS_ENUM(NSInteger, SettingSection){
 };
 typedef NS_ENUM(NSInteger, SettingRowInAvibeAccountSection){
     Username,
+    DisplayName,
     Email,
     PhoneNumber
 };
@@ -269,7 +287,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     switch (section) {
         case AvibeAccount:
-            return 3;
+            return 4;
         case LinkedAccount:
             return 4;
         default:
@@ -332,6 +350,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.textLabel.text = @"Username";
                 cell.detailTextLabel.text = [[PFUser currentUser] username];
                 break;
+            case DisplayName:
+                cell.textLabel.text = @"Display Name";
+                cell.detailTextLabel.text = [[PFUser currentUser] objectForKey:kClassUserDisplayname];
+                break;
             case Email:
                 cell.textLabel.text = @"Email";
                 cell.detailTextLabel.text = [[PFUser currentUser] objectForKey:kClassUserEmail];
@@ -373,11 +395,14 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     if (indexPath.section == AvibeAccount) {
         switch (indexPath.row) {
-            case Username:
+            case DisplayName:
+                [self displaynameSelected];
                 break;
             case Email:
+                [self emailSelected];
                 break;
             case PhoneNumber:
+                [self phoneNumberSelected];
                 break;
             default:
                 break;
@@ -397,6 +422,119 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
         }
         
+    }
+}
+#pragma mark - Cell selected method
+- (void)displaynameSelected
+{
+    _displayNameAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the display name you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    _displayNameAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [_displayNameAlertView show];
+}
+- (void)emailSelected
+{
+    _emailAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the email you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    _emailAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [_emailAlertView show];
+}
+- (void)phoneNumberSelected
+{
+    _phoneNumberAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter the phone number you want to change." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+    _phoneNumberAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
+    [_phoneNumberAlertView show];
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Display Name
+    if([alertView isEqual:_displayNameAlertView] && buttonIndex == 0) {
+        _classToChange = kClassUserDisplayname;
+        
+        NSString *string = [alertView textFieldAtIndex:0].text;
+        if (!string || [string isEqualToString:@""] || [string isEqualToString:[[PFUser currentUser] objectForKey:_classToChange]]) {
+            [self warnEmptyInput];
+            return;
+        }
+        
+        _valueToChange = string;
+        
+        
+        _displayNameConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:[@"Are you sure to change display name to: " stringByAppendingString:string] delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _displayNameConfirmAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [_displayNameConfirmAlertView show];
+    }
+    if ([alertView isEqual:_displayNameConfirmAlertView] && buttonIndex == 0){
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] target:self selector:@selector(changePFUser:error:)];
+    }
+    
+    
+    //Email
+    if([alertView isEqual:_emailAlertView] && buttonIndex == 0) {
+        _classToChange = kClassUserEmail;
+
+        NSString *string = [alertView textFieldAtIndex:0].text;
+        if (!string || [string isEqualToString:@""] || [string isEqualToString:[[PFUser currentUser] objectForKey:_classToChange]]) {
+            [self warnEmptyInput];
+            return;
+        }
+        
+        _valueToChange = string;
+        
+        _emailConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:[@"Are you sure to change email to: " stringByAppendingString:string] delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _emailConfirmAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [_emailConfirmAlertView show];
+    }
+    if ([alertView isEqual:_emailConfirmAlertView] && buttonIndex == 0){
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] target:self selector:@selector(changePFUser:error:)];
+    }
+    
+    //Phone number
+    if([alertView isEqual:_phoneNumberAlertView] && buttonIndex == 0) {
+        _classToChange = kClassUserPhoneNumber;
+        
+        NSString *string = [alertView textFieldAtIndex:0].text;
+        if (!string || [string isEqualToString:@""] || [string isEqualToString:[[PFUser currentUser] objectForKey:_classToChange]]) {
+            [self warnEmptyInput];
+            return;
+        }
+        
+        _valueToChange = string;
+        
+        _phoneNumberConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:[@"Are you sure to change phone number to: " stringByAppendingString:string] delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _phoneNumberConfirmAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [_phoneNumberConfirmAlertView show];
+    }
+    if ([alertView isEqual:_phoneNumberConfirmAlertView] && buttonIndex == 0){
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] target:self selector:@selector(changePFUser:error:)];
+    }
+    
+    
+}
+- (void)warnEmptyInput
+{
+    [[[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Your input is not correct, please try agian." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+}
+
+#pragma mark - Change Parse PFUser field
+- (void)changePFUser:(PFObject*)object error:(NSError*)error
+{
+    if (_valueToChange) {
+        [object setObject:_valueToChange forKey:_classToChange];
+        [object saveEventually:^(BOOL succeeded, NSError *error) {
+            [self objectSaveResult:succeeded];
+        }];
+    }
+}
+- (void)objectSaveResult:(BOOL)succeeded
+{
+    if (succeeded) {
+        [[PFUser currentUser] refresh];
+        [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Save successfully!" delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [self.tableView reloadData];
+    }else{
+        [[[UIAlertView alloc] initWithTitle: @"Oops" message: @"Save not finish. Please try later." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
 
@@ -420,102 +558,102 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 #pragma mark - Textfield Method
 
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if ([alertView isEqual:_currentAlertView] && buttonIndex == 0) {
-        PFQuery *query = [PFUser query];
-        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-            if(object){
-                [object setObject:_currentValueToChange forKey:_currentKey];
-                [object saveEventually:^(BOOL succeeded, NSError *error) {
-                    NSString *warningString;
-                    if (succeeded) {
-                        warningString = [NSString stringWithFormat:@"You have successfully changed %@ to %@.  Please log in again to see the update.", _currentType, _currentValueToChange];
-                        if([_currentValueToChange length] == 0){
-                            warningString = [NSString stringWithFormat:@"You have successfully deleted %@. Please log in again to see the update.", _currentType];
-                        }
-
-                        [[[UIAlertView alloc] initWithTitle: @"Success" message: warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                    }else if(error){
-                        warningString = [NSString stringWithFormat:@"You can't change %@ to %@, please try another one.", _currentType,_currentValueToChange];
-                        if([_currentValueToChange length] == 0){
-                            warningString = [NSString stringWithFormat:@"You can't deleted %@.", _currentType];
-                        }
-                        
-                        [[[UIAlertView alloc] initWithTitle: @"Error" message:warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-                    }
-                }];
-            }
-        }];
-    }else if([alertView isEqual:_currentAlertView] && buttonIndex == 1){
-        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-    }
-    
-    //Restore DONE action
-    _rightDrawerButton.action = @selector(popCurrentView);
-}
-- (void)disableBarItem
-{
-    //Disable DONE to avoid killing current controller by mistake
-    _rightDrawerButton.action = nil;
-}
-- (void)changeTextField
-{
-    //Ignore if user not change
-    if([_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
-        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-        return;
-    }
-    //Change to nil
-    NSString *warningString = [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange];
-    if([_currentValueToChange length] == 0){
-        warningString = [NSString stringWithFormat:@"Are you sure to delete %@?", _currentType];
-    }
-    
-    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message:warningString  delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
-    [_currentAlertView show];
-}
-- (void)changeUsername:(UITextField*)sender
-{
-    _currentValueToChange = sender.text;
-    _currentKey = kClassUserUsername;
-    _currentSender = sender;
-    _currentType = @"User Name";
-    [self changeTextField];
-}
-- (void)changeEmail:(UITextField*)sender
-{
-    _currentValueToChange = sender.text;
-    _currentKey = kClassUserEmail;
-    _currentSender = sender;
-    _currentType = @"Email";
-    [self changeTextField];
-}
-- (void)changePhoneNumber:(UITextField*)sender
-{
-    _currentValueToChange = sender.text;
-    _currentKey = kClassUserPhoneNumber;
-    _currentSender = sender;
-    _currentType = @"Phone Number";
-    [self changeTextField];
-}
-- (void)changeLastFM:(UITextField*)sender
-{
-    _currentValueToChange = sender.text;
-    _currentKey = kClassUserLastFM;
-    _currentSender = sender;
-    _currentType = @"LastFM Account";
-    [self changeTextField];
-}
-- (void)changeRdio:(UITextField*)sender
-{
-    _currentValueToChange = sender.text;
-    _currentKey = kClassUserRdio;
-    _currentSender = sender;
-    _currentType = @"Rdio Account";
-    [self changeTextField];
-}
+//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+//{
+//    if ([alertView isEqual:_currentAlertView] && buttonIndex == 0) {
+//        PFQuery *query = [PFUser query];
+//        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+//            if(object){
+//                [object setObject:_currentValueToChange forKey:_currentKey];
+//                [object saveEventually:^(BOOL succeeded, NSError *error) {
+//                    NSString *warningString;
+//                    if (succeeded) {
+//                        warningString = [NSString stringWithFormat:@"You have successfully changed %@ to %@.  Please log in again to see the update.", _currentType, _currentValueToChange];
+//                        if([_currentValueToChange length] == 0){
+//                            warningString = [NSString stringWithFormat:@"You have successfully deleted %@. Please log in again to see the update.", _currentType];
+//                        }
+//
+//                        [[[UIAlertView alloc] initWithTitle: @"Success" message: warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//                    }else if(error){
+//                        warningString = [NSString stringWithFormat:@"You can't change %@ to %@, please try another one.", _currentType,_currentValueToChange];
+//                        if([_currentValueToChange length] == 0){
+//                            warningString = [NSString stringWithFormat:@"You can't deleted %@.", _currentType];
+//                        }
+//                        
+//                        [[[UIAlertView alloc] initWithTitle: @"Error" message:warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//                        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+//                    }
+//                }];
+//            }
+//        }];
+//    }else if([alertView isEqual:_currentAlertView] && buttonIndex == 1){
+//        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+//    }
+//    
+//    //Restore DONE action
+//    _rightDrawerButton.action = @selector(popCurrentView);
+////}
+//- (void)disableBarItem
+//{
+//    //Disable DONE to avoid killing current controller by mistake
+//    _rightDrawerButton.action = nil;
+//}
+//- (void)changeTextField
+//{
+//    //Ignore if user not change
+//    if([_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
+//        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
+//        return;
+//    }
+//    //Change to nil
+//    NSString *warningString = [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange];
+//    if([_currentValueToChange length] == 0){
+//        warningString = [NSString stringWithFormat:@"Are you sure to delete %@?", _currentType];
+//    }
+//    
+//    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message:warningString  delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+//    [_currentAlertView show];
+//}
+//- (void)changeUsername:(UITextField*)sender
+//{
+//    _currentValueToChange = sender.text;
+//    _currentKey = kClassUserUsername;
+//    _currentSender = sender;
+//    _currentType = @"User Name";
+//    [self changeTextField];
+//}
+//- (void)changeEmail:(UITextField*)sender
+//{
+//    _currentValueToChange = sender.text;
+//    _currentKey = kClassUserEmail;
+//    _currentSender = sender;
+//    _currentType = @"Email";
+//    [self changeTextField];
+//}
+//- (void)changePhoneNumber:(UITextField*)sender
+//{
+//    _currentValueToChange = sender.text;
+//    _currentKey = kClassUserPhoneNumber;
+//    _currentSender = sender;
+//    _currentType = @"Phone Number";
+//    [self changeTextField];
+//}
+//- (void)changeLastFM:(UITextField*)sender
+//{
+//    _currentValueToChange = sender.text;
+//    _currentKey = kClassUserLastFM;
+//    _currentSender = sender;
+//    _currentType = @"LastFM Account";
+//    [self changeTextField];
+//}
+//- (void)changeRdio:(UITextField*)sender
+//{
+//    _currentValueToChange = sender.text;
+//    _currentKey = kClassUserRdio;
+//    _currentSender = sender;
+//    _currentType = @"Rdio Account";
+//    [self changeTextField];
+//}
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{
@@ -540,38 +678,38 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 
 
 #pragma mark - UITextField Delegate
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self disableBarItem];
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    [textField resignFirstResponder];
-    //Restore DONE action
-    _rightDrawerButton.action = @selector(popCurrentView);
-}
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    //hide the keyboard
-    [textField resignFirstResponder];
-    
-    //return NO or YES, it doesn't matter
-    return YES;
-}
-
-
-- (void)hideKeyBoard
-{
-    for (UIView *view1 in self.view.subviews){
-        for(UIView *view2 in view1.subviews){
-            if ([view2 isKindOfClass:[UITextField class]] && [view2 isFirstResponder]) {
-                UITextField *textField = (UITextField*)view2;
-                [textField resignFirstResponder];
-                return;
-            }
-        }
-    }
-}
+//- (void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    [self disableBarItem];
+//}
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//    [textField resignFirstResponder];
+//    //Restore DONE action
+//    _rightDrawerButton.action = @selector(popCurrentView);
+//}
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    //hide the keyboard
+//    [textField resignFirstResponder];
+//    
+//    //return NO or YES, it doesn't matter
+//    return YES;
+//}
+//
+//
+//- (void)hideKeyBoard
+//{
+//    for (UIView *view1 in self.view.subviews){
+//        for(UIView *view2 in view1.subviews){
+//            if ([view2 isKindOfClass:[UITextField class]] && [view2 isFirstResponder]) {
+//                UITextField *textField = (UITextField*)view2;
+//                [textField resignFirstResponder];
+//                return;
+//            }
+//        }
+//    }
+//}
 
 
 
