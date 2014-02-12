@@ -303,7 +303,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     switch (section) {
         case AvibeAccount:
-            return 4;
+            return 3;
         case LinkedAccount:
             return 4;
         default:
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         switch (indexPath.row) {
             case Scrobble:
                 cell.backgroundColor = [UIColor grayColor];
-                cell.textLabel.text = @"Scrobble";
+                cell.textLabel.text = @"Last.fm";
                 cell.detailTextLabel.text = @"detail";
                 break;
             case Rdio:
@@ -394,7 +394,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.text = @"detail";
                 break;
             case Youtube:
-                cell.textLabel.text = @"Youtube";
+                cell.textLabel.text = @"YouTube";
                 cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
