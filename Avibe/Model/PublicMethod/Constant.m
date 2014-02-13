@@ -37,6 +37,7 @@ NSString *const kClassUserDisplayname = @"displayname";
 NSString *const kClassUserEmail = @"email";
 NSString *const kClassUserPhoneNumber = @"additional";
 NSString *const kClassUserLastFM = @"lastFM";
+NSString *const kClassUserFacebook = @"facebook";
 NSString *const kClassUserRdio = @"rdio";
 NSString *const kClassUserRdioKey = @"rdioKey";
 

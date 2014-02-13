@@ -429,9 +429,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 
                 
                 BOOL facebookLogIn = NO;
+                NSString *facebookUser = [[PFUser currentUser] objectForKey:kClassUserFacebook];
                 if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound) facebookLogIn = YES;
                 cell.textLabel.text = @"Facebook";
-                cell.detailTextLabel.text = facebookLogIn? @"Authorized✓" : @"Unauthorized✗";
+                cell.detailTextLabel.text = facebookLogIn? [facebookUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
 
 ;
@@ -590,7 +591,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                         [[PFUser currentUser] refresh];
                         [self.tableView reloadData];
                     }else{
-                        [[[UIAlertView alloc] initWithTitle: @"Oooops" message: @"Something wrong happens, please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        [self authorizeFailed];
                     }
                 }];
             }
@@ -607,7 +608,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     [[[UIAlertView alloc] initWithTitle:@"Ooops" message:@"Your input is not correct, please try agian." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
-
+- (void)authorizeFailed
+{
+    [[[UIAlertView alloc] initWithTitle: @"Oooops" message: @"Something wrong happens, please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+}
 #pragma mark - Change Parse PFUser field
 - (void)changePFUser:(PFObject*)object error:(NSError*)error
 {
@@ -679,6 +683,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
     
 }
+- (void)youtubeRevoke
+{
+    [[PublicMethod sharedInstance] revokeAccess];
+}
 - (void)facebookAuthorize
 {
     _facebookAuthorizeViewController = [[FacebookAuthorizeViewController alloc] init];
@@ -737,10 +745,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
 }
 
-- (void)youtubeRevoke
-{
-    [[PublicMethod sharedInstance] revokeAccess];
-}
+
 
 
 #pragma mark - Last.fm Authorization
@@ -789,10 +794,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         if (name && key) {
             [self lastFMAuthorizeSucceed:name];
         }else{
-            [self lastFMAuthorizeFailed];
+            [self authorizeFailed];
         }
     }else{
-        [self lastFMAuthorizeFailed];
+        [self authorizeFailed];
     }
 }
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
@@ -822,16 +827,13 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                     [[PFUser currentUser] refresh];
                     [self.tableView reloadData];
                 }else{
-                    [self lastFMAuthorizeFailed];
+                    [self authorizeFailed];
                 }
             }];
         }
     }];
 }
-- (void)lastFMAuthorizeFailed
-{
-    [[[UIAlertView alloc] initWithTitle: @"Oooops" message: @"Something wrong happens, please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-}
+
 
 #pragma mark - Google OAuth
 - (void)authorizeGoogle:(UIView*)view {
@@ -965,6 +967,24 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
 {
     [self.tableView reloadData];
+}
+- (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
+{
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object setObject:[user name]  forKey:kClassUserFacebook];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+//                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
 }
 
 #pragma mark - Textfield Method
