@@ -23,8 +23,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self.view setBackgroundColor:[UIColor redColor]];
-//    self.view = [[UIWebView alloc] initWithFrame:self.view.frame];
+    
+    FBLoginView *loginView = [[FBLoginView alloc] initWithFrame:CGRectMake(20, 100, 40, 40)];
+    [self.view addSubview:loginView];
 }
 
 - (void)didReceiveMemoryWarning

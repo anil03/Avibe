@@ -41,6 +41,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    
+    /*
+     *Facebook - make sure that the FBLoginView class is loaded before the view is shown
+     */
+    [FBLoginView class];
+    
     //Check first run user
     static NSString* const hasRunAppOnceKey = @"hasRunAppOnceKey";
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];

@@ -21,7 +21,7 @@
 #import "BackgroundImageView.h"
 #import "MMDrawerBarButtonItem.h"
 
-@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate>
+@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
 @property (nonatomic, strong) UIBarButtonItem * rightDrawerButton;
@@ -51,7 +51,10 @@
 @property UIAlertView *youtubeConfirmAlertView;
 @property BOOL youtubeAuthorized;
 @property UIAlertView *facebookAlertView;
-
+@property FBLoginView *facebookLoginView;
+@property UILabel *facebookLoginLabel;
+@property NSString *facebookCellString;
+@property UIColor *facebookCellColor;
 
 //Authorization Sources
 @property (nonatomic, strong) ScrobbleAuthorizeViewController *scrobbleAuthorizeViewController;
@@ -80,6 +83,10 @@
     _youtubeAuthorizeViewController.previousViewController = self;
     [_youtubeAuthorizeViewController setGOAuthDelegate:self];
     [self authorizeGoogle:nil];
+    
+    
+    //Facebook
+//    _facebookLoginView
     
 //    //LastFM
 //    _lastFMAccountTextField.delegate = self;
@@ -278,6 +285,7 @@
 //    [scrollView sendSubviewToBack:backgroundView];
 }
 
+
 #pragma mark - UITableView DataSource
 typedef NS_ENUM(NSInteger, SettingSection){
     AvibeAccount,
@@ -290,10 +298,10 @@ typedef NS_ENUM(NSInteger, SettingRowInAvibeAccountSection){
     PhoneNumber
 };
 typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
-    Scrobble,
-    Rdio,
     Youtube,
-    Facebook
+    Facebook,
+    Scrobble,
+    Rdio
 };
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -303,7 +311,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     switch (section) {
         case AvibeAccount:
-            return 3;
+            return 4;
         case LinkedAccount:
             return 4;
         default:
@@ -398,11 +406,24 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
-            case Facebook:
-                cell.backgroundColor = [UIColor grayColor];
+            case Facebook:{
+                [self customizeFacebookLoginView:cell.frame];
+                assert(_facebookLoginView != nil);
+                assert(_facebookLoginLabel != nil);
+                [cell addSubview:_facebookLoginView];
+                [cell bringSubviewToFront:_facebookLoginView];
+                
+                
+                BOOL facebookLogIn = NO;
+                if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound) facebookLogIn = YES;
                 cell.textLabel.text = @"Facebook";
-                cell.detailTextLabel.text = @"detail";
+                cell.detailTextLabel.text = facebookLogIn? @"Authorized✓" : @"Unauthorized✗";
+                cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
+
+;
+                
                 break;
+            }
             default:
                 break;
         }
@@ -439,7 +460,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 [self youtubeAuthorize];
                 break;
             case Facebook:
-                [self facebookAuthorize];
+//                [self facebookAuthorize];
                 break;
             default:
                 break;
@@ -610,6 +631,55 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
     MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_facebookAuthorizeViewController];
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+    
+//    NSArray *permissionsNeeded = @[@"user_actions.music"];
+//    
+//    // Request the permissions the user currently has
+//    [FBRequestConnection startWithGraphPath:@"/me/permissions"
+//                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//                              if (!error){
+//                                  // These are the current permissions the user has
+//                                  NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
+//                                  
+//                                  // We will store here the missing permissions that we will have to request
+//                                  NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
+//                                  
+//                                  // Check if all the permissions we need are present in the user's current permissions
+//                                  // If they are not present add them to the permissions to be requested
+//                                  for (NSString *permission in permissionsNeeded){
+//                                      if (![currentPermissions objectForKey:permission]){
+//                                          [requestPermissions addObject:permission];
+//                                      }
+//                                  }
+//                                  
+//                                  // If we have permissions to request
+//                                  if ([requestPermissions count] > 0){
+//                                      [FBSession.activeSession
+//                                       requestNewReadPermissions:requestPermissions
+//                                       completionHandler:^(FBSession *session, NSError *error) {
+//                                           if (!error) {
+//                                               // Permission granted, we can request the user information
+////                                               [self makeMusicHistoryRequest];
+//                                           } else {
+//                                               // An error occurred, we need to handle the error
+//                                               // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+//                                               NSLog(@"error %@", error.description);
+//                                           }
+//                                       }];
+//                                  } else {
+//                                      // Permissions are present
+//                                      // We can request the user information
+////                                      [self makeMusicHistoryRequest];
+//                                  }
+//                                  
+//                              } else {
+//                                  // An error occurred, we need to handle the error
+//                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+//                                  NSLog(@"error %@", error.description);
+//                              }
+//                          }];
+
+    
 }
 
 - (void)youtubeRevoke
@@ -713,6 +783,42 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         
 //        [SaveMusicFromSources saveYoutubeEntry:entries];
     }
+}
+
+
+#pragma mark - Facebook login
+- (void)customizeFacebookLoginView:(CGRect)frame
+{
+    if (!_facebookLoginView) {
+        _facebookLoginView = [[FBLoginView alloc] init];
+        //        [[FBLoginView alloc] initWithPermissions:[NSArray arrayWithObject:@"publish_actions"]];
+    }
+    
+    _facebookLoginView.frame = frame;
+    for (id obj in _facebookLoginView.subviews)
+    {
+        if ([obj isKindOfClass:[UIButton class]])
+        {
+            UIButton * loginButton =  obj;
+            [loginButton setBackgroundImage:nil forState:UIControlStateNormal];
+        }
+        if ([obj isKindOfClass:[UILabel class]])
+        {
+            UILabel * loginLabel =  obj;
+            _facebookLoginLabel = loginLabel;
+            [loginLabel setHidden:YES];
+        }
+    }
+    
+    _facebookLoginView.delegate = self;
+}
+- (void)loginViewShowingLoggedInUser:(FBLoginView *)loginView
+{
+    [self.tableView reloadData];
+}
+- (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - Textfield Method
