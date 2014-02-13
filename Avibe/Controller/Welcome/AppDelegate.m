@@ -13,8 +13,8 @@
 #import "WelcomeViewController.h"
 
 //Rdio
-#import <Rdio/Rdio.h>
 #import "RdioConsumerCredentials.h"
+static AppDelegate *launchedDelegate;
 
 //SaveMusic
 #import "SaveMusicFromSources.h"
@@ -23,6 +23,7 @@
 @interface AppDelegate()
 @property (nonatomic, strong) SaveMusicFromSources *saveMusic;
 @property (nonatomic, strong) MPMusicPlayerController *player;
+
 @end
 
 @implementation AppDelegate
@@ -31,6 +32,15 @@
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 
+
+#pragma mark - Init instance
+//Rdio
++ (Rdio *)rdioInstance
+{
+    return launchedDelegate.rdio;
+}
+
+//Background Music Save
 - (SaveMusicFromSources *)saveMusic
 {
     if (!_saveMusic) {
@@ -39,6 +49,7 @@
     return _saveMusic;
 }
 
+#pragma mark - Application Method
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
@@ -47,7 +58,15 @@
      */
     [FBLoginView class];
     
-    //Check first run user
+    /**
+     * Rdio
+     */
+    launchedDelegate = self;
+    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+    
+    /*
+     * Check first run user
+     */
     static NSString* const hasRunAppOnceKey = @"hasRunAppOnceKey";
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     if ([defaults boolForKey:hasRunAppOnceKey] == NO)
@@ -59,7 +78,9 @@
 //    NSManagedObjectContext *context = [self managedObjectContext];
 
     
-    //Parse Account
+    /*
+     * Set up Parse Account
+     */
     [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
     [PFFacebookUtils initializeFacebook];
     [PFTwitterUtils initializeWithConsumerKey:@"7RufvU8xSuPj6dr9xPipdw"
@@ -70,7 +91,10 @@
     [defaultACL setPublicReadAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
-    //Background - 600s => 10mins
+    
+    /*
+     * Background Fetch - 600s => 10mins
+     */
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:600.0];
     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
     
@@ -79,10 +103,11 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeController];
     self.window.rootViewController = navigationController;
     
-    /*Notification*/
+    /*
+     * Notification
+     */
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     _player = [MPMusicPlayerController iPodMusicPlayer];
-    
     [notificationCenter addObserver:self
                            selector:@selector(nowPlayingItemChanged:)
                                name:MPMusicPlayerControllerNowPlayingItemDidChangeNotification

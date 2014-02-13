@@ -15,13 +15,14 @@
 #import "RdioAuthorizeViewController.h"
 #import "YoutubeAuthorizeViewController.h"
 #import "FacebookAuthorizeViewController.h"
-
+#import "Rdio/Rdio.h"
+#import "AppDelegate.h"
 #import "Setting.h"
 #import "PublicMethod.h"
 #import "BackgroundImageView.h"
 #import "MMDrawerBarButtonItem.h"
 
-@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate>
+@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate, RdioDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
 @property (nonatomic, strong) UIBarButtonItem * rightDrawerButton;
@@ -53,7 +54,8 @@
 @property (nonatomic, strong) NSURLConnection *urlConnection;
 @property BOOL lastFMAuthorizationSucceed;
 //Rdio
-@property UIAlertView *rdioAlertView;
+@property UIAlertView *rdioConfirmAlertView;
+@property BOOL rdioAutorizationSucceed;
 //Youtube
 @property UIAlertView *youtubeConfirmAlertView;
 @property BOOL youtubeAuthorized;
@@ -74,6 +76,7 @@
 
 @implementation SettingViewController
 
+#pragma mark - View method
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setupBarMenuButton];
@@ -99,6 +102,11 @@
     
     //Facebook
 //    _facebookLoginView
+    
+    //Rdio
+    Rdio *rdio = [AppDelegate rdioInstance];
+    assert(rdio != nil);
+    [self setRdioAutorizationSucceed:rdio.user? YES : NO];
     
 //    //LastFM
 //    _lastFMAccountTextField.delegate = self;
@@ -310,10 +318,10 @@ typedef NS_ENUM(NSInteger, SettingRowInAvibeAccountSection){
     PhoneNumber
 };
 typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
-    Youtube,
-    Facebook,
-    Scrobble,
-    Rdio
+    YoutubeRow,
+    FacebookRow,
+    ScrobbleRow,
+    RdioRow
 };
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -403,24 +411,24 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         }
     }else if (indexPath.section == LinkedAccount){
         switch (indexPath.row) {
-            case Scrobble:{
+            case ScrobbleRow:{
                 cell.textLabel.text = @"Last.fm";
                 NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFM];
                 cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
                 }
                 break;
-            case Rdio:
-                cell.backgroundColor = [UIColor grayColor];
+            case RdioRow:
                 cell.textLabel.text = @"Rdio";
-                cell.detailTextLabel.text = @"detail";
+                cell.detailTextLabel.text = _rdioAutorizationSucceed? @"Authorized✓" : @"Unauthorized✗";
+                cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
                 break;
-            case Youtube:
+            case YoutubeRow:
                 cell.textLabel.text = @"YouTube";
                 cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
-            case Facebook:{
+            case FacebookRow:{
                 if (!_facebookLoginView) {
                     [self customizeFacebookLoginView:cell.frame];
                 }
@@ -467,16 +475,16 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         }
     }else if (indexPath.section == LinkedAccount){
         switch (indexPath.row) {
-            case Scrobble:
+            case ScrobbleRow:
                 [self scrobbleAuthorize];
                 break;
-            case Rdio:
+            case RdioRow:
                 [self rdioAuthorize];
                 break;
-            case Youtube:
+            case YoutubeRow:
                 [self youtubeAuthorize];
                 break;
-            case Facebook:
+            case FacebookRow:
 //                [self facebookAuthorize];
                 break;
             default:
@@ -605,6 +613,11 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         [self revokeAccess];
     }
     
+    //Rdio
+    if ([alertView isEqual:_rdioConfirmAlertView] && buttonIndex == 0) {
+        [[AppDelegate rdioInstance] logout];
+    }
+    
 }
 - (void)warnEmptyInput
 {
@@ -659,11 +672,18 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 - (void)rdioAuthorize
 {
-    _rdioAuthorizeViewController = [[RdioAuthorizeViewController alloc] init];
-    _rdioAuthorizeViewController.previousViewController = self;
-    
-    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_rdioAuthorizeViewController];
-    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+    if (_rdioAutorizationSucceed) {
+        _rdioConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Rdio authorization" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        [_rdioConfirmAlertView show];
+    } else {
+        [AppDelegate rdioInstance].delegate = self;
+        [[AppDelegate rdioInstance] authorizeFromController:self];
+    }
+//    _rdioAuthorizeViewController = [[RdioAuthorizeViewController alloc] init];
+//    _rdioAuthorizeViewController.previousViewController = self;
+//    
+//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_rdioAuthorizeViewController];
+//    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 - (void)youtubeAuthorize
 {
@@ -987,6 +1007,32 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             }];
         }
     }];
+}
+
+#pragma mark - RdioDelegate
+
+- (void)rdioDidAuthorizeUser:(NSDictionary *)user withAccessToken:(NSString *)accessToken
+{
+    [self setRdioAutorizationSucceed:YES];
+    [self.tableView reloadData];
+}
+
+- (void)rdioAuthorizationFailed:(NSString *)error
+{
+    [self setRdioAutorizationSucceed:NO];
+    [self.tableView reloadData];
+}
+
+- (void)rdioAuthorizationCancelled
+{
+    [self setRdioAutorizationSucceed:NO];
+    [self.tableView reloadData];
+}
+
+- (void)rdioDidLogout
+{
+    [self setRdioAutorizationSucceed:NO];
+    [self.tableView reloadData];
 }
 
 #pragma mark - Textfield Method
