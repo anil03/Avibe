@@ -421,7 +421,9 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
             case Facebook:{
-                [self customizeFacebookLoginView:cell.frame];
+                if (!_facebookLoginView) {
+                    [self customizeFacebookLoginView:cell.frame];
+                }
                 assert(_facebookLoginView != nil);
                 assert(_facebookLoginLabel != nil);
                 [cell addSubview:_facebookLoginView];

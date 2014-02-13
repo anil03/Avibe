@@ -122,7 +122,7 @@
     MPMusicPlayerController *player = (MPMusicPlayerController *)notification.object;
     MPMediaItem *song = [player nowPlayingItem];
     
-    if (song) {
+    if (song && [[PFUser currentUser] isAuthenticated]) {
         NSString *title = [song valueForProperty:MPMediaItemPropertyTitle];
         NSString *album = [song valueForProperty:MPMediaItemPropertyAlbumTitle];
         NSString *artist = [song valueForProperty:MPMediaItemPropertyArtist];
