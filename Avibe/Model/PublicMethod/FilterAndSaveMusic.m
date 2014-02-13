@@ -7,6 +7,7 @@
 //
 
 #import "FilterAndSaveMusic.h"
+#import "NSString+MD5.h"
 
 @implementation FilterAndSaveMusic
 
@@ -17,48 +18,47 @@
 //    [self printMusicToSaveData:musicToSave];
     
     NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
-    __block int numberOfDuplicated = 0;
+    int numberOfDuplicated = 0;
     
-    BOOL songExisted = NO;
+    /**
+     * Check duplicated song by MD5
+     */
+    NSMutableArray *md5Array = [[NSMutableArray alloc] init];
+    for(PFObject *existingPFObject in fetechObjects){
+        NSString *md5 = [existingPFObject objectForKey:kClassSongMD5];
+        [md5Array addObject:md5];
+    }
     
+    /*
+     * Assign MD5 to each PFObject to indentify its uniqueness
+     */
     for(PFObject *pfToSave in musicToSave){
-        songExisted = NO;
-        
         NSString *newTitle = [pfToSave objectForKey:kClassSongTitle];
         NSString *newArtist = [pfToSave objectForKey:kClassSongArtist];
         NSString *newAlbum = [pfToSave objectForKey:kClassSongAlbum];
         
-        for(PFObject *pf in fetechObjects){
-            
-            NSString *existingTitle = [pf objectForKey:kClassSongTitle];
-            NSString *existingArtist = [pf objectForKey:kClassSongArtist];
-            NSString *existingAlbum = [pf objectForKey:kClassSongAlbum];
-            
-            //                NSLog(@"%@-%@", newTitle, existingTitle);
-            
-            BOOL duplicated = [newTitle isEqualToString:existingTitle] ||
-            ([newTitle isEqualToString:existingTitle] && [newArtist isEqualToString:existingArtist] && [newAlbum isEqualToString:existingAlbum]);
-            if (duplicated) {
-                //Duplicated Object
-                numberOfDuplicated++;
-                //                NSLog(@"Duplicated %@ - %@ - %@", newTitle, newArtist, newAlbum);
-                songExisted = YES;
-                break;
-            }
-        }
+        assert(newTitle != nil);
+        assert(newArtist != nil);
+        assert(newAlbum != nil);
         
-        if (songExisted) {
-            continue;
+        NSString *stringForMD5 = [NSString stringWithFormat:@"%@%@%@",newTitle,newArtist,newAlbum];
+        NSString *MD5String = [self handleStringToMD5:stringForMD5];
+        
+        if ([md5Array containsObject:MD5String] == NO) {
+            [pfToSave setObject:MD5String forKey:kClassSongMD5];
+            [dataToSave addObject:pfToSave];
+        }else{
+            numberOfDuplicated++;
         }
-
-        [dataToSave addObject:pfToSave];
     }
     
-    
+    /**
+     * Save PFObject to parse
+     */
     [PFObject saveAllInBackground:dataToSave block:^(BOOL succeeded, NSError *error) {
         NSLog(@"***Saving %@ Music***", sourceName);
         if (succeeded) {
-            NSLog(@"Number of songs to save: %d", [dataToSave count]);
+            NSLog(@"Number of songs to save: %lu", (unsigned long)[dataToSave count]);
             NSLog(@"Number of duplicated songs: %d", numberOfDuplicated);
             
 //            [UIApplication sharedApplication].applicationIconBadgeNumber += ([dataToSave count]-numberOfDuplicated);
@@ -83,6 +83,15 @@
         NSLog(@"%@,%@,%@", [object objectForKey:@"title"], [object objectForKey:@"artist"], [object objectForKey:@"album"]);
     }
     NSLog(@"==================>");
+}
+
+#pragma mark - Turn string to MD5 
+- (NSString*)handleStringToMD5:(NSString*)string
+{
+    NSString *charactirzedString = [NSString stringWithUTF8String:[string UTF8String]];
+    NSString *MD5String = [charactirzedString MD5];
+//    NSLog(@"Original: %@ Charactrized:%@ MD5: %@", string, charactirzedString, MD5String);
+    return MD5String;
 }
 
 #pragma mark - call delegate method

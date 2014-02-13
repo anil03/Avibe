@@ -37,6 +37,7 @@ extern NSString *const kClassUserFacebook;
 extern NSString *const kClassUserRdio;
 extern NSString *const kClassUserRdioKey;
 
+
 #pragma mark - Class Friend
 extern NSString *const kClassFriend;
 extern NSString *const kClassFriendFromUsername;
@@ -58,5 +59,7 @@ extern NSString *const kClassSongTitle;
 extern NSString *const kClassSongAlbum;
 extern NSString *const kClassSongArtist;
 extern NSString *const kClassSongSource;
+extern NSString *const kClassSongMD5;
+
 
 @end
