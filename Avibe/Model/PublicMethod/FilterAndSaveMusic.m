@@ -26,7 +26,9 @@
     NSMutableArray *md5Array = [[NSMutableArray alloc] init];
     for(PFObject *existingPFObject in fetechObjects){
         NSString *md5 = [existingPFObject objectForKey:kClassSongMD5];
-        [md5Array addObject:md5];
+        if(md5){
+            [md5Array addObject:md5];
+        }
     }
     
     /*
@@ -94,7 +96,7 @@
     return MD5String;
 }
 
-#pragma mark - call delegate method
+#pragma mark - call delegate method using by Share
 - (void)callSavedSucceed
 {
     if (self.delegate && [self.delegate respondsToSelector:@selector(dataSavedSucceed)]) {

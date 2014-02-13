@@ -32,9 +32,9 @@
 - (void)shareMusic
 {
     //Fetch Existing Songs from Parse
-    PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-    [postQuery whereKey:@"user" equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:@"updateAt"]; //Get latest song
+    PFQuery *postQuery = [PFQuery queryWithClassName:kClassShare];
+    [postQuery whereKey:kClassShareUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
     postQuery.limit = 1000;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         _fetechObjects = objects;
