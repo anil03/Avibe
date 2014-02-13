@@ -635,7 +635,7 @@
 {
     NSLog(@"Share Music");
     
-    PFObject *songRecord = [PFObject objectWithClassName:@"Share"];
+    PFObject *songRecord = [PFObject objectWithClassName:kClassShare];
     [songRecord setObject:_songTitle  forKey:@"title"];
     [songRecord setObject:_songAlbum forKey:@"album"];
     [songRecord setObject:_songArtist forKey:@"artist"];

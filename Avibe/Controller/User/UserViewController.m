@@ -193,7 +193,7 @@
     shareLabel.textAlignment = NSTextAlignmentCenter;
     [headerView addSubview:shareLabel];
     PFQuery *queryForShareNumber = [PFQuery queryWithClassName:kClassShare];
-    [queryForShareNumber whereKey:kClassShareUsername equalTo:_username];
+    [queryForShareNumber whereKey:kClassSongUsername equalTo:_username];
     [queryForShareNumber countObjectsInBackgroundWithBlock:^(int number, NSError *error) {
         if (!error) {
             shareLabel.text = [NSString stringWithFormat:@"Share: %d", number];
@@ -257,7 +257,7 @@
     [_shareView addSubview:collectionView];
     
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-    [postQuery whereKey:kClassShareUsername equalTo:_username];
+    [postQuery whereKey:kClassSongUsername equalTo:_username];
     [postQuery orderByDescending:@"updatedAt"];
     postQuery.limit = _collectionViewRows*_collectionViewColumns;
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {

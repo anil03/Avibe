@@ -50,7 +50,7 @@
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-    [postQuery whereKey:kClassShareUsername equalTo:self.username];
+    [postQuery whereKey:kClassSongUsername equalTo:self.username];
     [postQuery orderByDescending:@"updatedAt"];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {

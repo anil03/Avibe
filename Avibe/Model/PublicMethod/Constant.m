@@ -50,12 +50,8 @@ NSString *const kClassFriendToUsername = @"friend";
 NSString *const kClassFriendObjectId = @"objectId";
 
 
-#pragma mark - Class Share
+#pragma mark - Class Share (Should be the same with Song - Dependence in FilterAndSave)
 NSString *const kClassShare = @"Share";
-NSString *const kClassShareUsername = @"user";
-NSString *const kClassShareTitle = @"title";
-NSString *const kClassShareAlbum = @"album";
-NSString *const kClassShareArtist = @"artist";
 NSString *const kClassShareAlbumImage = @"albumImage";
 
 #pragma mark - Class Song

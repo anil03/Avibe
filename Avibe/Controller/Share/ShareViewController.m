@@ -189,8 +189,8 @@
         }
         
         PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-        [postQuery whereKey:kClassShareUsername notEqualTo:[[PFUser currentUser] username]];
-        [postQuery whereKey:kClassShareUsername containedIn:friendUsernameArray];
+        [postQuery whereKey:kClassSongUsername notEqualTo:[[PFUser currentUser] username]];
+        [postQuery whereKey:kClassSongUsername containedIn:friendUsernameArray];
         [postQuery orderByDescending:@"updatedAt"];
         [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
