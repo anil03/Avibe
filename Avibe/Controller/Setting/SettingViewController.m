@@ -10,7 +10,7 @@
 #import "SettingViewController.h"
 #import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
-
+#import "NSString+MD5.h"
 #import "ScrobbleAuthorizeViewController.h"
 #import "RdioAuthorizeViewController.h"
 #import "YoutubeAuthorizeViewController.h"
@@ -46,10 +46,18 @@
 @property UIAlertView *phoneNumberAlertView;
 @property UIAlertView *phoneNumberConfirmAlertView;
 //UIAlertview - Linked Account
+//LastFM
 @property UIAlertView *scrobbleAlertView;
+@property UIAlertView *scrobbleRevokeAlertView;
+@property (nonatomic, strong) NSMutableData *receivedData;
+@property (nonatomic, strong) NSURLConnection *urlConnection;
+@property BOOL lastFMAuthorizationSucceed;
+//Rdio
 @property UIAlertView *rdioAlertView;
+//Youtube
 @property UIAlertView *youtubeConfirmAlertView;
 @property BOOL youtubeAuthorized;
+//Facebook
 @property UIAlertView *facebookAlertView;
 @property FBLoginView *facebookLoginView;
 @property UILabel *facebookLoginLabel;
@@ -76,6 +84,10 @@
     
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; //eliminate lines after last cell
+    
+    //LastFM
+    _receivedData = [[NSMutableData alloc] init];
+    _urlConnection = [[NSURLConnection alloc] init];
     
     //Youtube
     _youtubeAuthorized = NO;
@@ -391,10 +403,12 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         }
     }else if (indexPath.section == LinkedAccount){
         switch (indexPath.row) {
-            case Scrobble:
-                cell.backgroundColor = [UIColor grayColor];
+            case Scrobble:{
                 cell.textLabel.text = @"Last.fm";
-                cell.detailTextLabel.text = @"detail";
+                NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+                cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
+                cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
+                }
                 break;
             case Rdio:
                 cell.backgroundColor = [UIColor grayColor];
@@ -487,6 +501,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     _phoneNumberAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     [_phoneNumberAlertView show];
 }
+
+#pragma mark - AlertView Method
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Display Name
@@ -555,6 +571,32 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
     
     
+    //LastFM
+    if ([alertView isEqual:_scrobbleAlertView] && buttonIndex == 0){
+        assert(alertView.alertViewStyle == UIAlertViewStyleLoginAndPasswordInput);
+        NSString *username = [alertView textFieldAtIndex:0].text;
+        NSString *passwrod = [alertView textFieldAtIndex:1].text;
+        
+        [self makePostRequestToGetMobileSession:username password:passwrod];
+    }
+    if ([alertView isEqual:_scrobbleRevokeAlertView] && buttonIndex == 0){
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+            if (object) {
+                [object removeObjectForKey:kClassUserLastFM];
+                [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"LastFM authorization has been revoked." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        [[PFUser currentUser] refresh];
+                        [self.tableView reloadData];
+                    }else{
+                        [[[UIAlertView alloc] initWithTitle: @"Oooops" message: @"Something wrong happens, please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    }
+                }];
+            }
+        }];
+    }
+    
     //Youtube
     if ([alertView isEqual:_youtubeConfirmAlertView] && buttonIndex == 0){
         [self revokeAccess];
@@ -580,21 +622,34 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     if (succeeded) {
         [[PFUser currentUser] refresh];
-        [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Save successfully!" delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Save successfully!" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [self.tableView reloadData];
     }else{
-        [[[UIAlertView alloc] initWithTitle: @"Oops" message: @"Save not finish. Please try later." delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        [[[UIAlertView alloc] initWithTitle: @"Oops" message: @"Save not finish. Please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
     }
 }
 
 #pragma mark - TableViewcell selected method for linked account
 - (void)scrobbleAuthorize
 {
-    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
-    _scrobbleAuthorizeViewController.previousViewController = self;
+    NSString *lastFMAccount = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+    if (lastFMAccount == nil || [lastFMAccount isEqualToString:@""]) {
+        _scrobbleAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter username and password to authorize with Last.fm." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _scrobbleAlertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        [_scrobbleAlertView show];
+    }else{
+        _scrobbleRevokeAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Last.fm authorization?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _scrobbleRevokeAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [_scrobbleRevokeAlertView show];
+    }
     
-    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
-    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+//
+//    
+//    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
+//    _scrobbleAuthorizeViewController.previousViewController = self;
+//    
+//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
+//    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 - (void)rdioAuthorize
 {
@@ -685,6 +740,97 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 - (void)youtubeRevoke
 {
     [[PublicMethod sharedInstance] revokeAccess];
+}
+
+
+#pragma mark - Last.fm Authorization
+- (void)makePostRequestToGetMobileSession:(NSString*)username password:(NSString*)password
+{
+    //api_keyxxxxxxxxmethodauth.getMobileSessionpasswordxxxxxxxusernamexxxxxxxx
+    //    Ensure your parameters are utf8 encoded. Now append your secret to this string.
+    NSString *api_key = @"862a61374f83fe58088571f3134b88bc";
+    NSString *method = @"auth.getMobileSession";
+    NSString *secret = @"a5bfdfebc2ef66b04984d78c116b88fb";
+    NSString *md5String = [NSString stringWithFormat:@"api_key%@method%@password%@username%@%@", api_key,method,password,username,secret];
+    
+    NSString *sig = [md5String MD5];
+//    NSLog(@"%@ %@", md5String, sig);
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://ws.audioscrobbler.com/2.0/"]];
+    [request setHTTPMethod:@"POST"];
+    NSString *postParams = [NSString stringWithFormat: @"api_key=862a61374f83fe58088571f3134b88bc&format=json&method=auth.getMobileSession&password=1989723&username=myhgew&api_sig=%@",sig];
+    [request setHTTPBody:[postParams dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [self makeRequest:request];
+}
+-(void)makeRequest:(NSMutableURLRequest *)request{
+    // Set the length of the _receivedData mutableData object to zero.
+    [_receivedData setLength:0];
+    
+    // Make the request.
+    _urlConnection = [NSURLConnection connectionWithRequest:request delegate:self];
+}
+-(void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    if (_lastFMAuthorizationSucceed) {
+        NSString *responseJSON;
+        responseJSON = [[NSString alloc] initWithData:(NSData *)_receivedData encoding:NSUTF8StringEncoding];
+        //    NSLog(responseJSON);
+        
+        NSError* error = nil;
+        NSDictionary* json = [NSJSONSerialization
+                              JSONObjectWithData:(NSData *)_receivedData
+                              options:kNilOptions
+                              error:&error];
+        NSMutableDictionary *session = [json objectForKey:@"session"];
+        NSString *name = [session objectForKey:@"name"];
+        NSString *key = [session objectForKey:@"key"];
+        //    NSLog(@"%@ %@", name, key);
+        
+        if (name && key) {
+            [self lastFMAuthorizeSucceed:name];
+        }else{
+            [self lastFMAuthorizeFailed];
+        }
+    }else{
+        [self lastFMAuthorizeFailed];
+    }
+}
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    // Append any new data to the _receivedData object.
+    [_receivedData appendData:data];
+}
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
+    NSLog(@"%d", [httpResponse statusCode]);
+    
+    //200 means successful
+    if ([httpResponse statusCode] == 200) {
+        _lastFMAuthorizationSucceed = YES;
+    }else{
+        _lastFMAuthorizationSucceed = NO;
+    }
+}
+- (void)lastFMAuthorizeSucceed:(NSString*)username
+{
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object setObject:username forKey:kClassUserLastFM];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"LastFM authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self lastFMAuthorizeFailed];
+                }
+            }];
+        }
+    }];
+}
+- (void)lastFMAuthorizeFailed
+{
+    [[[UIAlertView alloc] initWithTitle: @"Oooops" message: @"Something wrong happens, please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
 }
 
 #pragma mark - Google OAuth
