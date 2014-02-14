@@ -128,8 +128,8 @@
     NSString *facebookUsername = [[PFUser currentUser] objectForKey:kClassUserFacebookUsername];
     
     if (facebookUsername) {
-        _listenedMusic = [[FaceBookListenedMusic alloc] init];
-        _listenedMusic.delegate = self;
+//        _listenedMusic = [[FaceBookListenedMusic alloc] init];
+//        _listenedMusic.delegate = self;
     }else{
         NSLog(@"No Facebook Music - Spotify & Pandora Available");
     }

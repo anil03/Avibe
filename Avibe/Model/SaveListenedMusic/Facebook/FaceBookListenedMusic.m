@@ -21,6 +21,8 @@
     self = [super init];
     
     if(self){
+        _musicArray = [[NSMutableArray alloc] init];
+        
         //NSArray *permissionsNeeded = @[@"publish_actions"];
         NSArray *permissionsNeeded = @[@"user_actions.music"];
         
@@ -95,36 +97,92 @@
                           }];
     
 }
+- (void)makeSongIDRequest:(NSString*)songID
+{
+    [FBRequestConnection startWithGraphPath:[NSString stringWithFormat:@"/%@",songID]
+                                 parameters:nil
+                                 HTTPMethod:@"GET"
+                          completionHandler:^(
+                                              FBRequestConnection *connection,
+                                              id result,
+                                              NSError *error
+                                              ) {
+                              /* handle the result */
+                              if (!error) {
+                                  // Success! Include your code to handle the results here
+                                  //                                  NSLog(@"Music history: %@", result);
+                                  [self handleSongIDResult:result];
+                              } else {
+                                  // An error occurred, we need to handle the error
+                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
+                                  NSLog(@"error %@", error.description);
+                              }
+                          }];
+    
+}
+
 /**
  * No album & artist from facebook source
  */
 - (void)handleResult:(id)result
 {
-    _musicArray = [[NSMutableArray alloc] init];
     
     NSMutableArray* jsonArray = [result objectForKey:@"data"];
     for(NSMutableDictionary *dataDict in jsonArray){
         NSMutableDictionary *data = [dataDict objectForKey:@"data"];
+        //data-data-song-id,title
         NSMutableDictionary *song = [data objectForKey:@"song"];
-        NSString *title = [song objectForKey:@"title"];
+        NSString *songID = [song objectForKey:@"id"];
+//        NSString *title = [song objectForKey:@"title"];
 
-        NSMutableDictionary *application = [dataDict objectForKey:@"application"];
-        NSString *sourceName = [application objectForKey:@"name"];
+        //data-application-name
+//        NSMutableDictionary *application = [dataDict objectForKey:@"application"];
+//        NSString *sourceName = [application objectForKey:@"name"];
 
-        PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
-        [songRecord setObject:title  forKey:kClassSongTitle];
-        [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
-        [songRecord setObject:sourceName forKey:kClassSongSource];
-
-        [_musicArray addObject:songRecord];
+//        [self makeSongIDRequest:songID];
     }
+    
+    
+}
+- (void)handleSongIDResult:(id)result
+{
+    //Title
+    NSString *title = [result objectForKey:@"title"];
+    
+    //Image
+    NSMutableDictionary *image = [result objectForKey:@"image"];
+    NSString *imageurl = [image objectForKey:@"url"];
+    
+    //Data
+    NSMutableDictionary* data = [result objectForKey:@"data"];
+    //Data-Album
+    NSMutableArray* album = [data objectForKey:@"album"];
+    NSMutableDictionary* albumurl = [album[0] objectForKey:@"album"];
+    NSString *albumTitle = [albumurl objectForKey:@"title"];
+    
+    //Data-Musician
+    NSMutableDictionary* musician = [data objectForKey:@"musician"];
+    NSString *musicianTitle = [musician objectForKey:@"musician"];
+    
+    //Application
+    NSMutableDictionary *application = [result objectForKey:@"application"];
+    NSString *sourceName = [application objectForKey:@"name"];
+    
+    //PFObject
+    PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
+    [songRecord setObject:title  forKey:kClassSongTitle];
+    [songRecord setObject:albumTitle  forKey:kClassSongAlbum];
+    [songRecord setObject:musicianTitle  forKey:kClassSongArtist];
+    [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+    [songRecord setObject:sourceName forKey:kClassSongSource];
+//    [_musicArray addObject:songRecord];
+
     
     //Call delegate method
     if(self.delegate && [self.delegate respondsToSelector:@selector(finishGetListenedMusic:)]){
-        [self.delegate finishGetListenedMusic:_musicArray];
+        [self.delegate finishGetListenedMusic:[[NSMutableArray alloc] initWithObjects:songRecord,nil]];
     }
 }
-
 
 
 @end
