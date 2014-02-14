@@ -32,11 +32,12 @@ extern NSString *const kClassUserUsername;
 extern NSString *const kClassUserDisplayname;
 extern NSString *const kClassUserEmail;
 extern NSString *const kClassUserPhoneNumber;
-extern NSString *const kClassUserLastFM;
-extern NSString *const kClassUserFacebook;
-extern NSString *const kClassUserRdio;
+extern NSString *const kClassUserLastFMUsername;
+extern NSString *const kClassUserFacebookDisplayname;
+extern NSString *const kClassUserFacebookUsername;
+extern NSString *const kClassUserRdioDisplayname;
 extern NSString *const kClassUserRdioKey;
-
+extern NSString *const kClassUserGoogleUsername;
 
 #pragma mark - Class Friend
 extern NSString *const kClassFriend;

@@ -36,11 +36,12 @@ NSString *const kClassUserUsername = @"username";
 NSString *const kClassUserDisplayname = @"displayname";
 NSString *const kClassUserEmail = @"email";
 NSString *const kClassUserPhoneNumber = @"additional";
-NSString *const kClassUserLastFM = @"lastFM";
-NSString *const kClassUserFacebook = @"facebook";
-NSString *const kClassUserRdio = @"rdio";
+NSString *const kClassUserLastFMUsername = @"lastfmUsername";
+NSString *const kClassUserFacebookDisplayname = @"facebookDisplayname";
+NSString *const kClassUserFacebookUsername = @"facebookUsername";
+NSString *const kClassUserRdioDisplayname = @"rdioDisplayname";
 NSString *const kClassUserRdioKey = @"rdioKey";
-
+NSString *const kClassUserGoogleUsername = @"googleUsername";
 
 
 #pragma mark - Class Friend

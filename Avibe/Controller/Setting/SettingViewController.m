@@ -104,10 +104,12 @@
     [_youtubeAuthorizeViewController setGOAuthDelegate:self];
     [self authorizeGoogle:nil];
  
+    //Facebook
+    
     //Rdio
     Rdio *rdio = [AppDelegate rdioInstance];
     assert(rdio != nil);
-    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdio]? YES : NO];
+    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdioKey]? YES : NO];
 }
 
 
@@ -218,14 +220,14 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         switch (indexPath.row) {
             case ScrobbleRow:{
                 cell.textLabel.text = @"Last.fm";
-                NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+                NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
                 cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
                 }
                 break;
             case RdioRow:
                 cell.textLabel.text = @"Rdio";
-                cell.detailTextLabel.text = _rdioAutorizationSucceed? [[[PFUser currentUser] objectForKey:kClassUserRdio] stringByAppendingString:@"✓"] : @"Unauthorized✗";
+                cell.detailTextLabel.text = _rdioAutorizationSucceed? [[[PFUser currentUser] objectForKey:kClassUserRdioDisplayname] stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
                 break;
             case YoutubeRow:
@@ -244,7 +246,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 
                 
                 BOOL facebookLogIn = NO;
-                NSString *facebookUser = [[PFUser currentUser] objectForKey:kClassUserFacebook];
+                NSString *facebookUser = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound) facebookLogIn = YES;
                 cell.textLabel.text = @"Facebook";
                 cell.detailTextLabel.text = facebookLogIn? [facebookUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
@@ -398,7 +400,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         PFQuery *query = [PFUser query];
         [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
             if (object) {
-                [object removeObjectForKey:kClassUserLastFM];
+                [object removeObjectForKey:kClassUserLastFMUsername];
                 [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     if (succeeded) {
                         [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"LastFM authorization has been revoked." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -456,7 +458,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 #pragma mark - TableViewcell selected method for linked account
 - (void)scrobbleAuthorize
 {
-    NSString *lastFMAccount = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+    NSString *lastFMAccount = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
     if (lastFMAccount == nil || [lastFMAccount isEqualToString:@""]) {
         _scrobbleAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter username and password to authorize with Last.fm." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
         _scrobbleAlertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
@@ -587,7 +589,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     PFQuery *query = [PFUser query];
     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
         if (object) {
-            [object setObject:username forKey:kClassUserLastFM];
+            [object setObject:username forKey:kClassUserLastFMUsername];
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
                     [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"LastFM authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -704,9 +706,11 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 #pragma mark - Facebook login
 - (void)customizeFacebookLoginView:(CGRect)frame
 {
-    if (!_facebookLoginView) {
+    if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound){
         _facebookLoginView = [[FBLoginView alloc] init];
-        //        [[FBLoginView alloc] initWithPermissions:[NSArray arrayWithObject:@"publish_actions"]];
+        [_facebookLoginView setReadPermissions:[NSArray arrayWithObject: @"user_actions.music"]];
+        [_facebookLoginView setPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]];
+        [_facebookLoginView setDefaultAudience:FBSessionDefaultAudienceFriends];
     }
     
     _facebookLoginView.frame = frame;
@@ -733,14 +737,31 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 - (void)loginViewShowingLoggedOutUser:(FBLoginView *)loginView
 {
-    [self.tableView reloadData];
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object removeObjectForKey:kClassUserFacebookDisplayname];
+            [object removeObjectForKey:kClassUserFacebookUsername];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+//                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
+
 }
 - (void)loginViewFetchedUserInfo:(FBLoginView *)loginView user:(id<FBGraphUser>)user
 {
     PFQuery *query = [PFUser query];
     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
         if (object) {
-            [object setObject:[user name]  forKey:kClassUserFacebook];
+            [object setObject:[user name]  forKey:kClassUserFacebookDisplayname];
+            [object setObject:[user username] forKey:kClassUserFacebookUsername];
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
 //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -783,7 +804,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     PFQuery *query = [PFUser query];
     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
         if (object) {
-            [object setObject:username forKey:kClassUserRdio];
+            [object setObject:username forKey:kClassUserRdioDisplayname];
             [object setObject:key forKey:kClassUserRdioKey];
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
@@ -805,7 +826,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     PFQuery *query = [PFUser query];
     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
         if (object) {
-            [object removeObjectForKey:kClassUserRdio];
+            [object removeObjectForKey:kClassUserRdioDisplayname];
             [object removeObjectForKey:kClassUserRdioKey];
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {

@@ -39,6 +39,10 @@
         NSString *newArtist = [pfToSave objectForKey:kClassSongArtist];
         NSString *newAlbum = [pfToSave objectForKey:kClassSongAlbum];
         
+        if (newTitle == nil || newArtist == nil || newAlbum) {
+            return;
+        }
+        
         assert(newTitle != nil);
         assert(newArtist != nil);
         assert(newAlbum != nil);

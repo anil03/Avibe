@@ -68,7 +68,7 @@
     NSMutableArray *musicArray = [[NSMutableArray alloc] init];
     NSArray *playedMusicArray = [IPodListenedMusic iPodPlayedMusic];
     
-    if (playedMusicArray) {
+    if (playedMusicArray && [playedMusicArray count] > 0) {
         for(NSDictionary *dict in playedMusicArray){
             PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
             [songRecord setObject:[dict objectForKey:kClassSongTitle]  forKey:kClassSongTitle];
@@ -90,7 +90,7 @@
 #pragma mark - LastFM Music
 - (void)getScrobbleMusic
 {
-    NSString *lastFMUsername = [[PFUser currentUser] objectForKey:kClassUserLastFM];
+    NSString *lastFMUsername = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
     
     if(lastFMUsername){
         NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", lastFMUsername];
@@ -100,12 +100,19 @@
         _parser = [[ScrobbleListenedMusic alloc] initWithURL:url];
         _parser.delegate = self;
         [self.parser startParsing];
+    }else{
+        NSLog(@"No Last.fm Music Available");
     }
 }
 - (void)finishParsing:(NSMutableArray*)result
 {
     NSMutableArray *musicToSave = [[NSMutableArray alloc] init];
 
+    //Return if empty
+    if ([musicToSave count] == 0) {
+        return;
+    }
+    
     for(PFObject *object in result){
         [musicToSave addObject:object];
     }
@@ -118,11 +125,22 @@
 #pragma mark - Facebook with Spotify Music
 - (void)getFaceBookMusic
 {
-    _listenedMusic = [[FaceBookListenedMusic alloc] init];
-    _listenedMusic.delegate = self;
+    NSString *facebookUsername = [[PFUser currentUser] objectForKey:kClassUserFacebookUsername];
+    
+    if (facebookUsername) {
+        _listenedMusic = [[FaceBookListenedMusic alloc] init];
+        _listenedMusic.delegate = self;
+    }else{
+        NSLog(@"No Facebook Music - Spotify & Pandora Available");
+    }
 }
 - (void)finishGetListenedMusic:(NSMutableArray *)musicArray
 {
+    //Return if empty
+    if (musicArray == nil || [musicArray count] == 0) {
+        return;
+    }
+    
     //Get rid of duplicated data then save
     FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
     [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"Facebook" andFetchObjects:fetechObjects];
@@ -138,6 +156,8 @@
         [_rdio callAPIMethod:@"get"
               withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"s12187116", @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
                     delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+    }else{
+        NSLog(@"No Rdio Music Available");
     }
 }
 #pragma mark - Rdio delegate method
@@ -150,6 +170,11 @@
     NSString *title = [lastSongPlayedData objectForKey:@"name"];
     NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
     NSString *album = [lastSongPlayedData objectForKey:@"album"];
+    
+    //Return if empty
+    if (title == nil || artist == nil || album == nil) {
+        return;
+    }
     
     assert(title != nil);
     assert(artist != nil);
