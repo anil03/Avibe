@@ -49,8 +49,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionRightDrawerAnimation,
 };
 
-
-
 @interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate, UIAlertViewDelegate>
 {
     int columnNumber;
@@ -145,45 +143,14 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self setupRefreshControl];
 }
 
-#pragma mark - Table view data source
--(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        //Deleting, dosomething
-        
-    }
-}
-
-//#pragma mark Segue
-//-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-//{
-//    if ([[segue identifier] isEqualToString:@"SampleMusicSegue"])
-//    {
-//        // Get reference to the destination view controller
-//        SampleMusicViewController *controller = [segue destinationViewController];
-//        //        controller.song = [[Song alloc] init];
-//        controller.pfObject = sender;
-//        
-//        //        controller.song.title = [sender objectForKey:@"title"];
-//        //        controller.song.album = [sender objectForKey:@"album"];
-//        //        controller.song.artist = [sender objectForKey:@"artist"];
-//        
-//        
-//    }
-//}
-
-#pragma mark - UICollection view data source
-
+#pragma mark - UIColectionView data source
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
 	return 1;
 }
-
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 	return [self.PFObjects count]*4;
 }
-
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
 	
@@ -191,18 +158,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     cell.label.adjustsFontSizeToFitWidth = YES;
     cell.label.textColor = [UIColor whiteColor];
     
-//    UIButton *button = [[UIButton alloc] initWithFrame:cell.frame];
-//    button.backgroundColor = [UIColor greenColor];
-//    [cell addSubview:button];
-//    [cell bringSubviewToFront:button];
-    
-    //Gesture
-//    UITapGestureRecognizer *touchOnView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchView:)];
-//    [touchOnView setNumberOfTapsRequired:1];
-//    [touchOnView setNumberOfTouchesRequired:1];
-//    [cell addGestureRecognizer:touchOnView];
-    
-	
     //Data source
     int index = indexPath.row/columnNumber;
     cell.label.numberOfLines = 2;
@@ -240,22 +195,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             break;
     }
     
-    //Deal with NULL text
-//    if (!cell.label.text) {
-//        cell.label.text = @"N/A";
-//    }
-    
-    //Not implement ImageView yet
-    //    UIImageView *recipeImageView = (UIImageView *)[cell viewWithTag:100];
-    //    recipeImageView.image = [UIImage imageNamed:[recipeImages objectAtIndex:indexPath.row]];
-    //    cell.backgroundView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"photo-frame.png"]];
-	
 	return cell;
 }
-
-
-
-
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 {
    UICollectionReusableView *reusableview = nil;
@@ -274,11 +215,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    NSLog(@"Select %d", indexPath.row);
-    
     YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     
-//    NSLog(@"%@", cell.label.text);
     //Deal with NULL text
     if (!cell.label.text) {
         return;
@@ -382,27 +320,19 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     NSLog(@"iTuneUrl:%@", collectionString);
     
     _iTuneUrl = [NSURL URLWithString:collectionString];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:previewUrl];
     NSString *alertString = [NSString stringWithFormat:@"You are about to switch to iTune for the song %@ in %@ by %@.", trackName, collectionName, artistName];
     
     //Before Switch Webview
     _alertBeforeSwitchToITune = [[UIAlertView alloc] initWithTitle: @"Reminder" message:alertString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:@"Cancel", nil];
     [_alertBeforeSwitchToITune show];
-    
-    
-    
-//    UIWebView *webView = [[UIWebView alloc] initWithFrame:self.collectionView.frame];
-//    webView.delegate = self;
-//    [webView loadRequest:request];
-//    webView.hidden = NO;
-//    [self.collectionView addSubview:webView];
-  
 }
 - (void)fetchedDataWithError
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
+
+#pragma mark - AlertView delegate method
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     //Switch Webview
@@ -410,22 +340,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         [[UIApplication sharedApplication] openURL:_iTuneUrl];
     }
 }
-//#pragma mark - UIWebView Delegate
-//- (void)webViewDidStartLoad:(UIWebView *)webView
-//{
-//    
-//}
-//- (void)webViewDidFinishLoad:(UIWebView *)webView
-//{
-//}
 
 #pragma mark - SampleMusicSource Delegate
 - (void)listenSampleMusic:(NSString *)source
 {
     NSLog(@"Source:%@", source);
 }
-
-
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     PFQuery *friendQuery = [PFQuery queryWithClassName:kClassFriend];
@@ -457,8 +377,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             }
         }];
     }];
-    
-    
 }
 
 #pragma mark - RefreshControl Method
@@ -480,13 +398,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
     refresh.tintColor = [UIColor whiteColor];
     
-    // custom refresh logic would be placed here...
-    
     _saveMusicEntries = [[SaveMusicFromSources alloc] init];
     [_saveMusicEntries saveMusic];
     
     [self fetchData:self.refreshControl];
-//    [self updateSongInParse];
 }
 
 #pragma mark - Button Handlers
@@ -507,8 +422,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
-//    MMDrawerBarButtonItem *rightDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(rightDrawerButtonPress:)];
-//    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(rightDrawerButtonPress:)];
 //    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Youtube" style:UIBarButtonItemStyleBordered target:self action:@selector(rightDrawerButtonPress:)];
 //    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];
 }
@@ -516,30 +429,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 -(void)rightDrawerButtonPress:(id)sender{
-//    [self refreshView:_refreshControl];
     [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
 }
-
--(void)editSong
-{
-    if(self.editing)
-    {
-        [super setEditing:NO animated:NO];
-        [self setEditing:NO animated:NO];
-        [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Edit"];
-        [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStylePlain];
-    }
-    else
-    {
-        [super setEditing:YES animated:YES];
-        [self setEditing:YES animated:YES];
-        [self.mm_drawerController.navigationItem.leftBarButtonItem setTitle:@"Done"];
-        [self.mm_drawerController.navigationItem.leftBarButtonItem setStyle:UIBarButtonItemStyleDone];
-    }
-}
-
-
-
-
 
 @end

@@ -12,6 +12,7 @@
 
 //Rdio
 #import "RdioConsumerCredentials.h"
+#import "AppDelegate.h"
 #import <Rdio/Rdio.h>
 
 //iPod
@@ -114,9 +115,6 @@
     [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"Scrobble" andFetchObjects:fetechObjects];
 }
 
-
-
-
 #pragma mark - Facebook with Spotify Music
 - (void)getFaceBookMusic
 {
@@ -130,40 +128,32 @@
     [filter filterDuplicatedDataToSaveInParse:musicArray andSource:@"Facebook" andFetchObjects:fetechObjects];
 }
 
-
-
-
 #pragma mark - Rdio Music
 - (void)getRdioMusic
 {
-    NSString *username = [[PFUser currentUser] objectForKey:kClassUserRdioKey];
-    
-//    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-//    [defaults setObject:@"s12187116" forKey:kKeyRdioUserKey];
-//    _rdio_userkey = [defaults objectForKey:kKeyRdioUserKey];
-    
-    if (username) {
-        _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+    NSString *key = [[PFUser currentUser] objectForKey:kClassUserRdioKey];
+
+    if (key) {
+        _rdio = [AppDelegate rdioInstance];
         [_rdio callAPIMethod:@"get"
-              withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:username, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
+              withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"s12187116", @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
                     delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
     }
 }
 #pragma mark - Rdio delegate method
-- (void)rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error
-{
-    NSLog(@"No Rdio Music Available with error: %@", error);
-}
-
 - (void)rdioRequest:(RDAPIRequest *)request didLoadData:(id)data
 {
-    NSDictionary *userdata = [data objectForKey:_rdio_userkey];
+    NSString *key = [[PFUser currentUser] objectForKey:kClassUserRdioKey];
+    NSDictionary *userdata = [data objectForKey:key];
     NSDictionary *lastSongPlayedData = [userdata objectForKey:@"lastSongPlayed"];
     
     NSString *title = [lastSongPlayedData objectForKey:@"name"];
     NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
     NSString *album = [lastSongPlayedData objectForKey:@"album"];
-//    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
+    
+    assert(title != nil);
+    assert(artist != nil);
+    assert(album != nil);
     
     PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
     [songRecord setObject:title  forKey:kClassSongTitle];
@@ -175,7 +165,10 @@
     FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
     [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
 }
-
+- (void)rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error
+{
+    NSLog(@"No Rdio Music Available with error: %@", error);
+}
 
 #pragma mark - Youtube
 +(void)saveYoutubeEntry:(NSArray*)array

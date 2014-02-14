@@ -85,8 +85,13 @@
 {
     [super viewDidLoad];
     
+    //TableView Style
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero]; //eliminate lines after last cell
+    
+    //BackgroundView
+    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
+    [self.tableView setBackgroundView:backgroundView];
     
     //LastFM
     _receivedData = [[NSMutableData alloc] init];
@@ -98,211 +103,11 @@
     _youtubeAuthorizeViewController.previousViewController = self;
     [_youtubeAuthorizeViewController setGOAuthDelegate:self];
     [self authorizeGoogle:nil];
-    
-    
-    //Facebook
-//    _facebookLoginView
-    
+ 
     //Rdio
     Rdio *rdio = [AppDelegate rdioInstance];
     assert(rdio != nil);
-    [self setRdioAutorizationSucceed:rdio.user? YES : NO];
-    
-//    //LastFM
-//    _lastFMAccountTextField.delegate = self;
-//    _lastFMAccountTextField.text = [[Setting sharedSetting] lastFMAccount];
-//    
-//    //View Parameters
-//    UIColor *titleBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
-//    UIColor *titleTextColor = [UIColor whiteColor];
-//    UIColor *contentBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.3];
-//    UIColor *contentTextColor = [UIColor blackColor];
-//    float barHeight = 15.0f;
-//    float width = [[UIScreen mainScreen] bounds].size.width;
-//    float height = [[UIScreen mainScreen] bounds].size.height;
-//    float scrollWidth = width;
-//    float scrollHeight = height*2;
-//    float currentHeight = 0.0f;
-//    float left = 5.0f;
-//    float right = 5.0f;
-//    float unitHeight = 30.0f;
-//    int item = 15;
-//    float totalHeight = unitHeight*item;
-//
-//    UIView *accountView;
-//    UILabel *titleLabel;
-//    UILabel *contentLabel;
-//    UITextField *textField;
-//    
-//    //ScrollView
-//    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-//    [scrollView setContentSize:CGSizeMake(320, 920)];
-//    scrollView.userInteractionEnabled = YES;
-//    [scrollView setScrollEnabled:YES];
-//    self.view = scrollView;
-//    [self.view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyBoard)]];
-//    
-//
-//    
-//    /*AccountView*/
-//    item = 4;
-//    currentHeight += barHeight;
-//    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-//    accountView.backgroundColor = contentBackgroundColor;
-//    [scrollView addSubview:accountView];
-//    //Title
-//    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-//    titleLabel.backgroundColor = titleBackgroundColor;
-//    titleLabel.text = @" My Avibe Account";
-//    titleLabel.textColor = titleTextColor;
-//    titleLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:titleLabel];
-//    //User Name
-//    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight, width/2, unitHeight)];
-//    contentLabel.backgroundColor = contentBackgroundColor;
-//    contentLabel.text = @" Username";
-//    contentLabel.textColor = contentTextColor;
-//    contentLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:contentLabel];
-//    //User Name Description
-//    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2-right, unitHeight)];
-//    textField.text = [[PFUser currentUser] username];
-//    textField.backgroundColor = contentBackgroundColor;
-//    textField.textAlignment = NSTextAlignmentRight;
-//    textField.delegate = self;
-//    [textField addTarget:self action:@selector(changeUsername:) forControlEvents:UIControlEventEditingDidEnd];
-//    [accountView addSubview:textField];
-//    
-//    //Email
-//    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight*2, width/2, unitHeight)];
-//    contentLabel.backgroundColor = contentBackgroundColor;
-//    contentLabel.text = @" Email";
-//    contentLabel.textColor = contentTextColor;
-//    contentLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:contentLabel];
-//    //Email Description
-//    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight*2, width/2-right, unitHeight)];
-//    textField.text = [[PFUser currentUser] objectForKey:kClassUserEmail];
-//    textField.backgroundColor = contentBackgroundColor;
-//    textField.textAlignment = NSTextAlignmentRight;
-//    textField.delegate = self;
-//    textField.adjustsFontSizeToFitWidth = YES;
-//    [textField addTarget:self action:@selector(changeEmail:) forControlEvents:UIControlEventEditingDidEnd];
-//    [accountView addSubview:textField];
-//    
-//    //Mobile#
-//    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight*3, width/2, unitHeight)];
-//    contentLabel.backgroundColor = contentBackgroundColor;
-//    contentLabel.text = @" Mobile#";
-//    contentLabel.textColor = contentTextColor;
-//    contentLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:contentLabel];
-//    //Mobile# Description
-//    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight*3, width/2-right, unitHeight)];
-//    textField.text = [[PFUser currentUser] objectForKey:kClassUserPhoneNumber];
-//    textField.backgroundColor = contentBackgroundColor;
-//    textField.textAlignment = NSTextAlignmentRight;
-//    textField.delegate = self;
-//    [textField addTarget:self action:@selector(changePhoneNumber:) forControlEvents:UIControlEventEditingDidEnd];
-//    [accountView addSubview:textField];
-//
-//    /*OtherAccountView*/
-//    currentHeight += item*unitHeight;
-//    item = 4;
-//    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-//    accountView.backgroundColor = contentBackgroundColor;
-//    [scrollView addSubview:accountView];
-//    //Title
-//    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-//    titleLabel.backgroundColor = titleBackgroundColor;
-//    titleLabel.text = @" My Other Accounts";
-//    titleLabel.textColor = titleTextColor;
-//    titleLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:titleLabel];
-//    //LastFM#
-//    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight, width/2, unitHeight)];
-//    contentLabel.backgroundColor = contentBackgroundColor;
-//    contentLabel.text = @" LastFM Account";
-//    contentLabel.textColor = contentTextColor;
-//    contentLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:contentLabel];
-//    //LastFM TextField
-//    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight, width/2-right, unitHeight)];
-//    textField.text = [[PFUser currentUser] objectForKey:kClassUserLastFM];
-//    textField.backgroundColor = contentBackgroundColor;
-//    textField.textAlignment = NSTextAlignmentRight;
-//    textField.delegate = self;
-//    [textField addTarget:self action:@selector(changeLastFM:) forControlEvents:UIControlEventEditingDidEnd];
-//    [accountView addSubview:textField];
-//    //Rdio
-//    contentLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, unitHeight*2, width/2, unitHeight)];
-//    contentLabel.backgroundColor = contentBackgroundColor;
-//    contentLabel.text = @" Rdio Account";
-//    contentLabel.textColor = contentTextColor;
-//    contentLabel.textAlignment = NSTextAlignmentNatural;
-//    [accountView addSubview:contentLabel];
-//    //Rdio TextField
-//    textField = [[UITextField alloc] initWithFrame:CGRectMake(width/2, unitHeight*2, width/2-right, unitHeight)];
-//    textField.text = [[PFUser currentUser] objectForKey:kClassUserRdio];
-//    textField.backgroundColor = contentBackgroundColor;
-//    textField.textAlignment = NSTextAlignmentRight;
-//    textField.delegate = self;
-//    [textField addTarget:self action:@selector(changeRdio:) forControlEvents:UIControlEventEditingDidEnd];
-//    [accountView addSubview:textField];
-//    
-//    //Youtube Fetch
-//    UIButton *youtubeAccessButton = [[UIButton alloc] initWithFrame:CGRectMake(0,unitHeight*3,width/2,unitHeight)];
-//    [youtubeAccessButton setBackgroundColor:contentBackgroundColor];
-//    [youtubeAccessButton setTitle:@"Access Youtube" forState:UIControlStateNormal];
-//    [youtubeAccessButton addTarget:self action:@selector(youtubeFetch) forControlEvents:UIControlEventTouchUpInside];
-//    [accountView addSubview:youtubeAccessButton];
-//    UIButton *youtubeRevokeButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2,unitHeight*3,width/2,unitHeight)];
-//    [youtubeRevokeButton setBackgroundColor:contentBackgroundColor];
-//    [youtubeRevokeButton setTitle:@"Revoke Youtube" forState:UIControlStateNormal];
-//    [youtubeRevokeButton addTarget:self action:@selector(youtubeRevoke) forControlEvents:UIControlEventTouchUpInside];
-//    [accountView addSubview:youtubeRevokeButton];
-//    
-////    /*Feed Clogging*/
-////    currentHeight += item*unitHeight;
-////    item = 3;
-////    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-////    accountView.backgroundColor = contentBackgroundColor;
-////    [scrollView addSubview:accountView];
-////    //Title
-////    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-////    titleLabel.backgroundColor = titleBackgroundColor;
-////    titleLabel.text = @" Feed Clogging";
-////    titleLabel.textColor = titleTextColor;
-////    titleLabel.textAlignment = NSTextAlignmentNatural;
-////    [accountView addSubview:titleLabel];
-////    
-////    /*Other Setting*/
-////    currentHeight += item*unitHeight;
-////    item = 3;
-////    accountView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, item*unitHeight)];
-////    accountView.backgroundColor = contentBackgroundColor;
-////    [scrollView addSubview:accountView];
-////    //Title
-////    titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, unitHeight)];
-////    titleLabel.backgroundColor = titleBackgroundColor;
-////    titleLabel.text = @" Others";
-////    titleLabel.textColor = titleTextColor;
-////    titleLabel.textAlignment = NSTextAlignmentNatural;
-////    [accountView addSubview:titleLabel];
-////
-//    
-//    /*Finally*/
-//    currentHeight += item*unitHeight;
-//    [scrollView setContentSize:CGSizeMake(scrollWidth, currentHeight)];
-//
-//    //BackgroundView
-//    if (currentHeight < height) {
-//        currentHeight = height;
-//    }
-    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
-    [self.tableView setBackgroundView:backgroundView];
-//    [scrollView addSubview:backgroundView];
-//    [scrollView sendSubviewToBack:backgroundView];
+    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdio]? YES : NO];
 }
 
 
@@ -420,7 +225,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
             case RdioRow:
                 cell.textLabel.text = @"Rdio";
-                cell.detailTextLabel.text = _rdioAutorizationSucceed? @"Authorized✓" : @"Unauthorized✗";
+                cell.detailTextLabel.text = _rdioAutorizationSucceed? [[[PFUser currentUser] objectForKey:kClassUserRdio] stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
                 break;
             case YoutubeRow:
@@ -485,7 +290,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 [self youtubeAuthorize];
                 break;
             case FacebookRow:
-//                [self facebookAuthorize];
                 break;
             default:
                 break;
@@ -615,6 +419,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
     //Rdio
     if ([alertView isEqual:_rdioConfirmAlertView] && buttonIndex == 0) {
+        [AppDelegate rdioInstance].delegate = self;
         [[AppDelegate rdioInstance] logout];
     }
     
@@ -709,66 +514,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     [[PublicMethod sharedInstance] revokeAccess];
 }
-- (void)facebookAuthorize
-{
-    _facebookAuthorizeViewController = [[FacebookAuthorizeViewController alloc] init];
-    _facebookAuthorizeViewController.previousViewController = self;
-    
-    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_facebookAuthorizeViewController];
-    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
-    
-//    NSArray *permissionsNeeded = @[@"user_actions.music"];
-//    
-//    // Request the permissions the user currently has
-//    [FBRequestConnection startWithGraphPath:@"/me/permissions"
-//                          completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-//                              if (!error){
-//                                  // These are the current permissions the user has
-//                                  NSDictionary *currentPermissions= [(NSArray *)[result data] objectAtIndex:0];
-//                                  
-//                                  // We will store here the missing permissions that we will have to request
-//                                  NSMutableArray *requestPermissions = [[NSMutableArray alloc] initWithArray:@[]];
-//                                  
-//                                  // Check if all the permissions we need are present in the user's current permissions
-//                                  // If they are not present add them to the permissions to be requested
-//                                  for (NSString *permission in permissionsNeeded){
-//                                      if (![currentPermissions objectForKey:permission]){
-//                                          [requestPermissions addObject:permission];
-//                                      }
-//                                  }
-//                                  
-//                                  // If we have permissions to request
-//                                  if ([requestPermissions count] > 0){
-//                                      [FBSession.activeSession
-//                                       requestNewReadPermissions:requestPermissions
-//                                       completionHandler:^(FBSession *session, NSError *error) {
-//                                           if (!error) {
-//                                               // Permission granted, we can request the user information
-////                                               [self makeMusicHistoryRequest];
-//                                           } else {
-//                                               // An error occurred, we need to handle the error
-//                                               // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-//                                               NSLog(@"error %@", error.description);
-//                                           }
-//                                       }];
-//                                  } else {
-//                                      // Permissions are present
-//                                      // We can request the user information
-////                                      [self makeMusicHistoryRequest];
-//                                  }
-//                                  
-//                              } else {
-//                                  // An error occurred, we need to handle the error
-//                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-//                                  NSLog(@"error %@", error.description);
-//                              }
-//                          }];
-
-    
-}
-
-
-
 
 #pragma mark - Last.fm Authorization
 - (void)makePostRequestToGetMobileSession:(NSString*)username password:(NSString*)password
@@ -1010,130 +755,72 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 
 #pragma mark - RdioDelegate
-
 - (void)rdioDidAuthorizeUser:(NSDictionary *)user withAccessToken:(NSString *)accessToken
 {
+    NSString *key = [user objectForKey:@"key"];
+    NSString *firstName = [user objectForKey:@"firstName"];
+    NSString *lastName = [user objectForKey:@"lastName"];
+    assert(key != nil);
+    assert(firstName != nil);
+    assert(lastName != nil);
+    
+    [self rdioAuthorizedSuccess:[NSString stringWithFormat:@"%@ %@", firstName, lastName] key:key];
+}
+- (void)rdioAuthorizationFailed:(NSString *)error
+{
+    [self rdioAuthorizedRevoke];
+}
+- (void)rdioAuthorizationCancelled
+{
+    [self rdioAuthorizedRevoke];
+}
+- (void)rdioDidLogout
+{
+    [self rdioAuthorizedRevoke];
+}
+- (void)rdioAuthorizedSuccess:(NSString*)username key:(NSString*)key
+{
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object setObject:username forKey:kClassUserRdio];
+            [object setObject:key forKey:kClassUserRdioKey];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Rdio authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
+    
     [self setRdioAutorizationSucceed:YES];
     [self.tableView reloadData];
 }
-
-- (void)rdioAuthorizationFailed:(NSString *)error
+- (void)rdioAuthorizedRevoke
 {
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object removeObjectForKey:kClassUserRdio];
+            [object removeObjectForKey:kClassUserRdioKey];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Rdio revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
     [self setRdioAutorizationSucceed:NO];
     [self.tableView reloadData];
 }
-
-- (void)rdioAuthorizationCancelled
-{
-    [self setRdioAutorizationSucceed:NO];
-    [self.tableView reloadData];
-}
-
-- (void)rdioDidLogout
-{
-    [self setRdioAutorizationSucceed:NO];
-    [self.tableView reloadData];
-}
-
-#pragma mark - Textfield Method
-
-
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    if ([alertView isEqual:_currentAlertView] && buttonIndex == 0) {
-//        PFQuery *query = [PFUser query];
-//        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-//            if(object){
-//                [object setObject:_currentValueToChange forKey:_currentKey];
-//                [object saveEventually:^(BOOL succeeded, NSError *error) {
-//                    NSString *warningString;
-//                    if (succeeded) {
-//                        warningString = [NSString stringWithFormat:@"You have successfully changed %@ to %@.  Please log in again to see the update.", _currentType, _currentValueToChange];
-//                        if([_currentValueToChange length] == 0){
-//                            warningString = [NSString stringWithFormat:@"You have successfully deleted %@. Please log in again to see the update.", _currentType];
-//                        }
-//
-//                        [[[UIAlertView alloc] initWithTitle: @"Success" message: warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//                    }else if(error){
-//                        warningString = [NSString stringWithFormat:@"You can't change %@ to %@, please try another one.", _currentType,_currentValueToChange];
-//                        if([_currentValueToChange length] == 0){
-//                            warningString = [NSString stringWithFormat:@"You can't deleted %@.", _currentType];
-//                        }
-//                        
-//                        [[[UIAlertView alloc] initWithTitle: @"Error" message:warningString delegate: self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//                        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-//                    }
-//                }];
-//            }
-//        }];
-//    }else if([alertView isEqual:_currentAlertView] && buttonIndex == 1){
-//        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-//    }
-//    
-//    //Restore DONE action
-//    _rightDrawerButton.action = @selector(popCurrentView);
-////}
-//- (void)disableBarItem
-//{
-//    //Disable DONE to avoid killing current controller by mistake
-//    _rightDrawerButton.action = nil;
-//}
-//- (void)changeTextField
-//{
-//    //Ignore if user not change
-//    if([_currentValueToChange isEqualToString:[[PFUser currentUser] objectForKey:kClassUserUsername]]){
-//        _currentSender.text = [[PFUser currentUser] objectForKey: _currentKey];
-//        return;
-//    }
-//    //Change to nil
-//    NSString *warningString = [NSString stringWithFormat:@"Are you sure to change %@ to %@?", _currentType, _currentValueToChange];
-//    if([_currentValueToChange length] == 0){
-//        warningString = [NSString stringWithFormat:@"Are you sure to delete %@?", _currentType];
-//    }
-//    
-//    _currentAlertView = [[UIAlertView alloc] initWithTitle: @"Warning" message:warningString  delegate: self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
-//    [_currentAlertView show];
-//}
-//- (void)changeUsername:(UITextField*)sender
-//{
-//    _currentValueToChange = sender.text;
-//    _currentKey = kClassUserUsername;
-//    _currentSender = sender;
-//    _currentType = @"User Name";
-//    [self changeTextField];
-//}
-//- (void)changeEmail:(UITextField*)sender
-//{
-//    _currentValueToChange = sender.text;
-//    _currentKey = kClassUserEmail;
-//    _currentSender = sender;
-//    _currentType = @"Email";
-//    [self changeTextField];
-//}
-//- (void)changePhoneNumber:(UITextField*)sender
-//{
-//    _currentValueToChange = sender.text;
-//    _currentKey = kClassUserPhoneNumber;
-//    _currentSender = sender;
-//    _currentType = @"Phone Number";
-//    [self changeTextField];
-//}
-//- (void)changeLastFM:(UITextField*)sender
-//{
-//    _currentValueToChange = sender.text;
-//    _currentKey = kClassUserLastFM;
-//    _currentSender = sender;
-//    _currentType = @"LastFM Account";
-//    [self changeTextField];
-//}
-//- (void)changeRdio:(UITextField*)sender
-//{
-//    _currentValueToChange = sender.text;
-//    _currentKey = kClassUserRdio;
-//    _currentSender = sender;
-//    _currentType = @"Rdio Account";
-//    [self changeTextField];
-//}
 
 #pragma mark - BarMenuButton
 -(void)setupBarMenuButton{
@@ -1154,43 +841,5 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
-
-
-
-#pragma mark - UITextField Delegate
-//- (void)textFieldDidBeginEditing:(UITextField *)textField
-//{
-//    [self disableBarItem];
-//}
-//- (void)textFieldDidEndEditing:(UITextField *)textField
-//{
-//    [textField resignFirstResponder];
-//    //Restore DONE action
-//    _rightDrawerButton.action = @selector(popCurrentView);
-//}
-//- (BOOL)textFieldShouldReturn:(UITextField *)textField
-//{
-//    //hide the keyboard
-//    [textField resignFirstResponder];
-//    
-//    //return NO or YES, it doesn't matter
-//    return YES;
-//}
-//
-//
-//- (void)hideKeyBoard
-//{
-//    for (UIView *view1 in self.view.subviews){
-//        for(UIView *view2 in view1.subviews){
-//            if ([view2 isKindOfClass:[UITextField class]] && [view2 isFirstResponder]) {
-//                UITextField *textField = (UITextField*)view2;
-//                [textField resignFirstResponder];
-//                return;
-//            }
-//        }
-//    }
-//}
-
-
 
 @end
