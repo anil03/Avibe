@@ -75,12 +75,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @implementation LiveFeedViewController
 
+#pragma mark - Init method
 - (id)initWithSelf:(UIViewController*)controller
 {
     self.viewController = controller;
     return [self init];
 }
-
 - (id)init
 {
     columnNumber = 4;
@@ -117,23 +117,32 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     return self;
 }
 
+#pragma mark - View method
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self setupBarMenuButton];
+    
+    /**
+     * Automatically refresh in certain interval
+     * Unit - second
+     * Or the tableview is empty
+     */
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
+    NSTimeInterval actualInterval = [lastUpdatedDate timeIntervalSinceNow];
+    NSTimeInterval interval = 30.0;
+    if (abs(actualInterval) > interval || !_PFObjects) {
+        assert(_refreshControl != nil);
+        [self refreshView:_refreshControl];
+    }
 }
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-
-    
     //Setup Refresh Control
     [self setupRefreshControl];
-    [self refreshView:self.refreshControl];
-
-
 }
 
 #pragma mark - Table view data source
