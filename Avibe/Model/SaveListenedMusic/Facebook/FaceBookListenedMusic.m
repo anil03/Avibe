@@ -9,8 +9,16 @@
 #import "FaceBookListenedMusic.h"
 
 @interface FaceBookListenedMusic()
+{
+    int connectionNumber;
+}
 
 @property (nonatomic, strong) NSMutableArray *musicArray;
+
+//Batch Request
+@property FBRequestConnection *connection;
+@property (nonatomic, strong) NSMutableArray *batchRequestResult;
+
 
 @end
 
@@ -22,6 +30,10 @@
     
     if(self){
         _musicArray = [[NSMutableArray alloc] init];
+        
+        _connection = [[FBRequestConnection alloc] init];
+        _batchRequestResult = [[NSMutableArray alloc] init];
+        connectionNumber = 0;
         
         //NSArray *permissionsNeeded = @[@"publish_actions"];
         NSArray *permissionsNeeded = @[@"user_actions.music"];
@@ -99,26 +111,31 @@
 }
 - (void)makeSongIDRequest:(NSString*)songID
 {
-    [FBRequestConnection startWithGraphPath:[NSString stringWithFormat:@"/%@",songID]
-                                 parameters:nil
-                                 HTTPMethod:@"GET"
-                          completionHandler:^(
-                                              FBRequestConnection *connection,
-                                              id result,
-                                              NSError *error
-                                              ) {
-                              /* handle the result */
-                              if (!error) {
-                                  // Success! Include your code to handle the results here
-                                  //                                  NSLog(@"Music history: %@", result);
-                                  [self handleSongIDResult:result];
-                              } else {
-                                  // An error occurred, we need to handle the error
-                                  // Check out our error handling guide: https://developers.facebook.com/docs/ios/errors/
-                                  NSLog(@"error %@", error.description);
-                              }
-                          }];
+    connectionNumber++;
     
+    FBRequest *request = [FBRequest requestWithGraphPath:[NSString stringWithFormat:@"/%@",songID] parameters:nil HTTPMethod:@"GET"];
+    [_connection addRequest:request completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+//            NSLog(@"Connection succedd with %@", songID);
+            [_batchRequestResult addObject:result];
+            connectionNumber--;
+            
+            if (connectionNumber == 0) {
+//                NSLog(@"The end");
+                for (id result in _batchRequestResult) {
+                    [self handleSongIDResult:result];
+                }
+                
+                //Call delegate method
+                if(self.delegate && [self.delegate respondsToSelector:@selector(finishGetListenedMusic:)]){
+                    [self.delegate finishGetListenedMusic:_musicArray];
+                }
+            }
+            
+        }else{
+            NSLog(@"error %@", error.description);
+        }
+    }];
 }
 
 /**
@@ -139,34 +156,37 @@
 //        NSMutableDictionary *application = [dataDict objectForKey:@"application"];
 //        NSString *sourceName = [application objectForKey:@"name"];
 
-//        [self makeSongIDRequest:songID];
+        [self makeSongIDRequest:songID];
     }
     
-    
+    [_connection start];
 }
 - (void)handleSongIDResult:(id)result
 {
+//    NSLog(@"result:%@",result);
     //Title
     NSString *title = [result objectForKey:@"title"];
     
     //Image
-    NSMutableDictionary *image = [result objectForKey:@"image"];
-    NSString *imageurl = [image objectForKey:@"url"];
+    NSMutableArray *image = [result objectForKey:@"image"];
+    NSString *imageurl = [image[0] objectForKey:@"url"];
     
     //Data
     NSMutableDictionary* data = [result objectForKey:@"data"];
     //Data-Album
     NSMutableArray* album = [data objectForKey:@"album"];
-    NSMutableDictionary* albumurl = [album[0] objectForKey:@"album"];
+    NSMutableDictionary* albumurl = [album[0] objectForKey:@"url"];
     NSString *albumTitle = [albumurl objectForKey:@"title"];
     
     //Data-Musician
-    NSMutableDictionary* musician = [data objectForKey:@"musician"];
-    NSString *musicianTitle = [musician objectForKey:@"musician"];
+    NSMutableArray* musician = [data objectForKey:@"musician"];
+    NSString *musicianTitle = [musician[0] objectForKey:@"name"];
     
     //Application
     NSMutableDictionary *application = [result objectForKey:@"application"];
     NSString *sourceName = [application objectForKey:@"name"];
+    
+//    NSLog(@"%@ %@ %@ %@ %@", title, albumTitle, musicianTitle, sourceName, imageurl);
     
     //PFObject
     PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
@@ -175,13 +195,8 @@
     [songRecord setObject:musicianTitle  forKey:kClassSongArtist];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
     [songRecord setObject:sourceName forKey:kClassSongSource];
-//    [_musicArray addObject:songRecord];
-
     
-    //Call delegate method
-    if(self.delegate && [self.delegate respondsToSelector:@selector(finishGetListenedMusic:)]){
-        [self.delegate finishGetListenedMusic:[[NSMutableArray alloc] initWithObjects:songRecord,nil]];
-    }
+    [_musicArray addObject:songRecord];
 }
 
 
