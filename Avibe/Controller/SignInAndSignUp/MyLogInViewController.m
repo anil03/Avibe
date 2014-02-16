@@ -199,11 +199,39 @@
             NSLog(@"Uh oh. The user cancelled the Facebook login.");
             [self.delegate logInViewControllerDidCancelLogIn:self];
         } else if (user.isNew) {
-            [self.delegate logInViewController:self didLogInUser:nil];
             NSLog(@"User signed up and logged in through Facebook!");
+
+            
+            // Create request for user's Facebook data
+            FBRequest *request = [FBRequest requestForMe];
+            
+            // Send request to Facebook
+            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                if (!error) {
+                    // result is a dictionary with the user's Facebook data
+                    NSDictionary *userData = (NSDictionary *)result;
+
+                    [user setObject:userData[@"id"] forKey:kClassUserUsername];
+                    [user setObject:userData[@"name"] forKey:kClassUserDisplayname];
+//                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
+                    
+                    [user setObject:@YES forKey:kClassUserFacebookIntegratedWithParse];
+                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            NSLog(@"Facebook User saved.");
+                            [self.delegate logInViewController:self didLogInUser:nil];
+                        }
+                        
+                    }];
+                }
+            }];
+            
+            
+            
         } else {
-            [self.delegate logInViewController:self didLogInUser:nil];
             NSLog(@"User logged in through Facebook!");
+
+            [self.delegate logInViewController:self didLogInUser:nil];
         }
     }];
 }

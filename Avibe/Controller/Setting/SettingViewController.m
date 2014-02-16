@@ -241,8 +241,13 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 }
                 assert(_facebookLoginView != nil);
                 assert(_facebookLoginLabel != nil);
-                [cell addSubview:_facebookLoginView];
-                [cell bringSubviewToFront:_facebookLoginView];
+                
+                BOOL integratedWithParse = [[[PFUser currentUser] objectForKey:kClassUserFacebookIntegratedWithParse] boolValue];
+                if (!integratedWithParse) {
+                    [cell addSubview:_facebookLoginView];
+                    [cell bringSubviewToFront:_facebookLoginView];
+                }
+                
                 
                 
                 BOOL facebookLogIn = NO;
@@ -251,8 +256,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.textLabel.text = @"Facebook";
                 cell.detailTextLabel.text = facebookLogIn? [facebookUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
-
-;
+                
                 
                 break;
             }
@@ -291,8 +295,13 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             case YoutubeRow:
                 [self youtubeAuthorize];
                 break;
-            case FacebookRow:
+            case FacebookRow:{
+                BOOL integratedWithParse = [[[PFUser currentUser] objectForKey:kClassUserFacebookIntegratedWithParse] boolValue];
+                if (integratedWithParse) {
+                    [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Avibe account has been linked to Facebook, can't be changed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                }
                 break;
+            }
             default:
                 break;
         }

@@ -35,6 +35,7 @@ extern NSString *const kClassUserPhoneNumber;
 extern NSString *const kClassUserLastFMUsername;
 extern NSString *const kClassUserFacebookDisplayname;
 extern NSString *const kClassUserFacebookUsername;
+extern NSString *const kClassUserFacebookIntegratedWithParse;
 extern NSString *const kClassUserRdioDisplayname;
 extern NSString *const kClassUserRdioKey;
 extern NSString *const kClassUserGoogleUsername;
