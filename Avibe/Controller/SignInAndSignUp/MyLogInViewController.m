@@ -25,8 +25,8 @@
     self = [super initWithCoder:aDecoder];
     
     self.delegate = self;
-    self.facebookPermissions = @[@"friends_about_me"];
-    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsFacebook | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten | PFLogInFieldsDismissButton;
+//    self.facebookPermissions = @[@"friends_about_me", @"user_actions.music"];
+    self.fields = PFLogInFieldsUsernameAndPassword | PFLogInFieldsLogInButton | PFLogInFieldsPasswordForgotten | PFLogInFieldsDismissButton;
     
     return self;
 }
@@ -149,13 +149,15 @@
     
     //Facebook
     [self.logInView.externalLogInLabel setHidden:YES];
-    [self.logInView.facebookButton setBackgroundColor:[UIColor clearColor]];
-    [self.logInView.facebookButton setTitle:@"Facebook" forState:UIControlStateNormal];
-    [self.logInView.facebookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateNormal];
-    [self.logInView.facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.facebookButton setFrame:CGRectMake(buttonWidth, currentHeight, buttonWidth, buttonHeight)];
-
+    UIButton *facebookButton = [[UIButton alloc] init];
+    [facebookButton setBackgroundColor:[UIColor clearColor]];
+    [facebookButton setTitle:@"Facebook" forState:UIControlStateNormal];
+    [facebookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [facebookButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [facebookButton setFrame:CGRectMake(buttonWidth, currentHeight, buttonWidth, buttonHeight)];
+    [facebookButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:facebookButton];
     
     //Fogotton button
     buttonHeight = 20.0f;
@@ -189,6 +191,22 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma mark - Facebook Login Method
+- (void)facebookLogin
+{
+    [PFFacebookUtils logInWithPermissions:@[@"user_actions.music"] block:^(PFUser *user, NSError *error) {
+        if (!user) {
+            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+            [self.delegate logInViewControllerDidCancelLogIn:self];
+        } else if (user.isNew) {
+            [self.delegate logInViewController:self didLogInUser:nil];
+            NSLog(@"User signed up and logged in through Facebook!");
+        } else {
+            [self.delegate logInViewController:self didLogInUser:nil];
+            NSLog(@"User logged in through Facebook!");
+        }
+    }];
+}
 
 
 @end
