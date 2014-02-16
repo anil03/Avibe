@@ -213,7 +213,7 @@
 
                     [user setObject:userData[@"id"] forKey:kClassUserUsername];
                     [user setObject:userData[@"name"] forKey:kClassUserDisplayname];
-//                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
+                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
                     
                     [user setObject:@YES forKey:kClassUserFacebookIntegratedWithParse];
                     [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
