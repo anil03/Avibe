@@ -427,13 +427,13 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     PFObject *song = [_PFObjectsForTableView objectAtIndex:indexPath.row];
-    NSString *title = [song objectForKey:kClassSongTitle] ? [song objectForKey:kClassSongTitle] : @"N/A";
-    NSString *album = [song objectForKey:kClassSongAlbum] ? [song objectForKey:kClassSongAlbum] : @"N/A";
-    NSString *artist = [song objectForKey:kClassSongArtist] ? [song objectForKey:kClassSongArtist] : @"N/A";
+//    NSString *title = [song objectForKey:kClassSongTitle] ? [song objectForKey:kClassSongTitle] : @"N/A";
+//    NSString *album = [song objectForKey:kClassSongAlbum] ? [song objectForKey:kClassSongAlbum] : @"N/A";
+//    NSString *artist = [song objectForKey:kClassSongArtist] ? [song objectForKey:kClassSongArtist] : @"N/A";
+//    
+//    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
     
-    NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
-    
-    SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
+    SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithPFObject:song]; //initWithDictionary:dictionary];
     controller.delegate = self;
     MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
     [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
