@@ -23,6 +23,10 @@
 #import "MMDrawerBarButtonItem.h"
 
 @interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate, RdioDelegate>
+{
+    int leftOffset;
+    int topOffset;
+}
 
 @property (weak, nonatomic) IBOutlet UITextField *lastFMAccountTextField;
 @property (nonatomic, strong) UIBarButtonItem * rightDrawerButton;
@@ -84,6 +88,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Constant
+    leftOffset = 15;
+    topOffset = 8;
     
     //TableView Style
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -225,11 +233,18 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
                 }
                 break;
-            case RdioRow:
-                cell.textLabel.text = @"Rdio";
+            case RdioRow:{
+                UIImage *image = [UIImage imageNamed:@"rdio-logo.png"];
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftOffset, topOffset, 80, 28)];
+                [imageView setImage:image];
+                [cell addSubview:imageView];
+                [cell bringSubviewToFront:imageView];
+                
+//                cell.textLabel.text = @"Rdio";
                 cell.detailTextLabel.text = _rdioAutorizationSucceed? [[[PFUser currentUser] objectForKey:kClassUserRdioDisplayname] stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
                 break;
+            }
             case YoutubeRow:
                 cell.textLabel.text = @"YouTube";
                 cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";

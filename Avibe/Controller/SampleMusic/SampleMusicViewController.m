@@ -291,8 +291,8 @@
     [_buyInView addSubview:buyLabel];
     
     leftOffset += labelWidth;
-    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
-    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"iTunes-10-icon.png"] forState:UIControlStateNormal];
+    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, 110, 40)];
+    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"Download_on_iTunes_Badge_US-UK_110x40_1004"] forState:UIControlStateNormal];
     [iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];
     [_buyInView addSubview:iTuneButton];
 }
