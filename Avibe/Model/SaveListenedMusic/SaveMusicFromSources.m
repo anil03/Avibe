@@ -94,33 +94,75 @@
     NSString *lastFMUsername = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
     
     if(lastFMUsername){
-        NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=10", lastFMUsername];
+        int songNumber = 10;
+        NSString *kURLString = [NSString stringWithFormat:@"http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%@&api_key=55129edf3dc293c4192639caedef0c2e&limit=%d&format=json", lastFMUsername, songNumber];
+        
+        //Download Result From Last.fm
+        dispatch_async(kBgQueue, ^{
+            NSData* data = [NSData dataWithContentsOfURL:
+                            [NSURL URLWithString:kURLString]];
+            [self performSelectorOnMainThread:@selector(fetchedData:)
+                                   withObject:data waitUntilDone:YES];
+        });
         
         //Save Scrobbler Music from XML Parser
-        NSURL *url = [NSURL URLWithString:kURLString];
-        _parser = [[ScrobbleListenedMusic alloc] initWithURL:url];
-        _parser.delegate = self;
-        [self.parser startParsing];
+//        NSURL *url = [NSURL URLWithString:kURLString];
+//        _parser = [[ScrobbleListenedMusic alloc] initWithURL:url];
+//        _parser.delegate = self;
+//        [self.parser startParsing];
     }else{
         NSLog(@"No Last.fm Music Available");
     }
 }
-- (void)finishParsing:(NSMutableArray*)result
+- (void)fetchedData:(NSData *)responseData
 {
-    NSMutableArray *musicToSave = [[NSMutableArray alloc] init];
-
-    //Return if empty
-    if ([musicToSave count] == 0) {
+    if (!responseData) {
+        NSLog(@"No data from Last.fm.");
         return;
     }
     
-    for(PFObject *object in result){
-        [musicToSave addObject:object];
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+//    NSLog(@"%@",json);
+    
+    NSArray* tracks;
+    if(json && json[@"recenttracks"] && json[@"recenttracks"][@"track"]){
+        tracks = json[@"recenttracks"][@"track"];
+    }
+    
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for(NSDictionary *dict in tracks){
+        NSString *title = dict[@"name"];
+        NSString *album = dict[@"album"][@"#text"];
+        NSString *artist = dict[@"artist"][@"#text"];
+//        NSString *imagesmall = dict[@"image"][0][@"#text"];
+//        NSString *imagemedium = dict[@"image"][1][@"#text"];
+//        NSString *imagelarge = dict[@"image"][2][@"#text"];
+        NSString *imageextralarge = dict[@"image"][3][@"#text"];
+        
+        PFObject *object = [PFObject objectWithClassName:kClassSong];
+        if(title) [object setObject:title forKey:kClassSongTitle];
+        if(album) [object setObject:album forKey:kClassSongAlbum];
+        if(artist) [object setObject:artist forKey:kClassSongArtist];
+        if(imageextralarge) [object setObject:imageextralarge forKey:kClassSongAlbumURL];
+        [object setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
+        [object setObject:@"Last.fm" forKey:kClassSongSource];
+        
+        [array addObject:object];
+    }
+    
+    [self finishParsingLastFM:array];
+}
+- (void)finishParsingLastFM:(NSMutableArray*)musicToSave
+{
+    //Return if empty
+    if (musicToSave == nil || [musicToSave count] == 0) {
+        return;
     }
     
     //Get rid of duplicated data then save
     FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
-    [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"Scrobble" andFetchObjects:fetechObjects];
+    [filter filterDuplicatedDataToSaveInParse:musicToSave andSource:@"Last.fm" andFetchObjects:fetechObjects];
 }
 
 #pragma mark - Facebook with Spotify Music
@@ -171,20 +213,13 @@
     NSString *title = [lastSongPlayedData objectForKey:@"name"];
     NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
     NSString *album = [lastSongPlayedData objectForKey:@"album"];
-    
-    //Return if empty
-    if (title == nil || artist == nil || album == nil) {
-        return;
-    }
-    
-    assert(title != nil);
-    assert(artist != nil);
-    assert(album != nil);
+    NSString *albumurl = [lastSongPlayedData objectForKey:@"icon400"];
     
     PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
-    [songRecord setObject:title  forKey:kClassSongTitle];
-    [songRecord setObject:album forKey:kClassSongAlbum];
-    [songRecord setObject:artist forKey:kClassSongArtist];
+    if(title) [songRecord setObject:title  forKey:kClassSongTitle];
+    if(album) [songRecord setObject:album forKey:kClassSongAlbum];
+    if(albumurl) [songRecord setObject:albumurl forKey:kClassSongAlbumURL];
+    if(artist) [songRecord setObject:artist forKey:kClassSongArtist];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
     [songRecord setObject:@"Rdio" forKey:kClassSongSource];
     

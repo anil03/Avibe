@@ -133,6 +133,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];
+//        [self saveYoutubeMusic];
     }
 }
 - (void)viewDidLoad
@@ -428,7 +429,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 -(void)leftDrawerButtonPress:(id)sender{
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
--(void)rightDrawerButtonPress:(id)sender{
+
+-(void)saveYoutubeMusic{
     [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
 }
 

@@ -55,6 +55,8 @@ extern NSString *const kClassSong;
 extern NSString *const kClassSongUsername;
 extern NSString *const kClassSongTitle;
 extern NSString *const kClassSongAlbum;
+extern NSString *const kClassSongAlbumURL;
+extern NSString *const kClassSongAlbumImage;
 extern NSString *const kClassSongArtist;
 extern NSString *const kClassSongSource;
 extern NSString *const kClassSongMD5;

@@ -195,6 +195,7 @@
     [songRecord setObject:musicianTitle  forKey:kClassSongArtist];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
     [songRecord setObject:sourceName forKey:kClassSongSource];
+    [songRecord setObject:imageurl forKey:kClassSongAlbumURL];
     
     [_musicArray addObject:songRecord];
 }
