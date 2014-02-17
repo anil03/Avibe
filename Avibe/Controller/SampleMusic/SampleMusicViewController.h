@@ -13,6 +13,6 @@
 @property (nonatomic, weak) UIViewController *delegate;
 
 - (id)initWithDictionary:(NSDictionary*)dictionary;
-
+- (id)initWithPFObject:(PFObject*)object;
 
 @end

@@ -223,6 +223,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         return;
     }
     
+    NSLog(@"indexPath:%d", indexPath.row);
     
     MMNavigationController *navigationController;
     switch (indexPath.row%columnNumber) {
@@ -237,17 +238,20 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }
         case 1:{
 //            NSLog(@"Title");
-            YMGenericCollectionViewCell *cellTitle = cell;
-            YMGenericCollectionViewCell *cellAlbum = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]];
-            YMGenericCollectionViewCell *cellArtist = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]];
-            NSString *title = cellTitle.label.text? cellTitle.label.text:@" ";
-            NSString *album = cellAlbum.label.text? cellAlbum.label.text:@" ";
-            NSString *artist = cellArtist.label.text? cellArtist.label.text:@" ";
-            
-            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
+//            YMGenericCollectionViewCell *cellTitle = cell;
+//            YMGenericCollectionViewCell *cellAlbum = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]];
+//            YMGenericCollectionViewCell *cellArtist = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]];
+//            NSString *title = cellTitle.label.text? cellTitle.label.text:@" ";
+//            NSString *album = cellAlbum.label.text? cellAlbum.label.text:@" ";
+//            NSString *artist = cellArtist.label.text? cellArtist.label.text:@" ";
+//            
+//            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
             
             //Switch to Youtube
-            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
+//            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
+            int index = indexPath.row/columnNumber;
+            PFObject *object = _PFObjects[index];
+            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithPFObject:object];
             controller.delegate = self;
             navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
             [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];

@@ -82,10 +82,12 @@
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
 
-
 //Rdio
 @property (readonly) Rdio *rdio;
 @property NSString *rdio_userkey;
+
+//PFObject of current song
+@property PFObject *pfObject;
 
 @end
 
@@ -93,6 +95,7 @@
 @synthesize moviePlayer;
 @synthesize scrollView;
 
+#pragma mark - Init method
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
     self = [super init];
@@ -108,6 +111,20 @@
         
     }
     
+    return self;
+}
+- (id)initWithPFObject:(PFObject*)object
+{
+    self = [super init];
+    if (self) {
+        _pfObject = object;
+        _songTitle = [_pfObject objectForKey:kClassSongTitle];
+        _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
+        _songAlbum = [_pfObject objectForKey:kClassSongAlbum];
+        _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
+        _songArtist = [_pfObject objectForKey:kClassSongArtist];
+        _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
+    }
     return self;
 }
 
@@ -547,13 +564,9 @@
     _titleLabel.text = [songInfo objectForKey:@"title"];
     _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", [songInfo objectForKey:@"album"], [songInfo objectForKey:@"artist"]];
     
-    //Set Album Image
-    NSURL *imageUrl = [NSURL URLWithString:[songInfo objectForKey:@"imageURL"]];
-    NSData *imageData = [NSData dataWithContentsOfURL:imageUrl];
-    UIImage *image = [UIImage imageWithData:imageData];
-    if (image) {
-        _albumImage = image;
-    }
+    //Album image
+    [self handleAlbumImage:[songInfo objectForKey:@"imageURL"]];
+    
     
     _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, 0, playerImageWidth, playerImageHeight)];
     [_sampleMusicImageView setImage:_albumImage];
@@ -615,6 +628,30 @@
     
 //    _progress.value = _player.currentTime;
     [_progress setProgress:_player.currentTime/_player.duration animated:YES];
+}
+
+#pragma mark - Handle album image
+/**
+ * Get Image from PFObject image url
+ * If fails, then get album image from iTune
+ */
+- (void)handleAlbumImage:(NSString*)imageUrlFromITune
+{
+    //Parse image
+    NSString *imageUrlFromParse = [_pfObject objectForKey:kClassSongAlbumURL];
+    if (imageUrlFromParse) {
+        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
+        if (imageDataFromParse) {
+            _albumImage = [UIImage imageWithData:imageDataFromParse];
+            return;
+        }
+    }
+    
+    //iTune image
+    if(imageUrlFromITune){
+        NSData *imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
+        _albumImage = [UIImage imageWithData:imageDataFromITune];
+    }
 }
 
 #pragma mark - AVAudioPlayerDelegate
