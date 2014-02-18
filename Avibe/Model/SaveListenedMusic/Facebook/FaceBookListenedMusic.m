@@ -190,13 +190,13 @@
     
     //PFObject
     PFObject *songRecord = [PFObject objectWithClassName:kClassSong];
-    [songRecord setObject:title  forKey:kClassSongTitle];
-    [songRecord setObject:albumTitle  forKey:kClassSongAlbum];
-    [songRecord setObject:musicianTitle  forKey:kClassSongArtist];
+    if(title) [songRecord setObject:title  forKey:kClassSongTitle];
+    if(albumTitle) [songRecord setObject:albumTitle  forKey:kClassSongAlbum];
+    if(musicianTitle) [songRecord setObject:musicianTitle  forKey:kClassSongArtist];
+    if(sourceName) [songRecord setObject:sourceName forKey:kClassSongSource];
+    if(imageurl) [songRecord setObject:imageurl forKey:kClassSongAlbumURL];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
-    [songRecord setObject:sourceName forKey:kClassSongSource];
-    [songRecord setObject:imageurl forKey:kClassSongAlbumURL];
-    
+
     [_musicArray addObject:songRecord];
 }
 
