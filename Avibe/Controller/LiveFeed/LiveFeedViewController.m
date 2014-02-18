@@ -184,11 +184,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             break;
         }
         case 2:{
-            cell.label.text = [song objectForKey:kClassSongAlbum];
+            cell.label.text = [song objectForKey:kClassSongArtist];
             break;
         }
         case 3:{
-            cell.label.text = [song objectForKey:kClassSongArtist];
+            cell.label.text = [song objectForKey:kClassSongAlbum];
             break;
         }
         
@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     
     //Deal with NULL text
-    if (!cell.label.text) {
+    if (!cell.label.text || [cell.label.text isEqualToString:@""]) {
         return;
     }
     
