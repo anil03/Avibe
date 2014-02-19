@@ -22,6 +22,7 @@
 
 @interface UserViewController : SideMenuRowViewController
 @property (nonatomic, strong) NSString *username;
+@property NSString *displayname;
 
 @property (nonatomic, weak) id<UserViewControllerDelegate> delegate;
 @property (nonatomic, weak) UIViewController *previousViewController;

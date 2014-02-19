@@ -167,11 +167,22 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     switch (indexPath.row%columnNumber) {
         case 0:{
-            NSString *info = [song objectForKey:kClassSongUsername];
-//            info = [info stringByAppendingString:[NSString stringWithFormat:@"%@", [song createdAt]]];
+            //Search displayname by username
+            NSString *username = [song objectForKey:kClassSongUsername];
+            PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
+            NSString *displayname;
+            if (userObject) {
+               displayname = [userObject objectForKey:kClassUserDisplayname];
+            }
+            if (displayname) {
+                username = displayname;
+            }
+            
+            //Display friend
+            NSString *info;
             NSString *source = [song objectForKey:kClassSongSource];
             if (source) {
-                info = [info stringByAppendingFormat:@"\n%@", source];
+                info = [username stringByAppendingFormat:@"\n%@", source];
             }
             cell.label.text = info;
             cell.label.lineBreakMode = NSLineBreakByWordWrapping;

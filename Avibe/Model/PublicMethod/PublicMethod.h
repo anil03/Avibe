@@ -22,8 +22,15 @@
 - (NSMutableAttributedString*)refreshUpdatingString;
 - (NSMutableAttributedString*)refreshFinsihedString;
 
+
+
 #pragma mark - Google OAuth
 - (void)authorizeGoogle:(UIView*)view;
 - (void)revokeAccess;
+
+
+#pragma mark - PFUser Object
+- (PFObject*)searchPFUserByUsername:(NSString*)username;
+
 
 @end

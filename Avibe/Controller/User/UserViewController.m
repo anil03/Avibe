@@ -16,6 +16,8 @@
 #import "YMTableViewCell.h"
 #import "Setting.h"
 #import "BackgroundImageView.h"
+#import "PublicMethod.h"
+
 
 @interface UserViewController () <UITextFieldDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -85,6 +87,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Display Name
+    PFObject *user = [[PublicMethod sharedInstance] searchPFUserByUsername:_username];
+    if (user) {
+        _displayname = [user objectForKey:kClassUserDisplayname];
+    }
+    if(!_displayname) _displayname = _username;
+
     
     //View Parameters
     darkBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.5];
@@ -164,7 +174,7 @@
     
     //Name
     UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeightInHeaderView, width, unitHeight*2)];
-    usernameLabel.text = [_username uppercaseString];
+    usernameLabel.text = [_displayname uppercaseString];
     usernameLabel.textColor = componentTextColor;
     usernameLabel.textAlignment = NSTextAlignmentCenter;
     usernameLabel.adjustsFontSizeToFitWidth = YES;
@@ -461,7 +471,7 @@
 -(void)setupMenuButton{
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    NSString *titleText = _username;
+    NSString *titleText = _displayname;
     int titleLength = 8;
     if([titleText length] > titleLength) titleText = [[titleText substringToIndex:titleLength]  stringByAppendingString:@"..."];
     titleLabel.text = [NSString stringWithFormat:@"%@'s Profile", titleText];

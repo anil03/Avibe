@@ -26,6 +26,7 @@
 
 @property (nonatomic, strong) NSArray *songs;
 @property (nonatomic, strong) NSString *username;
+@property NSString *displayname;
 
 @end
 
@@ -57,6 +58,14 @@
 	[super viewDidLoad];
 	[self setupRefreshControl];
     [self refreshView:self.refreshControl];
+    
+    //Display Name
+    PFObject *user = [[PublicMethod sharedInstance] searchPFUserByUsername:_username];
+    if (user) {
+        _displayname = [user objectForKey:kClassUserDisplayname];
+    }
+    if(!_displayname) _displayname = _username;
+
     
     //BackgroundView
     UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:self.tableView.frame];
@@ -131,7 +140,7 @@
 -(void)setupMenuButton{
     //Navigation Title
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    NSString *titleText = self.username;
+    NSString *titleText = _displayname;
     int titleLength = 8;
     if([titleText length] > titleLength) titleText = [[titleText substringToIndex:titleLength]  stringByAppendingString:@"..."];
     titleLabel.text = [NSString stringWithFormat:@"%@'s Listen History", titleText];

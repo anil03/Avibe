@@ -17,6 +17,8 @@
 
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
+@property NSMutableArray *pfUserArray;
+
 @end
 
 @implementation PublicMethod
@@ -39,6 +41,8 @@
 {
     self = [super init];
     if (self) {
+        _pfUserArray = [[NSMutableArray alloc] init];
+        
         _backgroundImages = [[NSMutableArray alloc] init];
 
         /*Online search for background images, but slow*/
@@ -239,6 +243,29 @@
         
         [SaveMusicFromSources saveYoutubeEntry:entries];
     }
+}
+
+
+#pragma mark - PFUser Object
+- (PFObject*)searchPFUserByUsername:(NSString*)username
+{
+    //Find username in PFUserArray
+    for(PFObject *user in _pfUserArray){
+        NSString *usernameInObject = [user objectForKey:kClassUserDisplayname];
+        if (usernameInObject && [usernameInObject isEqualToString:username]) {
+            return user;
+        }
+    }
+    
+    //Can't find the user, fetch from Parse
+    PFQuery *query = [PFUser query];
+    [query whereKey:kClassUserUsername equalTo:username];
+    PFObject *user = [query getFirstObject];
+    if (user) {
+        [_pfUserArray addObject:user];
+    }
+    
+    return user;
 }
 
 @end
