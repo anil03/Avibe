@@ -13,49 +13,25 @@
 
 @interface MySignUpViewController ()
 @property (nonatomic, strong) UIImageView *fieldsBackground;
+@property UITextField *fullnameTextField;
 @end
 
 @implementation MySignUpViewController
 
 @synthesize fieldsBackground;
+@synthesize fullnameTextField;
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+
+//    self.fields = PFSignUpFieldsUsernameAndPassword;
+    
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//    [self.signUpView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"MainBG.png"]]];
-//    [self.signUpView setLogo:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Logo.png"]]];
-//    
-//    // Change button apperance
-//    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"Exit.png"] forState:UIControlStateNormal];
-////    [self.signUpView.dismissButton setImage:[UIImage imageNamed:@"ExitDown.png"] forState:UIControlStateHighlighted];
-//    
-//    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUp.png"] forState:UIControlStateNormal];
-//    [self.signUpView.signUpButton setBackgroundImage:[UIImage imageNamed:@"SignUpDown.png"] forState:UIControlStateHighlighted];
-//    [self.signUpView.signUpButton setTitle:@"" forState:UIControlStateNormal];
-//    [self.signUpView.signUpButton setTitle:@"" forState:UIControlStateHighlighted];
-//    
-//    // Add background for fields
-//    [self setFieldsBackground:[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SignUpFieldBG.png"]]];
-//    [self.signUpView insertSubview:fieldsBackground atIndex:1];
-//    
-//    // Remove text shadow
-//    CALayer *layer = self.signUpView.usernameField.layer;
-//    layer.shadowOpacity = 0.0f;
-//    layer = self.signUpView.passwordField.layer;
-//    layer.shadowOpacity = 0.0f;
-//    layer = self.signUpView.emailField.layer;
-//    layer.shadowOpacity = 0.0f;
-//    layer = self.signUpView.additionalField.layer;
-//    layer.shadowOpacity = 0.0f;
-//    
-//    // Set text color
-//    [self.signUpView.usernameField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-//    [self.signUpView.passwordField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-//    [self.signUpView.emailField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-//    [self.signUpView.additionalField setTextColor:[UIColor colorWithRed:135.0f/255.0f green:118.0f/255.0f blue:92.0f/255.0f alpha:1.0]];
-    
-
-    
 }
 
 - (void)viewDidLayoutSubviews {
@@ -95,7 +71,9 @@
     [self.view addSubview:label];
     self.signUpView.logo = label;
 
-    //Input Field
+  
+    
+    //Input Field - Username
     currentHeight = fieldHeight*2 + 70.0f;
     UIColor *fieldBackgroundColor = [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3];
     UIColor *placeHolderColor = [UIColor grayColor];
@@ -103,12 +81,22 @@
     [self.signUpView.usernameField setBackgroundColor:fieldBackgroundColor];
     [self.signUpView.usernameField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Username" attributes:@{NSForegroundColorAttributeName: placeHolderColor}]];
 
+    //Full Name
+//    currentHeight += fieldHeight;
+//    fullnameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
+//    [fullnameTextField setTextAlignment:NSTextAlignmentCenter];
+//    [fullnameTextField setBackgroundColor:[UIColor clearColor]];
+//    [fullnameTextField setTextColor:[UIColor whiteColor]];
+//    [fullnameTextField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Full Name" attributes:@{NSForegroundColorAttributeName: placeHolderColor}]];
+//    [self.view addSubview:fullnameTextField];
+    
+    //Email
     currentHeight += fieldHeight;
     [self.signUpView.emailField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.signUpView.emailField setBackgroundColor:fieldBackgroundColor];
     [self.signUpView.emailField setAttributedPlaceholder:[[NSAttributedString alloc] initWithString:@"Email" attributes:@{NSForegroundColorAttributeName: placeHolderColor}]];
 
-    
+    //Password
     currentHeight += fieldHeight;
     [self.signUpView.passwordField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.signUpView.passwordField setBackgroundColor:fieldBackgroundColor];
@@ -123,15 +111,16 @@
     
     //Sign Up
     currentHeight += fieldHeight+10.0f;
-    [self.signUpView.signUpButton setBackgroundColor:[UIColor clearColor]];
-    [self.signUpView.signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
-    [self.signUpView.signUpButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self.signUpView.signUpButton setImage:nil forState:UIControlStateNormal];
-    [self.signUpView.signUpButton setImage:nil forState:UIControlStateHighlighted];
-    [self.signUpView.signUpButton setBackgroundImage:nil forState:UIControlStateNormal];
-    [self.signUpView.signUpButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.signUpView.signUpButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
-
+    UIButton *signUpButton = self.signUpView.signUpButton;
+    [signUpButton setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
+    [signUpButton setBackgroundColor:[UIColor clearColor]];
+    [signUpButton setTitle:@"Sign Up" forState:UIControlStateNormal];
+    [signUpButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [signUpButton setImage:nil forState:UIControlStateNormal];
+    [signUpButton setImage:nil forState:UIControlStateHighlighted];
+    [signUpButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [signUpButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [signUpButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
     
     //Dismiss
     currentHeight = height-buttonHeight-bottom;
@@ -145,45 +134,36 @@
     [self.signUpView.dismissButton setBackgroundImage:nil forState:UIControlStateHighlighted];
     [self.signUpView.dismissButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
     [self.signUpView.dismissButton.titleLabel setFont:[UIFont systemFontOfSize:fontsize]];
-    
-    
-//    
-//    
-//    
-//    // Move all fields down on smaller screen sizes
-//    float yOffset = [UIScreen mainScreen].bounds.size.height <= 480.0f ? 30.0f : 0.0f;
-//
-//    CGRect fieldFrame = self.signUpView.usernameField.frame;
-//
-//    [self.signUpView.dismissButton setFrame:CGRectMake(0.0f, 15.0f, 87.5f, 45.5f)];
-//    [self.signUpView.logo setFrame:CGRectMake(66.5f, 70.0f, 187.0f, 58.5f)];
-//    [self.signUpView.signUpButton setFrame:CGRectMake([UIScreen mainScreen].bounds.size.width/2-60.0f, 385.0f, 120.0f, 40.0f)];
-//    
-//    [self.fieldsBackground setFrame:CGRectMake(35.0f, fieldFrame.origin.y + yOffset, 250.0f, 174.0f)];
-//    
-//    [self.signUpView.usernameField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
-//                                                       fieldFrame.origin.y + yOffset,
-//                                                       fieldFrame.size.width - 10.0f,
-//                                                       fieldFrame.size.height)];
-//    yOffset += fieldFrame.size.height;
-//    
-//    [self.signUpView.passwordField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
-//                                                       fieldFrame.origin.y + yOffset,
-//                                                       fieldFrame.size.width - 10.0f,
-//                                                       fieldFrame.size.height)];
-//    yOffset += fieldFrame.size.height;
-//    
-//    [self.signUpView.emailField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
-//                                                    fieldFrame.origin.y + yOffset,
-//                                                    fieldFrame.size.width - 10.0f,
-//                                                    fieldFrame.size.height)];
-//    yOffset += fieldFrame.size.height;
-//    
-//    [self.signUpView.additionalField setFrame:CGRectMake(fieldFrame.origin.x + 5.0f,
-//                                                         fieldFrame.origin.y + yOffset,
-//                                                         fieldFrame.size.width - 10.0f,
-//                                                         fieldFrame.size.height)];
 }
+
+//- (void)signUpUser
+//{
+//    PFUser *newUser = [PFUser user];
+//    
+//    NSString *username = self.signUpView.usernameField.text;
+//    NSString *fullname = fullnameTextField.text;
+//    NSString *password = self.signUpView.passwordField.text;
+//    NSString *email = self.signUpView.emailField.text;
+//    NSString *phonenumber = self.signUpView.additionalField.text;
+//
+//    BOOL authenicated = username && ![username isEqualToString:@""] &&
+//                        fullname && ![fullname isEqualToString:@""] &&
+//                        password && ![password isEqualToString:@""] &&
+//                        email && ![email isEqualToString:@""] &&
+//                        phonenumber && ![phonenumber isEqualToString:@""];
+//    if (!authenicated) {
+//        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please fill in all fields." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//        return;
+//    }
+//    
+//    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//        if (succeeded) {
+//            
+//        }else{
+//            NSLog(@"Error:%@",error.description);
+//        }
+//    }];
+//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

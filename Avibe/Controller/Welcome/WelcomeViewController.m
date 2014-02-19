@@ -248,6 +248,9 @@
 - (void)signUpViewController:(PFSignUpViewController *)signUpController didSignUpUser:(PFUser *)user {
     [self dismissViewControllerAnimated:YES completion:NULL];
     
+    [user setObject:@"Avibe" forKey:kClassUserDisplayname];
+    [user saveInBackground];
+    
     [self finishVerification];
 }
 
