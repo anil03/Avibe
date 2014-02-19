@@ -83,7 +83,7 @@ static AppDelegate *launchedDelegate;
     /*
      * Set up Parse Account
      */
-    [Parse setApplicationId:@"Rcx3lFlYc3jGxhpqsYfeqSZ4Lpsd0b6u1J1Etsdu" clientKey:@"sKdduRpy83mgM8lwoT6viMaoFei5eKnBrE9bef55"];
+    [Parse setApplicationId:@"DlQo5mHLeC6vHUQgSneLnEqMeoL0VmLpoSZITnv2" clientKey:@"QLuxJU6Td4rU0B06atRyyru3kWoN8SsiWymtcfGr"];
     [PFFacebookUtils initializeFacebook];
     [PFTwitterUtils initializeWithConsumerKey:@"7RufvU8xSuPj6dr9xPipdw"
                                consumerSecret:@"sxxk2HHFyorRfkPmO24GfexGEx3vPRe7t4guTZnGU"];
