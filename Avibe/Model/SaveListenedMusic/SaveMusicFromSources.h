@@ -11,6 +11,8 @@
 @interface SaveMusicFromSources : NSObject
 
 - (void)saveMusic;
+- (void)saveMusicInBackground;
+
 + (void)saveYoutubeEntry:(NSArray*)array;
 
 @end

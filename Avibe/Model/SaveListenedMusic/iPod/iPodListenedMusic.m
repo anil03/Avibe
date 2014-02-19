@@ -20,7 +20,8 @@
     
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
-
+    NSLog(@"Last update date:%@", lastUpdatedDate);
+    
     MPMediaQuery *songsQuery = [MPMediaQuery songsQuery];
     for(MPMediaItem *item in [songsQuery items]){
         NSString *title = [item valueForProperty:MPMediaItemPropertyTitle];

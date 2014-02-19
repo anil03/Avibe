@@ -129,7 +129,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
     NSTimeInterval actualInterval = [lastUpdatedDate timeIntervalSinceNow];
-    NSTimeInterval interval = 3.0;
+    NSTimeInterval interval = 60.0;
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];

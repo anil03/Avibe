@@ -17,11 +17,10 @@
 static AppDelegate *launchedDelegate;
 
 //SaveMusic
-#import "SaveMusicFromSources.h"
+#import "PublicMethod.h"
 #import "FilterAndSaveMusic.h"
 
 @interface AppDelegate()
-@property (nonatomic, strong) SaveMusicFromSources *saveMusic;
 @property (nonatomic, strong) MPMusicPlayerController *player;
 
 @end
@@ -40,14 +39,6 @@ static AppDelegate *launchedDelegate;
     return launchedDelegate.rdio;
 }
 
-//Background Music Save
-- (SaveMusicFromSources *)saveMusic
-{
-    if (!_saveMusic) {
-        _saveMusic = [[SaveMusicFromSources alloc] init];
-    }
-    return _saveMusic;
-}
 
 #pragma mark - Application Method
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -129,7 +120,7 @@ static AppDelegate *launchedDelegate;
     
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
-        [_saveMusic saveMusic];
+        [[[PublicMethod sharedInstance] saveMusicFromSources] saveMusicInBackground];
         completionHandler(UIBackgroundFetchResultNewData);
     }else{
         completionHandler(UIBackgroundFetchResultNoData);
@@ -173,7 +164,7 @@ static AppDelegate *launchedDelegate;
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyAlbumTitle] forKey:kClassSongAlbum];
     [songRecord setObject:[currentPlayingSong valueForProperty:MPMediaItemPropertyArtist] forKey:kClassSongArtist];
     [songRecord setObject:[[PFUser currentUser] username] forKey:kClassSongUsername];
-    [songRecord setObject:@"iPod Background" forKey:kClassSongSource];
+    [songRecord setObject:source forKey:kClassSongSource];
     
     FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
 //    filter.delegate = self;

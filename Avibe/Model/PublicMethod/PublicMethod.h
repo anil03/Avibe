@@ -9,11 +9,14 @@
 #import <Foundation/Foundation.h>
 
 #import "ImageFetcher.h"
+#import "SaveMusicFromSources.h"
 
 @interface PublicMethod : NSObject
 
 @property (nonatomic, strong) NSMutableArray *backgroundImages;
 //@property (nonatomic, strong) NSDate *lastUpdatedDate;
+
+@property (nonatomic, strong) SaveMusicFromSources *saveMusicFromSources;
 
 + (PublicMethod *)sharedInstance;
 

@@ -59,6 +59,17 @@
     return self;
 }
 
+#pragma mark - Instance
+- (SaveMusicFromSources *)saveMusicFromSources
+{
+    if (!_saveMusicFromSources) {
+        _saveMusicFromSources = [[SaveMusicFromSources alloc] init];
+    }
+    
+    return _saveMusicFromSources;
+}
+
+#pragma mark - Google
 - (GoogleOAuth *)googleOAuth
 {
     //Lazy init

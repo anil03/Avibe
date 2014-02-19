@@ -47,19 +47,41 @@
 
 @synthesize fetechObjects;
 
+- (void)saveMusicInBackground
+{
+    //Fetch Existing Songs from Parse
+    PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
+    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
+    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
+    postQuery.limit = 100;
+    
+    fetechObjects = [postQuery findObjects];
+    if (fetechObjects) {
+        [self getIPodMusic];
+//        [self getRdioMusic];
+//        [self getFaceBookMusic];
+//        [self getScrobbleMusic];
+    }
+}
+
 - (void)saveMusic
 {
     //Fetch Existing Songs from Parse
     PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
     [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
     [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
-    postQuery.limit = 1000;
+    postQuery.limit = 100;
+    
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        fetechObjects = objects;
-        [self getIPodMusic];
-        [self getRdioMusic];
-        [self getFaceBookMusic];
-        [self getScrobbleMusic];
+        if (!error) {
+            fetechObjects = objects;
+            [self getIPodMusic];
+            [self getRdioMusic];
+            [self getFaceBookMusic];
+            [self getScrobbleMusic];
+        }else{
+            NSLog(@"Error:%@", error.description);
+        }
     }];
 }
 
@@ -79,6 +101,8 @@
             [songRecord setObject:@"iPod" forKey:kClassSongSource];
 
 //            NSLog(@"=====iPod Music: Title:%@, Album:%@, Artist%@", [dict objectForKey:kClassSongTitle], [dict objectForKey:kClassSongAlbum], [dict objectForKey:kClassSongArtist]);
+            
+            [musicArray addObject:songRecord];
         }
         
         FilterAndSaveMusic *filter = [[FilterAndSaveMusic alloc] init];
