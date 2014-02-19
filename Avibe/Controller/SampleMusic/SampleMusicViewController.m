@@ -202,17 +202,18 @@
     [self listenInItune];
     
 
-    //Button - Share
+    //Button - Listen
     currentHeight += playerHeight;
-    [self addShareView];
+    [self addListenInView];
+    
     
     //Button - Buy
-    currentHeight += buttonHeight;
+    currentHeight += buttonHeight*1.5;
     [self addBuyInView];
     
-    //Button - Listen
-    currentHeight += buttonHeight;
-    [self addListenInView];
+    //Button - Share
+    currentHeight += buttonHeight*1.5;
+    [self addShareView];
     
     //Label - More Like this
 //    currentHeight += buttonHeight;
@@ -266,14 +267,25 @@
 #pragma mark - Add SubView
 - (void)addShareView
 {
-    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
-    [shareButton setTitle:@"Share" forState:UIControlStateNormal];
-    [shareButton setTitleColor:textColor forState:UIControlStateNormal];
-    [shareButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
-    shareButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    shareButton.backgroundColor = [UIColor blackColor];
+    float buttonWidth = buttonHeight;
+    float leftOffset = 100.0f;
+
+    
+    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    UILabel *shareLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, leftOffset, buttonHeight)];
+    [shareLabel setText:@"Share: "];
+    [shareLabel setTextColor:textColor];
+    shareLabel.textAlignment = NSTextAlignmentLeft;
+    shareLabel.backgroundColor = [UIColor blackColor];
+//    [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
+    [shareView addSubview:shareLabel];
+    [scrollView addSubview:shareView];
+    
+    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
+    [shareButton setBackgroundImage:[UIImage imageNamed:@"avibe_icon_120_120"] forState:UIControlStateNormal];
     [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:shareButton];
+    [shareView addSubview:shareButton];
+
 }
 - (void)addBuyInView
 {
@@ -290,7 +302,7 @@
     buyLabel.backgroundColor = [UIColor blackColor];
     [_buyInView addSubview:buyLabel];
     
-    leftOffset += labelWidth;
+    leftOffset = width/2 - 110/2;
     UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, 110, 40)];
     [iTuneButton setBackgroundImage:[UIImage imageNamed:@"Download_on_iTunes_Badge_US-UK_110x40_1004"] forState:UIControlStateNormal];
     [iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];

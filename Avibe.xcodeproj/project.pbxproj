@@ -26,6 +26,7 @@
 		4C09E18B18AAF65400847DEF /* FacebookAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */; };
 		4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */; };
 		4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17610618A5B18500B58F42 /* GoogleOAuth.m */; };
+		4C19DF3118B53AA9006BAA2B /* avibe_icon_120_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C19DF3018B53AA9006BAA2B /* avibe_icon_120_120.png */; };
 		4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */; };
 		4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */; };
 		4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231C5A188104F800B030F9 /* MMExampleCenterTableViewController.m */; };
@@ -171,6 +172,7 @@
 		4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestYoutubeOAuth.m; path = SaveListenedMusicTest/Youtube/TestYoutubeOAuth.m; sourceTree = "<group>"; };
 		4C17610518A5B18500B58F42 /* GoogleOAuth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleOAuth.h; sourceTree = "<group>"; };
 		4C17610618A5B18500B58F42 /* GoogleOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleOAuth.m; sourceTree = "<group>"; };
+		4C19DF3018B53AA9006BAA2B /* avibe_icon_120_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = avibe_icon_120_120.png; sourceTree = "<group>"; };
 		4C231C4E188104F800B030F9 /* MMCenterTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMCenterTableViewCell.h; sourceTree = "<group>"; };
 		4C231C4F188104F800B030F9 /* MMCenterTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMCenterTableViewCell.m; sourceTree = "<group>"; };
 		4C231C55188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MMDrawerControllerKitchenSink-Info.plist"; sourceTree = "<group>"; };
@@ -821,6 +823,7 @@
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4C19DF3018B53AA9006BAA2B /* avibe_icon_120_120.png */,
 				4C7ADAEA18B19E5500ACEA79 /* iTune */,
 				4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */,
 				4CC5272418985EFF00562CE1 /* youtube-48.png */,
@@ -1131,6 +1134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C19DF3118B53AA9006BAA2B /* avibe_icon_120_120.png in Resources */,
 				4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */,
 				4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */,
 				4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */,

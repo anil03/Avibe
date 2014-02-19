@@ -118,6 +118,12 @@ static AppDelegate *launchedDelegate;
 {
     NSLog(@"########### Received Background Fetch ###########");
     
+    //Test Parse Background
+    PFObject *pfObject = [PFObject objectWithClassName:@"BackgroundFetch"];
+    [pfObject setObject:[NSDate date] forKey:@"BackgroundFetchDate"];
+    [pfObject saveInBackground];
+    
+    
     MPMediaItem *currentPlayingSong = [[MPMusicPlayerController iPodMusicPlayer] nowPlayingItem];
     if (currentPlayingSong){
         [[[PublicMethod sharedInstance] saveMusicFromSources] saveMusicInBackground];
