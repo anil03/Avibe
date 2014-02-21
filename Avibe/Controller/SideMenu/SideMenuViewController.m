@@ -274,14 +274,39 @@ typedef NS_ENUM(NSInteger, BeetRow){
     [self.mm_drawerController setCenterViewController:navigationSettingViewController withCloseAnimation:YES completion:nil];
 }
 - (void)logoutButtonPressed {
-    //log out
-    [PFUser logOut];
+    //Clear Parse
+    PFQuery *query = [PFUser query];
+    PFObject *object  = [query getObjectWithId:[[PFUser currentUser] objectId]];
+    if (object) {
+        //Clear Google
+        [object removeObjectForKey:kClassUserGoogleUsername];
+        //Clear Facebook
+        [object removeObjectForKey:kClassUserFacebookDisplayname];
+        [object removeObjectForKey:kClassUserFacebookUsername];
+        //Clear Rdio
+        [object removeObjectForKey:kClassUserRdioKey];
+        [object removeObjectForKey:kClassUserRdioDisplayname];
+        //Clear Last.fm
+        [object removeObjectForKey:kClassUserLastFMUsername];
+        
+        [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                [[PFUser currentUser] refresh];
+            }
+        }];
+    }
+    
+    
+    
     
     UIViewController *welcomeController = [[WelcomeViewController alloc] init];
     
     //Disconnect Facebook
     [FBSession.activeSession closeAndClearTokenInformation];
 
+    
+    
     
     //Clear all controller
     liveFeedViewController = nil;
@@ -297,6 +322,9 @@ typedef NS_ENUM(NSInteger, BeetRow){
     self.navigationUserViewController = nil;
     
     [self.mm_drawerController.navigationController pushViewController:welcomeController animated:YES];
+    
+    //log out
+    [PFUser logOut];
 }
 
 #pragma mark - UserViewController Delegate
