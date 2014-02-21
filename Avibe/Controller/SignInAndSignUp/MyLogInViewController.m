@@ -146,7 +146,7 @@
     [self.logInView.logInButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateNormal];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.logInButton setFrame:CGRectMake(width/2-buttonWidth/2, currentHeight, buttonWidth, buttonHeight)];
+    [self.logInView.logInButton setFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
     
     //Facebook
     [self.logInView.externalLogInLabel setHidden:YES];
@@ -158,7 +158,7 @@
     [facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
     [facebookButton setFrame:CGRectMake(buttonWidth, currentHeight, buttonWidth, buttonHeight)];
     [facebookButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];
-//    [self.view addSubview:facebookButton];
+    [self.view addSubview:facebookButton];
     
     //Fogotton button
     buttonHeight = 20.0f;
@@ -219,8 +219,19 @@
              // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
              [appDelegate sessionStateChanged:session state:state error:error];
 
-             //TO-DO Problematic....
-             [self.delegate logInViewController:self didLogInUser:nil];
+             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                 if (!error) {
+                     // Success! Include your code to handle the results here
+                     NSLog(@"user info: %@", result);
+                     
+                     //TO-DO Problematic....
+                     //             [self.delegate logInViewController:self didLogInUser:nil];
+                 } else {
+                     // An error occurred, we need to handle the error
+                     // See: https://developers.facebook.com/docs/ios/errors   
+                 }
+             }];
+       
          }];
     }
 
