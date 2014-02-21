@@ -676,14 +676,23 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 -(void)authorizationWasSuccessful{
     _youtubeAuthorized = YES;
     [self.tableView reloadData];
-    
-//    [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/channels"
-//               withHttpMethod:httpMethod_GET
-//           postParameterNames:[NSArray arrayWithObjects:@"part",@"mine",nil] postParameterValues:[NSArray arrayWithObjects:@"contentDetails",@"true",nil]];
-    
-    //    [_googleOAuth callAPI:@"https://www.googleapis.com/oauth2/v1/userinfo"
-    //           withHttpMethod:httpMethod_GET
-    //       postParameterNames:nil postParameterValues:nil];
+
+    //Save to Parse
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object setObject:@"Youtube"  forKey:kClassUserGoogleUsername];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
 }
 -(void)accessTokenWasRevoked{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""
@@ -693,6 +702,23 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
     _youtubeAuthorized = NO;
     [self.tableView reloadData];
+    
+    //Remove from Parse
+    PFQuery *query = [PFUser query];
+    [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+        if (object) {
+            [object removeObjectForKey:kClassUserGoogleUsername];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                if (succeeded) {
+                    //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                    [[PFUser currentUser] refresh];
+                    [self.tableView reloadData];
+                }else{
+                    [self authorizeFailed];
+                }
+            }];
+        }
+    }];
 }
 -(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
     NSLog(@"%@", errorShortDescription);

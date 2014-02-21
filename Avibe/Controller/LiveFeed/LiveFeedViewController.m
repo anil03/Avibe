@@ -452,26 +452,27 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
+
+
+#pragma mark - Google OAuth
 -(void)saveYoutubeMusic{
-//    [[PublicMethod sharedInstance] authorizationWasSuccessful];
-//    [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
-//    if (!_youtubeAuthorized) {
+    NSString *key = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
+    
+    if (key) {
         _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
         _youtubeAuthorizeViewController.previousViewController = self;
         [_youtubeAuthorizeViewController setGOAuthDelegate:self];
-//    }
-    
-//    if (!_youtubeAuthorized) {
+        //    }
+        
+        //    if (!_youtubeAuthorized) {
         MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_youtubeAuthorizeViewController];
         [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
         
         
         [self authorizeGoogle:nil];
-//    }
-    
+    }
 }
 
-#pragma mark - Google OAuth
 - (void)authorizeGoogle:(UIView*)view {
     //    [_googleOAuth authorizeUserWithClienID:@"746869634473-hl2v6kv6e65r1ak0u6uvajdl5grrtsgb.apps.googleusercontent.com"
     //                           andClientSecret:@"_FsYBVXMeUD9BGzNmmBvE9Q4"
