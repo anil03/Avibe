@@ -39,13 +39,13 @@
         NSString *newArtist = [pfToSave objectForKey:kClassSongArtist];
         NSString *newAlbum = [pfToSave objectForKey:kClassSongAlbum];
         
-        if (newTitle == nil || newArtist == nil || newAlbum == nil) {
-            continue;
-        }
-        
-        assert(newTitle != nil);
-        assert(newArtist != nil);
-        assert(newAlbum != nil);
+        //From Youtube, possible NIL
+//        if (newTitle == nil || newArtist == nil || newAlbum == nil) {
+//            continue;
+//        }
+//        assert(newTitle != nil);
+//        assert(newArtist != nil);
+//        assert(newAlbum != nil);
         
         NSString *stringForMD5 = [NSString stringWithFormat:@"%@%@%@%@",newTitle,newArtist,newAlbum,[[PFUser currentUser]username]];
         NSString *MD5String = [self handleStringToMD5:stringForMD5];

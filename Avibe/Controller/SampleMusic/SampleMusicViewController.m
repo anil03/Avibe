@@ -119,10 +119,15 @@
     if (self) {
         _pfObject = object;
         _songTitle = [_pfObject objectForKey:kClassSongTitle];
+        if (!_songTitle) _songTitle = @" ";
         _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
+       
         _songAlbum = [_pfObject objectForKey:kClassSongAlbum];
+        if (!_songAlbum) _songAlbum = @" ";
         _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
+        
         _songArtist = [_pfObject objectForKey:kClassSongArtist];
+        if (!_songArtist) _songArtist = @" ";
         _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
     }
     return self;

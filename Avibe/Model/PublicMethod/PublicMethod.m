@@ -232,27 +232,68 @@
     
     if ([kind rangeOfString:@"playlistItemListResponse"].location != NSNotFound) {
         NSMutableArray *items = [dictionary objectForKey:@"items"];
-        NSMutableArray *entries = [[NSMutableArray alloc] init];
+        
+        NSMutableArray *videoIds = [[NSMutableArray alloc] init];
         
         for(NSMutableDictionary *item in items){
             NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
             //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
-            NSString *title = [snippet objectForKey:@"title"];
+//            NSString *title = [snippet objectForKey:@"title"];
             //Thumbnails
             NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
             NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
             NSString *thumbnailHighURL = [high objectForKey:@"url"];
+            NSString *videoId;
+            if (snippet && snippet[@"resourceId"]) {
+                 videoId = snippet[@"resourceId"][@"videoId"];
+            }
             
-            NSLog(@"Title:%@, ThumbnailUrl:%@", title, thumbnailHighURL);
+//            NSLog(@"Title:%@, ThumbnailUrl:%@", title, thumbnailHighURL);
             
-            //Save to Parse
-            NSMutableDictionary *entry = [[NSMutableDictionary alloc] init];
-            [entry setObject:title forKey:@"title"];
-            [entry setObject:thumbnailHighURL forKey:@"url"];
-            [entries addObject:entry];
+            //Get VideoId type
+            if (videoId) {
+                [videoIds addObject:videoId];
+            }
+        }
+        
+        NSString *videoIdCall = [videoIds componentsJoinedByString:@","];
+        //Call API for Video categoryId
+        if (videoIdCall) {
+            [self.googleOAuth callAPI:@"https://www.googleapis.com/youtube/v3/videos"
+                       withHttpMethod:httpMethod_GET
+                   postParameterNames:[NSArray arrayWithObjects:@"part",@"id",nil] postParameterValues:[NSArray arrayWithObjects:@"snippet",videoIdCall,nil]];
+        }
+    }
+    
+    if ([kind rangeOfString:@"videoListResponse"].location != NSNotFound){
+        NSMutableArray *entries = [[NSMutableArray alloc] init];
+
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        
+        for(NSMutableDictionary *item in items){
+            NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
+            NSString *categoryId = snippet[@"categoryId"];
+            
+            if ([categoryId isEqualToString:@"10"]) {
+                NSString *title;
+                if (snippet) {
+                    title = snippet[@"title"];
+                }
+                NSString *thumbnailUrl;
+                if (snippet && snippet[@"thumbnails"] && snippet[@"thumbnails"][@"high"]) {
+                    thumbnailUrl = snippet[@"thumbnails"][@"high"][@"url"];
+                }
+                
+                //Save to Parse
+                NSMutableDictionary *entry = [[NSMutableDictionary alloc] init];
+                if(title) [entry setObject:title forKey:@"title"];
+                if(thumbnailUrl) [entry setObject:thumbnailUrl forKey:@"url"];
+                [entries addObject:entry];
+            }
         }
         
         [SaveMusicFromSources saveYoutubeEntry:entries];
+
     }
 }
 

@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];
-//        [self saveYoutubeMusic];
+        [self saveYoutubeMusic];
     }
 }
 - (void)viewDidLoad
