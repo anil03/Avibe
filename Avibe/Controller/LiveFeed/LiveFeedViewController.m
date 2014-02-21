@@ -42,6 +42,9 @@
 #import "UserViewController.h"
 #import "SaveMusicFromSources.h"
 
+//Youtube
+#import "YoutubeAuthorizeViewController.h"
+
 typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionLeftViewState,
     MMCenterViewControllerSectionLeftDrawerAnimation,
@@ -49,7 +52,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     MMCenterViewControllerSectionRightDrawerAnimation,
 };
 
-@interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate, UIAlertViewDelegate>
+@interface LiveFeedViewController() <SampleMusicSourceViewDelegate, UIWebViewDelegate, UIAlertViewDelegate, GoogleOAuthDelegate>
 {
     int columnNumber;
 }
@@ -69,6 +72,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @property (nonatomic, strong) NSArray *PFObjects;
 @property (nonatomic, strong) SaveMusicFromSources *saveMusicEntries;
+
+//Youtube Auth
+@property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
+
 @end
 
 @implementation LiveFeedViewController
@@ -129,7 +136,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
     NSTimeInterval actualInterval = [lastUpdatedDate timeIntervalSinceNow];
-    NSTimeInterval interval = 60.0;
+    NSTimeInterval interval = 3.0;
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];
@@ -446,7 +453,151 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 
 -(void)saveYoutubeMusic{
-    [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
+//    [[PublicMethod sharedInstance] authorizationWasSuccessful];
+//    [[PublicMethod sharedInstance] authorizeGoogle:self.collectionView];
+//    if (!_youtubeAuthorized) {
+        _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
+        _youtubeAuthorizeViewController.previousViewController = self;
+        [_youtubeAuthorizeViewController setGOAuthDelegate:self];
+//    }
+    
+//    if (!_youtubeAuthorized) {
+        MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_youtubeAuthorizeViewController];
+        [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+        
+        
+        [self authorizeGoogle:nil];
+//    }
+    
+}
+
+#pragma mark - Google OAuth
+- (void)authorizeGoogle:(UIView*)view {
+    //    [_googleOAuth authorizeUserWithClienID:@"746869634473-hl2v6kv6e65r1ak0u6uvajdl5grrtsgb.apps.googleusercontent.com"
+    //                           andClientSecret:@"_FsYBVXMeUD9BGzNmmBvE9Q4"
+    //                             andParentView:self.view
+    //                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
+    //     ];
+    [self.youtubeAuthorizeViewController authorizeUserWithClienID:@"4881560502-uteihtgcnas28bcjmnh0hfrbk4chlmsa.apps.googleusercontent.com"
+                                                  andClientSecret:@"R02t8Pk-59eEYy-B359-gvOY"
+                                                    andParentView:view
+                                                        andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/youtube", @"https://www.googleapis.com/auth/youtube.readonly",@"https://www.googleapis.com/auth/youtubepartner",@"https://www.googleapis.com/auth/youtubepartner-channel-audit", nil]
+     ];
+}
+- (void)revokeAccess{
+    return;
+}
+
+-(void)authorizationWasSuccessful{
+//    _youtubeAuthorized = YES;
+//    [self.tableView reloadData];
+    
+    [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/channels"
+               withHttpMethod:httpMethod_GET
+           postParameterNames:[NSArray arrayWithObjects:@"part",@"mine",nil] postParameterValues:[NSArray arrayWithObjects:@"contentDetails",@"true",nil]];
+}
+-(void)accessTokenWasRevoked{
+    return;
+}
+-(void)errorOccuredWithShortDescription:(NSString *)errorShortDescription andErrorDetails:(NSString *)errorDetails{
+    NSLog(@"%@", errorShortDescription);
+    NSLog(@"%@", errorDetails);
+}
+-(void)errorInResponseWithBody:(NSString *)errorMessage{
+    NSLog(@"%@", errorMessage);
+}
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
+    NSError *error;
+    NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
+                                                                      options:NSJSONReadingMutableContainers
+                                                                        error:&error];
+    if (error) {
+        NSLog(@"An error occured while converting JSON data to dictionary.");
+        return;
+    }
+//    NSLog(@"%@", dictionary);
+    
+    NSString *kind = [dictionary objectForKey:@"kind"];
+    if ([kind rangeOfString:@"channelListResponse"].location != NSNotFound){
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        NSMutableDictionary *contentDetails = [items[0] objectForKey:@"contentDetails"];
+        NSMutableDictionary *relatedPlaylists = [contentDetails objectForKey:@"relatedPlaylists"];
+        //likes, uploads, watchHistory, favorites, watchLater
+        NSString *watchHistory = [relatedPlaylists objectForKey:@"watchHistory"];
+        NSLog(@"WatchHistory playListID:%@", watchHistory);
+        
+        //Get playlist items
+        [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/playlistItems"
+                   withHttpMethod:httpMethod_GET
+               postParameterNames:[NSArray arrayWithObjects:@"part",@"playlistId",nil] postParameterValues:[NSArray arrayWithObjects:@"snippet",watchHistory,nil]];
+        
+    }
+    
+    if ([kind rangeOfString:@"playlistItemListResponse"].location != NSNotFound) {
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        
+        NSMutableArray *videoIds = [[NSMutableArray alloc] init];
+        
+        for(NSMutableDictionary *item in items){
+            NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
+            //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
+            //            NSString *title = [snippet objectForKey:@"title"];
+            //Thumbnails
+            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
+            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
+            NSString *thumbnailHighURL = [high objectForKey:@"url"];
+            NSString *videoId;
+            if (snippet && snippet[@"resourceId"]) {
+                videoId = snippet[@"resourceId"][@"videoId"];
+            }
+            
+            //            NSLog(@"Title:%@, ThumbnailUrl:%@", title, thumbnailHighURL);
+            
+            //Get VideoId type
+            if (videoId) {
+                [videoIds addObject:videoId];
+            }
+        }
+        
+        NSString *videoIdCall = [videoIds componentsJoinedByString:@","];
+        //Call API for Video categoryId
+        if (videoIdCall) {
+            [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/videos"
+                       withHttpMethod:httpMethod_GET
+                   postParameterNames:[NSArray arrayWithObjects:@"part",@"id",nil] postParameterValues:[NSArray arrayWithObjects:@"snippet",videoIdCall,nil]];
+        }
+    }
+    
+    if ([kind rangeOfString:@"videoListResponse"].location != NSNotFound){
+        NSMutableArray *entries = [[NSMutableArray alloc] init];
+        
+        NSMutableArray *items = [dictionary objectForKey:@"items"];
+        
+        for(NSMutableDictionary *item in items){
+            NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
+            NSString *categoryId = snippet[@"categoryId"];
+            
+            if ([categoryId isEqualToString:@"10"]) {
+                NSString *title;
+                if (snippet) {
+                    title = snippet[@"title"];
+                }
+                NSString *thumbnailUrl;
+                if (snippet && snippet[@"thumbnails"] && snippet[@"thumbnails"][@"high"]) {
+                    thumbnailUrl = snippet[@"thumbnails"][@"high"][@"url"];
+                }
+                
+                //Save to Parse
+                NSMutableDictionary *entry = [[NSMutableDictionary alloc] init];
+                if(title) [entry setObject:title forKey:@"title"];
+                if(thumbnailUrl) [entry setObject:thumbnailUrl forKey:@"url"];
+                [entries addObject:entry];
+            }
+        }
+        
+        [SaveMusicFromSources saveYoutubeEntry:entries];
+        
+    }
 }
 
 @end

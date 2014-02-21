@@ -29,6 +29,7 @@
 
 #pragma mark - Google OAuth
 - (void)authorizeGoogle:(UIView*)view;
+- (void)authorizationWasSuccessful;
 - (void)revokeAccess;
 
 

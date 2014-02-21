@@ -701,59 +701,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 -(void)errorInResponseWithBody:(NSString *)errorMessage{
     NSLog(@"%@", errorMessage);
 }
--(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData{
-    NSError *error;
-    NSMutableDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:responseJSONAsData
-                                                                      options:NSJSONReadingMutableContainers
-                                                                        error:&error];
-    if (error) {
-        NSLog(@"An error occured while converting JSON data to dictionary.");
-        return;
-    }
-    NSLog(@"%@", dictionary);
+-(void)responseFromServiceWasReceived:(NSString *)responseJSONAsString andResponseJSONAsData:(NSData *)responseJSONAsData;
+{
     
-    NSString *kind = [dictionary objectForKey:@"kind"];
-    if ([kind rangeOfString:@"channelListResponse"].location != NSNotFound){
-        NSMutableArray *items = [dictionary objectForKey:@"items"];
-        NSMutableDictionary *contentDetails = [items[0] objectForKey:@"contentDetails"];
-        NSMutableDictionary *relatedPlaylists = [contentDetails objectForKey:@"relatedPlaylists"];
-        //likes, uploads, watchHistory, favorites, watchLater
-        NSString *watchHistory = [relatedPlaylists objectForKey:@"watchHistory"];
-        NSLog(@"WatchHistory playListID:%@", watchHistory);
-        
-        //Get playlist items
-        [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/playlistItems"
-                   withHttpMethod:httpMethod_GET
-               postParameterNames:[NSArray arrayWithObjects:@"part",@"playlistId",nil] postParameterValues:[NSArray arrayWithObjects:@"snippet",watchHistory,nil]];
-        
-    }
-    
-    if ([kind rangeOfString:@"playlistItemListResponse"].location != NSNotFound) {
-        NSMutableArray *items = [dictionary objectForKey:@"items"];
-        NSMutableArray *entries = [[NSMutableArray alloc] init];
-        
-        for(NSMutableDictionary *item in items){
-            NSMutableDictionary *snippet = [item objectForKey:@"snippet"];
-            //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
-            NSString *title = [snippet objectForKey:@"title"];
-            //Thumbnails
-            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
-            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
-            NSString *thumbnailHighURL = [high objectForKey:@"url"];
-            
-            NSLog(@"Title:%@, ThumbnailUrl:%@", title, thumbnailHighURL);
-            
-            //Save to Parse
-            NSMutableDictionary *entry = [[NSMutableDictionary alloc] init];
-            [entry setObject:title forKey:@"title"];
-            [entry setObject:thumbnailHighURL forKey:@"url"];
-            [entries addObject:entry];
-        }
-        
-//        [SaveMusicFromSources saveYoutubeEntry:entries];
-    }
 }
-
 
 #pragma mark - Facebook login
 - (void)customizeFacebookLoginView:(CGRect)frame
