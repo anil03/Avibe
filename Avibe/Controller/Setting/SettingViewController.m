@@ -314,6 +314,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 BOOL integratedWithParse = [[[PFUser currentUser] objectForKey:kClassUserFacebookIntegratedWithParse] boolValue];
                 if (integratedWithParse) {
                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Avibe account has been linked to Facebook, can't be changed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                }else{
+//                    [self facebookAuthroize];
                 }
                 break;
             }
@@ -540,6 +542,32 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     [[PublicMethod sharedInstance] revokeAccess];
 }
+- (void)facebookAuthroize
+{
+    // If the session state is any of the two "open" states when the button is clicked
+    if (FBSession.activeSession.state == FBSessionStateOpen
+        || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+        
+        // Close the session and remove the access token from the cache
+        // The session state handler (in the app delegate) will be called automatically
+        [FBSession.activeSession closeAndClearTokenInformation];
+        
+        // If the session state is not any of the two "open" states when the button is clicked
+    } else {
+        // Open a session showing the user the login UI
+        // You must ALWAYS ask for basic_info permissions when opening a session
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"user_actions.music"]
+                                           allowLoginUI:YES
+                                      completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             
+             // Retrieve the app delegate
+             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+             // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+             [appDelegate sessionStateChanged:session state:state error:error];
+         }];
+    }
+}
 
 #pragma mark - Last.fm Authorization
 - (void)makePostRequestToGetMobileSession:(NSString*)username password:(NSString*)password
@@ -732,9 +760,9 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound){
         _facebookLoginView = [[FBLoginView alloc] init];
-        [_facebookLoginView setReadPermissions:[NSArray arrayWithObject: @"user_actions.music"]];
-        [_facebookLoginView setPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]];
-        [_facebookLoginView setDefaultAudience:FBSessionDefaultAudienceFriends];
+        [_facebookLoginView setReadPermissions:@[@"basic_info", @"user_actions.music"]];
+//        [_facebookLoginView setPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]];
+//        [_facebookLoginView setDefaultAudience:FBSessionDefaultAudienceFriends];
     }
     
     _facebookLoginView.frame = frame;

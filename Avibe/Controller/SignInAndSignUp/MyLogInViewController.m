@@ -11,6 +11,7 @@
 
 #import "BackgroundImageView.h"
 #import "SubclassConfigViewController.h"
+#import "AppDelegate.h"
 
 @interface MyLogInViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (nonatomic, strong) UIImageView *fieldsBackground;
@@ -145,7 +146,7 @@
     [self.logInView.logInButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateNormal];
     [self.logInView.logInButton setBackgroundImage:nil forState:UIControlStateHighlighted];
-    [self.logInView.logInButton setFrame:CGRectMake(0, currentHeight, buttonWidth, buttonHeight)];
+    [self.logInView.logInButton setFrame:CGRectMake(width/2-buttonWidth/2, currentHeight, buttonWidth, buttonHeight)];
     
     //Facebook
     [self.logInView.externalLogInLabel setHidden:YES];
@@ -157,7 +158,7 @@
     [facebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
     [facebookButton setFrame:CGRectMake(buttonWidth, currentHeight, buttonWidth, buttonHeight)];
     [facebookButton addTarget:self action:@selector(facebookLogin) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:facebookButton];
+//    [self.view addSubview:facebookButton];
     
     //Fogotton button
     buttonHeight = 20.0f;
@@ -192,48 +193,77 @@
 }
 
 #pragma mark - Facebook Login Method
+#pragma mark - TO-DO
+
 - (void)facebookLogin
 {
-    [PFFacebookUtils logInWithPermissions:@[@"user_actions.music"] block:^(PFUser *user, NSError *error) {
-        if (!user) {
-            NSLog(@"Uh oh. The user cancelled the Facebook login.");
-            [self.delegate logInViewControllerDidCancelLogIn:self];
-        } else if (user.isNew) {
-            NSLog(@"User signed up and logged in through Facebook!");
+    // If the session state is any of the two "open" states when the button is clicked
+    if (FBSession.activeSession.state == FBSessionStateOpen
+        || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
+        
+        // Close the session and remove the access token from the cache
+        // The session state handler (in the app delegate) will be called automatically
+        [FBSession.activeSession closeAndClearTokenInformation];
+        
+        // If the session state is not any of the two "open" states when the button is clicked
+    } else {
+        // Open a session showing the user the login UI
+        // You must ALWAYS ask for basic_info permissions when opening a session
+        [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"user_actions.music"]
+                                           allowLoginUI:YES
+                                      completionHandler:
+         ^(FBSession *session, FBSessionState state, NSError *error) {
+             
+             // Retrieve the app delegate
+             AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+             // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+             [appDelegate sessionStateChanged:session state:state error:error];
 
-            
-            // Create request for user's Facebook data
-            FBRequest *request = [FBRequest requestForMe];
-            
-            // Send request to Facebook
-            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                if (!error) {
-                    // result is a dictionary with the user's Facebook data
-                    NSDictionary *userData = (NSDictionary *)result;
+             //TO-DO Problematic....
+             [self.delegate logInViewController:self didLogInUser:nil];
+         }];
+    }
 
-                    [user setObject:userData[@"id"] forKey:kClassUserUsername];
-                    [user setObject:userData[@"name"] forKey:kClassUserDisplayname];
-                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
-                    
-                    [user setObject:@YES forKey:kClassUserFacebookIntegratedWithParse];
-                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                        if (succeeded) {
-                            NSLog(@"Facebook User saved.");
-                            [self.delegate logInViewController:self didLogInUser:nil];
-                        }
-                        
-                    }];
-                }
-            }];
-            
-            
-            
-        } else {
-            NSLog(@"User logged in through Facebook!");
-
-            [self.delegate logInViewController:self didLogInUser:nil];
-        }
-    }];
+//    [PFFacebookUtils logInWithPermissions:@[@"user_actions.music"] block:^(PFUser *user, NSError *error) {
+//        if (!user) {
+//            NSLog(@"Uh oh. The user cancelled the Facebook login.");
+//            [self.delegate logInViewControllerDidCancelLogIn:self];
+//        } else if (user.isNew) {
+//            NSLog(@"User signed up and logged in through Facebook!");
+//
+//            
+//            // Create request for user's Facebook data
+//            FBRequest *request = [FBRequest requestForMe];
+//            
+//            // Send request to Facebook
+//            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+//                if (!error) {
+//                    // result is a dictionary with the user's Facebook data
+//                    NSDictionary *userData = (NSDictionary *)result;
+//
+//                    [user setObject:userData[@"id"] forKey:kClassUserUsername];
+//                    [user setObject:userData[@"name"] forKey:kClassUserDisplayname];
+//                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
+//                    
+//                    [user setObject:@YES forKey:kClassUserFacebookIntegratedWithParse];
+//                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                        if (succeeded) {
+//                            NSLog(@"Facebook User saved.");
+//                            [self.delegate logInViewController:self didLogInUser:nil];
+//                        }
+//                        
+//                    }];
+//                }
+//            }];
+//            
+//            
+//            
+//        } else {
+//            NSLog(@"User logged in through Facebook!");
+//
+//            [self.delegate logInViewController:self didLogInUser:nil];
+//        }
+//    }];
 }
 
 

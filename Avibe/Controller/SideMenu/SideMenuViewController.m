@@ -279,6 +279,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
     
     UIViewController *welcomeController = [[WelcomeViewController alloc] init];
     
+    //Disconnect Facebook
+    [FBSession.activeSession closeAndClearTokenInformation];
+
+    
     //Clear all controller
     liveFeedViewController = nil;
     shareViewController = nil;

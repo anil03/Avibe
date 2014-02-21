@@ -23,4 +23,7 @@
 @property (readonly) Rdio *rdio;
 + (Rdio *)rdioInstance;
 
+- (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
+
+
 @end
