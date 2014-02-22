@@ -12,6 +12,7 @@
 #import "BackgroundImageView.h"
 #import "SubclassConfigViewController.h"
 #import "AppDelegate.h"
+#import "NSString+MD5.h"
 
 @interface MyLogInViewController () <PFLogInViewControllerDelegate, PFSignUpViewControllerDelegate>
 @property (nonatomic, strong) UIImageView *fieldsBackground;
@@ -222,10 +223,30 @@
              [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
                  if (!error) {
                      // Success! Include your code to handle the results here
-                     NSLog(@"user info: %@", result);
+                     //NSLog(@"user info: %@", result);
                      
-                     //TO-DO Problematic....
-                     //             [self.delegate logInViewController:self didLogInUser:nil];
+                     NSString *facebookId = result[@"id"];
+                     NSString *username = result[@"username"];
+                     NSString *password = [facebookId MD5];
+//                     NSString *email = result[@"email"];
+                     NSString *displayName = result[@"name"];
+                     
+                     [PFUser logInWithUsernameInBackground:facebookId password:password block:^(PFUser *user, NSError *error) {
+                         if (!error) {
+                             [user setObject:displayName forKey:kClassUserFacebookDisplayname];
+                             [user setObject:username forKey:kClassUserFacebookUsername];
+                             [user save];
+                             [user refresh];
+                             
+                             [self.delegate logInViewController:self didLogInUser:user];
+                         }else{
+                             NSString *errorMessage = [error.userInfo objectForKey:@"error"];
+                             if (errorMessage) {
+                                 [[[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                             }
+                         }
+                     }];
+                     
                  } else {
                      // An error occurred, we need to handle the error
                      // See: https://developers.facebook.com/docs/ios/errors   
@@ -234,47 +255,6 @@
        
          }];
     }
-
-//    [PFFacebookUtils logInWithPermissions:@[@"user_actions.music"] block:^(PFUser *user, NSError *error) {
-//        if (!user) {
-//            NSLog(@"Uh oh. The user cancelled the Facebook login.");
-//            [self.delegate logInViewControllerDidCancelLogIn:self];
-//        } else if (user.isNew) {
-//            NSLog(@"User signed up and logged in through Facebook!");
-//
-//            
-//            // Create request for user's Facebook data
-//            FBRequest *request = [FBRequest requestForMe];
-//            
-//            // Send request to Facebook
-//            [request startWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-//                if (!error) {
-//                    // result is a dictionary with the user's Facebook data
-//                    NSDictionary *userData = (NSDictionary *)result;
-//
-//                    [user setObject:userData[@"id"] forKey:kClassUserUsername];
-//                    [user setObject:userData[@"name"] forKey:kClassUserDisplayname];
-//                    [user setObject:userData[@"email"] forKey:kClassUserEmail];
-//                    
-//                    [user setObject:@YES forKey:kClassUserFacebookIntegratedWithParse];
-//                    [user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//                        if (succeeded) {
-//                            NSLog(@"Facebook User saved.");
-//                            [self.delegate logInViewController:self didLogInUser:nil];
-//                        }
-//                        
-//                    }];
-//                }
-//            }];
-//            
-//            
-//            
-//        } else {
-//            NSLog(@"User logged in through Facebook!");
-//
-//            [self.delegate logInViewController:self didLogInUser:nil];
-//        }
-//    }];
 }
 
 

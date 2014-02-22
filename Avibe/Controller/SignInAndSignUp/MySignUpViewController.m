@@ -8,8 +8,9 @@
 
 #import "MySignUpViewController.h"
 #import <QuartzCore/QuartzCore.h>
-
+#import "AppDelegate.h"
 #import "BackgroundImageView.h"
+#import "NSString+MD5.h"
 
 @interface MySignUpViewController ()
 @property (nonatomic, strong) UIImageView *fieldsBackground;
@@ -122,6 +123,21 @@
     [signUpButton setBackgroundImage:nil forState:UIControlStateHighlighted];
     [signUpButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
     
+    //Sign Up
+    currentHeight += fieldHeight;
+    UIButton *signUpWithFacebookButton = [[UIButton alloc] init];
+    [signUpWithFacebookButton setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
+    [signUpWithFacebookButton setBackgroundColor:[UIColor clearColor]];
+    [signUpWithFacebookButton setTitle:@"Sign Up With Facebook" forState:UIControlStateNormal];
+    [signUpWithFacebookButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [signUpWithFacebookButton setImage:nil forState:UIControlStateNormal];
+    [signUpWithFacebookButton setImage:nil forState:UIControlStateHighlighted];
+    [signUpWithFacebookButton setBackgroundImage:nil forState:UIControlStateNormal];
+    [signUpWithFacebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
+    [signUpWithFacebookButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
+    [signUpWithFacebookButton addTarget:self action:@selector(signUpWithFacebook) forControlEvents:UIControlEventTouchUpInside];
+    [self.signUpView addSubview:signUpWithFacebookButton];
+    
     //Dismiss
     currentHeight = height-buttonHeight-bottom;
     [self.signUpView.dismissButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
@@ -167,6 +183,61 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - Sign up with facebook
+- (void)signUpWithFacebook
+{
+    [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"user_actions.music"]
+                                       allowLoginUI:YES
+                                  completionHandler:
+     ^(FBSession *session, FBSessionState state, NSError *error) {
+         
+         // Retrieve the app delegate
+         AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
+         // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
+         [appDelegate sessionStateChanged:session state:state error:error];
+         
+         [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+             if (!error) {
+                 // Success! Include your code to handle the results here
+//                 NSLog(@"user info: %@", result);
+                 
+                 NSString *facebookId = result[@"id"];
+                 NSString *username = result[@"username"];
+                 NSString *password = [facebookId MD5];
+                 NSString *email = result[@"email"];
+                 NSString *displayName = result[@"name"];
+                 
+                 PFUser *newUser = [PFUser user];
+                 [newUser setUsername:facebookId];
+                 [newUser setPassword:password];
+//                 [newUser setEmail:email];
+                 [newUser setObject:displayName forKey:kClassUserDisplayname];
+                 [newUser setObject:username forKey:kClassUserFacebookUsername];
+                 [newUser setObject:displayName forKey:kClassUserFacebookDisplayname];
+                 
+                 [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                     if (succeeded) {
+                         [self.delegate signUpViewController:self didSignUpUser:newUser];
+                     }else{
+                         NSString *errorMessage = [error.userInfo objectForKey:@"error"];
+                         if (errorMessage) {
+                             [[[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                         }
+                         
+                     }
+                 }];
+                 
+                 
+             } else {
+                 // An error occurred, we need to handle the error
+                 // See: https://developers.facebook.com/docs/ios/errors
+             }
+         }];
+         
+     }];
+
 }
 
 @end
