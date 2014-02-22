@@ -221,8 +221,8 @@
     [self addShareView];
     
     //Label - More Like this
-//    currentHeight += buttonHeight;
-//    [self addMoreLikeThisView];
+    currentHeight += buttonHeight*1.5;
+    [self addMoreLikeThisView];
     
     //Test Rdio Image
 //    [self getRdioMusic];
@@ -366,6 +366,15 @@
     moreLabel.text = @"More Like This:";
     moreLabel.textColor = textColor;
     [scrollView addSubview:moreLabel];
+    
+    //Fetch from echo nest
+    NSURL *searchUrl = [NSURL URLWithString:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&artist=the+postal+service&format=json&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks"];
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchUrl];
+        [self performSelectorOnMainThread:@selector(fetchFromEchoNest:)
+                               withObject:data waitUntilDone:YES];
+    });
 }
 
 #pragma mark - ListenIn Button Method
@@ -709,6 +718,35 @@
     
     _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];
     [_shareMusicEntry shareMusic];
+}
+
+#pragma mark - More like this
+- (void)fetchFromEchoNest:(NSData*)responseData
+{
+    //Return if no data
+    if(!responseData) return;
+
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    
+    NSLog(@"Result from Echo Nest:%@",json);
+    
+    NSDictionary *songs;
+    if(json && json[@"response"]){
+        songs = json[@"response"][@"songs"];
+    }
+    
+    for(NSDictionary *song in songs){
+        NSString *title = song[@"title"];
+        NSString *artist = song[@"artist_name"];
+        NSArray *tracks = song[@"tracks"];
+        
+        if(tracks){
+            for(NSDictionary *track in tracks){
+                NSString *image = track[@"release_image"];
+            }
+        }
+    }
 }
 
 #pragma mark - Button Handlers
