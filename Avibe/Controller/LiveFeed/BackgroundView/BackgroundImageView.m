@@ -28,7 +28,7 @@
     float imageHeight = 80.0f;
     float imageWidth = 80.0f;
     
-    _row = 10;//frame.size.height/imageHeight; //10;
+    _row = 8;//frame.size.height/imageHeight; //10;
     _column = 4;//frame.size.width/imageWidth; //4;
     
     UICollectionViewFlowLayout *backgroundFlowLayout =[[UICollectionViewFlowLayout alloc] init];

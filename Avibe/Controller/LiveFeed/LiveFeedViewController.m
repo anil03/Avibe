@@ -156,6 +156,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
      * after logged in
      */
     PFQuery *queryForUsers = [PFUser query];
+#warning Long time pending
     NSArray *userArray = [queryForUsers findObjects];
     if(userArray) [[PublicMethod sharedInstance].pfUserArray addObjectsFromArray:userArray];
     
@@ -248,10 +249,11 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     YMGenericCollectionViewCell *cell = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:indexPath];
     
-    //Deal with NULL text
-    if (!cell.label.text || [cell.label.text isEqualToString:@""]) {
-        return;
-    }
+    //Deal with nil/empty text
+    if(!cell.label.text) return;
+    NSString *text = [cell.label.text stringByReplacingOccurrencesOfString:@" " withString:@""];
+    if ([text isEqualToString:@""]) return;
+    
     
     NSLog(@"indexPath:%d", indexPath.row);
     
