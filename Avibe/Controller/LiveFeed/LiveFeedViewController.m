@@ -158,6 +158,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     PFQuery *queryForUsers = [PFUser query];
     NSArray *userArray = [queryForUsers findObjects];
     if(userArray) [[PublicMethod sharedInstance].pfUserArray addObjectsFromArray:userArray];
+    
+    
+
 }
 
 #pragma mark - UIColectionView data source

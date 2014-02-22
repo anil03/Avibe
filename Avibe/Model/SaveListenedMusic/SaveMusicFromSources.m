@@ -49,40 +49,18 @@
 
 - (void)saveMusicInBackground
 {
-    //Fetch Existing Songs from Parse
-    PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
-    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
-    postQuery.limit = 100;
-    
-    fetechObjects = [postQuery findObjects];
-    if (fetechObjects) {
-        [self getIPodMusic];
+    [self getIPodMusic];
 //        [self getRdioMusic];
 //        [self getFaceBookMusic];
 //        [self getScrobbleMusic];
-    }
 }
 
 - (void)saveMusic
 {
-    //Fetch Existing Songs from Parse
-    PFQuery *postQuery = [PFQuery queryWithClassName:kClassSong];
-    [postQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
-    [postQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
-    postQuery.limit = 100;
-    
-    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-            fetechObjects = objects;
-            [self getIPodMusic];
-            [self getRdioMusic];
-            [self getFaceBookMusic];
-            [self getScrobbleMusic];
-        }else{
-            NSLog(@"Error:%@", error.description);
-        }
-    }];
+    [self getIPodMusic];
+    [self getRdioMusic];
+    [self getFaceBookMusic];
+    [self getScrobbleMusic];
 }
 
 #pragma mark - iPod Music

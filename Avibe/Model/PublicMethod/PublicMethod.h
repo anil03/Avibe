@@ -37,5 +37,8 @@
 @property (nonatomic, strong) NSMutableArray *pfUserArray;
 - (PFObject*)searchPFUserByUsername:(NSString*)username;
 
+#pragma mark - MD5 String Array for current user
+@property (nonatomic, strong, readonly) NSMutableArray *md5Array; //Store MD5 info to check for duplicate songs, even in the same save
+- (void)addStringToMD5Array:(NSString*)md5String;
 
 @end

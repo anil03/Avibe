@@ -7,6 +7,7 @@
 //
 
 #import "FilterAndSaveMusic.h"
+#import "PublicMethod.h"
 #import "NSString+MD5.h"
 
 @implementation FilterAndSaveMusic
@@ -20,16 +21,6 @@
     NSMutableArray *dataToSave = [[NSMutableArray alloc] init];
     int numberOfDuplicated = 0;
     
-    /**
-     * Check duplicated song by MD5
-     */
-    NSMutableArray *md5Array = [[NSMutableArray alloc] init];
-    for(PFObject *existingPFObject in fetechObjects){
-        NSString *md5 = [existingPFObject objectForKey:kClassSongMD5];
-        if(md5){
-            [md5Array addObject:md5];
-        }
-    }
     
     /*
      * Assign MD5 to each PFObject to indentify its uniqueness
@@ -47,7 +38,15 @@
         NSString *stringForMD5 = [NSString stringWithFormat:@"%@%@%@%@",newTitle,newArtist,newAlbum,[[PFUser currentUser]username]];
         NSString *MD5String = [self handleStringToMD5:stringForMD5];
         
+        //Get dupliacted song MD5 from Public Method
+        NSMutableArray *md5Array = [PublicMethod sharedInstance].md5Array;
         if ([md5Array containsObject:MD5String] == NO) {
+            /*
+             * Save MD5String to PublicMethod for next usage in the same save
+             * In case there are more than same song in one save
+             */
+            [[PublicMethod sharedInstance] addStringToMD5Array:MD5String];
+            
             [pfToSave setObject:MD5String forKey:kClassSongMD5];
             [dataToSave addObject:pfToSave];
         }else{

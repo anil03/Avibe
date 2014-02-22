@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
-@property (atomic, strong) NSMutableArray *md5Array; //Store MD5 info to check for duplicate songs, even in the same save
+@property (nonatomic, strong) NSMutableArray *md5Array; //Store MD5 info to check for duplicate songs, even in the same save
 
 @end
 
@@ -320,6 +320,30 @@
     return user;
 }
 
-#pragma mark -
+#pragma mark - Save MD5 string for current user, set up when first log in
+- (NSMutableArray *)md5Array
+{
+    if (!_md5Array) {
+        _md5Array = [[NSMutableArray alloc] init];
+        
+        //Fetch Existing Songs from Parse
+        PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
+        [songQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
+        [songQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
+        NSArray *objects = [songQuery findObjects];
+        for(PFObject *existingPFObject in objects){
+            NSString *md5 = [existingPFObject objectForKey:kClassSongMD5];
+            if(md5){
+                [_md5Array addObject:md5];
+            }
+        }
+    }
+    return _md5Array;
+}
+- (void)addStringToMD5Array:(NSString *)md5String
+{
+    [self.md5Array addObject:md5String];
+}
+
 
 @end
