@@ -615,4 +615,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     }
 }
 
+#pragma mark - View set up & button
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationPortrait | UIInterfaceOrientationPortraitUpsideDown;
+}
+
 @end

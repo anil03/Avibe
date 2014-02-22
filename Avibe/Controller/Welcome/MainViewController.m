@@ -137,4 +137,18 @@
 //    [self.mm_drawerController bouncePreviewForDrawerSide:MMDrawerSideRight completion:nil];
 //}
 
+#pragma mark - View set up & button
+- (BOOL)shouldAutorotate
+{
+    return NO;
+}
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationPortrait;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+}
+
 @end
