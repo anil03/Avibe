@@ -34,6 +34,7 @@
 
 
 #pragma mark - PFUser Object
+@property (nonatomic, strong) NSMutableArray *pfUserArray;
 - (PFObject*)searchPFUserByUsername:(NSString*)username;
 
 

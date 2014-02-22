@@ -611,8 +611,8 @@
 		4C231CAA188104F800B030F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
 				4C23F17F1885D6BB00D2075A /* ShareMethod */,
+				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
 				4CDEF2AA1883997E00CBD40E /* SampleMusic */,
 				4C23F17B1885D59E00D2075A /* ShareMusic */,
 				4C231D701881DC1300B030F9 /* BackgroundImage */,

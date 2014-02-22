@@ -149,6 +149,15 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     //Setup Refresh Control
     [self setupRefreshControl];
+    
+    /**
+     * Prepare for PFUserArray in Public Method
+     * Written here depend on LiveFeed is the first view 
+     * after logged in
+     */
+    PFQuery *queryForUsers = [PFUser query];
+    NSArray *userArray = [queryForUsers findObjects];
+    if(userArray) [[PublicMethod sharedInstance].pfUserArray addObjectsFromArray:userArray];
 }
 
 #pragma mark - UIColectionView data source

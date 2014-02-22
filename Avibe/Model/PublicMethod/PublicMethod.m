@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) GoogleOAuth *googleOAuth;
 
-@property NSMutableArray *pfUserArray;
+@property (atomic, strong) NSMutableArray *md5Array; //Store MD5 info to check for duplicate songs, even in the same save
 
 @end
 
@@ -303,7 +303,7 @@
 {
     //Find username in PFUserArray
     for(PFObject *user in _pfUserArray){
-        NSString *usernameInObject = [user objectForKey:kClassUserDisplayname];
+        NSString *usernameInObject = [user objectForKey:kClassUserUsername];
         if (usernameInObject && [usernameInObject isEqualToString:username]) {
             return user;
         }
@@ -319,5 +319,7 @@
     
     return user;
 }
+
+#pragma mark -
 
 @end
