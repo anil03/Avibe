@@ -76,6 +76,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 //Youtube Auth
 @property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
 
+//Select Music to SampleMusic
+@property (nonatomic, strong) MMNavigationController *navigationControllerForSampleMusic;
+@property (nonatomic, strong) SampleMusicViewController *sampleMusicViewController;
+
 @end
 
 @implementation LiveFeedViewController
@@ -257,7 +261,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     NSLog(@"indexPath:%d", indexPath.row);
     
-    MMNavigationController *navigationController;
     switch (indexPath.row%columnNumber) {
         case 0:{
 //            NSLog(@"User Name");
@@ -270,33 +273,23 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }
         case 1:{
 //            NSLog(@"Title");
-//            YMGenericCollectionViewCell *cellTitle = cell;
-//            YMGenericCollectionViewCell *cellAlbum = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+1 inSection:indexPath.section]];
-//            YMGenericCollectionViewCell *cellArtist = (YMGenericCollectionViewCell*)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row+2 inSection:indexPath.section]];
-//            NSString *title = cellTitle.label.text? cellTitle.label.text:@" ";
-//            NSString *album = cellAlbum.label.text? cellAlbum.label.text:@" ";
-//            NSString *artist = cellArtist.label.text? cellArtist.label.text:@" ";
-//            
-//            NSDictionary *dictionary = [[NSDictionary alloc] initWithObjects:@[title, album, artist] forKeys:@[@"title", @"album", @"artist"]];
-            
             //Switch to Youtube
-//            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithDictionary:dictionary];
             int index = indexPath.row/columnNumber;
             PFObject *object = _PFObjects[index];
-            SampleMusicViewController *controller = [[SampleMusicViewController alloc] initWithPFObject:object];
-            controller.delegate = self;
-            navigationController = [[MMNavigationController alloc] initWithRootViewController:controller];
-            [self.mm_drawerController setCenterViewController:navigationController withFullCloseAnimation:YES completion:nil];
+            _sampleMusicViewController = [[SampleMusicViewController alloc] initWithPFObject:object];
+            _sampleMusicViewController.delegate = self;
+            _navigationControllerForSampleMusic = [[MMNavigationController alloc] initWithRootViewController:_sampleMusicViewController];
+            [self.mm_drawerController setCenterViewController:_navigationControllerForSampleMusic withFullCloseAnimation:YES completion:nil];
             break;
         }
         case 2:{
             [self openiTuneStore:cell.label.text];
-            NSLog(@"Album");
+//            NSLog(@"Album");
             break;
         }
         case 3:{
             [self openiTuneStore:cell.label.text];
-            NSLog(@"Artist");
+//            NSLog(@"Artist");
             break;
         }
         default:

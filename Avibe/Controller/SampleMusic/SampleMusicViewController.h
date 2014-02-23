@@ -10,9 +10,14 @@
 
 @interface SampleMusicViewController : UIViewController
 
-@property (nonatomic, weak) UIViewController *delegate;
+@property (nonatomic, strong) UIViewController *delegate;
 
 - (id)initWithDictionary:(NSDictionary*)dictionary;
 - (id)initWithPFObject:(PFObject*)object;
+
+/**
+ * Really bad practice
+ */
+-(void)setupNavigationBar;
 
 @end

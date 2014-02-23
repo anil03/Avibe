@@ -15,15 +15,16 @@
 #import "ShareMusicEntry.h"
 #import "Setting.h"
 #import "SampleMusic_iTune.h"
-
+#import "MMNavigationController.h"
 
 //Rdio
 #import "RdioConsumerCredentials.h"
 #import <Rdio/Rdio.h>
 
-@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate>
+@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     UIColor *backgroundColor;
+    UIColor *lightBackgroundColor;
     UIColor *textColor;
     UIColor *textHighlightColor;
     
@@ -44,6 +45,8 @@
     float playerProgressHeight;
     float playerButtonWidth;
     float playerButtonHeight;
+    
+    float bottomOfScrollView;
 }
 
 //View
@@ -89,26 +92,46 @@
 //PFObject of current song
 @property PFObject *pfObject;
 
+//MoreLikeThis View - UITableView
+@property UILabel *moreLabel;
+@property (nonatomic, strong) NSMutableArray *songsForTableView;
+@property UITableView *tableView;
+@property int tableViewRows;
+@property float tableViewRowHeight;
+
+//Select Music to SampleMusic from Echo Nest
+@property (nonatomic, strong) MMNavigationController *navigationControllerForSampleMusic;
+@property (nonatomic, strong) SampleMusicViewController *sampleMusicViewController;
+
 @end
 
 @implementation SampleMusicViewController
 @synthesize moviePlayer;
 @synthesize scrollView;
 
+@synthesize moreLabel;
+@synthesize tableView;
+
 #pragma mark - Init method
+- (void)checkInfoValid
+{
+    if (!_songTitle) _songTitle = @" ";
+    _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
+    if (!_songAlbum) _songAlbum = @" ";
+    _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
+    if (!_songArtist) _songArtist = @" ";
+    _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
+}
+
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
     self = [super init];
     
     if (self) {
         _songTitle = [dictionary objectForKey:@"title"];
-        _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
         _songAlbum = [dictionary objectForKey:@"album"];
-        _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
         _songArtist = [dictionary objectForKey:@"artist"];
-        _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
-        
-        
+        [self checkInfoValid];
     }
     
     return self;
@@ -119,16 +142,9 @@
     if (self) {
         _pfObject = object;
         _songTitle = [_pfObject objectForKey:kClassSongTitle];
-        if (!_songTitle) _songTitle = @" ";
-        _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
-       
         _songAlbum = [_pfObject objectForKey:kClassSongAlbum];
-        if (!_songAlbum) _songAlbum = @" ";
-        _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
-        
         _songArtist = [_pfObject objectForKey:kClassSongArtist];
-        if (!_songArtist) _songArtist = @" ";
-        _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
+        [self checkInfoValid];
     }
     return self;
 }
@@ -139,15 +155,26 @@
     [_player pause];
     _player = nil;
 }
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    /**
+     * Should set up everytime appear
+     * Otherwise the navigation item may be the item of last view, not current view
+     * Why not called inside NavigationController?
+     */
+    [self setupNavigationBar];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
 //    self.view.userInteractionEnabled = NO;
-
     [self setupNavigationBar];
     
     backgroundColor = [UIColor blackColor];
+    lightBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1];
+
     textColor = [UIColor whiteColor];
     textHighlightColor = [UIColor grayColor];
     [self.view setBackgroundColor:backgroundColor];
@@ -222,6 +249,9 @@
     
     //Label - More Like this
     currentHeight += buttonHeight*1.5;
+    bottomOfScrollView = currentHeight;
+    _tableViewRows = 8;
+    _tableViewRowHeight = 50.0f;
     [self addMoreLikeThisView];
     
     //Test Rdio Image
@@ -361,14 +391,30 @@
 }
 - (void)addMoreLikeThisView
 {
-    UILabel *moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, currentHeight, width, buttonHeight)];
+    UIView *addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight*10)];
+    [scrollView addSubview:addMoreLikeThisView];
+    
+    moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
     moreLabel.backgroundColor = backgroundColor;
     moreLabel.text = @"More Like This:";
     moreLabel.textColor = textColor;
-    [scrollView addSubview:moreLabel];
+    [moreLabel setHidden:YES];
+    [addMoreLikeThisView addSubview:moreLabel];
+    
+    //UITableView
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, buttonHeight, width, _tableViewRows*_tableViewRowHeight) style:UITableViewStylePlain];
+//    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
+    [tableView setBackgroundColor:[UIColor clearColor]];
+    [addMoreLikeThisView addSubview:tableView];
+    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [tableView setHidden:YES];
     
     //Fetch from echo nest
-    NSURL *searchUrl = [NSURL URLWithString:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&artist=the+postal+service&format=json&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks"];
+    NSString *artist = [_songArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&artist=%@&format=json&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks", artist];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:
                         searchUrl];
@@ -736,17 +782,76 @@
         songs = json[@"response"][@"songs"];
     }
     
+    _songsForTableView = [[NSMutableArray alloc] init];
     for(NSDictionary *song in songs){
+        
         NSString *title = song[@"title"];
         NSString *artist = song[@"artist_name"];
         NSArray *tracks = song[@"tracks"];
+        NSString *imageUrl;
         
-        if(tracks){
-            for(NSDictionary *track in tracks){
-                NSString *image = track[@"release_image"];
-            }
+        if(tracks && [tracks count] != 0){
+            imageUrl = tracks[0][@"release_image"];
+        }
+        
+        if(title && artist && imageUrl){
+            NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[title,artist,imageUrl] forKeys:@[@"title",@"artist",@"imageUrl"]];
+            [_songsForTableView addObject:dict];
         }
     }
+    
+    if([_songsForTableView count] > 0){
+        [moreLabel setHidden:NO];
+        [tableView setHidden:NO];
+        
+        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+1);
+        [scrollView setFrame:CGRectMake(0, 0, width, bottomOfScrollView)];
+        
+        [tableView setContentSize:CGSizeMake(width, [_songsForTableView count]*_tableViewRowHeight)];
+        
+        [tableView reloadData];
+    }else{
+        [scrollView setFrame:CGRectMake(0, 0, width, height)];
+    }
+}
+
+#pragma mark - UITableView
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [_songsForTableView count];
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return _tableViewRowHeight;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString * CellIdentifier = @"Cell";
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    
+    NSDictionary *dict = _songsForTableView[indexPath.row];
+    assert(dict != nil);
+    NSString *title = [dict objectForKey:@"title"];
+    NSString *artist = [dict objectForKey:@"artist"];
+    
+    cell.backgroundColor = lightBackgroundColor;
+    cell.textLabel.text = title;
+    cell.detailTextLabel.text = artist;
+    
+    return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *dict = _songsForTableView[indexPath.row];
+    
+    self.sampleMusicViewController = [[SampleMusicViewController alloc] initWithDictionary:dict];
+    self.sampleMusicViewController.delegate = self;
+    _navigationControllerForSampleMusic = [[MMNavigationController alloc] initWithRootViewController:self.sampleMusicViewController];
+    [self.mm_drawerController setCenterViewController:_navigationControllerForSampleMusic withFullCloseAnimation:YES completion:nil];
 }
 
 #pragma mark - Button Handlers
@@ -769,7 +874,14 @@
     [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
 }
 -(void)leftDrawerButtonPress{
-    [self.mm_drawerController setCenterViewController:self.delegate withCloseAnimation:YES completion:nil];
+    /**
+     * Bad way to get around that ViewWillAppear not called
+     */
+    if([self.delegate isKindOfClass:[SampleMusicViewController class]]){
+        [((SampleMusicViewController*)self.delegate) setupNavigationBar];
+    }
+    
+    [self.mm_drawerController setCenterViewController:[[MMNavigationController alloc] initWithRootViewController:self.delegate] withCloseAnimation:YES completion:nil];
 }
 
 @end
