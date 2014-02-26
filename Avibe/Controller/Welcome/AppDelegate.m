@@ -13,7 +13,7 @@
 #import "WelcomeViewController.h"
 
 //Rdio
-#import "RdioConsumerCredentials.h"
+//#import "RdioConsumerCredentials.h"
 static AppDelegate *launchedDelegate;
 
 //SaveMusic
@@ -38,10 +38,10 @@ static AppDelegate *launchedDelegate;
 
 #pragma mark - Init instance
 //Rdio
-+ (Rdio *)rdioInstance
-{
-    return launchedDelegate.rdio;
-}
+//+ (Rdio *)rdioInstance
+//{
+//    return launchedDelegate.rdio;
+//}
 
 
 #pragma mark - Application Method
@@ -54,8 +54,8 @@ static AppDelegate *launchedDelegate;
     /**
      * Rdio
      */
-    launchedDelegate = self;
-    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+//    launchedDelegate = self;
+//    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
     
     /*
      * Check first run user

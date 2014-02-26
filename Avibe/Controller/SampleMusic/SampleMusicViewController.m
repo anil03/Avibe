@@ -262,14 +262,14 @@
 #pragma mark - Rdio Music
 - (void)getRdioMusic
 {
-    _rdio_userkey = @"s12187116";
-    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
-//    [_rdio callAPIMethod:@"get"
-//          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
+//    _rdio_userkey = @"s12187116";
+//    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
+////    [_rdio callAPIMethod:@"get"
+////          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
+////                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
+//    [_rdio callAPIMethod:@"search"
+//          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"rolling", @"track", nil] forKeys:[NSArray arrayWithObjects:@"query",@"types", nil]]
 //                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
-    [_rdio callAPIMethod:@"search"
-          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"rolling", @"track", nil] forKeys:[NSArray arrayWithObjects:@"query",@"types", nil]]
-                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
 }
 
 #pragma mark - Rdio delegate method

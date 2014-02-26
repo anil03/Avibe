@@ -115,9 +115,9 @@
     //Facebook
     
     //Rdio
-    Rdio *rdio = [AppDelegate rdioInstance];
-    assert(rdio != nil);
-    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdioKey]? YES : NO];
+//    Rdio *rdio = [AppDelegate rdioInstance];
+//    assert(rdio != nil);
+//    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdioKey]? YES : NO];
 }
 
 
@@ -315,7 +315,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 if (integratedWithParse) {
                     [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Avibe account has been linked to Facebook, can't be changed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 }else{
-//                    [self facebookAuthroize];
+                    [self facebookAuthroize];
                 }
                 break;
             }
@@ -446,10 +446,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
     
     //Rdio
-    if ([alertView isEqual:_rdioConfirmAlertView] && buttonIndex == 0) {
-        [AppDelegate rdioInstance].delegate = self;
-        [[AppDelegate rdioInstance] logout];
-    }
+//    if ([alertView isEqual:_rdioConfirmAlertView] && buttonIndex == 0) {
+//        [AppDelegate rdioInstance].delegate = self;
+//        [[AppDelegate rdioInstance] logout];
+//    }
     
 }
 - (void)warnEmptyInput
@@ -505,13 +505,15 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 - (void)rdioAuthorize
 {
-    if (_rdioAutorizationSucceed) {
-        _rdioConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Rdio authorization" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-        [_rdioConfirmAlertView show];
-    } else {
-        [AppDelegate rdioInstance].delegate = self;
-        [[AppDelegate rdioInstance] authorizeFromController:self];
-    }
+//    if (_rdioAutorizationSucceed) {
+//        _rdioConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Rdio authorization" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+//        [_rdioConfirmAlertView show];
+//    } else {
+//        [AppDelegate rdioInstance].delegate = self;
+//        [[AppDelegate rdioInstance] authorizeFromController:self];
+//    }
+    
+    
 //    _rdioAuthorizeViewController = [[RdioAuthorizeViewController alloc] init];
 //    _rdioAuthorizeViewController.previousViewController = self;
 //    

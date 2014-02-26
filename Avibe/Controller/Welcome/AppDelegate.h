@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Rdio/Rdio.h"
+//#import "Rdio/Rdio.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,9 +19,9 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 //Rdio
-@property (retain) RDPlayer *rdioPlayer;
-@property (readonly) Rdio *rdio;
-+ (Rdio *)rdioInstance;
+//@property (retain) RDPlayer *rdioPlayer;
+//@property (readonly) Rdio *rdio;
+//+ (Rdio *)rdioInstance;
 
 - (void)sessionStateChanged:(FBSession *)session state:(FBSessionState) state error:(NSError *)error;
 

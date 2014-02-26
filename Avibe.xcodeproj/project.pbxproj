@@ -93,8 +93,6 @@
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
 		4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */; };
 		4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE8188311CC00B030F9 /* ScrobbleListenedMusic.m */; };
-		4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
-		4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEC1883129F00B030F9 /* Rdio.framework */; };
 		4C231DF0188316A300B030F9 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
 		4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF31883179D00B030F9 /* CoreMedia.framework */; };
@@ -137,7 +135,6 @@
 		4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271A18984A4F00562CE1 /* libstdc++.dylib */; };
 		4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */; };
 		4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
-		4CC527201898567600562CE1 /* libspotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271F1898567600562CE1 /* libspotify.framework */; };
 		4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5272418985EFF00562CE1 /* youtube-48.png */; };
 		4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC527281898603600562CE1 /* youtube-48-highlight.png */; };
 		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
@@ -284,7 +281,6 @@
 		4C231DE7188311CC00B030F9 /* ScrobbleListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrobbleListenedMusic.h; sourceTree = "<group>"; };
 		4C231DE8188311CC00B030F9 /* ScrobbleListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrobbleListenedMusic.m; sourceTree = "<group>"; };
 		4C231DEB188311EF00B030F9 /* RdioConsumerCredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RdioConsumerCredentials.h; sourceTree = "<group>"; };
-		4C231DEC1883129F00B030F9 /* Rdio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Rdio.framework; path = Framework/Rdio.framework; sourceTree = "<group>"; };
 		4C231DEF188316A200B030F9 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4C231DF1188316AC00B030F9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		4C231DF31883179D00B030F9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -339,7 +335,6 @@
 		4CC5271718984A2300562CE1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		4CC5271A18984A4F00562CE1 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
-		4CC5271F1898567600562CE1 /* libspotify.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libspotify.framework; path = Framework/libspotify.framework; sourceTree = "<group>"; };
 		4CC5272418985EFF00562CE1 /* youtube-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48.png"; sourceTree = "<group>"; };
 		4CC527281898603600562CE1 /* youtube-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48-highlight.png"; sourceTree = "<group>"; };
 		4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusic_iTune.h; sourceTree = "<group>"; };
@@ -374,9 +369,7 @@
 				4CEBEE41184CE16C0018ABE0 /* CoreLocation.framework in Frameworks */,
 				4CEBEE35184ADF0C0018ABE0 /* libxml2.dylib in Frameworks */,
 				4CEBEE33184ADEFC0018ABE0 /* CoreFoundation.framework in Frameworks */,
-				4CC527201898567600562CE1 /* libspotify.framework in Frameworks */,
 				4CEBEE31184ADEE80018ABE0 /* MobileCoreServices.framework in Frameworks */,
-				4C231DED1883129F00B030F9 /* Rdio.framework in Frameworks */,
 				4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */,
 				4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */,
 				4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */,
@@ -395,7 +388,6 @@
 				4C231DF41883179D00B030F9 /* CoreMedia.framework in Frameworks */,
 				4C231DF2188316AC00B030F9 /* AudioToolbox.framework in Frameworks */,
 				4C231DF0188316A300B030F9 /* Security.framework in Frameworks */,
-				4C231DEE1883161200B030F9 /* Rdio.framework in Frameworks */,
 				4C31799818440EA700F7D41B /* XCTest.framework in Frameworks */,
 				4C31799A18440EA700F7D41B /* UIKit.framework in Frameworks */,
 				4C31799918440EA700F7D41B /* Foundation.framework in Frameworks */,
@@ -866,7 +858,6 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CC5271F1898567600562CE1 /* libspotify.framework */,
 				4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */,
 				4CC5271A18984A4F00562CE1 /* libstdc++.dylib */,
 				4CC5271718984A2300562CE1 /* CoreAudio.framework */,
@@ -886,7 +877,6 @@
 				4C3179CB1844107D00F7D41B /* MediaPlayer.framework */,
 				4CEBEE30184ADEE80018ABE0 /* MobileCoreServices.framework */,
 				4C9169DF187DF1B0000AB100 /* Parse.framework */,
-				4C231DEC1883129F00B030F9 /* Rdio.framework */,
 				4C231DEF188316A200B030F9 /* Security.framework */,
 				4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */,
 				4C31797C18440EA700F7D41B /* UIKit.framework */,

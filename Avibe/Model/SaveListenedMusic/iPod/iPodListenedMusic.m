@@ -33,9 +33,10 @@
         
         if ([lastPlayedDate compare:lastUpdatedDate] == NSOrderedDescending) {
             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-            [dict setObject:title forKey:kClassSongTitle];
-            [dict setObject:album forKey:kClassSongAlbum];
-            [dict setObject:artist forKey:kClassSongArtist];
+            
+            if(title) [dict setObject:title forKey:kClassSongTitle];
+            if(album) [dict setObject:album forKey:kClassSongAlbum];
+            if(artist) [dict setObject:artist forKey:kClassSongArtist];
             [array addObject:dict];
             
 //            NSLog(@"===*****====%@, %@, %@, %lu, lastPlayed: %@, lastUpdated: %@", title, album, artist, (unsigned long)[count unsignedIntegerValue], lastPlayedDate, lastUpdatedDate);
