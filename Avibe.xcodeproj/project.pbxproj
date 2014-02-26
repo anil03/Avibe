@@ -116,6 +116,8 @@
 		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
 		4C31899E18BDA1CA00549731 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C31899D18BDA1CA00549731 /* README.md */; };
+		4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */; };
+		4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */; };
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
 		4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
@@ -309,6 +311,11 @@
 		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4C31899D18BDA1CA00549731 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		4C3189A918BDAD8C00549731 /* LBYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTube.h; sourceTree = "<group>"; };
+		4C3189AA18BDAD8C00549731 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
+		4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
+		4C3189AC18BDAD8C00549731 /* LBYouTubePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubePlayerViewController.h; sourceTree = "<group>"; };
+		4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerViewController.m; sourceTree = "<group>"; };
 		4C4184D118A1CA9D00999660 /* iPodListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPodListenedMusic.h; path = iPod/iPodListenedMusic.h; sourceTree = "<group>"; };
 		4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPodListenedMusic.m; path = iPod/iPodListenedMusic.m; sourceTree = "<group>"; };
 		4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestIPodListenedMusic.m; path = SaveListenedMusicTest/iPod/TestIPodListenedMusic.m; sourceTree = "<group>"; };
@@ -888,6 +895,26 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C31899F18BDAC9A00549731 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				4C3189A818BDAD8C00549731 /* LBYouTubeView */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		4C3189A818BDAD8C00549731 /* LBYouTubeView */ = {
+			isa = PBXGroup;
+			children = (
+				4C3189A918BDAD8C00549731 /* LBYouTube.h */,
+				4C3189AA18BDAD8C00549731 /* LBYouTubeExtractor.h */,
+				4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */,
+				4C3189AC18BDAD8C00549731 /* LBYouTubePlayerViewController.h */,
+				4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */,
+			);
+			path = LBYouTubeView;
+			sourceTree = "<group>";
+		};
 		4C4184CF18A1C72500999660 /* Archive */ = {
 			isa = PBXGroup;
 			children = (
@@ -974,6 +1001,7 @@
 				4C231CB3188104F800B030F9 /* Resource */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231D6C1881063A00B030F9 /* Supporting Files */,
+				4C31899F18BDAC9A00549731 /* Framework */,
 			);
 			path = Avibe;
 			sourceTree = "<group>";
@@ -1248,6 +1276,7 @@
 				4C231D11188104F800B030F9 /* YMGenericCollectionViewCell.m in Sources */,
 				4C8F74EC188D825D00B91651 /* Constant.m in Sources */,
 				4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */,
+				4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */,
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
 				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
@@ -1257,6 +1286,7 @@
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,
 				4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */,
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
+				4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
 				4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */,
@@ -1420,8 +1450,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework/**",
-					/Users/Michael/Developer/github/Avibe/Framework,
-					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
@@ -1450,8 +1478,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"${SRCROOT}/Framework/**",
-					/Users/Michael/Developer/github/Avibe/Framework,
-					/Users/Michael/Developer/github/Avibe,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "${PROJECT_NAME}/Avibe-Prefix.pch";
