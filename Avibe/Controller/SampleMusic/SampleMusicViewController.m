@@ -21,6 +21,9 @@
 #import "RdioConsumerCredentials.h"
 #import <Rdio/Rdio.h>
 
+//Echo NEst
+#import "NSMutableArray+Shuffling.h"
+
 @interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     UIColor *backgroundColor;
@@ -879,6 +882,7 @@
 #pragma mark - UITableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    [_songsForTableView shuffle];
     return [_songsForTableView count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section

@@ -118,6 +118,7 @@
 		4C31899E18BDA1CA00549731 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C31899D18BDA1CA00549731 /* README.md */; };
 		4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */; };
 		4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */; };
+		4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */; };
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
 		4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
@@ -316,6 +317,8 @@
 		4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
 		4C3189AC18BDAD8C00549731 /* LBYouTubePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubePlayerViewController.h; sourceTree = "<group>"; };
 		4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerViewController.m; sourceTree = "<group>"; };
+		4C3189B018BE821B00549731 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
+		4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		4C4184D118A1CA9D00999660 /* iPodListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPodListenedMusic.h; path = iPod/iPodListenedMusic.h; sourceTree = "<group>"; };
 		4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPodListenedMusic.m; path = iPod/iPodListenedMusic.m; sourceTree = "<group>"; };
 		4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestIPodListenedMusic.m; path = SaveListenedMusicTest/iPod/TestIPodListenedMusic.m; sourceTree = "<group>"; };
@@ -799,6 +802,8 @@
 				4C8F74EB188D825D00B91651 /* Constant.m */,
 				4C7CA74718AC5A4E00A0EC99 /* NSString+MD5.h */,
 				4C7CA74818AC5A4E00A0EC99 /* NSString+MD5.m */,
+				4C3189B018BE821B00549731 /* NSMutableArray+Shuffling.h */,
+				4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */,
 			);
 			name = ShareMethod;
 			path = PublicMethod;
@@ -1315,6 +1320,7 @@
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
 				4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */,
+				4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
