@@ -106,7 +106,6 @@
     _urlConnection = [[NSURLConnection alloc] init];
     
     //Youtube
-    _youtubeAuthorized = NO;
     _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
     _youtubeAuthorizeViewController.previousViewController = self;
     [_youtubeAuthorizeViewController setGOAuthDelegate:self];
@@ -148,7 +147,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         case AvibeAccount:
             return 4;
         case LinkedAccount:
-            return 4;
+            return 3;
         default:
             return 2;
     }
@@ -245,11 +244,15 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
                 break;
             }
-            case YoutubeRow:
+            case YoutubeRow:{
+                NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
+                _youtubeAuthorized = googleUsername? YES : NO;
+                
                 cell.textLabel.text = @"YouTube";
                 cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
+            }
             case FacebookRow:{
                 NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 BOOL facebookLogIn = NO;
@@ -720,7 +723,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             [object setObject:@"Youtube"  forKey:kClassUserGoogleUsername];
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 if (succeeded) {
-                    //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Youtube authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                     [[PFUser currentUser] refresh];
                     [self.tableView reloadData];
                 }else{

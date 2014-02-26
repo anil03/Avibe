@@ -130,7 +130,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setupBarMenuButton];
     
     /**
      * Automatically refresh in certain interval
@@ -144,8 +143,15 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];
-//        [self saveYoutubeMusic];
+        
+        //Save Youtube Music if already authorize
+        NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
+        if (googleUsername) {
+            [self saveYoutubeMusic];
+        }
     }
+    
+    [self setupBarMenuButton];
 }
 - (void)viewDidLoad
 {
