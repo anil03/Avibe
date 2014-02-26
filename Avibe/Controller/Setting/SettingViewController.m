@@ -251,25 +251,12 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
             case FacebookRow:{
-                if (!_facebookLoginView) {
-                    [self customizeFacebookLoginView:cell.frame];
-                }
-                assert(_facebookLoginView != nil);
-                assert(_facebookLoginLabel != nil);
-                
-                BOOL integratedWithParse = [[[PFUser currentUser] objectForKey:kClassUserFacebookIntegratedWithParse] boolValue];
-                if (!integratedWithParse) {
-                    [cell addSubview:_facebookLoginView];
-                    [cell bringSubviewToFront:_facebookLoginView];
-                }
-                
-                
-                
+                NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 BOOL facebookLogIn = NO;
-                NSString *facebookUser = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
-                if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound) facebookLogIn = YES;
+                if(displayName) facebookLogIn = YES;
+                
                 cell.textLabel.text = @"Facebook";
-                cell.detailTextLabel.text = facebookLogIn? [facebookUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
+                cell.detailTextLabel.text = facebookLogIn? [displayName stringByAppendingString:@"✓"] : @"Unauthorized✗";
                 cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
                 
                 
@@ -555,6 +542,25 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         [FBSession.activeSession closeAndClearTokenInformation];
         
         // If the session state is not any of the two "open" states when the button is clicked
+        // Log out, clear Parse info about facebook
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+            if (object) {
+                [object removeObjectForKey:kClassUserFacebookDisplayname];
+                [object removeObjectForKey:kClassUserFacebookUsername];
+                [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        [[PFUser currentUser] refresh];
+                        [self.tableView reloadData];
+                    }else{
+                        [self authorizeFailed];
+                    }
+                }];
+            }
+        }];
+        
+        
     } else {
         // Open a session showing the user the login UI
         // You must ALWAYS ask for basic_info permissions when opening a session
@@ -567,6 +573,34 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
              AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
              // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
              [appDelegate sessionStateChanged:session state:state error:error];
+             
+             //Successfully log in with Facebook, update Parse info about Facebook
+             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                 if (!error) {
+                     NSString *username = result[@"username"];
+                     NSString *displayName = result[@"name"];
+                     
+                     PFQuery *query = [PFUser query];
+                     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+                         if (object) {
+                             if(username) [object setObject:username  forKey:kClassUserFacebookUsername];
+                             if(displayName) [object setObject:displayName forKey:kClassUserFacebookDisplayname];
+                             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                 if (succeeded) {
+                                     [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                     [[PFUser currentUser] refresh];
+                                     [self.tableView reloadData];
+                                 }else{
+                                     [self authorizeFailed];
+                                 }
+                             }];
+                         }
+                     }];
+                     
+                 }
+             }];
+             
+             
          }];
     }
 }
@@ -740,6 +774,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     if([_facebookLoginLabel.text rangeOfString:@"out"].location != NSNotFound){
         _facebookLoginView = [[FBLoginView alloc] init];
         [_facebookLoginView setReadPermissions:@[@"basic_info", @"user_actions.music"]];
+        [self.tableView bringSubviewToFront:_facebookLoginView];
 //        [_facebookLoginView setPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]];
 //        [_facebookLoginView setDefaultAudience:FBSessionDefaultAudienceFriends];
     }
