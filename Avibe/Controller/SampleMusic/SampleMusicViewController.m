@@ -102,6 +102,8 @@
 //Select Music to SampleMusic from Echo Nest
 @property (nonatomic, strong) MMNavigationController *navigationControllerForSampleMusic;
 @property (nonatomic, strong) SampleMusicViewController *sampleMusicViewController;
+@property NSMutableArray *artistsArrray;
+@property NSUInteger artistFetchCount;
 
 @end
 
@@ -248,6 +250,10 @@
     [self addShareView];
     
     //Label - More Like this
+    _artistsArrray = [[NSMutableArray alloc] init];
+    _artistFetchCount = 0;
+    _songsForTableView = [[NSMutableArray alloc] init];
+    
     currentHeight += buttonHeight*1.5;
     bottomOfScrollView = currentHeight;
     _tableViewRows = 8;
@@ -329,7 +335,7 @@
     
     float leftOffset = buttonLeft;
     float labelWidth = 80;
-    float buttonWidth = buttonHeight;
+//    float buttonWidth = buttonHeight;
     
     UILabel *buyLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, labelWidth, buttonHeight)];
     [buyLabel setText:@"Buy in: "];
@@ -391,7 +397,7 @@
 }
 - (void)addMoreLikeThisView
 {
-    UIView *addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight*10)];
+    UIView *addMoreLikeThisView = [[[UIView alloc] init] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight*10)];
     [scrollView addSubview:addMoreLikeThisView];
     
     moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
@@ -413,12 +419,12 @@
     
     //Fetch from echo nest
     NSString *artist = [_songArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&artist=%@&format=json&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks", artist];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/artist/similar?api_key=9PFPYZSZPU9X2PKES&name=%@&format=json", artist];
     NSURL *searchUrl = [NSURL URLWithString:urlString];
     dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:
                         searchUrl];
-        [self performSelectorOnMainThread:@selector(fetchFromEchoNest:)
+        [self performSelectorOnMainThread:@selector(fetchFromEchoNestSimilarArtist:)
                                withObject:data waitUntilDone:YES];
     });
 }
@@ -766,8 +772,51 @@
     [_shareMusicEntry shareMusic];
 }
 
-#pragma mark - More like this
-- (void)fetchFromEchoNest:(NSData*)responseData
+#pragma mark - Echo Nest More like this
+- (void)fetchFromEchoNestSimilarArtist:(NSData*)responseData
+{
+    //Return if no data
+    if(!responseData) return;
+    
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    
+    NSLog(@"Result from Echo Nest For similar artist:%@",json);
+    
+    NSDictionary *artists;
+    if(json && json[@"response"]){
+        artists = json[@"response"][@"artists"];
+    }
+    
+    
+    for(NSDictionary *dict in artists){
+        NSString *name = dict[@"name"];
+        if(name) [_artistsArrray addObject:name];
+    }
+    
+    if([_artistsArrray count] > 0){
+        NSString *artist = [_artistsArrray lastObject];
+        if(artist){
+            [self callEchoNestForSongsOfArtist:artist];
+            [_artistsArrray removeLastObject];
+        }
+    }
+}
+- (void)callEchoNestForSongsOfArtist:(NSString*)artist
+{
+    _artistFetchCount++;
+    
+    artist = [artist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&artist=%@&format=json&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks&results=8", artist];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchUrl];
+        [self performSelectorOnMainThread:@selector(fetchFromEchoNestSongsOfArtist:)
+                               withObject:data waitUntilDone:YES];
+    });
+}
+- (void)fetchFromEchoNestSongsOfArtist:(NSData*)responseData
 {
     //Return if no data
     if(!responseData) return;
@@ -775,14 +824,14 @@
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     
-    NSLog(@"Result from Echo Nest:%@",json);
+//    NSLog(@"Result from Echo Nest:%@",json);
     
     NSDictionary *songs;
     if(json && json[@"response"]){
         songs = json[@"response"][@"songs"];
     }
     
-    _songsForTableView = [[NSMutableArray alloc] init];
+    
     for(NSDictionary *song in songs){
         
         NSString *title = song[@"title"];
@@ -804,14 +853,26 @@
         [moreLabel setHidden:NO];
         [tableView setHidden:NO];
         
-        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+1);
-        [scrollView setFrame:CGRectMake(0, 0, width, bottomOfScrollView)];
+        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+5);
         
-        [tableView setContentSize:CGSizeMake(width, [_songsForTableView count]*_tableViewRowHeight)];
+//        [scrollView setFrame:CGRectMake(0, 0, width, bottomOfScrollView)];
+        
+        [scrollView setContentSize:CGSizeMake(width, bottomOfScrollView)];
+        
+        [moreLabel setFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+        [tableView setFrame:CGRectMake(0, currentHeight+buttonHeight, width, [_songsForTableView count]*_tableViewRowHeight)];
         
         [tableView reloadData];
     }else{
         [scrollView setFrame:CGRectMake(0, 0, width, height)];
+    }
+    
+    if([_artistsArrray count] > 0 && _artistFetchCount < 3){
+        NSString *artist = [_artistsArrray lastObject];
+        if(artist){
+            [self callEchoNestForSongsOfArtist:artist];
+            [_artistsArrray removeLastObject];
+        }
     }
 }
 
