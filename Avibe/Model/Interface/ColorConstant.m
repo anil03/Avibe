@@ -93,6 +93,13 @@
 //    return [ColorConstant color:@"00" green:@"00" blue:@"00" alpha:1.0f];
 }
 
+#pragma mark - Navigation Bar
++ (UIColor*)navigationBarBackgroundColor
+{
+    return [UIColor colorWithRed:28.0/255.0 green:51.0/255.0 blue:107.0/255.0 alpha:0.1];
+//    return [UIColor colorWithRed:246.0/255.0 green:246.0/255.0 blue:246.0/255.0 alpha:0.05];
+}
+
 #pragma mark - Live Feed
 + (UIColor*)liveFeedTextColor
 {

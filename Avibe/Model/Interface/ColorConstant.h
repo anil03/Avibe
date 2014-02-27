@@ -16,6 +16,9 @@
 + (UIColor*)sideMenuCellColor;
 + (UIColor*)sideMenuCellTextColor;
 
+#pragma mark - Navigation Bar
++ (UIColor*)navigationBarBackgroundColor;
+
 #pragma mark - Live Feed
 + (UIColor*)liveFeedTextColor;
 

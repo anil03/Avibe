@@ -932,7 +932,7 @@
     [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
     [titleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = titleLabel;
-    [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [[Setting sharedSetting] barTintColor]];
+    [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [ColorConstant navigationBarBackgroundColor]];
     
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress)];
