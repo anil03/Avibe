@@ -47,7 +47,7 @@
         
         float barHeight = 30.0f;
         UIView *mask = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, frame.size.width, frame.size.height+barHeight)];
-        [mask setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8]];
+        [mask setBackgroundColor:[ColorConstant backgroundViewMaskColor]];
         [self addSubview:mask];
         [self bringSubviewToFront:mask];
         

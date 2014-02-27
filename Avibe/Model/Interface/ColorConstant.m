@@ -73,6 +73,7 @@
     return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
 }
 
+#pragma mark - Side Menu
 + (UIColor*)sideMenuBackgroundColor
 {
     return [UIColor colorWithRed:246.0 green:246.0 blue:246.0 alpha:1.0];
@@ -90,6 +91,22 @@
 {
     return [UIColor colorWithRed:28.0/255.0 green:51.0/255.0 blue:107.0/255.0 alpha:1.0];
 //    return [ColorConstant color:@"00" green:@"00" blue:@"00" alpha:1.0f];
+}
+
+#pragma mark - Live Feed
++ (UIColor*)liveFeedTextColor
+{
+    return [UIColor whiteColor];
+//    return [UIColor blackColor];
+//    return [UIColor colorWithRed:28.0/255.0 green:51.0/255.0 blue:107.0/255.0 alpha:1.0];
+}
+
+#pragma mark - Background View
++ (UIColor*)backgroundViewMaskColor
+{
+    return [ColorConstant color:@"45" green:@"45" blue:@"46" alpha:0.8];
+//    return [UIColor colorWithRed:28.0/255.0 green:51.0/255.0 blue:107.0/255.0 alpha:0.8];
+//    return [UIColor colorWithRed:246.0 green:246.0 blue:246.0 alpha:0.6];
 }
 
 @end

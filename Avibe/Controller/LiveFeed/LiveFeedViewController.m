@@ -184,7 +184,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 	
 	YMGenericCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     cell.label.adjustsFontSizeToFitWidth = YES;
-    cell.label.textColor = [UIColor whiteColor];
+    cell.label.textColor = [ColorConstant liveFeedTextColor];
     
     //Data source
     int index = indexPath.row/columnNumber;

@@ -10,11 +10,17 @@
 
 @interface ColorConstant : NSObject
 
-//Side Menu
+#pragma mark - Side Menu
 + (UIColor*)sideMenuBackgroundColor;
 + (UIColor*)sideMenuHeaderBackgroundColor;
 + (UIColor*)sideMenuCellColor;
 + (UIColor*)sideMenuCellTextColor;
+
+#pragma mark - Live Feed
++ (UIColor*)liveFeedTextColor;
+
+#pragma mark - Background View
++ (UIColor*)backgroundViewMaskColor;
 
 
 @end
