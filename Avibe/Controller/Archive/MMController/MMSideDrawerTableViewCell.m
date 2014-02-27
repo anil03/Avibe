@@ -29,35 +29,35 @@
     if (self) {
         [self setAccessoryCheckmarkColor:[UIColor whiteColor]];
 
-        UIView * backgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        [backgroundView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        
-        //Background Color
-        UIColor * backgroundColor= [UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.6];
-        [backgroundView setBackgroundColor:backgroundColor];
+//        UIView * backgroundView = [[UIView alloc] initWithFrame:self.bounds];
+//        [backgroundView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+//        [self setBackgroundView:backgroundView];
 
-        [self setBackgroundView:backgroundView];
+        //Background Color - Cell Color
+        UIColor * backgroundColor= [ColorConstant sideMenuCellColor];
+        [self setBackgroundColor:backgroundColor];
+
         
         //Selection Backgroundview
-        UIView * selectionBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
-        [selectionBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        UIColor * selectionBackgroundColor;
-        if(OSVersionIsAtLeastiOS7()){
-            selectionBackgroundColor = [UIColor colorWithRed:102.0/255.0
-                                              green:163.0/255.0
-                                               blue:210.0/255.0
-                                              alpha:1.0];
-        }
-        else {
-            selectionBackgroundColor = [UIColor colorWithRed:77.0/255.0
-                                              green:79.0/255.0
-                                               blue:80.0/255.0
-                                              alpha:1.0];
-        }
-        [selectionBackgroundView setBackgroundColor:selectionBackgroundColor];
-        [self setSelectedBackgroundView:selectionBackgroundView];
+//        UIView * selectionBackgroundView = [[UIView alloc] initWithFrame:self.bounds];
+//        [selectionBackgroundView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+//        UIColor * selectionBackgroundColor;
+//        if(OSVersionIsAtLeastiOS7()){
+//            selectionBackgroundColor = [UIColor colorWithRed:102.0/255.0
+//                                              green:163.0/255.0
+//                                               blue:210.0/255.0
+//                                              alpha:1.0];
+//        }
+//        else {
+//            selectionBackgroundColor = [UIColor colorWithRed:77.0/255.0
+//                                              green:79.0/255.0
+//                                               blue:80.0/255.0
+//                                              alpha:1.0];
+//        }
+//        [selectionBackgroundView setBackgroundColor:selectionBackgroundColor];
+//        [self setSelectedBackgroundView:selectionBackgroundView];
         
-        //Textlabel
+        //Textlabel - default
         /*
         [self.textLabel setBackgroundColor:[UIColor clearColor]];
         [self.textLabel setTextColor:[UIColor
@@ -72,18 +72,18 @@
         }
         */
         
-        //Custom label
-        _label = [[UILabel alloc] initWithFrame:CGRectMake(35, 5, 320, 30)];
+        //Custom label - Text to show like "Live Feed"
+        _label = [[UILabel alloc] initWithFrame:CGRectMake(45, 5, 320, 30)];
         [_label setBackgroundColor:[UIColor clearColor]];
+        
         //Text Color
-        UIColor *textColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:1.0];
+        UIColor *textColor = [ColorConstant sideMenuCellTextColor];
         [_label setTextColor:textColor];
         [self addSubview:_label];
         [self bringSubviewToFront:_label];
         
-        //Button
-        _button = [[UIButton alloc] initWithFrame:CGRectMake(5, 8, 24, 24)];
-//        [button setBackgroundColor:[UIColor redColor]];
+        //Button left to the text
+        _button = [[UIButton alloc] initWithFrame:CGRectMake(10, 8, 24, 24)];
         _button.enabled = NO;
         [self addSubview:_button];
     }

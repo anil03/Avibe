@@ -46,10 +46,13 @@
     [self.view addSubview:self.tableView];
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     
-    //TableView BackgroundColor
-    UIColor * tableViewBackgroundColor= [UIColor whiteColor];
-    [self.tableView setBackgroundColor:tableViewBackgroundColor];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    //TableView BackgroundColor - SideMenu Background Color
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SideMenuBackgroundImage.png"]];
+    [self.tableView setBackgroundView:imageView];
+
+//    UIColor * tableViewBackgroundColor= [ColorConstant sideMenuBackgroundColor];
+//    [self.tableView setBackgroundColor:tableViewBackgroundColor];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     //BarColor
     UIColor * barColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.8];;
@@ -82,9 +85,9 @@
 //                                                                     logoSize.height)];
     UILabel *logo = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,-logoSize.height-logoSize.height/4.0,logoSize.width,logoSize.height)];
     NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:@"By Yuhua Mai & David Perkins"];
-    [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(0,2)];
-    [string addAttribute:NSForegroundColorAttributeName value:[UIColor redColor] range:NSMakeRange(13,13)];
-    [string addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(14,14)];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,13)];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(13,13)];
+    [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(14,14)];
     logo.attributedText = string;
     logo.adjustsFontSizeToFitWidth = YES;
     [logo setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin];

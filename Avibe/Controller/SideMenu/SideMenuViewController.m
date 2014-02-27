@@ -172,7 +172,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
                 [cell.label setText:@"Profile"];
                 break;
             case 1:
-                [cell.button setBackgroundImage:[UIImage imageNamed:@"settings-32.png"] forState:UIControlStateNormal];
+                [cell.button setBackgroundImage:[UIImage imageNamed:@"settings-24.png"] forState:UIControlStateNormal];
                 [cell.label setText:@"Setting"];
                 break;
             case 2:

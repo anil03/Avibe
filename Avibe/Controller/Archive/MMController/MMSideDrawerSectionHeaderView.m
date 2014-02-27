@@ -32,8 +32,8 @@
     self = [super initWithFrame:frame];
     if (self) {
 
-        //Section BackgroundColor
-        [self setBackgroundColor:[UIColor blackColor]];
+        //Section BackgroundColor - Header View
+        [self setBackgroundColor:[ColorConstant sideMenuHeaderBackgroundColor]];
 
         
         if(OSVersionIsAtLeastiOS7()){
