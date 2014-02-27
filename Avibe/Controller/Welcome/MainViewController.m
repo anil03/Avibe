@@ -53,11 +53,12 @@
     
     self = [super initWithCenterViewController:_centerNavigationController
                              leftDrawerViewController:_leftSideNavController];
-    [self setShowsShadow:NO];
-
+    
     //Set Side Menu Parameters
     [self setRestorationIdentifier:@"MMDrawer"];
-    [self setMaximumLeftDrawerWidth:160.0];
+    [self setShowsShadow:YES];
+    [self setAnimationVelocity:1500];
+//    [self setMaximumLeftDrawerWidth:160.0];
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     

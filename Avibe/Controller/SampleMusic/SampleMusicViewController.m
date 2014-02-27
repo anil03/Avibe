@@ -432,8 +432,7 @@
     });
 }
 
-#pragma mark - ListenIn Button Method
-
+#pragma mark - Youtube
 - (void)listenInYoutube
 {
     [_player stop];
@@ -552,8 +551,8 @@
                            }\
                            </style>\
                            </head><body style=\"margin:0\">\
-                           <iframe width=\"100%%\" height=\"240px\" src=\"%@?fs=0&playsinline=1&modestbranding=1&rel=0&showinfo=0&autohide=2&html5=1\" webkit-playsinline frameborder=\"0\"></iframe>\
-                           </body></html>",videoURL];
+                           <iframe width=\"100%%\" height=\"240px\" src=\"%@?playsinline=1\" webkit-playsinline frameborder=\"0\"></iframe>\
+                           </body></html>",videoURL]; //fs=0&playsinline=1&modestbranding=1&rel=0&showinfo=0&autohide=2&html5=1
     [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
     self.sampleMusicWebView.allowsInlineMediaPlayback = YES;
     _sampleMusicWebView.delegate = self;

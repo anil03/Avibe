@@ -240,23 +240,24 @@ typedef NS_ENUM(NSInteger, BeetRow){
 
 #pragma mark - Button pressed
 - (void)livefeedButtonPressed {
-    [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
+//    [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withFullCloseAnimation:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.navigationLiveFeedViewController withCloseAnimation:YES completion:nil];
 }
 - (void)shareButtonPressed {
     shareViewController = [[ShareViewController alloc] init];
     self.navigationShareViewController = [[MMNavigationController alloc] initWithRootViewController:shareViewController];
-    [self.mm_drawerController setCenterViewController:self.navigationShareViewController withFullCloseAnimation:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.navigationShareViewController withCloseAnimation:YES completion:nil];
 }
 - (void)friendsButtonPressed {
     friendsViewController = [[FriendsViewController alloc] init];
     self.navigationFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:friendsViewController];
-    [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withFullCloseAnimation:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.navigationFriendsViewController withCloseAnimation:YES completion:nil];
 }
 - (void)userButtonPressed {
     userViewController = [[UserViewController alloc] init];
     userViewController.delegate = self;
     self.navigationUserViewController = [[MMNavigationController alloc] initWithRootViewController:userViewController];
-    [self.mm_drawerController setCenterViewController:self.navigationUserViewController withFullCloseAnimation:YES completion:nil];
+    [self.mm_drawerController setCenterViewController:self.navigationUserViewController withCloseAnimation:YES completion:nil];
 }
 - (void)settingButtonPressed
 {
