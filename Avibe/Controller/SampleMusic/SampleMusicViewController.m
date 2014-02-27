@@ -552,9 +552,10 @@
                            }\
                            </style>\
                            </head><body style=\"margin:0\">\
-                           <iframe width=\"100%%\" height=\"240px\" src=\"%@\" frameborder=\"0\" allowfullscreen></iframe>\
+                           <iframe width=\"100%%\" height=\"240px\" src=\"%@?fs=0&playsinline=1&modestbranding=1&rel=0&showinfo=0&autohide=2&html5=1\" webkit-playsinline frameborder=\"0\"></iframe>\
                            </body></html>",videoURL];
     [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
+    self.sampleMusicWebView.allowsInlineMediaPlayback = YES;
     _sampleMusicWebView.delegate = self;
 }
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
