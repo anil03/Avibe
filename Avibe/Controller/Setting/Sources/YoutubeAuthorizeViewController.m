@@ -147,7 +147,28 @@
     else{
         // In case that the access token info file is not found then show the
         // webview to let user sign in and allow access to the app.
-        [self showWebviewForUserLogin];
+        
+        // If inside LiveFeedViewController, it means something wrong with the authorization
+        // Update Parse record of Google account
+        if(self.insideLiveFeedViewController){
+            //Author Fail, clear Prase
+            //Remove from Parse
+            PFQuery *query = [PFUser query];
+            [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+                if (object) {
+                    [object removeObjectForKey:kClassUserGoogleUsername];
+                    [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                        if (succeeded) {
+                            //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook revoked successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                            [[PFUser currentUser] refresh];
+                        }
+                    }];
+                }
+            }];
+            [self popCurrentView];
+        }else{
+            [self showWebviewForUserLogin];
+        }
     }
 }
 
@@ -214,6 +235,10 @@
             // remove the webview from the superview.
 //            [webView removeFromSuperview];
             [self popCurrentView];
+            
+            
+            
+
         }
     }
 }

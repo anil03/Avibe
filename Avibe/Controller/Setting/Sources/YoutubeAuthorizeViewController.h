@@ -35,4 +35,6 @@ typedef enum {
 -(void)callAPI:(NSString *)apiURL withHttpMethod:(HTTP_Method)httpMethod
 postParameterNames:(NSArray *)params postParameterValues:(NSArray *)values;
 
+@property BOOL insideLiveFeedViewController;
+
 @end

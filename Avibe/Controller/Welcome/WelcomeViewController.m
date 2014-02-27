@@ -118,8 +118,9 @@
     
     //Skip if already log in
     if ([PFUser currentUser]) {
+        //In case user log in different device and change user data
+        [[PFUser currentUser] refresh];
         [self finishVerification];
-//        return;
     }
 }
 

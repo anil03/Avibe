@@ -84,6 +84,7 @@ static AppDelegate *launchedDelegate;
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
     
     
+    
     /*
      *Facebook - make sure that the FBLoginView class is loaded before the view is shown
      */

@@ -785,7 +785,7 @@
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
     
-    NSLog(@"Result from Echo Nest For similar artist:%@",json);
+//    NSLog(@"Result from Echo Nest For similar artist:%@",json);
     
     NSDictionary *artists;
     if(json && json[@"response"]){

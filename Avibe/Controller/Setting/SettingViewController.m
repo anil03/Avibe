@@ -256,7 +256,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             case FacebookRow:{
                 NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 BOOL facebookLogIn = NO;
-                if(displayName) facebookLogIn = YES;
+                if(FBSession.activeSession.state == FBSessionStateOpen
+                   || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) facebookLogIn = YES;
                 
                 cell.textLabel.text = @"Facebook";
                 cell.detailTextLabel.text = facebookLogIn? [displayName stringByAppendingString:@"✓"] : @"Unauthorized✗";
@@ -577,31 +578,36 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
              // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
              [appDelegate sessionStateChanged:session state:state error:error];
              
-             //Successfully log in with Facebook, update Parse info about Facebook
-             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                 if (!error) {
-                     NSString *username = result[@"username"];
-                     NSString *displayName = result[@"name"];
-                     
-                     PFQuery *query = [PFUser query];
-                     [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
-                         if (object) {
-                             if(username) [object setObject:username  forKey:kClassUserFacebookUsername];
-                             if(displayName) [object setObject:displayName forKey:kClassUserFacebookDisplayname];
-                             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                 if (succeeded) {
-                                     [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                                     [[PFUser currentUser] refresh];
-                                     [self.tableView reloadData];
-                                 }else{
-                                     [self authorizeFailed];
-                                 }
-                             }];
-                         }
-                     }];
-                     
-                 }
-             }];
+             if (!error) {
+                 //Successfully log in with Facebook, update Parse info about Facebook
+                 [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+                     if (!error) {
+                         NSString *username = result[@"username"];
+                         NSString *displayName = result[@"name"];
+                         
+                         PFQuery *query = [PFUser query];
+                         [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+                             if (object) {
+                                 if(username) [object setObject:username  forKey:kClassUserFacebookUsername];
+                                 if(displayName) [object setObject:displayName forKey:kClassUserFacebookDisplayname];
+                                 [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                                     if (succeeded) {
+                                         [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Facebook authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                                         [[PFUser currentUser] refresh];
+                                         [self.tableView reloadData];
+                                     }else{
+                                         [self authorizeFailed];
+                                     }
+                                 }];
+                             }
+                         }];
+                         
+                     }
+                 }];
+             }else{
+                 [[[UIAlertView alloc] initWithTitle: @"Error" message: @"Facebook authorized could not be finished. Please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+             }
+             
              
              
          }];

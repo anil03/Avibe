@@ -139,16 +139,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     NSDate *lastUpdatedDate = [defaults objectForKey:kKeyLastUpdatedDate];
     NSTimeInterval actualInterval = [lastUpdatedDate timeIntervalSinceNow];
-    NSTimeInterval interval = 3.0;
+    NSTimeInterval interval = 60.0;
     if (abs(actualInterval) > interval || !_PFObjects) {
         assert(_refreshControl != nil);
         [self refreshView:_refreshControl];
         
         //Save Youtube Music if already authorize
-        NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
-        if (googleUsername) {
-            [self saveYoutubeMusic];
-        }
+        [self saveYoutubeMusic];
     }
     
     [self setupBarMenuButton];
@@ -470,7 +467,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 #pragma mark - Google OAuth
 -(void)saveYoutubeMusic{
     NSString *key = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
-    
+
+    //Save Youtube Music if already authorize
     if (key) {
         _youtubeAuthorizeViewController = [[YoutubeAuthorizeViewController alloc] init];
         _youtubeAuthorizeViewController.previousViewController = self;
@@ -492,6 +490,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     //                             andParentView:self.view
     //                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
     //     ];
+    [self.youtubeAuthorizeViewController setInsideLiveFeedViewController:YES];
     [self.youtubeAuthorizeViewController authorizeUserWithClienID:@"4881560502-uteihtgcnas28bcjmnh0hfrbk4chlmsa.apps.googleusercontent.com"
                                                   andClientSecret:@"R02t8Pk-59eEYy-B359-gvOY"
                                                     andParentView:view
@@ -505,6 +504,25 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 -(void)authorizationWasSuccessful{
 //    _youtubeAuthorized = YES;
 //    [self.tableView reloadData];
+    
+    NSString *key = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
+    //Resave to parse in in case parse doesn't have it.
+    if (!key) {
+        //Save to Parse
+        PFQuery *query = [PFUser query];
+        [query getObjectInBackgroundWithId:[[PFUser currentUser] objectId] block:^(PFObject *object, NSError *error) {
+            if (object) {
+                [object setObject:@"Youtube"  forKey:kClassUserGoogleUsername];
+                [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    if (succeeded) {
+                        //                    [[[UIAlertView alloc] initWithTitle: @"Congratulations" message: @"Youtube authorized successfully." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+                        [[PFUser currentUser] refresh];
+                    }
+                }];
+            }
+        }];
+
+    }
     
     [self.youtubeAuthorizeViewController callAPI:@"https://www.googleapis.com/youtube/v3/channels"
                withHttpMethod:httpMethod_GET
