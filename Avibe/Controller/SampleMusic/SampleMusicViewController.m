@@ -24,6 +24,9 @@
 //Echo NEst
 #import "NSMutableArray+Shuffling.h"
 
+//Youtube
+#import "LBYouTube.h"
+
 @interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     UIColor *backgroundColor;
@@ -517,12 +520,30 @@
     [_spinner stopAnimating];
     
     [self playYoutube:href];
+//    [self parseYoutubeAddres:href];
 //    [self playYoutubeIFrame:href];
 }
 - (void)fetchedDataWithError
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't listen in Youtube right now. Please try later." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
+}
+- (void)parseYoutubeAddres:(NSString*)videoString
+{
+    NSURL *youtubeUrl = [NSURL URLWithString:videoString];
+    
+    LBYouTubeExtractor* extractor = [[LBYouTubeExtractor alloc] initWithURL:youtubeUrl quality:LBYouTubeVideoQualityLarge];
+
+    [extractor extractVideoURLWithCompletionBlock:^(NSURL *videoURL, NSError *error) {
+        if(!error) {
+            NSString *urlString = [videoURL absoluteString];
+            urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            [[UIApplication sharedApplication] openURL:videoURL];
+            NSLog(@"Did extract video URL using completion block: %@", videoURL);
+        } else {
+            NSLog(@"Failed extracting video URL using block due to error:%@", error);
+        }
+    }];
 }
 - (void)playYoutubeIFrame:(NSString*)videoUrl
 {
