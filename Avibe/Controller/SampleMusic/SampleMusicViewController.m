@@ -904,7 +904,7 @@
         [scrollView setFrame:CGRectMake(0, 0, width, height)];
     }
     
-    if([_artistsArrray count] > 0 && _artistFetchCount < 3){
+    if([_artistsArrray count] > 0 && _artistFetchCount < 4){
         NSString *artist = [_artistsArrray lastObject];
         if(artist){
             [self callEchoNestForSongsOfArtist:artist];
