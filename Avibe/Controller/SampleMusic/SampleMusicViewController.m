@@ -554,6 +554,10 @@
 }
 - (void)playYoutube:(NSString*)videoURL
 {
+    //Safari or Youtube to open video url
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:videoURL]];
+    return;
+    
     //URL Example
 //    NSString *videoURL = @"http://www.youtube.com/embed/SB-DA6hyuj4";
 //    videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
