@@ -97,7 +97,18 @@
     [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
     
-    // Configure the cell...
+    //Get username from friendsDictionary, then search displayname by username
+//    NSString *username = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
+//    PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
+//    NSString *displayname;
+//    if (userObject) {
+//        displayname = [userObject objectForKey:kClassUserDisplayname];
+//    }
+//    if (displayname) {
+//        username = displayname;
+//    }
+//    
+//    cell.textLabel.text = username;
     cell.textLabel.text = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
     
     return cell;
@@ -157,7 +168,23 @@
     
     
     for(PFObject *object in objects){
-        [friends addObject:[object objectForKey:@"friend"]];
+//        [friends addObject:[object objectForKey:@"friend"]];
+
+        
+        //Set up display name from username
+        //Get username from friendsDictionary, then search displayname by username
+        NSString *username = [object objectForKey:kClassFriendToUsername];
+        PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
+        NSString *displayname;
+        if (userObject) {
+            displayname = [userObject objectForKey:kClassUserDisplayname];
+        }
+        if (displayname) {
+            username = displayname;
+        }
+        
+        [friends addObject:username];
+        
     }
     [friends sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     

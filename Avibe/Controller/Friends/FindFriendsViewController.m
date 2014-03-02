@@ -26,6 +26,7 @@ enum FindFriendTableViewSection {
 @interface FindFriendsViewController () <UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contactList;
+@property NSMutableArray *registeredUsers;
 @property (nonatomic, strong) NSMutableArray *registeredFollowingUsers;
 @property (nonatomic, strong) NSMutableArray *registeredNotFollowedUsers;
 @property (nonatomic, strong) NSMutableArray *unRegisteredUsers;
@@ -59,6 +60,7 @@ enum FindFriendTableViewSection {
 {
     [super viewDidLoad];
 
+    _registeredUsers = [[NSMutableArray alloc] init];
     _registeredFollowingUsers = [[NSMutableArray alloc] init];
     _registeredNotFollowedUsers = [[NSMutableArray alloc] init];
     _unRegisteredUsers = [[NSMutableArray alloc] init];
@@ -143,7 +145,7 @@ enum FindFriendTableViewSection {
         [_contactList addObject:person];
         
     }
-    NSLog(@"Contacts = %@",_contactList);
+//    NSLog(@"Contacts = %@",_contactList);
 }
 
 #pragma mark - Data Source
@@ -192,7 +194,8 @@ enum FindFriendTableViewSection {
              * Add to registered/unregistered and remove current entry
              */
             if(isRegistered){
-                [_registeredNotFollowedUsers addObject:person];
+                [_registeredUsers addObject:person];
+//                [_registeredNotFollowedUsers addObject:person];
             }else{
                 [_unRegisteredUsers addObject:person];
             }
@@ -213,7 +216,7 @@ enum FindFriendTableViewSection {
     [friendQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
     [friendQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if(!error){
-            for(NSMutableDictionary *person in _registeredNotFollowedUsers){
+            for(NSMutableDictionary *person in _registeredUsers){
                 NSString *username = [person objectForKey:kClassUserUsername];
                 
                 BOOL isFriend = NO;
@@ -231,7 +234,9 @@ enum FindFriendTableViewSection {
                 
                 if(isFriend){
                     [_registeredFollowingUsers addObject:person];
-                    [_registeredNotFollowedUsers removeObject:person];
+                }else{
+                    [_registeredNotFollowedUsers addObject:person];
+
                 }
             }
             [self.tableView reloadData];
