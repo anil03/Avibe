@@ -30,12 +30,14 @@
 @interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     UIColor *backgroundColor;
+    UIColor *scrollViewBackgroundColor;
     UIColor *lightBackgroundColor;
     UIColor *textColor;
     UIColor *textHighlightColor;
     
     float width;
     float height;
+    float backgroundImageHeight;
     float playerHeight;
     float currentHeight;
     float buttonLeft;
@@ -180,7 +182,7 @@
 //    self.view.userInteractionEnabled = NO;
     [self setupNavigationBar];
     
-    backgroundColor = [UIColor blackColor];
+    backgroundColor = [UIColor clearColor];
     lightBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1];
 
     textColor = [UIColor whiteColor];
@@ -208,6 +210,7 @@
     
     //ScrollView
     scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
+    [scrollView setBackgroundColor:backgroundColor];
     [scrollView setContentSize:CGSizeMake(width, height*2)];
     self.view = scrollView;
     
@@ -239,8 +242,10 @@
 
     //iTune
     _sampleMusicITuneView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
+    [_sampleMusicITuneView setBackgroundColor:backgroundColor];
     [self listenInItune];
-    
+    //Set Background Image View Height
+    backgroundImageHeight = infoLabelHight*2+playerImageHeight+playerProgressHeight+playerButtonHeight;
 
     //Button - Listen
     currentHeight += playerHeight;
@@ -319,6 +324,7 @@
 
     
     UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [shareView setBackgroundColor:backgroundColor];
     UILabel *shareLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, leftOffset, buttonHeight)];
     [shareLabel setText:@"Share: "];
     [shareLabel setTextColor:textColor];
@@ -337,6 +343,7 @@
 - (void)addBuyInView
 {
     _buyInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [_buyInView setBackgroundColor:backgroundColor];
     [scrollView addSubview:_buyInView];
     
     float leftOffset = buttonLeft;
@@ -372,6 +379,7 @@
 - (void)addListenInView
 {
     _listenInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+    [_listenInView setBackgroundColor:backgroundColor];
     [scrollView addSubview:_listenInView];
     
     float buttonWidth = buttonHeight;
@@ -662,6 +670,8 @@
     _spinner.hidesWhenStopped = YES;
     [_sampleMusicITuneView addSubview:_spinner];
     [_spinner startAnimating];
+    
+    
 }
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
@@ -750,6 +760,22 @@
  * Get Image from PFObject image url
  * If fails, then get album image from iTune
  */
+- (void)setAlbumImage:(UIImage *)albumImage
+{
+    _albumImage = albumImage;
+    
+    //Set background image for scroll view when setting album image
+    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, backgroundImageHeight)];
+    [scrollBackgroundView setImage:albumImage];
+    //Mask for ScrollBackgroundView
+    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:scrollBackgroundView.frame];
+    [scrollBackgroundViewMask setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8]];
+    [scrollBackgroundView addSubview:scrollBackgroundViewMask];
+    
+    [scrollView addSubview:scrollBackgroundView];
+    [scrollView sendSubviewToBack:scrollBackgroundView];
+}
+
 - (void)handleAlbumImage:(NSString*)imageUrlFromITune
 {
     //Parse image
@@ -757,7 +783,7 @@
     if (imageUrlFromParse) {
         NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
         if (imageDataFromParse) {
-            _albumImage = [UIImage imageWithData:imageDataFromParse];
+            self.albumImage = [UIImage imageWithData:imageDataFromParse];
             return;
         }
     }
@@ -765,7 +791,7 @@
     //iTune image
     if(imageUrlFromITune){
         NSData *imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
-        _albumImage = [UIImage imageWithData:imageDataFromITune];
+        self.albumImage = [UIImage imageWithData:imageDataFromITune];
     }
 }
 
