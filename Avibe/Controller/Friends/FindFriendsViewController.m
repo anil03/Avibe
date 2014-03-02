@@ -134,7 +134,8 @@ enum FindFriendTableViewSection {
         for(CFIndex i = 0; i < ABMultiValueGetCount(phones); i++) {
             mobileLabel = (__bridge NSString*)ABMultiValueCopyLabelAtIndex(phones, i);
             NSString *currentPhoneNumber = (__bridge NSString*)ABMultiValueCopyValueAtIndex(phones, i);
-            [phoneNumberArray addObject:currentPhoneNumber];
+            NSString *pureNumbers = [[currentPhoneNumber componentsSeparatedByCharactersInSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]] componentsJoinedByString:@""];
+            [phoneNumberArray addObject:pureNumbers];
         }
         [person setObject:phoneNumberArray forKey:kClassContactPhoneNumber];
         
