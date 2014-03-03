@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13C64" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="BEI-Or-EbB">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
+    </dependencies>
+    <scenes>
+        <!--Spotify View Controller-->
+        <scene sceneID="CLd-t7-d1p">
+            <objects>
+                <viewController storyboardIdentifier="Spotify" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BEI-Or-EbB" customClass="SpotifyViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="ded-F9-aBN"/>
+                        <viewControllerLayoutGuide type="bottom" id="NXw-Sn-uXv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="I8n-MP-L6E">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Spotify.png" translatesAutoresizingMaskIntoConstraints="NO" id="KRY-n3-mEB">
+                                <rect key="frame" x="-87" y="115" width="470" height="338"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lQH-JN-0ba" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-417" y="-264"/>
+        </scene>
+        <!--Pandora View Controller-->
+        <scene sceneID="JC4-LJ-mO4">
+            <objects>
+                <viewController storyboardIdentifier="Pandora" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Agh-HZ-Z56" customClass="PandoraViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="J5x-yb-eBb"/>
+                        <viewControllerLayoutGuide type="bottom" id="rN2-Xt-4x3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xhC-UP-TsR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Pandora.png" translatesAutoresizingMaskIntoConstraints="NO" id="AWh-GQ-Oyx">
+                                <rect key="frame" x="10" y="171" width="300" height="225"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MAk-lV-pN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="15" y="-264"/>
+        </scene>
+        <!--Rdio View Controller-->
+        <scene sceneID="L13-Fs-Da9">
+            <objects>
+                <viewController storyboardIdentifier="Rdio" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Xc0-GU-hEA" customClass="RdioViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bQm-pX-ryV"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Eq-3A-YUg"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7oc-Tq-j0s">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Rdio.png" translatesAutoresizingMaskIntoConstraints="NO" id="X5q-Pj-YEL">
+                                <rect key="frame" x="8" y="175" width="305" height="218"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Dfr-Pp-oZQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-417" y="400"/>
+        </scene>
+        <!--Eight Tracks View Controller-->
+        <scene sceneID="q5Y-Ii-f0P">
+            <objects>
+                <viewController storyboardIdentifier="EightTracks" useStoryboardIdentifierAsRestorationIdentifier="YES" id="P97-Hm-gV3" customClass="EightTracksViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TEs-wn-bar"/>
+                        <viewControllerLayoutGuide type="bottom" id="ELN-y2-9a0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gn2-JL-tnU">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="8tracks.png" translatesAutoresizingMaskIntoConstraints="NO" id="KHf-Y2-2lZ">
+                                <rect key="frame" x="35" y="126" width="250" height="315"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="du0-Js-eUq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="393" y="400"/>
+        </scene>
+        <!--Deezer View Controller-->
+        <scene sceneID="PZ3-JI-j8q">
+            <objects>
+                <viewController storyboardIdentifier="Deezer" useStoryboardIdentifierAsRestorationIdentifier="YES" id="NDy-IQ-44I" customClass="DeezerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="hfv-sz-t8O"/>
+                        <viewControllerLayoutGuide type="bottom" id="hdq-LV-sbv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sz2-M7-juc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Deezer.png" translatesAutoresizingMaskIntoConstraints="NO" id="Qwq-9g-Z5k">
+                                <rect key="frame" x="14" y="131" width="293" height="306"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="89Q-pR-Tt3" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="15" y="400"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="8tracks.png" width="320" height="389"/>
+        <image name="Deezer.png" width="368" height="361"/>
+        <image name="Pandora.png" width="530" height="364"/>
+        <image name="Rdio.png" width="603" height="389"/>
+        <image name="Spotify.png" width="603" height="389"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>

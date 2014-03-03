@@ -22,7 +22,6 @@
 
 /* Begin PBXBuildFile section */
 		4C09E18918AAF65400847DEF /* ScrobbleAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */; };
-		4C09E18A18AAF65400847DEF /* RdioAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */; };
 		4C09E18B18AAF65400847DEF /* FacebookAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */; };
 		4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */; };
 		4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C17610618A5B18500B58F42 /* GoogleOAuth.m */; };
@@ -135,6 +134,18 @@
 		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
+		4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4618C4FA7800F86916 /* 8tracks.png */; };
+		4CADBB4C18C4FA7800F86916 /* Deezer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4718C4FA7800F86916 /* Deezer.png */; };
+		4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4818C4FA7800F86916 /* Pandora.png */; };
+		4CADBB4E18C4FA7800F86916 /* Rdio.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4918C4FA7800F86916 /* Rdio.png */; };
+		4CADBB4F18C4FA7800F86916 /* Spotify.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4A18C4FA7800F86916 /* Spotify.png */; };
+		4CADBB5218C500B300F86916 /* LinkFacebookStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB5118C500B300F86916 /* LinkFacebookStoryboard.storyboard */; };
+		4CADBB5718C5045500F86916 /* SpotifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5618C5045500F86916 /* SpotifyViewController.m */; };
+		4CADBB6018C50A3400F86916 /* DeezerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5918C50A3400F86916 /* DeezerViewController.m */; };
+		4CADBB6118C50A3400F86916 /* EightTracksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5B18C50A3400F86916 /* EightTracksViewController.m */; };
+		4CADBB6218C50A3400F86916 /* PandoraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5D18C50A3400F86916 /* PandoraViewController.m */; };
+		4CADBB6318C50A3400F86916 /* RdioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5F18C50A3400F86916 /* RdioViewController.m */; };
+		4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB6518C50D7300F86916 /* LinkFacebookViewController.m */; };
 		4CC5271818984A2300562CE1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271718984A2300562CE1 /* CoreAudio.framework */; };
 		4CC5271918984A4500562CE1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
 		4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271A18984A4F00562CE1 /* libstdc++.dylib */; };
@@ -167,8 +178,6 @@
 /* Begin PBXFileReference section */
 		4C09E18318AAF65400847DEF /* ScrobbleAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrobbleAuthorizeViewController.h; path = Sources/ScrobbleAuthorizeViewController.h; sourceTree = "<group>"; };
 		4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrobbleAuthorizeViewController.m; path = Sources/ScrobbleAuthorizeViewController.m; sourceTree = "<group>"; };
-		4C09E18518AAF65400847DEF /* RdioAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RdioAuthorizeViewController.h; path = Sources/RdioAuthorizeViewController.h; sourceTree = "<group>"; };
-		4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RdioAuthorizeViewController.m; path = Sources/RdioAuthorizeViewController.m; sourceTree = "<group>"; };
 		4C09E18718AAF65400847DEF /* FacebookAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FacebookAuthorizeViewController.h; path = Sources/FacebookAuthorizeViewController.h; sourceTree = "<group>"; };
 		4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FacebookAuthorizeViewController.m; path = Sources/FacebookAuthorizeViewController.m; sourceTree = "<group>"; };
 		4C1760BC18A5381600B58F42 /* TestYoutubeOAuth.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestYoutubeOAuth.m; path = SaveListenedMusicTest/Youtube/TestYoutubeOAuth.m; sourceTree = "<group>"; };
@@ -347,6 +356,24 @@
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4CADBB4618C4FA7800F86916 /* 8tracks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 8tracks.png; path = Setting/LinkAccount/8tracks.png; sourceTree = "<group>"; };
+		4CADBB4718C4FA7800F86916 /* Deezer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Deezer.png; path = Setting/LinkAccount/Deezer.png; sourceTree = "<group>"; };
+		4CADBB4818C4FA7800F86916 /* Pandora.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Pandora.png; path = Setting/LinkAccount/Pandora.png; sourceTree = "<group>"; };
+		4CADBB4918C4FA7800F86916 /* Rdio.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Rdio.png; path = Setting/LinkAccount/Rdio.png; sourceTree = "<group>"; };
+		4CADBB4A18C4FA7800F86916 /* Spotify.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Spotify.png; path = Setting/LinkAccount/Spotify.png; sourceTree = "<group>"; };
+		4CADBB5118C500B300F86916 /* LinkFacebookStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LinkFacebookStoryboard.storyboard; path = Avibe/View/Setting/LinkFacebook/LinkFacebookStoryboard.storyboard; sourceTree = SOURCE_ROOT; };
+		4CADBB5518C5045500F86916 /* SpotifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpotifyViewController.h; path = LinkFacebook/SpotifyViewController.h; sourceTree = "<group>"; };
+		4CADBB5618C5045500F86916 /* SpotifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpotifyViewController.m; path = LinkFacebook/SpotifyViewController.m; sourceTree = "<group>"; };
+		4CADBB5818C50A3400F86916 /* DeezerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeezerViewController.h; path = LinkFacebook/DeezerViewController.h; sourceTree = "<group>"; };
+		4CADBB5918C50A3400F86916 /* DeezerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeezerViewController.m; path = LinkFacebook/DeezerViewController.m; sourceTree = "<group>"; };
+		4CADBB5A18C50A3400F86916 /* EightTracksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EightTracksViewController.h; path = LinkFacebook/EightTracksViewController.h; sourceTree = "<group>"; };
+		4CADBB5B18C50A3400F86916 /* EightTracksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EightTracksViewController.m; path = LinkFacebook/EightTracksViewController.m; sourceTree = "<group>"; };
+		4CADBB5C18C50A3400F86916 /* PandoraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PandoraViewController.h; path = LinkFacebook/PandoraViewController.h; sourceTree = "<group>"; };
+		4CADBB5D18C50A3400F86916 /* PandoraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PandoraViewController.m; path = LinkFacebook/PandoraViewController.m; sourceTree = "<group>"; };
+		4CADBB5E18C50A3400F86916 /* RdioViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RdioViewController.h; path = LinkFacebook/RdioViewController.h; sourceTree = "<group>"; };
+		4CADBB5F18C50A3400F86916 /* RdioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RdioViewController.m; path = LinkFacebook/RdioViewController.m; sourceTree = "<group>"; };
+		4CADBB6418C50D7300F86916 /* LinkFacebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkFacebookViewController.h; path = LinkFacebook/LinkFacebookViewController.h; sourceTree = "<group>"; };
+		4CADBB6518C50D7300F86916 /* LinkFacebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinkFacebookViewController.m; path = LinkFacebook/LinkFacebookViewController.m; sourceTree = "<group>"; };
 		4CC5271718984A2300562CE1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		4CC5271A18984A4F00562CE1 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
@@ -544,6 +571,7 @@
 		4C231C90188104F800B030F9 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				4CADBB5418C5043700F86916 /* LinkFacebook */,
 				4C716EAE18A9B63A00816A62 /* Sources */,
 				4C231C91188104F800B030F9 /* SettingViewController.h */,
 				4C231C92188104F800B030F9 /* SettingViewController.m */,
@@ -668,6 +696,7 @@
 		4C231CF4188104F800B030F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CADBB5318C500CB00F86916 /* Setting */,
 				4C23F1751885A3AB00D2075A /* SampleMusic */,
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
 				4C231CF6188104F800B030F9 /* Main.storyboard */,
@@ -974,8 +1003,6 @@
 			children = (
 				4C09E18318AAF65400847DEF /* ScrobbleAuthorizeViewController.h */,
 				4C09E18418AAF65400847DEF /* ScrobbleAuthorizeViewController.m */,
-				4C09E18518AAF65400847DEF /* RdioAuthorizeViewController.h */,
-				4C09E18618AAF65400847DEF /* RdioAuthorizeViewController.m */,
 				4C09E18718AAF65400847DEF /* FacebookAuthorizeViewController.h */,
 				4C09E18818AAF65400847DEF /* FacebookAuthorizeViewController.m */,
 				4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */,
@@ -995,6 +1022,7 @@
 		4C7ADAED18B19F5600ACEA79 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				4CADBB4018C4F77700F86916 /* LinkAccount */,
 				4C7ADAEE18B19F6300ACEA79 /* rdio-logo.png */,
 			);
 			name = Setting;
@@ -1022,6 +1050,54 @@
 				4C31899F18BDAC9A00549731 /* Framework */,
 			);
 			path = Avibe;
+			sourceTree = "<group>";
+		};
+		4CADBB4018C4F77700F86916 /* LinkAccount */ = {
+			isa = PBXGroup;
+			children = (
+				4CADBB4618C4FA7800F86916 /* 8tracks.png */,
+				4CADBB4718C4FA7800F86916 /* Deezer.png */,
+				4CADBB4818C4FA7800F86916 /* Pandora.png */,
+				4CADBB4918C4FA7800F86916 /* Rdio.png */,
+				4CADBB4A18C4FA7800F86916 /* Spotify.png */,
+			);
+			name = LinkAccount;
+			sourceTree = "<group>";
+		};
+		4CADBB5018C5005100F86916 /* LinkFacebookViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4CADBB5118C500B300F86916 /* LinkFacebookStoryboard.storyboard */,
+			);
+			name = LinkFacebookViewController;
+			path = ../Controller/Setting;
+			sourceTree = "<group>";
+		};
+		4CADBB5318C500CB00F86916 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				4CADBB5018C5005100F86916 /* LinkFacebookViewController */,
+			);
+			name = Setting;
+			sourceTree = "<group>";
+		};
+		4CADBB5418C5043700F86916 /* LinkFacebook */ = {
+			isa = PBXGroup;
+			children = (
+				4CADBB6418C50D7300F86916 /* LinkFacebookViewController.h */,
+				4CADBB6518C50D7300F86916 /* LinkFacebookViewController.m */,
+				4CADBB5518C5045500F86916 /* SpotifyViewController.h */,
+				4CADBB5618C5045500F86916 /* SpotifyViewController.m */,
+				4CADBB5C18C50A3400F86916 /* PandoraViewController.h */,
+				4CADBB5D18C50A3400F86916 /* PandoraViewController.m */,
+				4CADBB5E18C50A3400F86916 /* RdioViewController.h */,
+				4CADBB5F18C50A3400F86916 /* RdioViewController.m */,
+				4CADBB5818C50A3400F86916 /* DeezerViewController.h */,
+				4CADBB5918C50A3400F86916 /* DeezerViewController.m */,
+				4CADBB5A18C50A3400F86916 /* EightTracksViewController.h */,
+				4CADBB5B18C50A3400F86916 /* EightTracksViewController.m */,
+			);
+			name = LinkFacebook;
 			sourceTree = "<group>";
 		};
 		4CDEF2AA1883997E00CBD40E /* SampleMusic */ = {
@@ -1173,13 +1249,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CADBB4C18C4FA7800F86916 /* Deezer.png in Resources */,
 				4C19DF3118B53AA9006BAA2B /* avibe_icon_120_120.png in Resources */,
 				4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */,
+				4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */,
 				4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */,
 				4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */,
 				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
+				4CADBB5218C500B300F86916 /* LinkFacebookStoryboard.storyboard in Resources */,
+				4CADBB4E18C4FA7800F86916 /* Rdio.png in Resources */,
 				4C23F185188612FB00D2075A /* default_album.png in Resources */,
 				4C3150C518BFEC6300D80BBB /* settings-24.png in Resources */,
 				4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */,
@@ -1194,11 +1274,13 @@
 				4C7ADAEF18B19F6300ACEA79 /* rdio-logo.png in Resources */,
 				4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */,
 				4C3150C318BFD87800D80BBB /* SideMenuBackgroundImage.png in Resources */,
+				4CADBB4F18C4FA7800F86916 /* Spotify.png in Resources */,
 				4C231D33188104F800B030F9 /* undo-2-16.png in Resources */,
 				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
 				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
 				4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */,
+				4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */,
 				4C7ADAEC18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png in Resources */,
 				4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */,
 				4C231D2C188104F800B030F9 /* conference-24.png in Resources */,
@@ -1284,8 +1366,10 @@
 				4C231D13188104F800B030F9 /* YMGenericCollectionViewFlowLayout.m in Sources */,
 				4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */,
 				4C231D09188104F800B030F9 /* MMTableViewCell.m in Sources */,
+				4CADBB6218C50A3400F86916 /* PandoraViewController.m in Sources */,
 				4C231D23188104F800B030F9 /* Song.m in Sources */,
 				4C231D00188104F800B030F9 /* MMExampleDrawerVisualStateManager.m in Sources */,
+				4CADBB6318C50A3400F86916 /* RdioViewController.m in Sources */,
 				4C8B5807188F64BE00430CF9 /* FaceBookListenedMusic.m in Sources */,
 				4C231D17188104F800B030F9 /* LiveFeedViewController.m in Sources */,
 				4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */,
@@ -1298,6 +1382,7 @@
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
 				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
+				4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
 				4C231DD61881E51300B030F9 /* ITuneMusicViewController.m in Sources */,
 				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,
@@ -1312,6 +1397,7 @@
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
+				4CADBB6018C50A3400F86916 /* DeezerViewController.m in Sources */,
 				4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */,
 				4C2F0FCF1884781F006BA932 /* SampleMusic.m in Sources */,
 				4C09E18B18AAF65400847DEF /* FacebookAuthorizeViewController.m in Sources */,
@@ -1329,9 +1415,10 @@
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
 				4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
-				4C09E18A18AAF65400847DEF /* RdioAuthorizeViewController.m in Sources */,
 				4C23F17A1885A48100D2075A /* SampleMusicViewController.m in Sources */,
 				4C231D18188104F800B030F9 /* SettingViewController.m in Sources */,
+				4CADBB5718C5045500F86916 /* SpotifyViewController.m in Sources */,
+				4CADBB6118C50A3400F86916 /* EightTracksViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
 				4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */,
 				4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */,

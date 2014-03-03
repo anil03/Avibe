@@ -12,7 +12,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "NSString+MD5.h"
 #import "ScrobbleAuthorizeViewController.h"
-#import "RdioAuthorizeViewController.h"
+
 #import "YoutubeAuthorizeViewController.h"
 #import "FacebookAuthorizeViewController.h"
 #import "Rdio/Rdio.h"
@@ -21,6 +21,14 @@
 #import "PublicMethod.h"
 #import "BackgroundImageView.h"
 #import "MMDrawerBarButtonItem.h"
+
+//Link Facebook
+#import "LinkFacebookViewController.h"
+#import "SpotifyViewController.h"
+#import "PandoraViewController.h"
+#import "RdioViewController.h"
+#import "DeezerViewController.h"
+#import "EightTracksViewController.h"
 
 @interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate, RdioDelegate>
 {
@@ -70,15 +78,31 @@
 @property NSString *facebookCellString;
 @property UIColor *facebookCellColor;
 
+//Link Facebook
+@property NSUserDefaults* defaults;
+@property BOOL spotifyAuthorized;
+@property BOOL pandoraAuthorized;
+@property BOOL rdioAuthorized;
+@property BOOL deezerAuthorized;
+@property BOOL eightTracksAuthorized;
+
 //Authorization Sources
 @property (nonatomic, strong) ScrobbleAuthorizeViewController *scrobbleAuthorizeViewController;
-@property (nonatomic, strong) RdioAuthorizeViewController *rdioAuthorizeViewController;
+//@property (nonatomic, strong) RdioåAuthorizeViewController *rdioAuthorizeViewController;
 @property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
 @property (nonatomic, strong) FacebookAuthorizeViewController *facebookAuthorizeViewController;
 
 @end
 
 @implementation SettingViewController
+
+static NSString* const spotifyDefault = @"SpotifyAuthorized";
+static NSString* const pandoraDefault = @"PandoraAuthorized";
+static NSString* const rdioDefault = @"RdioAuthorized";
+static NSString* const deezerDefault = @"DeezerAuthorized";
+static NSString* const eightTracksDefault = @"EightTracksAuthorized";
+
+@synthesize defaults;
 
 #pragma mark - View method
 - (void)viewWillAppear:(BOOL)animated
@@ -117,6 +141,14 @@
 //    Rdio *rdio = [AppDelegate rdioInstance];
 //    assert(rdio != nil);
 //    [self setRdioAutorizationSucceed:[[PFUser currentUser] objectForKey:kClassUserRdioKey]? YES : NO];
+    
+    //Spotify
+    defaults = [NSUserDefaults standardUserDefaults];
+    self.spotifyAuthorized = [defaults boolForKey:spotifyDefault];
+    self.pandoraAuthorized = [defaults boolForKey:pandoraDefault];
+    self.rdioAuthorized = [defaults boolForKey:rdioDefault];
+    self.deezerAuthorized = [defaults boolForKey:deezerDefault];
+    self.eightTracksAuthorized = [defaults boolForKey:eightTracksDefault];
 }
 
 
@@ -133,9 +165,14 @@ typedef NS_ENUM(NSInteger, SettingRowInAvibeAccountSection){
 };
 typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     YoutubeRow,
-    FacebookRow,
     ScrobbleRow,
-    RdioRow
+    
+    FacebookRow,
+    SpotifyRow,
+    PandoraRow,
+    RdioRow,
+    DeezerRow,
+    EightTracksRow
 };
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -147,7 +184,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         case AvibeAccount:
             return 4;
         case LinkedAccount:
-            return 3;
+            return 8;
         default:
             return 2;
     }
@@ -224,35 +261,36 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
         }
     }else if (indexPath.section == LinkedAccount){
+        UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(250, 6, 50, 20)];
+        [cell addSubview:switchView];
+        [cell bringSubviewToFront:switchView];
+        
         switch (indexPath.row) {
-            case ScrobbleRow:{
-                cell.textLabel.text = @"Last.fm";
-                NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
-                cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
-                cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
-                }
-                break;
-            case RdioRow:{
-                UIImage *image = [UIImage imageNamed:@"rdio-logo.png"];
-                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftOffset, topOffset, 80, 28)];
-                [imageView setImage:image];
-                [cell addSubview:imageView];
-                [cell bringSubviewToFront:imageView];
-                
-//                cell.textLabel.text = @"Rdio";
-                cell.detailTextLabel.text = _rdioAutorizationSucceed? [[[PFUser currentUser] objectForKey:kClassUserRdioDisplayname] stringByAppendingString:@"✓"] : @"Unauthorized✗";
-                cell.detailTextLabel.textColor = _rdioAutorizationSucceed? [UIColor redColor] : [UIColor grayColor];
-                break;
-            }
             case YoutubeRow:{
                 NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
                 _youtubeAuthorized = googleUsername? YES : NO;
                 
                 cell.textLabel.text = @"YouTube";
-                cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
-                cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
+                
+                switchView.on = _youtubeAuthorized;
+                [switchView addTarget:self action:@selector(youtubeAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                //                cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
+                //                cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
                 break;
             }
+            case ScrobbleRow:{
+                cell.textLabel.text = @"Last.fm";
+                NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
+//                cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
+//                cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
+                switchView.on = lastFMUser? YES:NO;
+                [switchView addTarget:self action:@selector(scrobbleAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                }
+                break;
+            
+            
             case FacebookRow:{
                 NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 BOOL facebookLogIn = NO;
@@ -260,9 +298,58 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                    || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) facebookLogIn = YES;
                 
                 cell.textLabel.text = @"Facebook";
-                cell.detailTextLabel.text = facebookLogIn? [displayName stringByAppendingString:@"✓"] : @"Unauthorized✗";
-                cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
                 
+                switchView.on = facebookLogIn;
+                [switchView addTarget:self action:@selector(facebookAuthroize) forControlEvents:UIControlEventValueChanged];
+                
+//                cell.detailTextLabel.text = facebookLogIn? [displayName stringByAppendingString:@"✓"] : @"Unauthorized✗";
+//                cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
+                
+                
+                break;
+            }
+            case SpotifyRow:{
+                cell.textLabel.text = @"Spotify";
+                
+                switchView.on = self.spotifyAuthorized;
+                [switchView addTarget:self action:@selector(spotifyAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                break;
+            }
+            case PandoraRow:{
+                cell.textLabel.text = @"Pandora";
+                
+                switchView.on = self.pandoraAuthorized;
+                [switchView addTarget:self action:@selector(pandoraAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                break;
+            }
+            case RdioRow:{
+//                UIImage *image = [UIImage imageNamed:@"rdio-logo.png"];
+//                UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(leftOffset, topOffset, 80, 28)];
+//                [imageView setImage:image];
+//                [cell addSubview:imageView];
+//                [cell bringSubviewToFront:imageView];
+                
+                cell.textLabel.text = @"Rdio";
+                switchView.on = self.rdioAuthorized;
+                [switchView addTarget:self action:@selector(rdioAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                break;
+            }
+            case DeezerRow:{
+                cell.textLabel.text = @"Deezer";
+                
+                switchView.on = self.deezerAuthorized;
+                [switchView addTarget:self action:@selector(deezerAuthorize) forControlEvents:UIControlEventValueChanged];
+                
+                break;
+            }
+            case EightTracksRow:{
+                cell.textLabel.text = @"EightTracks";
+                
+                switchView.on = self.eightTracksAuthorized;
+                [switchView addTarget:self action:@selector(eightTrackAuthorize) forControlEvents:UIControlEventValueChanged];
                 
                 break;
             }
@@ -291,22 +378,25 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
         }
     }else if (indexPath.section == LinkedAccount){
+        //Disable userinteraction
+        return;
+        
         switch (indexPath.row) {
             case ScrobbleRow:
-                [self scrobbleAuthorize];
+//                [self scrobbleAuthorize];
                 break;
             case RdioRow:
-                [self rdioAuthorize];
+//                [self rdioAuthorize];
                 break;
             case YoutubeRow:
-                [self youtubeAuthorize];
+//                [self youtubeAuthorize];
                 break;
             case FacebookRow:{
                 BOOL integratedWithParse = [[[PFUser currentUser] objectForKey:kClassUserFacebookIntegratedWithParse] boolValue];
                 if (integratedWithParse) {
-                    [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Avibe account has been linked to Facebook, can't be changed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+//                    [[[UIAlertView alloc] initWithTitle:@"Alert" message:@"Avibe account has been linked to Facebook, can't be changed." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
                 }else{
-                    [self facebookAuthroize];
+//                    [self facebookAuthroize];
                 }
                 break;
             }
@@ -316,6 +406,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         
     }
 }
+
 #pragma mark - Cell selected method for Avibe account
 - (void)displaynameSelected
 {
@@ -473,44 +564,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 
 #pragma mark - TableViewcell selected method for linked account
-- (void)scrobbleAuthorize
-{
-    NSString *lastFMAccount = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
-    if (lastFMAccount == nil || [lastFMAccount isEqualToString:@""]) {
-        _scrobbleAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter username and password to authorize with Last.fm." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-        _scrobbleAlertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
-        [_scrobbleAlertView show];
-    }else{
-        _scrobbleRevokeAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Last.fm authorization?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-        _scrobbleRevokeAlertView.alertViewStyle = UIAlertViewStyleDefault;
-        [_scrobbleRevokeAlertView show];
-    }
-    
-//
-//    
-//    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
-//    _scrobbleAuthorizeViewController.previousViewController = self;
-//    
-//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
-//    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
-}
-- (void)rdioAuthorize
-{
-//    if (_rdioAutorizationSucceed) {
-//        _rdioConfirmAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Rdio authorization" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
-//        [_rdioConfirmAlertView show];
-//    } else {
-//        [AppDelegate rdioInstance].delegate = self;
-//        [[AppDelegate rdioInstance] authorizeFromController:self];
-//    }
-    
-    
-//    _rdioAuthorizeViewController = [[RdioAuthorizeViewController alloc] init];
-//    _rdioAuthorizeViewController.previousViewController = self;
-//    
-//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_rdioAuthorizeViewController];
-//    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
-}
+
 - (void)youtubeAuthorize
 {
     if (!_youtubeAuthorized) {
@@ -535,6 +589,29 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 {
     [[PublicMethod sharedInstance] revokeAccess];
 }
+
+- (void)scrobbleAuthorize
+{
+    NSString *lastFMAccount = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
+    if (lastFMAccount == nil || [lastFMAccount isEqualToString:@""]) {
+        _scrobbleAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Please enter username and password to authorize with Last.fm." delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _scrobbleAlertView.alertViewStyle = UIAlertViewStyleLoginAndPasswordInput;
+        [_scrobbleAlertView show];
+    }else{
+        _scrobbleRevokeAlertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:@"Are you sure to revoke Last.fm authorization?" delegate:self cancelButtonTitle:@"Yes" otherButtonTitles:@"No", nil];
+        _scrobbleRevokeAlertView.alertViewStyle = UIAlertViewStyleDefault;
+        [_scrobbleRevokeAlertView show];
+    }
+    
+    //
+    //
+    //    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
+    //    _scrobbleAuthorizeViewController.previousViewController = self;
+    //
+    //    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
+    //    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+
 - (void)facebookAuthroize
 {
     // If the session state is any of the two "open" states when the button is clicked
@@ -614,6 +691,48 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
 }
 
+//Link Facebook
+- (void)linkFacebookAuthorize:(BOOL)authorized identifier:(NSString*)identifier defaultKey:(NSString*)key
+{
+    if (!authorized) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LinkFacebookStoryboard" bundle:nil];
+        LinkFacebookViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+        viewController.delegate = self;
+        
+        MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:viewController];
+        [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+    }
+    
+    [defaults setBool:!authorized forKey:key];
+}
+
+- (void)spotifyAuthorize
+{
+    [self linkFacebookAuthorize:self.spotifyAuthorized identifier:@"Spotify" defaultKey:spotifyDefault];
+    self.spotifyAuthorized = !self.spotifyAuthorized;
+}
+- (void)pandoraAuthorize
+{
+    [self linkFacebookAuthorize:self.pandoraAuthorized identifier:@"Pandora" defaultKey:pandoraDefault];
+    self.pandoraAuthorized = !self.pandoraAuthorized;
+}
+- (void)rdioAuthorize
+{
+    [self linkFacebookAuthorize:self.rdioAuthorized identifier:@"Rdio" defaultKey:rdioDefault];
+    self.rdioAuthorized = !self.rdioAuthorized;
+}
+- (void)deezerAuthorize
+{
+    [self linkFacebookAuthorize:self.deezerAuthorized identifier:@"Deezer" defaultKey:deezerDefault];
+    self.deezerAuthorized = !self.deezerAuthorized;
+}
+- (void)eightTrackAuthorize
+{
+    [self linkFacebookAuthorize:self.eightTracksAuthorized identifier:@"EightTracks" defaultKey:eightTracksDefault];
+    self.eightTracksAuthorized = !self.eightTracksAuthorized;
+}
+
+
 #pragma mark - Last.fm Authorization
 - (void)makePostRequestToGetMobileSession:(NSString*)username password:(NSString*)password
 {
@@ -672,7 +791,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSLog(@"%d", [httpResponse statusCode]);
+    NSLog(@"%ld", (long)[httpResponse statusCode]);
     
     //200 means successful
     if ([httpResponse statusCode] == 200) {
