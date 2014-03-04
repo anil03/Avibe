@@ -85,6 +85,7 @@
 @property BOOL rdioAuthorized;
 @property BOOL deezerAuthorized;
 @property BOOL eightTracksAuthorized;
+@property UIView *floatingView;
 
 //Authorization Sources
 @property (nonatomic, strong) ScrobbleAuthorizeViewController *scrobbleAuthorizeViewController;
@@ -112,6 +113,10 @@ static NSString* const eightTracksDefault = @"EightTracksAuthorized";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //Touch Event
+    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    [self.view addGestureRecognizer:tap];
     
     //Constant
     leftOffset = 15;
@@ -692,15 +697,81 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 
 //Link Facebook
+- (void)showViewController:(NSString*)identifier
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LinkFacebookStoryboard" bundle:nil];
+    LinkFacebookViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
+    viewController.delegate = self;
+    
+    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:viewController];
+    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+}
+- (void)showFloatingView:(NSString*)identifier
+{
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float widthForImage = width;
+    float heightForImage;
+    
+    UIImage *image;
+    UIImageView *imageView;
+    
+    if ([identifier isEqualToString:@"Spotify"]) {
+        image = [UIImage imageNamed:@"Spotify.png"];
+        widthForImage = width*1.5;
+        heightForImage = image.size.height/image.size.width*widthForImage;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, 50, widthForImage, heightForImage)];
+        imageView.image = image;
+    }else if ([identifier isEqualToString:@"Pandora"]) {
+        image = [UIImage imageNamed:@"Pandora.png"];
+        widthForImage = width;
+        heightForImage = image.size.height/image.size.width*widthForImage;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
+        imageView.image = image;
+    }else if ([identifier isEqualToString:@"Rdio"]) {
+        image = [UIImage imageNamed:@"Rdio.png"];
+        widthForImage = width;
+        heightForImage = image.size.height/image.size.width*widthForImage;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
+        imageView.image = image;
+    }else if ([identifier isEqualToString:@"Deezer"]) {
+        image = [UIImage imageNamed:@"Deezer.png"];
+        widthForImage = width;
+        heightForImage = image.size.height/image.size.width*widthForImage;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 120, widthForImage, heightForImage)];
+        imageView.image = image;
+    }else if ([identifier isEqualToString:@"EightTracks"]) {
+        image = [UIImage imageNamed:@"8tracks.png"];
+        widthForImage = width;
+        heightForImage = image.size.height/image.size.width*widthForImage;
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, widthForImage, heightForImage)];
+        imageView.image = image;
+    }
+    
+    [_floatingView removeFromSuperview];
+    _floatingView = [[UIView alloc] init];
+    [_floatingView addSubview:imageView];
+    
+    [self.view addSubview:_floatingView];
+    [self.view bringSubviewToFront:_floatingView];
+}
+- (void)handleTap:(UITapGestureRecognizer *)sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        [_floatingView removeFromSuperview];
+    }
+}
+
+
 - (void)linkFacebookAuthorize:(BOOL)authorized identifier:(NSString*)identifier defaultKey:(NSString*)key
 {
     if (!authorized) {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LinkFacebookStoryboard" bundle:nil];
-        LinkFacebookViewController *viewController = [storyboard instantiateViewControllerWithIdentifier:identifier];
-        viewController.delegate = self;
-        
-        MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:viewController];
-        [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
+        //Switch to show viewcontroller with image or just a subview of setting
+//        [self showViewController:identifier];
+        [self showFloatingView:identifier];
+    }else{
+        [_floatingView removeFromSuperview];
     }
     
     [defaults setBool:!authorized forKey:key];
