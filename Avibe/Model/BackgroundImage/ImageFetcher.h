@@ -10,7 +10,7 @@
 
 @interface ImageFetcher : NSObject
 
-- (id)initWithLimit:(int)limit andTerm:(NSString*)term;
+- (id)initWithLimit:(NSInteger)limit andTerm:(NSString*)term;
 - (NSArray*)getAlbumImages;
 
 @end

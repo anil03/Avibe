@@ -44,15 +44,8 @@
         _pfUserArray = [[NSMutableArray alloc] init];
         
         _backgroundImages = [[NSMutableArray alloc] init];
-
-        /*Online search for background images, but slow*/
-        NSArray *artistArray = @[@"Justin+Timberlake", @"Katy+Perry", @"Pitbull", @"OneRepublic", @"Eminem", @"One+Direction", @"Passenger", @"Lorde", @"Avicii", @"Imagine+Dragons", @"Beyonce", @"Miley+Cyrus", @"Rihanna", @"Lady+Gaga", @"Calvin+Harris", @"Rihanna", @"Daft+Punk", @"Bastille", @"Drake", @"Jason+Derulo", @"Lana+Del+Rey", @"Martin+Garrix", @"Britney+Spears", @"Robin+Thicke", @"Macklemore", @"Ryan+Lewis", @"Michael+Buble", @"Stromae", @"Arctic+Moneys", @"Pharrell", @"Justin+Bieber", @"John+Newman", @"Demi+Lovato", @"Ed+Sheeran", @"Kid+Ink", @"Lily+Allen", @"Adele", @"Beatles", @"Killers", @"Leona", @"Greenday", @"Ariana+Grande", @"Westlife"];
-        for(NSString *artist in artistArray){
-            [self searchForImages:1 andTerm:artist];
-        }
+        [self setupBackImages];
         
-        /*Use predefine images*/
-        //...
         
         
     }
@@ -86,6 +79,54 @@
 }
 
 #pragma mark - Fetch images
+- (void)setupBackImages
+{
+    NSUInteger limit = 500;
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&format=json&results=%lu&bucket=song_hotttnesss&sort=song_hotttnesss-desc",limit];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+//    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchUrl];
+        [self performSelectorOnMainThread:@selector(fetchHotArtistListFromEchoNest:)
+                               withObject:data waitUntilDone:YES];
+//    });
+}
+- (void)fetchHotArtistListFromEchoNest:(NSData*)responseData
+{
+    //Artist used to search artist album image from iTune
+    NSMutableSet *artistArray;
+    if(!responseData){
+        artistArray = [NSMutableSet setWithArray:@[@"Justin+Timberlake", @"Katy+Perry", @"Pitbull", @"OneRepublic", @"Eminem", @"One+Direction", @"Passenger", @"Lorde", @"Avicii", @"Imagine+Dragons", @"Beyonce", @"Miley+Cyrus", @"Rihanna", @"Lady+Gaga", @"Calvin+Harris", @"Rihanna", @"Daft+Punk", @"Bastille", @"Drake", @"Jason+Derulo", @"Lana+Del+Rey", @"Martin+Garrix", @"Britney+Spears", @"Robin+Thicke", @"Macklemore", @"Ryan+Lewis", @"Michael+Buble", @"Stromae", @"Arctic+Moneys", @"Pharrell", @"Justin+Bieber", @"John+Newman", @"Demi+Lovato", @"Ed+Sheeran", @"Kid+Ink", @"Lily+Allen", @"Adele", @"Beatles", @"Killers", @"Leona", @"Greenday", @"Ariana+Grande", @"Westlife"]];
+    }else{
+        artistArray = [[NSMutableSet alloc] init];
+        
+        NSError* error = nil;
+        NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+        NSDictionary *songs;
+        if(json && json[@"response"]){
+            songs = json[@"response"][@"songs"];
+        }
+        if(songs){
+            for(NSDictionary *song in songs){
+                NSString *title = song[@"title"];
+                NSString *artist = song[@"artist_name"];
+                
+                [artistArray addObject:artist];
+            }
+        }
+    }
+    
+    
+    /*
+     * Search hot artist one by one
+     * Online search for background images, but slow
+     */
+    for(NSString *artist in artistArray){
+        [self searchForImages:1 andTerm:artist];
+    }
+
+}
+
 /**
  * Hugely improve app loading speed for just load image at the frist time, then save locally
  * Next time, just load local image instead of download images again.
@@ -120,7 +161,7 @@
     for (NSUInteger i = 0; i < count; ++i) {
         // Select a random element between i and end of array to swap with.
         NSInteger nElements = count - i;
-        NSInteger n = arc4random_uniform(nElements) + i;
+        NSInteger n = arc4random_uniform((int)nElements) + i;
         [shuffleBackGroundImages exchangeObjectAtIndex:i withObjectAtIndex:n];
     }
     return shuffleBackGroundImages;
@@ -240,9 +281,9 @@
             //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
 //            NSString *title = [snippet objectForKey:@"title"];
             //Thumbnails
-            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
-            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
-            NSString *thumbnailHighURL = [high objectForKey:@"url"];
+//            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
+//            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
+//            NSString *thumbnailHighURL = [high objectForKey:@"url"];
             NSString *videoId;
             if (snippet && snippet[@"resourceId"]) {
                  videoId = snippet[@"resourceId"][@"videoId"];

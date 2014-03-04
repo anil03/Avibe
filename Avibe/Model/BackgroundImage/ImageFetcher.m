@@ -10,7 +10,7 @@
 
 @interface ImageFetcher ()
 
-@property int limit;
+@property NSInteger limit;
 @property NSString *term;
 
 @end
@@ -19,13 +19,13 @@
 
 static NSString *const kURLString = @"https://itunes.apple.com/search?";
 
-- (id)initWithLimit:(int)limit andTerm:(NSString*)term
+- (id)initWithLimit:(NSInteger)limit andTerm:(NSString*)term
 {
     self = [super init];
     
     if (self) {
         _limit = limit;
-        _term = term;
+        _term = [term stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     }
     
     return self;
