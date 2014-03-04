@@ -276,9 +276,10 @@
     [self.view addSubview:_leftTime];
     
     //Button View
+    float playButtonSize = 36;
     float buttonSize = 24;
     [_playButton removeFromSuperview];
-    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-buttonSize/2, height-buttonSize, buttonSize, buttonSize)];
+    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playButtonSize/2, height-playButtonSize, playButtonSize, playButtonSize)];
     [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
     
     [_playButton setBackgroundImage:[UIImage imageNamed:@"start-32.png"] forState:UIControlStateNormal];
