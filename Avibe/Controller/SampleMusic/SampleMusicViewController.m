@@ -206,8 +206,8 @@
 
     //Size Specification
     barHeight = self.mm_drawerController.navigationController.navigationBar.frame.size.height;
-    float titleLabelHeight = 30;
-    float infoLabelHight = 30;
+//    float titleLabelHeight = 30;
+//    float infoLabelHight = 30;
     float bottomOffset = 15;
     
     width = [[UIScreen mainScreen] bounds].size.width;
@@ -252,7 +252,7 @@
     bottomOfScrollView = currentHeight;
     _tableViewRows = 8;
     _tableViewRowHeight = 50.0f;
-    [self addMoreLikeThisView];
+    [self addSimilarSongView];
     
     //Progress View
     _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
@@ -363,7 +363,7 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_collectionViewUrl]];
     }
 }
-- (void)addMoreLikeThisView
+- (void)addSimilarSongView
 {
     moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
     moreLabel.backgroundColor = backgroundColor;
@@ -378,7 +378,7 @@
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableView.dataSource = self;
-    tableView.delegate = self;
+//    tableView.delegate = self;
     [tableView setHidden:YES];
     [_addMoreLikeThisView addSubview:tableView];
 }
@@ -574,7 +574,7 @@
     /**
      * https://developers.google.com/youtube/iframe_api_reference
      */
-    NSString* embedHTML = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <body>  <div id=\"player\"></div> <script> var tag = document.createElement('script');  tag.src = \"https://www.youtube.com/iframe_api\"; var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '390', width: '640', videoId: 'M7lc1UVf-VE', events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange } }); } function onPlayerReady(event) {  event.target.playVideo(); } var done = false; function onPlayerStateChange(event) { if (event.data == YT.PlayerState.PLAYING && !done) { setTimeout(stopVideo, 6000); done = true; } } function stopVideo() { player.stopVideo(); } </script> </body>  </html>", videoUrl];
+//    NSString* embedHTML = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <body>  <div id=\"player\"></div> <script> var tag = document.createElement('script');  tag.src = \"https://www.youtube.com/iframe_api\"; var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '390', width: '640', videoId: 'M7lc1UVf-VE', events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange } }); } function onPlayerReady(event) {  event.target.playVideo(); } var done = false; function onPlayerStateChange(event) { if (event.data == YT.PlayerState.PLAYING && !done) { setTimeout(stopVideo, 6000); done = true; } } function stopVideo() { player.stopVideo(); } </script> </body>  </html>", videoUrl];
 }
 - (void)playYoutube:(NSString*)videoURL
 {
@@ -643,10 +643,14 @@
     [_sampleMusicImageView setImage:albumImage];
     
     //Set background image for scroll view when setting album image
-    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:self.view.frame];
+//    float imageHeight = albumImage.size.height;
+//    float imageWidth = albumImage.size.width;
+//    float portion = imageHeight/imageWidth;
+    
+    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(-width/2, barHeight, height, height)];
     [scrollBackgroundView setImage:albumImage];
     //Mask for ScrollBackgroundView
-    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:scrollBackgroundView.frame];
+    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:CGRectMake(width/2, 0, width, height)];
     [scrollBackgroundViewMask setBackgroundColor:[ColorConstant backgroundViewMaskColor]];
     [scrollBackgroundView addSubview:scrollBackgroundViewMask];
     
@@ -779,7 +783,7 @@
         songs = json[@"response"][@"songs"];
     }
     
-    
+    int songCount = 0;
     for(NSDictionary *song in songs){
         
         NSString *title = song[@"title"];
@@ -791,28 +795,13 @@
             imageUrl = tracks[0][@"release_image"];
         }
         
-        if(title && artist && imageUrl){
+        if(title && artist && imageUrl && songCount < 3){
             NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[title,artist,imageUrl] forKeys:@[@"title",@"artist",@"imageUrl"]];
             [_songsForTableView addObject:dict];
+            
+            songCount++;
         }
-    }
-    
-    if([_songsForTableView count] > 0){
-        [moreLabel setHidden:NO];
-        [tableView setHidden:NO];
         
-//        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+5);
-        
-//        [scrollView setFrame:CGRectMake(0, 0, width, bottomOfScrollView)];
-        
-//        [scrollView setContentSize:CGSizeMake(width, bottomOfScrollView)];
-        
-//        [moreLabel setFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
-//        [tableView setFrame:CGRectMake(0, currentHeight+buttonHeight, width, [_songsForTableView count]*_tableViewRowHeight)];
-        
-        [tableView reloadData];
-    }else{
-//        [scrollView setFrame:CGRectMake(0, 0, width, height)];
     }
     
     if([_artistsArrray count] > 0 && _artistFetchCount < 4){
@@ -821,18 +810,26 @@
             [self callEchoNestForSongsOfArtist:artist];
             [_artistsArrray removeLastObject];
         }
+    }else{
+        if([_songsForTableView count] > 0){
+            [moreLabel setHidden:NO];
+            [tableView setHidden:NO];
+            
+            [tableView reloadData];
+        }
+       
     }
 }
 
 #pragma mark - UITableView
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    [_songsForTableView shuffle];
+    if([_songsForTableView count] > 0)[_songsForTableView shuffle];
     return [_songsForTableView count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 0;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
