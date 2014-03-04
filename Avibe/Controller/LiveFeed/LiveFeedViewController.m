@@ -187,7 +187,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     cell.label.textColor = [ColorConstant liveFeedTextColor];
     
     //Data source
-    int index = indexPath.row/columnNumber;
+    int index = (int) indexPath.row/columnNumber;
     cell.label.numberOfLines = 2;
     
     PFObject *song = [self.PFObjects objectAtIndex:index];
@@ -262,12 +262,17 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     if ([text isEqualToString:@""]) return;
     
     
-    NSLog(@"indexPath:%d", indexPath.row);
+//    NSLog(@"indexPath:%d", indexPath.row);
+    
+    //Data source
+    int index = (int)indexPath.row/columnNumber;
+    PFObject *song = [self.PFObjects objectAtIndex:index];
     
     switch (indexPath.row%columnNumber) {
         case 0:{
 //            NSLog(@"User Name");
-            _userViewController = [[UserViewController alloc] initWithUsername:cell.label.text];
+            NSString *username = [song objectForKey:kClassSongUsername];
+            _userViewController = [[UserViewController alloc] initWithUsername:username];
             _userViewController.previousViewController = self;
             
             MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_userViewController];

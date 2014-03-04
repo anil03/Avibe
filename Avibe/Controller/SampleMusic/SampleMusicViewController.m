@@ -673,6 +673,8 @@
     if (iTuneSrouce){
         return;
     }
+    
+    [self getImageFromDefault];
 }
 - (BOOL)getImageFromEchoNest
 {
@@ -696,8 +698,8 @@
     
     if (songs && [songs count] > 0) {
         NSDictionary *song = songs[0];
-        NSString *title = song[@"title"];
-        NSString *artist = song[@"artist_name"];
+//        NSString *title = song[@"title"];
+//        NSString *artist = song[@"artist_name"];
         NSArray *tracks = song[@"tracks"];
         NSString *imageUrl;
         if(tracks && [tracks count] > 0){
@@ -735,6 +737,10 @@
         return YES;
     }
     return NO;
+}
+- (void)getImageFromDefault
+{
+    self.albumImage = [UIImage imageNamed:@"avibe_icon_120_120.png"];
 }
 
 #pragma mark - Audio play method
