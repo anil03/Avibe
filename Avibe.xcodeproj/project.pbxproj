@@ -657,7 +657,7 @@
 				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
 				4CDEF2AA1883997E00CBD40E /* SampleMusic */,
 				4C23F17B1885D59E00D2075A /* ShareMusic */,
-				4C231D701881DC1300B030F9 /* BackgroundImage */,
+				4C231D701881DC1300B030F9 /* BackgroundImageFetcher */,
 				4C4184CF18A1C72500999660 /* Archive */,
 			);
 			path = Model;
@@ -723,12 +723,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4C231D701881DC1300B030F9 /* BackgroundImage */ = {
+		4C231D701881DC1300B030F9 /* BackgroundImageFetcher */ = {
 			isa = PBXGroup;
 			children = (
 				4C231DD71881E88500B030F9 /* ImageFetcher.h */,
 				4C231DD81881E88500B030F9 /* ImageFetcher.m */,
 			);
+			name = BackgroundImageFetcher;
 			path = BackgroundImage;
 			sourceTree = "<group>";
 		};

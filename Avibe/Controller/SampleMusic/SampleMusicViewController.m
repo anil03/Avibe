@@ -93,6 +93,7 @@
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
+@property NSString * songImageUrl;
 @property (nonatomic, strong) NSString *collectionViewUrl;
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
@@ -222,34 +223,34 @@
 - (void)setupMusicView
 {
     playerHeight = 200;
-    playerImageWidth = width/2;
-    playerImageHeight = playerHeight*2/3;
+    
+    playerImageWidth = 200;//width/2;
+    playerImageHeight = 200;//playerHeight*2/3;
+    
     playerProgressWidth = width*2/3;
-    playerProgressHeight = (playerHeight-playerImageHeight)/2;
-    playerLabelWidth = 30.0f;
+    playerProgressHeight = 36.0;
+    playerLabelWidth = 36.0f;
     playerLabelHeight = playerProgressHeight;
-    playerButtonWidth = 30.0f;
-    playerButtonHeight = playerProgressHeight;
-    //    [self.view addSubview:_sampleMusicITuneView];
+    
+    playerButtonWidth = 36.0f;
+    playerButtonHeight = playerButtonWidth;
+    
+    float buttonSize = 24;
     
     //iTune Image View
     float imageViewTopOffset = 30.0f;
-    float moreLikeThisViewTopOffset = 10.0f;
-    float moreLikeThisViewHeight = height-playerButtonHeight-playerProgressHeight - (barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset);
-    
     _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, barHeight+imageViewTopOffset, playerImageWidth, playerImageHeight)];
     [self.view addSubview:_sampleMusicImageView];
     
     //More like this
+    float moreLikeThisViewTopOffset = 10.0f;
+    float moreLikeThisViewBottomOffset = 10.0f;
+    float moreLikeThisViewHeight = height-(barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset+moreLikeThisViewBottomOffset)-playerButtonHeight-playerProgressHeight;
     _addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset, width, moreLikeThisViewHeight)];
     [_addMoreLikeThisView setHidden:YES];
     [self.view addSubview:_addMoreLikeThisView];
     
     //More Like this Parameter
-
-    
-    currentHeight += buttonHeight*1.5;
-    bottomOfScrollView = currentHeight;
     _tableViewRows = 8;
     _tableViewRowHeight = 50.0f;
     [self addSimilarSongView];
@@ -258,7 +259,6 @@
     _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
     [_progress setProgressViewStyle:UIProgressViewStyleBar];
     [self.view addSubview:_progress];
-    
     
     float fontSize = 12.0;
     _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, height-playerButtonHeight-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
@@ -276,10 +276,8 @@
     [self.view addSubview:_leftTime];
     
     //Button View
-    float playButtonSize = 36;
-    float buttonSize = 24;
     [_playButton removeFromSuperview];
-    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playButtonSize/2, height-playButtonSize, playButtonSize, playButtonSize)];
+    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playerButtonWidth/2, height-playerButtonHeight, playerButtonWidth, playerButtonHeight)];
     [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
     
     [_playButton setBackgroundImage:[UIImage imageNamed:@"start-32.png"] forState:UIControlStateNormal];
@@ -401,26 +399,18 @@
 }
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
-    //Enable User interaction
-    //    self.view.userInteractionEnabled = YES;
-    [_spinner stopAnimating];
-    
-    //Update origin song
+    //Update origin song info
     _songTitle = [songInfo objectForKey:@"title"];
     _songAlbum = [songInfo objectForKey:@"album"];
     _songArtist = [songInfo objectForKey:@"artist"];
     _collectionViewUrl = [songInfo objectForKey:@"collectionViewUrl"];
-    
-    //Set Song Title
+    _songImageUrl = [songInfo objectForKey:@"imageURL"];
     _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
     
-    //Album image
-    [self handleAlbumImage:[songInfo objectForKey:@"imageURL"]];
     
-    //Player
+    //Music Player
     NSError* __autoreleasing audioError = nil;
     AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
-    
     if (!audioError) {
         _player = newPlayer;
         _player.delegate = self;
@@ -439,14 +429,18 @@
         NSLog(@"Audio Error!");
     }
     
+    //User interface
     [_playButton setHidden:NO];
     [_shareButton setHidden:NO];
     [_playSourceButton setHidden:NO];
     [_iTuneButton setHidden:NO];
     [_addMoreLikeThisView setHidden:NO];
-    
+    //Album image
+    [self handleAlbumImage];
+    //Recommended songs
     [self fetchFromEchoNest];
-
+    //Spinner
+    [_spinner stopAnimating];
     
 }
 - (void)finishFetchDataWithError:(NSError *)error
@@ -658,19 +652,89 @@
     [self.view addSubview:scrollBackgroundView];
     [self.view sendSubviewToBack:scrollBackgroundView];
 }
-
-- (void)handleAlbumImage:(NSString*)imageUrlFromITune
+/**
+ * Get image from Echo Nest
+ * Then try saved album url
+ * Last try iTune image
+ */
+- (void)handleAlbumImage
+{
+    BOOL echoNestSource = [self getImageFromEchoNest];
+    if (echoNestSource) {
+        return;
+    }
+    
+    BOOL parseSource = [self getImageFromParse];
+    if (parseSource) {
+        return;
+    }
+    
+    BOOL iTuneSrouce = [self getImageFromITune];
+    if (iTuneSrouce){
+        return;
+    }
+}
+- (BOOL)getImageFromEchoNest
+{
+    NSString *title = [_songTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *artist = [_songArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&format=json&results=1&artist=%@&title=%@&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks", artist, title];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+    NSData* responseData = [NSData dataWithContentsOfURL:
+                    searchUrl];
+    
+    //Return if no data
+    if(!responseData) return NO;
+    
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    
+    NSArray *songs;
+    if(json && json[@"response"]){
+        songs = json[@"response"][@"songs"];
+    }
+    
+    if (songs && [songs count] > 0) {
+        NSDictionary *song = songs[0];
+        NSString *title = song[@"title"];
+        NSString *artist = song[@"artist_name"];
+        NSArray *tracks = song[@"tracks"];
+        NSString *imageUrl;
+        if(tracks && [tracks count] > 0){
+            imageUrl = tracks[0][@"release_image"];
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+            if (imageData) {
+                self.albumImage = [UIImage imageWithData:imageData];
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+- (BOOL)getImageFromParse
 {
     NSString *imageUrlFromParse = [_pfObject objectForKey:kClassSongAlbumURL];
     if (imageUrlFromParse) { //Parse image
         NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
         if (imageDataFromParse) {
             self.albumImage = [UIImage imageWithData:imageDataFromParse];
+            return YES;
         }
-    }else if(imageUrlFromITune){ //iTune image
-        NSData *imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
-        self.albumImage = [UIImage imageWithData:imageDataFromITune];
     }
+    return NO;
+}
+- (BOOL)getImageFromITune
+{
+    NSData *imageDataFromITune;
+    if (_collectionViewUrl) {
+        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:_songImageUrl]];
+    }
+    if (imageDataFromITune) {
+        self.albumImage = [UIImage imageWithData:imageDataFromITune];
+        return YES;
+    }
+    return NO;
 }
 
 #pragma mark - Audio play method
@@ -772,7 +836,10 @@
 - (void)fetchFromEchoNestSongsOfArtist:(NSData*)responseData
 {
     //Return if no data
-    if(!responseData) return;
+    if(!responseData){
+        [self noDataFromEchoNest];
+        return;
+    }
 
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
@@ -815,9 +882,15 @@
             [tableView setHidden:NO];
             
             [tableView reloadData];
+        }else{
+            [self noDataFromEchoNest];
         }
        
     }
+}
+- (void)noDataFromEchoNest
+{
+    [_sampleMusicImageView setFrame:CGRectMake(width/2-playerImageWidth/2, height/2-playerImageHeight/2, playerImageWidth, playerImageHeight)];
 }
 
 #pragma mark - UITableView
