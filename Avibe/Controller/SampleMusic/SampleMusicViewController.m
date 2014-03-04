@@ -783,7 +783,7 @@
         songs = json[@"response"][@"songs"];
     }
     
-    int songCount = 0;
+//    int songCount = 0;
     for(NSDictionary *song in songs){
         
         NSString *title = song[@"title"];
@@ -795,12 +795,10 @@
             imageUrl = tracks[0][@"release_image"];
         }
         
-        if(title && artist && imageUrl && songCount < 3){
+        if(title && artist && imageUrl){
             NSDictionary *dict = [NSDictionary dictionaryWithObjects:@[title,artist,imageUrl] forKeys:@[@"title",@"artist",@"imageUrl"]];
             [_songsForTableView addObject:dict];
-            
-            songCount++;
-        }
+                    }
         
     }
     
@@ -838,7 +836,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString * CellIdentifier = @"Cell";
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     
     NSDictionary *dict = _songsForTableView[indexPath.row];
     assert(dict != nil);
