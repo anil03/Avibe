@@ -55,6 +55,7 @@
                              leftDrawerViewController:_leftSideNavController];
     
     //Set Side Menu Parameters
+    [self.view setGestureRecognizers:nil]; //Disable gesture to open drawer
     [self setRestorationIdentifier:@"MMDrawer"];
     [self setShowsShadow:YES];
     [self setAnimationVelocity:1500];

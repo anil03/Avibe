@@ -696,7 +696,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     }
 }
 
-//Link Facebook
+#pragma mark - Cell selected method Link Facebook
 - (void)showViewController:(NSString*)identifier
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"LinkFacebookStoryboard" bundle:nil];

@@ -41,8 +41,9 @@
     float playerHeight;
     float currentHeight;
     float buttonLeft;
-    
     float buttonHeight;
+    
+    float barHeight;
     
     //iTune View
     float playerImageWidth;
@@ -82,6 +83,9 @@
 @property (strong, nonatomic) UIProgressView *progress;
 @property (strong, nonatomic) NSTimer *progressTimer;
 @property (strong, nonatomic) UIButton *playButton;
+@property UIButton *shareButton;
+@property UIButton *playSourceButton;
+@property UIButton *iTuneButton;
 @property (nonatomic, retain) AVAudioPlayer *player;
 @property (nonatomic, strong) UIImage *albumImage;
 
@@ -101,6 +105,7 @@
 @property PFObject *pfObject;
 
 //MoreLikeThis View - UITableView
+@property (nonatomic, strong) UIView *addMoreLikeThisView;
 @property UILabel *moreLabel;
 @property (nonatomic, strong) NSMutableArray *songsForTableView;
 @property UITableView *tableView;
@@ -112,6 +117,9 @@
 @property (nonatomic, strong) SampleMusicViewController *sampleMusicViewController;
 @property NSMutableArray *artistsArrray;
 @property NSUInteger artistFetchCount;
+
+//NavigationBar
+@property UILabel *navigationBarTitleLabel;
 
 @end
 
@@ -132,7 +140,6 @@
     if (!_songArtist) _songArtist = @" ";
     _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
 }
-
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
     self = [super init];
@@ -178,92 +185,68 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-//    self.view.userInteractionEnabled = NO;
+    [self setupParameter];
     [self setupNavigationBar];
+
+    //More like this setup
+    _artistsArrray = [[NSMutableArray alloc] init];
+    _artistFetchCount = 0;
+    _songsForTableView = [[NSMutableArray alloc] init];
     
+    [self setupMusicView];
+    [self listenInItune];
+}
+- (void)setupParameter
+{
     backgroundColor = [UIColor clearColor];
     lightBackgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.1];
-
+    
     textColor = [UIColor whiteColor];
     textHighlightColor = [UIColor grayColor];
-    [self.view setBackgroundColor:backgroundColor];
-    
+
     //Size Specification
-    width = [[UIScreen mainScreen] bounds].size.width;
-    height = [[UIScreen mainScreen] bounds].size.height;
-    float barHeight = 10;
+    barHeight = self.mm_drawerController.navigationController.navigationBar.frame.size.height;
     float titleLabelHeight = 30;
     float infoLabelHight = 30;
+    float bottomOffset = 15;
+    
+    width = [[UIScreen mainScreen] bounds].size.width;
+    height = [[UIScreen mainScreen] bounds].size.height-bottomOffset;
+    
+    buttonHeight = 40;
+    buttonLeft = 10;
+    currentHeight = 0;
+}
+
+#pragma mark - Add SubView
+- (void)setupMusicView
+{
     playerHeight = 200;
     playerImageWidth = width/2;
     playerImageHeight = playerHeight*2/3;
-    playerProgressWidth = width/2;
+    playerProgressWidth = width*2/3;
     playerProgressHeight = (playerHeight-playerImageHeight)/2;
     playerLabelWidth = 30.0f;
     playerLabelHeight = playerProgressHeight;
     playerButtonWidth = 30.0f;
     playerButtonHeight = playerProgressHeight;
-    buttonHeight = 40;
-    buttonLeft = 10;
-    currentHeight = 0;
+    //    [self.view addSubview:_sampleMusicITuneView];
     
-    //ScrollView
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, width, height)];
-    [scrollView setBackgroundColor:backgroundColor];
-    [scrollView setContentSize:CGSizeMake(width, height*2)];
-    self.view = scrollView;
+    //iTune Image View
+    float imageViewTopOffset = 30.0f;
+    float moreLikeThisViewTopOffset = 10.0f;
+    float moreLikeThisViewHeight = height-playerButtonHeight-playerProgressHeight - (barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset);
     
-    //Song Info
-    currentHeight = barHeight;
-    _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, titleLabelHeight)];
-    _titleLabel.backgroundColor = backgroundColor;
-    _titleLabel.text = _songTitle;
-    _titleLabel.textColor = textColor;
-    _titleLabel.textAlignment = NSTextAlignmentCenter;
-    _titleLabel.adjustsFontSizeToFitWidth = YES;
-    [scrollView addSubview:_titleLabel];
+    _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, barHeight+imageViewTopOffset, playerImageWidth, playerImageHeight)];
+    [self.view addSubview:_sampleMusicImageView];
     
-    currentHeight += titleLabelHeight;
-    _infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, currentHeight, width, infoLabelHight)];
-    _infoLabel.backgroundColor = backgroundColor;
-//    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", _songAlbum, _songArtist];
-    _infoLabel.textColor = textColor;
-    _infoLabel.textAlignment = NSTextAlignmentCenter;
-    _infoLabel.adjustsFontSizeToFitWidth = YES;
-    [scrollView addSubview:_infoLabel];
+    //More like this
+    _addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset, width, moreLikeThisViewHeight)];
+    [_addMoreLikeThisView setHidden:YES];
+    [self.view addSubview:_addMoreLikeThisView];
     
-    //PlayerView
-    /**
-     Could be Youtube, iTune, ...
-     */
-    currentHeight += infoLabelHight;
-    //Youtube
+    //More Like this Parameter
 
-    //iTune
-    _sampleMusicITuneView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, playerHeight)];
-    [_sampleMusicITuneView setBackgroundColor:backgroundColor];
-    [self listenInItune];
-    //Set Background Image View Height
-    backgroundImageHeight = infoLabelHight*2+playerImageHeight+playerProgressHeight+playerButtonHeight;
-
-    //Button - Listen
-    currentHeight += playerHeight;
-    [self addListenInView];
-    
-    
-    //Button - Buy
-    currentHeight += buttonHeight*1.5;
-    [self addBuyInView];
-    
-    //Button - Share
-    currentHeight += buttonHeight*1.5;
-    [self addShareView];
-    
-    //Label - More Like this
-    _artistsArrray = [[NSMutableArray alloc] init];
-    _artistFetchCount = 0;
-    _songsForTableView = [[NSMutableArray alloc] init];
     
     currentHeight += buttonHeight*1.5;
     bottomOfScrollView = currentHeight;
@@ -271,96 +254,100 @@
     _tableViewRowHeight = 50.0f;
     [self addMoreLikeThisView];
     
-    //Test Rdio Image
-//    [self getRdioMusic];
-}
-
-
-#pragma mark - Rdio Music
-- (void)getRdioMusic
-{
-//    _rdio_userkey = @"s12187116";
-//    _rdio = [[Rdio alloc] initWithConsumerKey:RDIO_CONSUMER_KEY andSecret:RDIO_CONSUMER_SECRET delegate:nil];
-////    [_rdio callAPIMethod:@"get"
-////          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:_rdio_userkey, @"lastSongPlayed,lastSongPlayTime", nil] forKeys:[NSArray arrayWithObjects:@"keys",@"extras", nil]]
-////                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
-//    [_rdio callAPIMethod:@"search"
-//          withParameters:[NSDictionary dictionaryWithObjects:[NSArray arrayWithObjects:@"rolling", @"track", nil] forKeys:[NSArray arrayWithObjects:@"query",@"types", nil]]
-//                delegate:[RDAPIRequestDelegate delegateToTarget:self       loadedAction:@selector(rdioRequest:didLoadData:)              failedAction:@selector(rdioRequest:didFailWithError:)]];
-}
-
-#pragma mark - Rdio delegate method
-- (void)rdioRequest:(RDAPIRequest *)request didFailWithError:(NSError *)error
-{
-    NSLog(@"No Rdio Music Available with error: %@", error);
-}
-
-- (void)rdioRequest:(RDAPIRequest *)request didLoadData:(id)data
-{
-    NSDictionary *userdata = [data objectForKey:_rdio_userkey];
-    NSDictionary *lastSongPlayedData = [userdata objectForKey:@"lastSongPlayed"];
+    //Progress View
+    _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
+    [_progress setProgressViewStyle:UIProgressViewStyleBar];
+    [self.view addSubview:_progress];
     
-    NSString *title = [lastSongPlayedData objectForKey:@"name"];
-    NSString *artist = [lastSongPlayedData objectForKey:@"artist"];
-    NSString *album = [lastSongPlayedData objectForKey:@"album"];
-    //    NSLog(@"Rdio LastSongPlayed: %@, %@, %@", title, artist, album);
     
-    PFObject *songRecord = [PFObject objectWithClassName:@"Song"];
-    [songRecord setObject:title  forKey:@"title"];
-    [songRecord setObject:album forKey:@"album"];
-    [songRecord setObject:artist forKey:@"artist"];
+    float fontSize = 12.0;
+    _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, height-playerButtonHeight-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
+    _playedTime.textColor = textColor;
+    _playedTime.font = [UIFont systemFontOfSize:fontSize];
+    _playedTime.backgroundColor = backgroundColor;
+    _playedTime.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:_playedTime];
+    
+    _leftTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2+playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
+    _leftTime.textColor = textColor;
+    _leftTime.font = [UIFont systemFontOfSize:fontSize];
+    _leftTime.backgroundColor = backgroundColor;
+    _leftTime.adjustsFontSizeToFitWidth = YES;
+    [self.view addSubview:_leftTime];
+    
+    //Button View
+    float buttonSize = 24;
+    [_playButton removeFromSuperview];
+    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-buttonSize/2, height-buttonSize, buttonSize, buttonSize)];
+    [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
+    
+    [_playButton setBackgroundImage:[UIImage imageNamed:@"start-32.png"] forState:UIControlStateNormal];
+    [_playButton setBackgroundImage:[UIImage imageNamed:@"stop-32.png"] forState:UIControlStateSelected];
+    
+    //    [_playButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    //    [_playButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    //    [_playButton setTitle:@"▶︎" forState:UIControlStateNormal];
+    //    [_playButton setTitle:@"◼︎" forState:UIControlStateSelected];
+    [_playButton setHidden:YES];
+    [self.view addSubview:_playButton];
+    
+    //Share button
+    _shareButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-buttonSize*9/2, height-buttonSize, buttonSize, buttonSize)];
+    UIImage *shareButtonImage = [UIImage imageNamed:@"outline-star-32.png"];
+    [_shareButton setBackgroundImage:shareButtonImage forState:UIControlStateNormal];
+    [_shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
+    [_shareButton setHidden:YES];
+    [self.view addSubview:_shareButton];
+    
+    //Play source button
+    _playSourceButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-buttonSize*5/2, height-buttonSize, buttonSize, buttonSize)];
+    [_playSourceButton setBackgroundImage:[UIImage imageNamed:@"youtube-48.png"] forState:UIControlStateNormal];
+    [_playSourceButton setBackgroundImage:[UIImage imageNamed:@"youtube-48-highlight.png"] forState:UIControlStateHighlighted];
+    [_playSourceButton addTarget:self action:@selector(listenInYoutube) forControlEvents:UIControlEventTouchUpInside];
+    [_playSourceButton setHidden:YES];
+    [self.view addSubview:_playSourceButton];
+    
+    //Buy in iTune button
+    _iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2+buttonSize*3/2, height-buttonSize, 64, 24)];
+    [_iTuneButton setBackgroundImage:[UIImage imageNamed:@"Download_on_iTunes_Badge_US-UK_110x40_1004"] forState:UIControlStateNormal];
+    [_iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];
+    //    [_iTuneButton setBackgroundColor:[UIColor whiteColor]];
+    [_iTuneButton setHidden:YES];
+    [self.view addSubview:_iTuneButton];
+    
+    //Spinner
+    _spinner = [[UIActivityIndicatorView alloc]
+                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    _spinner.center = CGPointMake(self.view.frame.size.width/2, self.view.frame.size.height/2);
+    _spinner.hidesWhenStopped = YES;
+    [self.view addSubview:_spinner];
+    [self.view bringSubviewToFront:_spinner];
+    [_spinner startAnimating];
+}
+- (void)shareMusic
+{
+    NSLog(@"Share Music");
+    
+    PFObject *songRecord = [PFObject objectWithClassName:kClassShare];
+    [songRecord setObject:_songTitle  forKey:@"title"];
+    [songRecord setObject:_songAlbum forKey:@"album"];
+    [songRecord setObject:_songArtist forKey:@"artist"];
     [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
     
-//    FilterAndSaveObjects *filter = [[FilterAndSaveObjects alloc] init];
-//    [filter filterDuplicatedDataToSaveInParse:[NSMutableArray arrayWithObject:songRecord] andSource:@"Rdio" andFetchObjects:fetechObjects];
-}
-
-
-#pragma mark - Add SubView
-- (void)addShareView
-{
-    float buttonWidth = buttonHeight;
-    float leftOffset = 100.0f;
-
+    if (!_albumImage) {
+        _albumImage = [UIImage imageNamed:@"default_album.png"];
+    }
+    NSData *imageData = UIImageJPEGRepresentation(_albumImage, 0.05f);
+    /*ImageFile Name should be Error code indicating an invalid channel name. A channel name is either an empty string (the broadcast channel) or contains only a-zA-Z0-9_ characters and starts with a letter.*/
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"yyyy_MM_dd_h_mm"];
+    NSString *lastUpdated = [formatter stringFromDate:[NSDate date]];
+    NSString *imageFileName = [NSString stringWithFormat:@"%@_%@", [[PFUser currentUser] username],lastUpdated];
+    PFFile *imageFile = [PFFile fileWithName:imageFileName data:imageData];
+    [songRecord setObject:imageFile forKey:@"albumImage"];
     
-    UIView *shareView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
-    [shareView setBackgroundColor:backgroundColor];
-    UILabel *shareLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, leftOffset, buttonHeight)];
-    [shareLabel setText:@"Share: "];
-    [shareLabel setTextColor:textColor];
-    shareLabel.textAlignment = NSTextAlignmentLeft;
-    shareLabel.backgroundColor = [UIColor blackColor];
-//    [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
-    [shareView addSubview:shareLabel];
-    [scrollView addSubview:shareView];
-    
-    UIButton *shareButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
-    [shareButton setBackgroundImage:[UIImage imageNamed:@"avibe_icon_120_120"] forState:UIControlStateNormal];
-    [shareButton addTarget:self action:@selector(shareMusic) forControlEvents:UIControlEventTouchUpInside];
-    [shareView addSubview:shareButton];
-
-}
-- (void)addBuyInView
-{
-    _buyInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
-    [_buyInView setBackgroundColor:backgroundColor];
-    [scrollView addSubview:_buyInView];
-    
-    float leftOffset = buttonLeft;
-    float labelWidth = 80;
-//    float buttonWidth = buttonHeight;
-    
-    UILabel *buyLabel = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, labelWidth, buttonHeight)];
-    [buyLabel setText:@"Buy in: "];
-    [buyLabel setTextColor:textColor];
-    buyLabel.backgroundColor = [UIColor blackColor];
-    [_buyInView addSubview:buyLabel];
-    
-    leftOffset = width/2 - 110/2;
-    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, 110, 40)];
-    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"Download_on_iTunes_Badge_US-UK_110x40_1004"] forState:UIControlStateNormal];
-    [iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];
-    [_buyInView addSubview:iTuneButton];
+    _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];
+    [_shareMusicEntry shareMusic];
 }
 - (void)buyInItune
 {
@@ -376,71 +363,100 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_collectionViewUrl]];
     }
 }
-- (void)addListenInView
-{
-    _listenInView = [[UIView alloc] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
-    [_listenInView setBackgroundColor:backgroundColor];
-    [scrollView addSubview:_listenInView];
-    
-    float buttonWidth = buttonHeight;
-    float labelWidth = 80;
-    float leftOffset = buttonLeft;
-    UILabel *listenButton = [[UILabel alloc] initWithFrame:CGRectMake(leftOffset, 0, labelWidth, buttonHeight)];
-    [listenButton setText:@"Listen in: "];
-    [listenButton setTextColor:textColor];
-//    [listenButton setTitle:@"Listen in " forState:UIControlStateNormal];
-//    [listenButton setTitleColor:textColor forState:UIControlStateNormal];
-//    [listenButton setTitleColor:textHighlightColor forState:UIControlStateHighlighted];
-//    listenButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-    listenButton.backgroundColor = [UIColor blackColor];
-    [_listenInView addSubview:listenButton];
-    
-    leftOffset += labelWidth;
-    UIButton *youtubeButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
-    [youtubeButton setBackgroundImage:[UIImage imageNamed:@"youtube-48.png"] forState:UIControlStateNormal];
-    [youtubeButton setBackgroundImage:[UIImage imageNamed:@"youtube-48-highlight.png"] forState:UIControlStateHighlighted];
-    [youtubeButton addTarget:self action:@selector(listenInYoutube) forControlEvents:UIControlEventTouchUpInside];
-    [_listenInView addSubview:youtubeButton];
-    
-    leftOffset += buttonWidth*4/3;
-    UIButton *iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(leftOffset, 0, buttonWidth, buttonHeight)];
-    [iTuneButton setBackgroundImage:[UIImage imageNamed:@"iTunes-10-icon.png"] forState:UIControlStateNormal];
-    [iTuneButton addTarget:self action:@selector(listenInItune) forControlEvents:UIControlEventTouchUpInside];
-    [_listenInView addSubview:iTuneButton];
-    
-}
 - (void)addMoreLikeThisView
 {
-    UIView *addMoreLikeThisView = [[[UIView alloc] init] initWithFrame:CGRectMake(0, currentHeight, width, buttonHeight*10)];
-    [scrollView addSubview:addMoreLikeThisView];
-    
     moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
     moreLabel.backgroundColor = backgroundColor;
     moreLabel.text = @"More Like This:";
     moreLabel.textColor = textColor;
     [moreLabel setHidden:YES];
-    [addMoreLikeThisView addSubview:moreLabel];
+    [_addMoreLikeThisView addSubview:moreLabel];
     
     //UITableView
-    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, buttonHeight, width, _tableViewRows*_tableViewRowHeight) style:UITableViewStylePlain];
+    tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, buttonHeight, width, _addMoreLikeThisView.frame.size.height-buttonHeight) style:UITableViewStylePlain];
 //    UIView *backgroundView = [[BackgroundImageView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, tableView.frame.size.height)];
     [tableView setBackgroundColor:[UIColor clearColor]];
-    [addMoreLikeThisView addSubview:tableView];
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableView.dataSource = self;
     tableView.delegate = self;
     [tableView setHidden:YES];
+    [_addMoreLikeThisView addSubview:tableView];
+}
+
+#pragma mark - iTune Music
+- (void)listenInItune
+{
+    //    [_sampleMusicWebView removeFromSuperview];
     
-    //Fetch from echo nest
-    NSString *artist = [_songArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
-    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/artist/similar?api_key=9PFPYZSZPU9X2PKES&name=%@&format=json", artist];
-    NSURL *searchUrl = [NSURL URLWithString:urlString];
-    dispatch_async(kBgQueue, ^{
-        NSData* data = [NSData dataWithContentsOfURL:
-                        searchUrl];
-        [self performSelectorOnMainThread:@selector(fetchFromEchoNestSimilarArtist:)
-                               withObject:data waitUntilDone:YES];
-    });
+    if (_player) {
+        [_spinner stopAnimating];
+        //        [self.view addSubview:_sampleMusicITuneView];
+    }else{
+        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
+        _samepleMusic = [[SampleMusic_iTune alloc] init];
+        _samepleMusic.delegate = self;
+        [_samepleMusic startSearch:dict];
+    }
+}
+- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
+{
+    //Enable User interaction
+    //    self.view.userInteractionEnabled = YES;
+    [_spinner stopAnimating];
+    
+    //Update origin song
+    _songTitle = [songInfo objectForKey:@"title"];
+    _songAlbum = [songInfo objectForKey:@"album"];
+    _songArtist = [songInfo objectForKey:@"artist"];
+    _collectionViewUrl = [songInfo objectForKey:@"collectionViewUrl"];
+    
+    //Set Song Title
+    _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
+    
+    //Album image
+    [self handleAlbumImage:[songInfo objectForKey:@"imageURL"]];
+    
+    //Player
+    NSError* __autoreleasing audioError = nil;
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
+    
+    if (!audioError) {
+        _player = newPlayer;
+        _player.delegate = self;
+        
+        //Update Progress Slider
+        //        self.progress.maximumValue = self.player.duration;
+        self.progress.userInteractionEnabled = NO;
+        
+        _playedTime.text = @"0:00";
+        int minLeft = self.player.duration/60;
+        int secLeft = ceil(self.player.duration-minLeft*60);
+        _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
+        
+        [_player prepareToPlay];
+    }else{
+        NSLog(@"Audio Error!");
+    }
+    
+    [_playButton setHidden:NO];
+    [_shareButton setHidden:NO];
+    [_playSourceButton setHidden:NO];
+    [_iTuneButton setHidden:NO];
+    [_addMoreLikeThisView setHidden:NO];
+    
+    [self fetchFromEchoNest];
+
+    
+}
+- (void)finishFetchDataWithError:(NSError *)error
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+    //Enable User interaction
+    //    self.view.userInteractionEnabled = YES;
+    [_spinner stopAnimating];
+    
+    [self fetchFromEchoNest];
 }
 
 #pragma mark - Youtube
@@ -616,119 +632,43 @@
     NSLog(@"WebView Load Fail:%@", error);
 }
 
-#pragma mark - iTune Music
-- (void)listenInItune
+#pragma mark - Handle album image
+/**
+ * Get Image from PFObject image url
+ * If fails, then get album image from iTune
+ */
+- (void)setAlbumImage:(UIImage *)albumImage
 {
-    [_sampleMusicWebView removeFromSuperview];
+    _albumImage = albumImage;
+    [_sampleMusicImageView setImage:albumImage];
+    
+    //Set background image for scroll view when setting album image
+    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    [scrollBackgroundView setImage:albumImage];
+    //Mask for ScrollBackgroundView
+    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:scrollBackgroundView.frame];
+    [scrollBackgroundViewMask setBackgroundColor:[ColorConstant backgroundViewMaskColor]];
+    [scrollBackgroundView addSubview:scrollBackgroundViewMask];
+    
+    [self.view addSubview:scrollBackgroundView];
+    [self.view sendSubviewToBack:scrollBackgroundView];
+}
 
-    if (_player) {
-        [_spinner stopAnimating];
-        [scrollView addSubview:_sampleMusicITuneView];
-    }else{
-        [self setupITuneMusicView];
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
-        _samepleMusic = [[SampleMusic_iTune alloc] init];
-        _samepleMusic.delegate = self;
-        [_samepleMusic startSearch:dict];
+- (void)handleAlbumImage:(NSString*)imageUrlFromITune
+{
+    NSString *imageUrlFromParse = [_pfObject objectForKey:kClassSongAlbumURL];
+    if (imageUrlFromParse) { //Parse image
+        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
+        if (imageDataFromParse) {
+            self.albumImage = [UIImage imageWithData:imageDataFromParse];
+        }
+    }else if(imageUrlFromITune){ //iTune image
+        NSData *imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
+        self.albumImage = [UIImage imageWithData:imageDataFromITune];
     }
 }
-- (void)setupITuneMusicView
-{
-    
-    [scrollView addSubview:_sampleMusicITuneView];
 
-    //Progress View
-    _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, playerImageHeight+playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
-    [_progress setProgressViewStyle:UIProgressViewStyleBar];
-//    _progress = [[UISlider alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, playerImageHeight, playerProgressWidth, playerProgressHeight)];
-    [_sampleMusicITuneView addSubview:_progress];
-    _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, playerImageHeight, playerLabelWidth, playerLabelHeight)];
-    _playedTime.textColor = textColor;
-    _playedTime.backgroundColor = backgroundColor;
-    _playedTime.adjustsFontSizeToFitWidth = YES;
-    [_sampleMusicITuneView addSubview:_playedTime];
-    _leftTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2+playerProgressWidth/2, playerImageHeight, playerLabelWidth, playerLabelHeight)];
-    _leftTime.textColor = textColor;
-    _leftTime.backgroundColor = backgroundColor;
-    _leftTime.adjustsFontSizeToFitWidth = YES;
-    [_sampleMusicITuneView addSubview:_leftTime];
-    
-    //Button View
-    [_playButton removeFromSuperview];
-    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playerButtonWidth/2, playerImageHeight+playerProgressHeight, playerButtonWidth, playerButtonHeight)];
-    [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
-    [_playButton setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    [_playButton setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
-    [_playButton setTitle:@"▶︎" forState:UIControlStateNormal];
-    [_playButton setTitle:@"◼︎" forState:UIControlStateSelected];
-    [_sampleMusicITuneView addSubview:_playButton];
-    
-    //Spinner
-    _spinner = [[UIActivityIndicatorView alloc]
-                initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _spinner.center = CGPointMake(_sampleMusicITuneView.frame.size.width/2, _sampleMusicITuneView.frame.size.height/2);
-    _spinner.hidesWhenStopped = YES;
-    [_sampleMusicITuneView addSubview:_spinner];
-    [_spinner startAnimating];
-    
-    
-}
-- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
-{
-    //Enable User interaction
-//    self.view.userInteractionEnabled = YES;
-    [_spinner stopAnimating];
-    
-    //Update origin song
-    _songTitle = [songInfo objectForKey:@"title"];
-    _songAlbum = [songInfo objectForKey:@"album"];
-    _songArtist = [songInfo objectForKey:@"artist"];
-    _collectionViewUrl = [songInfo objectForKey:@"collectionViewUrl"];
-    
-    //Set Song Title
-    _titleLabel.text = [songInfo objectForKey:@"title"];
-    _infoLabel.text = [NSString stringWithFormat:@"%@ by %@", [songInfo objectForKey:@"album"], [songInfo objectForKey:@"artist"]];
-    
-    //Album image
-    [self handleAlbumImage:[songInfo objectForKey:@"imageURL"]];
-    
-    
-    _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, 0, playerImageWidth, playerImageHeight)];
-    [_sampleMusicImageView setImage:_albumImage];
-    [_sampleMusicITuneView addSubview:_sampleMusicImageView];
-    
-    //Player
-    NSError* __autoreleasing audioError = nil;
-    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
-    
-    if (!audioError) {
-        _player = newPlayer;
-        _player.delegate = self;
-        
-        //Update Progress Slider
-//        self.progress.maximumValue = self.player.duration;
-        self.progress.userInteractionEnabled = NO;
-        
-        _playedTime.text = @"0:00";
-        int minLeft = self.player.duration/60;
-        int secLeft = ceil(self.player.duration-minLeft*60);
-        _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
-        
-        [_player prepareToPlay];
-    }else{
-        NSLog(@"Audio Error!");
-    }
-
-}
-- (void)finishFetchDataWithError:(NSError *)error
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    //Enable User interaction
-//    self.view.userInteractionEnabled = YES;
-    [_spinner stopAnimating];
-
-}
+#pragma mark - Audio play method
 - (void)playOrPause {
     _playButton.selected = !_playButton.selected;
     // if already playing, then pause
@@ -751,48 +691,8 @@
     _playedTime.text = [NSString stringWithFormat:@"%d:%02d", minPlayed, secPlayed];
     _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
     
-//    _progress.value = _player.currentTime;
+    //    _progress.value = _player.currentTime;
     [_progress setProgress:_player.currentTime/_player.duration animated:YES];
-}
-
-#pragma mark - Handle album image
-/**
- * Get Image from PFObject image url
- * If fails, then get album image from iTune
- */
-- (void)setAlbumImage:(UIImage *)albumImage
-{
-    _albumImage = albumImage;
-    
-    //Set background image for scroll view when setting album image
-    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, width, backgroundImageHeight)];
-    [scrollBackgroundView setImage:albumImage];
-    //Mask for ScrollBackgroundView
-    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:scrollBackgroundView.frame];
-    [scrollBackgroundViewMask setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.8]];
-    [scrollBackgroundView addSubview:scrollBackgroundViewMask];
-    
-    [scrollView addSubview:scrollBackgroundView];
-    [scrollView sendSubviewToBack:scrollBackgroundView];
-}
-
-- (void)handleAlbumImage:(NSString*)imageUrlFromITune
-{
-    //Parse image
-    NSString *imageUrlFromParse = [_pfObject objectForKey:kClassSongAlbumURL];
-    if (imageUrlFromParse) {
-        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
-        if (imageDataFromParse) {
-            self.albumImage = [UIImage imageWithData:imageDataFromParse];
-            return;
-        }
-    }
-    
-    //iTune image
-    if(imageUrlFromITune){
-        NSData *imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
-        self.albumImage = [UIImage imageWithData:imageDataFromITune];
-    }
 }
 
 #pragma mark - AVAudioPlayerDelegate
@@ -808,34 +708,19 @@
     _playButton.selected = !_playButton.selected;
 }
 
-#pragma mark - Button Method
-- (void)shareMusic
-{
-    NSLog(@"Share Music");
-    
-    PFObject *songRecord = [PFObject objectWithClassName:kClassShare];
-    [songRecord setObject:_songTitle  forKey:@"title"];
-    [songRecord setObject:_songAlbum forKey:@"album"];
-    [songRecord setObject:_songArtist forKey:@"artist"];
-    [songRecord setObject:[[PFUser currentUser] username] forKey:@"user"];
-    
-    if (!_albumImage) {
-        _albumImage = [UIImage imageNamed:@"default_album.png"];
-    }
-    NSData *imageData = UIImageJPEGRepresentation(_albumImage, 0.05f);
-    /*ImageFile Name should be Error code indicating an invalid channel name. A channel name is either an empty string (the broadcast channel) or contains only a-zA-Z0-9_ characters and starts with a letter.*/
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"yyyy_MM_dd_h_mm"];
-    NSString *lastUpdated = [formatter stringFromDate:[NSDate date]];
-    NSString *imageFileName = [NSString stringWithFormat:@"%@_%@", [[PFUser currentUser] username],lastUpdated];
-    PFFile *imageFile = [PFFile fileWithName:imageFileName data:imageData];
-    [songRecord setObject:imageFile forKey:@"albumImage"];
-    
-    _shareMusicEntry = [[ShareMusicEntry alloc] initWithMusic:songRecord];
-    [_shareMusicEntry shareMusic];
-}
-
 #pragma mark - Echo Nest More like this
+- (void)fetchFromEchoNest
+{
+    NSString *artist = [_songArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/artist/similar?api_key=9PFPYZSZPU9X2PKES&name=%@&format=json", artist];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+    dispatch_async(kBgQueue, ^{
+        NSData* data = [NSData dataWithContentsOfURL:
+                        searchUrl];
+        [self performSelectorOnMainThread:@selector(fetchFromEchoNestSimilarArtist:)
+                               withObject:data waitUntilDone:YES];
+    });
+}
 - (void)fetchFromEchoNestSimilarArtist:(NSData*)responseData
 {
     //Return if no data
@@ -916,18 +801,18 @@
         [moreLabel setHidden:NO];
         [tableView setHidden:NO];
         
-        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+5);
+//        bottomOfScrollView = currentHeight+buttonHeight*([_songsForTableView count]+5);
         
 //        [scrollView setFrame:CGRectMake(0, 0, width, bottomOfScrollView)];
         
-        [scrollView setContentSize:CGSizeMake(width, bottomOfScrollView)];
+//        [scrollView setContentSize:CGSizeMake(width, bottomOfScrollView)];
         
-        [moreLabel setFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
-        [tableView setFrame:CGRectMake(0, currentHeight+buttonHeight, width, [_songsForTableView count]*_tableViewRowHeight)];
+//        [moreLabel setFrame:CGRectMake(0, currentHeight, width, buttonHeight)];
+//        [tableView setFrame:CGRectMake(0, currentHeight+buttonHeight, width, [_songsForTableView count]*_tableViewRowHeight)];
         
         [tableView reloadData];
     }else{
-        [scrollView setFrame:CGRectMake(0, 0, width, height)];
+//        [scrollView setFrame:CGRectMake(0, 0, width, height)];
     }
     
     if([_artistsArrray count] > 0 && _artistFetchCount < 4){
@@ -982,16 +867,20 @@
 #pragma mark - Button Handlers
 -(void)setupNavigationBar{
     //Navigation Title
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    titleLabel.text = @"Now Playing";
-    titleLabel.textColor = [UIColor colorWithRed:3.0/255.0
+    _navigationBarTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 44)];
+    _navigationBarTitleLabel.text = @"Now Playing";
+    _navigationBarTitleLabel.textColor = [UIColor colorWithRed:3.0/255.0
                                            green:49.0/255.0
                                             blue:107.0/255.0
                                            alpha:1.0];
-    [titleLabel setFont:[UIFont boldSystemFontOfSize:16]];
-    [titleLabel sizeToFit];
-    self.mm_drawerController.navigationItem.titleView = titleLabel;
-    [self.mm_drawerController.navigationController.navigationBar setBarTintColor: [ColorConstant navigationBarBackgroundColor]];
+    [_navigationBarTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [_navigationBarTitleLabel sizeToFit];
+    self.mm_drawerController.navigationItem.titleView = _navigationBarTitleLabel;
+    
+    UINavigationBar *navigationBar = self.mm_drawerController.navigationController.navigationBar;
+    [navigationBar setBackgroundImage:[UIImage new] forBarMetrics:UIBarMetricsDefault];
+    navigationBar.shadowImage = [UIImage new];
+    navigationBar.translucent = YES;
     
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress)];

@@ -146,6 +146,9 @@
 		4CADBB6218C50A3400F86916 /* PandoraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5D18C50A3400F86916 /* PandoraViewController.m */; };
 		4CADBB6318C50A3400F86916 /* RdioViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB5F18C50A3400F86916 /* RdioViewController.m */; };
 		4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CADBB6518C50D7300F86916 /* LinkFacebookViewController.m */; };
+		4CADBB6B18C575FD00F86916 /* outline-star-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB6918C575FD00F86916 /* outline-star-32.png */; };
+		4CADBB6C18C575FD00F86916 /* start-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB6A18C575FD00F86916 /* start-32.png */; };
+		4CADBB7218C5774200F86916 /* stop-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB7118C5774200F86916 /* stop-32.png */; };
 		4CC5271818984A2300562CE1 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271718984A2300562CE1 /* CoreAudio.framework */; };
 		4CC5271918984A4500562CE1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DEF188316A200B030F9 /* Security.framework */; };
 		4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC5271A18984A4F00562CE1 /* libstdc++.dylib */; };
@@ -374,6 +377,9 @@
 		4CADBB5F18C50A3400F86916 /* RdioViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RdioViewController.m; path = LinkFacebook/RdioViewController.m; sourceTree = "<group>"; };
 		4CADBB6418C50D7300F86916 /* LinkFacebookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LinkFacebookViewController.h; path = LinkFacebook/LinkFacebookViewController.h; sourceTree = "<group>"; };
 		4CADBB6518C50D7300F86916 /* LinkFacebookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LinkFacebookViewController.m; path = LinkFacebook/LinkFacebookViewController.m; sourceTree = "<group>"; };
+		4CADBB6918C575FD00F86916 /* outline-star-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "outline-star-32.png"; sourceTree = "<group>"; };
+		4CADBB6A18C575FD00F86916 /* start-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "start-32.png"; sourceTree = "<group>"; };
+		4CADBB7118C5774200F86916 /* stop-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stop-32.png"; sourceTree = "<group>"; };
 		4CC5271718984A2300562CE1 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		4CC5271A18984A4F00562CE1 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
@@ -862,6 +868,9 @@
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
+				4CADBB6918C575FD00F86916 /* outline-star-32.png */,
+				4CADBB7118C5774200F86916 /* stop-32.png */,
+				4CADBB6A18C575FD00F86916 /* start-32.png */,
 				4C19DF3018B53AA9006BAA2B /* avibe_icon_120_120.png */,
 				4C7ADAEA18B19E5500ACEA79 /* iTune */,
 				4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */,
@@ -1252,6 +1261,7 @@
 				4CADBB4C18C4FA7800F86916 /* Deezer.png in Resources */,
 				4C19DF3118B53AA9006BAA2B /* avibe_icon_120_120.png in Resources */,
 				4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */,
+				4CADBB6B18C575FD00F86916 /* outline-star-32.png in Resources */,
 				4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */,
 				4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */,
 				4C231D6A1881058A00B030F9 /* Avibe-Info.plist in Resources */,
@@ -1274,8 +1284,10 @@
 				4C7ADAEF18B19F6300ACEA79 /* rdio-logo.png in Resources */,
 				4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */,
 				4C3150C318BFD87800D80BBB /* SideMenuBackgroundImage.png in Resources */,
+				4CADBB6C18C575FD00F86916 /* start-32.png in Resources */,
 				4CADBB4F18C4FA7800F86916 /* Spotify.png in Resources */,
 				4C231D33188104F800B030F9 /* undo-2-16.png in Resources */,
+				4CADBB7218C5774200F86916 /* stop-32.png in Resources */,
 				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
 				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
