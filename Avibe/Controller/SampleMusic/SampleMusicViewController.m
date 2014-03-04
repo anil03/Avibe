@@ -378,7 +378,7 @@
     [tableView setBackgroundColor:[UIColor clearColor]];
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"Cell"];
     tableView.dataSource = self;
-//    tableView.delegate = self;
+    tableView.delegate = self;
     [tableView setHidden:YES];
     [_addMoreLikeThisView addSubview:tableView];
 }
