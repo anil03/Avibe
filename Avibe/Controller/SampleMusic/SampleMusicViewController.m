@@ -874,7 +874,7 @@
                                             blue:107.0/255.0
                                            alpha:1.0];
     [_navigationBarTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [_navigationBarTitleLabel sizeToFit];
+//    [_navigationBarTitleLabel sizeToFit];
     self.mm_drawerController.navigationItem.titleView = _navigationBarTitleLabel;
     
     UINavigationBar *navigationBar = self.mm_drawerController.navigationController.navigationBar;
