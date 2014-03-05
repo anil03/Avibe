@@ -36,12 +36,8 @@
         [self setBackgroundColor:[ColorConstant sideMenuHeaderBackgroundColor]];
 
         
-        if(OSVersionIsAtLeastiOS7()){
             _label = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(self.bounds)-28,CGRectGetWidth(self.bounds)-30, 22)];
-        }
-        else {
-            _label = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 10.0, 2.0)];
-        }
+ 
 
         
         if([[UIFont class] respondsToSelector:@selector(preferredFontForTextStyle:)]){
@@ -56,10 +52,7 @@
                                             green:206.0/255.0
                                              blue:209.0/255.0
                                             alpha:1.0]];
-        if(OSVersionIsAtLeastiOS7() == NO){
-            [self.label setShadowOffset:CGSizeMake(0, 1)];
-            [self.label setShadowColor:[[UIColor blackColor] colorWithAlphaComponent:.5]];
-        }
+
         [self.label setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleTopMargin];
         [self addSubview:self.label];
         [self setClipsToBounds:NO];        
@@ -74,7 +67,7 @@
 
 -(void)drawRect:(CGRect)rect{
     //// General Declarations
-    if(OSVersionIsAtLeastiOS7()== NO){
+    if(NO){
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef context = UIGraphicsGetCurrentContext();
         

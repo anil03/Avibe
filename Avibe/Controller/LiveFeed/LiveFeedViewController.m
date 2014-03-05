@@ -164,12 +164,12 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
      * after logged in
      */
     PFQuery *queryForUsers = [PFUser query];
-#warning Long time pending
-    NSArray *userArray = [queryForUsers findObjects];
-    if(userArray) [[PublicMethod sharedInstance].pfUserArray addObjectsFromArray:userArray];
-    
-    
-
+    [queryForUsers findObjectsInBackgroundWithBlock:^(NSArray *userArray, NSError *error) {
+        if(!error){
+            [[PublicMethod sharedInstance].pfUserArray addObjectsFromArray:userArray];
+            [self.collectionView reloadData];
+        }
+    }];
 }
 
 #pragma mark - UIColectionView data source
@@ -285,7 +285,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         case 1:{
 //            NSLog(@"Title");
             //Switch to Youtube
-            int index = indexPath.row/columnNumber;
+            int index = (int)indexPath.row/columnNumber;
             PFObject *object = _PFObjects[index];
             _sampleMusicViewController = [[SampleMusicViewController alloc] initWithPFObject:object];
             _sampleMusicViewController.delegate = self;
@@ -593,9 +593,9 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             //Snippet: desciption, thumbnails, publishedAt, channelTitle, playlistId, channelId, resourceId, title
             //            NSString *title = [snippet objectForKey:@"title"];
             //Thumbnails
-            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
-            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
-            NSString *thumbnailHighURL = [high objectForKey:@"url"];
+//            NSMutableDictionary *thumbnails = [snippet objectForKey:@"thumbnails"];
+//            NSMutableDictionary *high = [thumbnails objectForKey:@"high"];
+//            NSString *thumbnailHighURL = [high objectForKey:@"url"];
             NSString *videoId;
             if (snippet && snippet[@"resourceId"]) {
                 videoId = snippet[@"resourceId"][@"videoId"];

@@ -351,14 +351,14 @@
     }
     
     //Can't find the user, fetch from Parse
-    PFQuery *query = [PFUser query];
-    [query whereKey:kClassUserUsername equalTo:username];
-    PFObject *user = [query getFirstObject];
-    if (user) {
-        [_pfUserArray addObject:user];
-    }
+//    PFQuery *query = [PFUser query];
+//    [query whereKey:kClassUserUsername equalTo:username];
+//    PFObject *user = [query getFirstObject];
+//    if (user) {
+//        [_pfUserArray addObject:user];
+//    }
     
-    return user;
+    return nil;
 }
 
 #pragma mark - Save MD5 string for current user, set up when first log in

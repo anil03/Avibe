@@ -33,13 +33,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    if(OSVersionIsAtLeastiOS7()){
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
-    }
-    else {
-        _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
-    }
+    
+    _tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStyleGrouped];
+    
     
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
@@ -49,9 +45,9 @@
     //TableView BackgroundColor - SideMenu Background Color
     UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SideMenuBackgroundImage.png"]];
     [self.tableView setBackgroundView:imageView];
-
-//    UIColor * tableViewBackgroundColor= [ColorConstant sideMenuBackgroundColor];
-//    [self.tableView setBackgroundColor:tableViewBackgroundColor];
+    
+    //    UIColor * tableViewBackgroundColor= [ColorConstant sideMenuBackgroundColor];
+    //    [self.tableView setBackgroundColor:tableViewBackgroundColor];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     //BarColor
@@ -62,8 +58,8 @@
     else {
         [self.navigationController.navigationBar setTintColor:barColor];
     }
-
-
+    
+    
     NSDictionary *navBarTitleDict;
     
     //TitleColor
@@ -79,10 +75,10 @@
     
     //Logo
     CGSize logoSize = CGSizeMake(150, 40);
-//    MMLogoView * logo = [[MMLogoView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,
-//                                                                     -logoSize.height-logoSize.height/4.0,
-//                                                                     logoSize.width,
-//                                                                     logoSize.height)];
+    //    MMLogoView * logo = [[MMLogoView alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,
+    //                                                                     -logoSize.height-logoSize.height/4.0,
+    //                                                                     logoSize.width,
+    //                                                                     logoSize.height)];
     UILabel *logo = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMidX(self.tableView.bounds)-logoSize.width/2.0,-logoSize.height-logoSize.height/4.0,logoSize.width,logoSize.height)];
     NSMutableAttributedString * string = [[NSMutableAttributedString alloc] initWithString:@"By Yuhua Mai & David Perkins"];
     [string addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:NSMakeRange(0,13)];
@@ -299,24 +295,16 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
     MMSideDrawerSectionHeaderView * headerView;
-    if(OSVersionIsAtLeastiOS7()){
-        headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 56.0)];
-    }
-    else {
-        headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 23.0)];
-    }
+    headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 56.0)];
+    
     [headerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [headerView setTitle:[tableView.dataSource tableView:tableView titleForHeaderInSection:section]];
     return headerView;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
-    if(OSVersionIsAtLeastiOS7()){
-        return 56.0;
-    }
-    else {
-        return 23.0;
-    }
+
+    return 23.0;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
