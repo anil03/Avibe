@@ -47,10 +47,6 @@ static AppDelegate *launchedDelegate;
 #pragma mark - Application Method
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    
-    
-    
-    
     /**
      * Rdio
      */
@@ -78,12 +74,14 @@ static AppDelegate *launchedDelegate;
 //    [PFFacebookUtils initializeFacebook]; //Manual sign in with Facebook below
 //    [PFTwitterUtils initializeWithConsumerKey:@"7RufvU8xSuPj6dr9xPipdw"  consumerSecret:@"sxxk2HHFyorRfkPmO24GfexGEx3vPRe7t4guTZnGU"];
     
-    // Set default ACLs
+    /*
+     * Set default ACLs
+     * ACL should be read/write access for future modify in sample music
+     */
     PFACL *defaultACL = [PFACL ACL];
     [defaultACL setPublicReadAccess:YES];
+    [defaultACL setPublicWriteAccess:YES];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:YES];
-    
-    
     
     /*
      *Facebook - make sure that the FBLoginView class is loaded before the view is shown

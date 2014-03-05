@@ -96,8 +96,8 @@
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
-@property NSString *songImageUrl;
-@property NSString *songPreviewUrl;
+@property NSString *songImageUrlString;
+@property NSString *songPreviewUrlString;
 @property (nonatomic, strong) NSString *collectionViewUrlLinkToITuneStore;
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
@@ -144,6 +144,8 @@
     _songAlbum =  [NSString stringWithUTF8String:[_songAlbum UTF8String]];
     if (!_songArtist) _songArtist = @" ";
     _songArtist =  [NSString stringWithUTF8String:[_songArtist UTF8String]];
+    
+    
 }
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
@@ -193,13 +195,25 @@
     [self setupParameter];
     [self setupNavigationBar];
 
+    //Navigation bar title
+    _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
+    
     //More like this setup
     _artistsArrray = [[NSMutableArray alloc] init];
     _artistFetchCount = 0;
     _songsForTableView = [[NSMutableArray alloc] init];
     
     [self setupMusicView];
-    [self listenInItune];
+    
+    /**
+     * Preview Url existed, then no need to search from iTune
+     */
+    NSString *previewUrlString = [_pfObject objectForKey:kClassSongDataURL];
+    if (previewUrlString) {
+        [self handleAudioPlayer:previewUrlString];
+    }else{
+        [self listenInItune];
+    }
 }
 - (void)setupParameter
 {
@@ -359,7 +373,6 @@
     [_alertBeforeSwitchToITune show];
 
 }
-
 - (void)addSimilarSongView
 {
     moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
@@ -385,15 +398,17 @@
 {
     //    [_sampleMusicWebView removeFromSuperview];
     
-    if (_player) {
-        [_spinner stopAnimating];
-        //        [self.view addSubview:_sampleMusicITuneView];
-    }else{
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
-        _samepleMusic = [[SampleMusic alloc] init];
-        _samepleMusic.delegate = self;
-        [_samepleMusic startSearch:dict];
-    }
+//    if (_player) {
+//        [_spinner stopAnimating];
+//        //        [self.view addSubview:_sampleMusicITuneView];
+//    }else{
+    
+    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
+    _samepleMusic = [[SampleMusic alloc] init];
+    _samepleMusic.delegate = self;
+    [_samepleMusic startSearch:dict];
+    
+//    }
 }
 - (void)finishFetchData:(NSDictionary *)songInfo
 {
@@ -402,20 +417,13 @@
     _songAlbum = [songInfo objectForKey:@"album"];
     _songArtist = [songInfo objectForKey:@"artist"];
     _collectionViewUrlLinkToITuneStore = [songInfo objectForKey:@"collectionViewUrl"];
-    _songImageUrl = [songInfo objectForKey:@"imageURL"];
-    _songPreviewUrl = [songInfo objectForKey:@"previewUrl"];
+    _songImageUrlString = [songInfo objectForKey:@"imageURL"];
+    _songPreviewUrlString = [songInfo objectForKey:@"previewUrl"];
     _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
     
     
     //Music Player
-    [self handleAudioPlayer];
-    //Album image
-    [self handleAlbumImage];
-    //Recommended songs
-    [self fetchFromEchoNest];
-    //Spinner
-    [_spinner stopAnimating];
-    
+    [self handleAudioPlayer:_songPreviewUrlString];    
 }
 - (void)finishFetchDataWithError:(NSError *)error
 {
@@ -425,10 +433,10 @@
 //    [_spinner stopAnimating];
 //    [self fetchFromEchoNest];
 }
-- (void)handleAudioPlayer
+- (void)handleAudioPlayer:(NSString*)previewUrlString
 {
     dispatch_async(kBgQueue, ^{
-        NSURL* previewUrl = [NSURL URLWithString:_songPreviewUrl];
+        NSURL* previewUrl = [NSURL URLWithString:previewUrlString];
         NSError* soundFileError = nil;
         NSData *songFile = [[NSData alloc] initWithContentsOfURL:previewUrl options:NSDataReadingMappedIfSafe error:&soundFileError ];
         if (soundFileError) {
@@ -468,33 +476,35 @@
     [_playSourceButton setHidden:NO];
     [_iTuneButton setHidden:NO];
     [_addMoreLikeThisView setHidden:NO];
+    
+    //Spinner
+    [_spinner stopAnimating];
+    //Album image
+    [self handleAlbumImage];
+    //Recommended songs
+    [self fetchFromEchoNest];
 }
 - (void)updateSongInfo
 {
-    //Not working with song updating
-//    if(_pfObject){
-//        NSString *objectId = [_pfObject objectId];
-//        
-//        PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
-//        [songQuery getObjectInBackgroundWithId:objectId block:^(PFObject *songObject, NSError *error) {
-//                songObject[kClassSongTitle] = @"test";
-////            [songObject setObject:_songTitle forKey:kClassSongTitle];
-////            [songObject setObject:_songAlbum forKey:kClassSongAlbum];
-////            [songObject setObject:_songArtist forKey:kClassSongArtist];
-////            [songObject setObject:_songImageUrl forKey:kClassSongAlbumURL];
-////            [songObject setObject:_songPreviewUrl forKey:kClassSongDataURL];
-//            
-//            [songObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//                if (succeeded) {
-//                    NSLog(@"Update song successfully.");
-//                }else{
-//                    NSLog(@"Update song with error:%@",error.description);
-//                }
-//            }];
-//
-//        }];
-//        
-//    }
+    //Update song info if previewDataUrl not saved
+    if(_pfObject && ![_pfObject objectForKey:kClassSongDataURL]){
+        NSString *objectId = [_pfObject objectId];
+
+        PFObject *songObject = [PFObject objectWithoutDataWithClassName:kClassSong objectId:objectId];
+        if(_songTitle) [songObject setObject:_songTitle forKey:kClassSongTitle];
+        if(_songAlbum) [songObject setObject:_songAlbum forKey:kClassSongAlbum];
+        if(_songArtist) [songObject setObject:_songArtist forKey:kClassSongArtist];
+        if(_songImageUrlString) [songObject setObject:_songImageUrlString forKey:kClassSongAlbumURL];
+        if(_songPreviewUrlString) [songObject setObject:_songPreviewUrlString forKey:kClassSongDataURL];
+        [songObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            if (succeeded) {
+                NSLog(@"Sample music update song successfully.");
+            }else{
+                NSLog(@"Sample music update song with error:%@",error.description);
+            }
+        }];
+        
+    }
 }
 
 
@@ -751,7 +761,7 @@
             imageUrl = tracks[0][@"release_image"];
             NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
             if (imageData) {
-                _songImageUrl = imageUrl; //Update song image url
+                _songImageUrlString = imageUrl; //Update song image url
                 self.albumImage = [UIImage imageWithData:imageData];
                 return YES;
             }
@@ -766,7 +776,7 @@
     if (imageUrlFromParse) { //Parse image
         NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
         if (imageDataFromParse) {
-            _songImageUrl = imageUrlFromParse;
+            _songImageUrlString = imageUrlFromParse;
             self.albumImage = [UIImage imageWithData:imageDataFromParse];
             return YES;
         }
@@ -776,8 +786,8 @@
 - (BOOL)getImageFromITune
 {
     NSData *imageDataFromITune;
-    if (_songImageUrl) {
-        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:_songImageUrl]];
+    if (_songImageUrlString) {
+        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:_songImageUrlString]];
     }
     if (imageDataFromITune) {
         self.albumImage = [UIImage imageWithData:imageDataFromITune];
