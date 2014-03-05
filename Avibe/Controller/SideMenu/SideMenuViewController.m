@@ -91,7 +91,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
     //custom user section
     if(section == MMDrawerSectionUser){
         MMSideDrawerSectionHeaderView * headerView;
-        headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 56.0)];
+        headerView =  [[MMSideDrawerSectionHeaderView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(tableView.bounds), 100.0)];
 
         
         [headerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];

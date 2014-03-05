@@ -67,7 +67,7 @@
 
 -(void)drawRect:(CGRect)rect{
     //// General Declarations
-    if(NO){
+    if(YES){
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef context = UIGraphicsGetCurrentContext();
         
