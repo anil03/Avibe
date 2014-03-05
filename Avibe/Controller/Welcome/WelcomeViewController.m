@@ -188,7 +188,7 @@
 
 - (void)failToLogIn
 {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fail", nil) message:NSLocalizedString(@"Sorry, not able to Log In!", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Fail", nil) message:NSLocalizedString(@"Sorry, not able to Log In! Please try again later.", nil) delegate:nil cancelButtonTitle:NSLocalizedString(@"OK", nil) otherButtonTitles:nil] show];
     
 }
 

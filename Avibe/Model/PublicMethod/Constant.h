@@ -31,6 +31,7 @@ extern NSString *const kClassUser;
 extern NSString *const kClassUserUsername;
 extern NSString *const kClassUserDisplayname;
 extern NSString *const kClassUserEmail;
+extern NSString *const kClassUserProfileImage;
 extern NSString *const kClassUserPhoneNumber;
 extern NSString *const kClassUserLastFMUsername;
 extern NSString *const kClassUserFacebookDisplayname;

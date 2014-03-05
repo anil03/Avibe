@@ -136,7 +136,7 @@
     [signUpWithFacebookButton setBackgroundImage:nil forState:UIControlStateHighlighted];
     [signUpWithFacebookButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
     [signUpWithFacebookButton addTarget:self action:@selector(signUpWithFacebook) forControlEvents:UIControlEventTouchUpInside];
-    [self.signUpView addSubview:signUpWithFacebookButton];
+//    [self.signUpView addSubview:signUpWithFacebookButton];
     
     //Dismiss
     currentHeight = height-buttonHeight-bottom;
@@ -151,35 +151,6 @@
     [self.signUpView.dismissButton setFrame:CGRectMake(0, currentHeight, width, fieldHeight)];
     [self.signUpView.dismissButton.titleLabel setFont:[UIFont systemFontOfSize:fontsize]];
 }
-
-//- (void)signUpUser
-//{
-//    PFUser *newUser = [PFUser user];
-//    
-//    NSString *username = self.signUpView.usernameField.text;
-//    NSString *fullname = fullnameTextField.text;
-//    NSString *password = self.signUpView.passwordField.text;
-//    NSString *email = self.signUpView.emailField.text;
-//    NSString *phonenumber = self.signUpView.additionalField.text;
-//
-//    BOOL authenicated = username && ![username isEqualToString:@""] &&
-//                        fullname && ![fullname isEqualToString:@""] &&
-//                        password && ![password isEqualToString:@""] &&
-//                        email && ![email isEqualToString:@""] &&
-//                        phonenumber && ![phonenumber isEqualToString:@""];
-//    if (!authenicated) {
-//        [[[UIAlertView alloc] initWithTitle:@"Warning" message:@"Please fill in all fields." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-//        return;
-//    }
-//    
-//    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//        if (succeeded) {
-//            
-//        }else{
-//            NSLog(@"Error:%@",error.description);
-//        }
-//    }];
-//}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

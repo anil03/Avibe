@@ -194,67 +194,97 @@
 }
 
 #pragma mark - Facebook Login Method
-#pragma mark - TO-DO
-
+/**
+ * Sign up for user if first login with this facebook
+ * Create new user using facebook id
+ * Sign in automatically in a second time
+ */
 - (void)facebookLogin
 {
-    // If the session state is any of the two "open" states when the button is clicked
     if (FBSession.activeSession.state == FBSessionStateOpen
         || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) {
-        
-        // Close the session and remove the access token from the cache
-        // The session state handler (in the app delegate) will be called automatically
-        [FBSession.activeSession closeAndClearTokenInformation];
-        
-        // If the session state is not any of the two "open" states when the button is clicked
-    } else {
-        // Open a session showing the user the login UI
-        // You must ALWAYS ask for basic_info permissions when opening a session
+        [self requestForFacebookInformation];
+    }else{
         [FBSession openActiveSessionWithReadPermissions:@[@"basic_info",@"user_actions.music"]
                                            allowLoginUI:YES
                                       completionHandler:
          ^(FBSession *session, FBSessionState state, NSError *error) {
+             if (error) {
+                 [self facebookLoginFail];
+                 return;
+             }
              
              // Retrieve the app delegate
              AppDelegate* appDelegate = [UIApplication sharedApplication].delegate;
              // Call the app delegate's sessionStateChanged:state:error method to handle session state changes
              [appDelegate sessionStateChanged:session state:state error:error];
-
-             [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
-                 if (!error) {
-                     // Success! Include your code to handle the results here
-                     //NSLog(@"user info: %@", result);
-                     
-                     NSString *facebookId = result[@"id"];
-                     NSString *username = result[@"username"];
-                     NSString *password = [facebookId MD5];
-//                     NSString *email = result[@"email"];
-                     NSString *displayName = result[@"name"];
-                     
-                     [PFUser logInWithUsernameInBackground:facebookId password:password block:^(PFUser *user, NSError *error) {
-                         if (!error) {
-                             [user setObject:displayName forKey:kClassUserFacebookDisplayname];
-                             [user setObject:username forKey:kClassUserFacebookUsername];
-                             [user save];
-                             [user refresh];
-                             
-                             [self.delegate logInViewController:self didLogInUser:user];
-                         }else{
-                             NSString *errorMessage = [error.userInfo objectForKey:@"error"];
-                             if (errorMessage) {
-                                 [[[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
-                             }
-                         }
-                     }];
-                     
-                 } else {
-                     // An error occurred, we need to handle the error
-                     // See: https://developers.facebook.com/docs/ios/errors   
-                 }
-             }];
-       
+             
+             [self requestForFacebookInformation];
          }];
     }
+}
+- (void)requestForFacebookInformation
+{
+    [FBRequestConnection startForMeWithCompletionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
+        if (!error) {
+            // Success! Include your code to handle the results here
+            NSString *facebookId = result[@"id"];
+            NSString *username = result[@"username"];
+            NSString *password = [facebookId MD5];
+            NSString *email = result[@"email"];
+            NSString *displayName = result[@"name"];
+            
+            PFQuery *checkUserSignedUpWithParseQuery = [PFUser query];
+            [checkUserSignedUpWithParseQuery whereKey:kClassUserUsername equalTo:facebookId];
+            [checkUserSignedUpWithParseQuery getFirstObjectInBackgroundWithBlock:^(PFObject *signedUpUser, NSError *error) {
+                if (signedUpUser) {
+                    [self signInParseUser:facebookId password:password];
+                }else{
+                    [self signUpNewParseUser:facebookId password:password displayName:displayName facebookUsername:username facebookDisplayname:displayName];
+                }
+            }];
+            
+        } else {
+            [self facebookLoginFail];
+        }
+    }];
+}
+- (void)signUpNewParseUser:(NSString*)username password:(NSString*)password displayName:(NSString*)displayname facebookUsername:(NSString*)facebookUsername facebookDisplayname:(NSString*)facebookDisplayname
+{
+    PFUser *newUser = [PFUser user];
+    [newUser setUsername:username];
+    [newUser setPassword:password];
+//                 [newUser setEmail:email];
+    [newUser setObject:displayname forKey:kClassUserDisplayname];
+    [newUser setObject:facebookUsername forKey:kClassUserFacebookUsername];
+    [newUser setObject:facebookDisplayname forKey:kClassUserFacebookDisplayname];
+    
+    [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (succeeded) {
+            [self.delegate logInViewController:self didLogInUser:newUser];
+        }else{
+            NSString *errorMessage = [error.userInfo objectForKey:@"error"];
+            if (errorMessage) {
+                [[[UIAlertView alloc] initWithTitle:@"Error" message:errorMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            }
+            
+        }
+    }];
+}
+
+- (void)signInParseUser:(NSString*)username password:(NSString*)password
+{
+    [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser *user, NSError *error) {
+        if (!error) {
+            [self.delegate logInViewController:self didLogInUser:user];
+        }else{
+            [self facebookLoginFail];
+        }
+    }];
+}
+- (void)facebookLoginFail
+{
+    [self.delegate logInViewController:self didFailToLogInWithError:nil];
 }
 
 

@@ -25,8 +25,7 @@
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
-@property (nonatomic, strong) NSMutableDictionary *friendsDictionary;
-@property NSMutableDictionary *usernameDisplaynameDictionary;
+@property (nonatomic, strong) NSMutableDictionary *friendsDictionarySortByAlphabet;
 
 @property (nonatomic, strong) NSArray *alphabet;
 @property (nonatomic, strong) NSString *others;
@@ -42,8 +41,7 @@
 {
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
-        _friendsDictionary = [[NSMutableDictionary alloc] init];
-        _usernameDisplaynameDictionary = [[NSMutableDictionary alloc] init];
+        _friendsDictionarySortByAlphabet = [[NSMutableDictionary alloc] init];
         
         _others = @"Others";
         _alphabet = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", _others];
@@ -72,12 +70,15 @@
 }
 
 #pragma mark - Table view data source
+/**
+ * Setup those sections with friend in it
+ */
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     _titleForSection = [[NSMutableArray alloc] init];
     int numberOfSections = 0;
     for(NSString *key in _alphabet){
-        NSArray *array = [_friendsDictionary objectForKey:key];
+        NSArray *array = [_friendsDictionarySortByAlphabet objectForKey:key];
         if ([array count] > 0) {
             numberOfSections++;
             [_titleForSection addObject:key];
@@ -91,7 +92,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[_friendsDictionary objectForKey:_titleForSection[section]] count];
+    return [[_friendsDictionarySortByAlphabet objectForKey:_titleForSection[section]] count];
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -100,14 +101,14 @@
     [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
 
-    cell.textLabel.text = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
+    cell.textLabel.text = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserDisplayname];
     
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *displayname = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
-    NSString *username = [_usernameDisplaynameDictionary objectForKey:displayname];
+    NSString *displayname = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserDisplayname];
+    NSString *username = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserUsername];
     
     _userViewController = [[UserViewController alloc] initWithUsername:username];
     _userViewController.previousViewController = self;
@@ -144,7 +145,7 @@
     [postQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
     [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (!error) {
-            [self sortFriend:objects];
+            [self setupFriendsArray:objects];
             refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [refresh endRefreshing];
             [self.tableView reloadData];
@@ -154,7 +155,7 @@
 /**
  * Save Dictionary friend with username & displayname
  */
--(void)sortFriend:(NSArray *)objects
+-(void)setupFriendsArray:(NSArray *)objects
 {
     NSMutableArray *friends = [[NSMutableArray alloc] init];
     
@@ -174,28 +175,39 @@
             displayname = username;
         }
         
-        //Setup map key(displayname) - value(username)
-        [_usernameDisplaynameDictionary setValue:username forKey:displayname];
+        NSDictionary *friend = [[NSDictionary alloc] initWithObjects:@[username,displayname] forKeys:@[kClassUserUsername,kClassUserDisplayname]];
         
         //Add displayname to friends array
-        [friends addObject:displayname];
+        [friends addObject:friend];
     }
-    [friends sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
-    //Separate into Different Alphabet
+    [self sortFriendsArray:friends];
+}
+/**
+ * Sort friends array
+ * friends[username(key)-displayname(value),...]
+ */
+- (void)sortFriendsArray:(NSMutableArray*)friends
+{
+    //Separate into Different Alphabet, A,B,C,D,....,Others
     for(NSString *firstChar in _alphabet){
-        NSMutableArray *array = [[NSMutableArray alloc] init];
-        for(NSString *string in friends){
-            NSString *firstCharInString = [string substringToIndex:1];
+        NSMutableArray *friendArrayWithUsernameAndDisplayname = [[NSMutableArray alloc] init];
+        for(NSDictionary *friend in friends){
+            NSString *displayname = friend[kClassUserDisplayname];
+            NSString *firstCharInString = [displayname substringToIndex:1];
             
             //Match "Others" or Alphabet char
-            if([firstChar isEqualToString:_others] || [firstChar isEqualToString:firstCharInString] || [firstChar isEqualToString:[firstCharInString capitalizedString]]){
-                [array addObject:string];
+            if([firstChar isEqualToString:firstCharInString] ||
+               [firstChar isEqualToString:[firstCharInString capitalizedString]]){
+                [friendArrayWithUsernameAndDisplayname addObject:friend];
             }
         }
-        [friends removeObjectsInArray:array];
-        [_friendsDictionary setObject:array forKey:firstChar];
+        [friends removeObjectsInArray:friendArrayWithUsernameAndDisplayname];
+        [_friendsDictionarySortByAlphabet setObject:friendArrayWithUsernameAndDisplayname forKey:firstChar];
     }
+    
+    //Others should be left in the friends after deleting A,B,C,.....Z
+    [_friendsDictionarySortByAlphabet setObject:friends forKey:_others];
 }
 
 #pragma mark - Button Handlers
