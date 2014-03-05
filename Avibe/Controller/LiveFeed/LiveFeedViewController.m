@@ -407,6 +407,13 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         [songQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
         [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
+                //Remove load more view if empty result
+                if ([objects count] == 0) {
+                    //Dependency on flowLayout is flowLayout
+                    UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout*) self.collectionViewLayout;
+                    flowLayout.footerReferenceSize = CGSizeMake(0, 0);
+                }
+                
                 if (!_PFObjects) {
                     _PFObjects = [[NSMutableArray alloc] initWithArray:objects];
                 }else{
