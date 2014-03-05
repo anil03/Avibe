@@ -25,8 +25,9 @@
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
-//@property (nonatomic, strong) NSMutableArray *friends;
 @property (nonatomic, strong) NSMutableDictionary *friendsDictionary;
+@property NSMutableDictionary *usernameDisplaynameDictionary;
+
 @property (nonatomic, strong) NSArray *alphabet;
 @property (nonatomic, strong) NSString *others;
 @property (nonatomic, strong) NSMutableArray *titleForSection;
@@ -42,6 +43,8 @@
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         _friendsDictionary = [[NSMutableDictionary alloc] init];
+        _usernameDisplaynameDictionary = [[NSMutableDictionary alloc] init];
+        
         _others = @"Others";
         _alphabet = @[@"A", @"B", @"C", @"D", @"E", @"F", @"G", @"H", @"I", @"J", @"K", @"L", @"M", @"N", @"O", @"P", @"Q", @"R", @"S", @"T", @"U", @"V", @"W", @"X", @"Y", @"Z", _others];
         
@@ -96,32 +99,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
     [cell.textLabel setTextColor:[UIColor whiteColor]];
-    
-    //Get username from friendsDictionary, then search displayname by username
-//    NSString *username = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
-//    PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
-//    NSString *displayname;
-//    if (userObject) {
-//        displayname = [userObject objectForKey:kClassUserDisplayname];
-//    }
-//    if (displayname) {
-//        username = displayname;
-//    }
-//    
-//    cell.textLabel.text = username;
+
     cell.textLabel.text = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
     
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    static NSString *CellIdentifier = @"Cell";
-//    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-//    [cell setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.4]];
-//    [cell.textLabel setTextColor:[UIColor whiteColor]];
-//    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
-    
-    NSString *username = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
+    NSString *displayname = [_friendsDictionary objectForKey:_titleForSection[indexPath.section]][indexPath.row];
+    NSString *username = [_usernameDisplaynameDictionary objectForKey:displayname];
     
     _userViewController = [[UserViewController alloc] initWithUsername:username];
     _userViewController.previousViewController = self;
@@ -149,6 +135,9 @@
 	refresh.attributedTitle = [[PublicMethod sharedInstance] refreshUpdatingString];
     [self fetchData:refresh];
 }
+/**
+ * Find friend of current username in Friend class
+ */
 -(void)fetchData:(UIRefreshControl*)refresh
 {
     PFQuery *postQuery = [PFQuery queryWithClassName:kClassFriend];
@@ -162,29 +151,34 @@
         }
     }];
 }
+/**
+ * Save Dictionary friend with username & displayname
+ */
 -(void)sortFriend:(NSArray *)objects
 {
     NSMutableArray *friends = [[NSMutableArray alloc] init];
     
-    
     for(PFObject *object in objects){
-//        [friends addObject:[object objectForKey:@"friend"]];
-
-        
         //Set up display name from username
         //Get username from friendsDictionary, then search displayname by username
+        
         NSString *username = [object objectForKey:kClassFriendToUsername];
-        PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
         NSString *displayname;
+        
+        PFObject *userObject = [[PublicMethod sharedInstance] searchPFUserByUsername:username];
         if (userObject) {
             displayname = [userObject objectForKey:kClassUserDisplayname];
         }
-        if (displayname) {
-            username = displayname;
+        //If no displyname then use username
+        if (!displayname) {
+            displayname = username;
         }
         
-        [friends addObject:username];
+        //Setup map key(displayname) - value(username)
+        [_usernameDisplaynameDictionary setValue:username forKey:displayname];
         
+        //Add displayname to friends array
+        [friends addObject:displayname];
     }
     [friends sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
     
