@@ -245,7 +245,8 @@
             }];
             
         } else {
-            [self facebookLoginFail];
+//            NSLog(@"Log in view error:%@", error.description);
+//            [self facebookLoginFail];
         }
     }];
 }
@@ -258,6 +259,13 @@
     [newUser setObject:displayname forKey:kClassUserDisplayname];
     [newUser setObject:facebookUsername forKey:kClassUserFacebookUsername];
     [newUser setObject:facebookDisplayname forKey:kClassUserFacebookDisplayname];
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://graph.facebook.com/%@/picture?width=300&height=300", facebookUsername]];
+    NSData *profileImageData = [NSData dataWithContentsOfURL:url];
+    if (profileImageData) {
+        PFFile *imageFile = [PFFile fileWithData:profileImageData];
+        newUser[kClassUserProfileImage] = imageFile;
+    }
     
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         if (succeeded) {
