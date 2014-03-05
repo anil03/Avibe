@@ -32,6 +32,7 @@
 #import "YMTableViewCell.h"
 #import "YMGenericCollectionViewCell.h"
 #import "YMGenericCollectionReusableHeaderView.h"
+#import "YMCollectionReusableFooterView.h"
 #import "YMGenericCollectionViewFlowLayout.h"
 
 #import "Setting.h"
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 
-@property (nonatomic, strong) NSArray *PFObjects;
+@property (nonatomic, strong) NSMutableArray *PFObjects;
 @property (nonatomic, strong) SaveMusicFromSources *saveMusicEntries;
 
 //Youtube Auth
@@ -101,6 +102,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5); //Between sections
     flowLayout.headerReferenceSize = CGSizeMake(50, 20); //set header
+    flowLayout.footerReferenceSize = CGSizeMake(50, 20); //set footer
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -110,7 +112,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         //UICollectionview
         [self.collectionView registerClass:[YMGenericCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
         [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
-        [self.collectionView registerClass:[YMGenericCollectionReusableHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
+        [self.collectionView registerClass:[YMCollectionReusableFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView"];
         self.collectionView.delegate=self;
         self.collectionView.dataSource=self;
         
@@ -125,7 +127,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     
     return self;
 }
-
 #pragma mark - View method
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -178,6 +179,24 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 	return [self.PFObjects count]*4;
+}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        
+        UICollectionReusableView *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        reusableview = headerview;
+    }
+    if (kind == UICollectionElementKindSectionFooter) {
+        YMCollectionReusableFooterView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
+        [footerview.loadMoreButton addTarget:self action:@selector(loadMoreData) forControlEvents:UIControlEventTouchUpInside];
+        
+        reusableview = footerview;
+    }
+    
+    return reusableview;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
@@ -235,22 +254,6 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     }
     
 	return cell;
-}
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-{
-   UICollectionReusableView *reusableview = nil;
-
-   if (kind == UICollectionElementKindSectionHeader) {
-
-       UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-       reusableview = footerview;
-   }
-   if (kind == UICollectionElementKindSectionFooter) {
-       UICollectionReusableView *footerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-       reusableview = footerview;
-   }
-
-   return reusableview;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -384,7 +387,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 {
     NSLog(@"Source:%@", source);
 }
--(void)fetchData:(UIRefreshControl*)refresh
+- (void)fetchDataFromParse:(NSUInteger)skipNumber
 {
     PFQuery *friendQuery = [PFQuery queryWithClassName:kClassFriend];
     [friendQuery whereKey:kClassFriendFromUsername equalTo:[[PFUser currentUser] username]];
@@ -398,15 +401,22 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }
         
         PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
-        songQuery.limit = 100;
+        songQuery.limit = 10;
+        songQuery.skip = skipNumber;
         [songQuery whereKey:kClassSongUsername containedIn:friendArray];
         [songQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
         [songQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
             if (!error) {
-                self.PFObjects = objects;
+                if (!_PFObjects) {
+                    _PFObjects = [[NSMutableArray alloc] initWithArray:objects];
+                }else{
+                    for(PFObject *pfObject in objects){
+                        [_PFObjects addObject:pfObject];
+                    }
+                }
                 
-                refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
-                [refresh endRefreshing];
+                _refreshControl.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
+                [_refreshControl endRefreshing];
                 
                 
                 [self.collectionView reloadData];
@@ -416,7 +426,10 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         }];
     }];
 }
-
+- (void)loadMoreData
+{
+    [self fetchDataFromParse:[_PFObjects count]];
+}
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {
@@ -439,7 +452,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     _saveMusicEntries = [[SaveMusicFromSources alloc] init];
     [_saveMusicEntries saveMusic];
     
-    [self fetchData:self.refreshControl];
+    [self fetchDataFromParse:0];
 }
 
 #pragma mark - Button Handlers
