@@ -85,7 +85,6 @@
 		4C231DCD1881DF3700B030F9 /* TestNSXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */; };
 		4C231DCE1881DF3700B030F9 /* TestXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DC91881DF3700B030F9 /* TestXMLParser.m */; };
 		4C231DD21881E3FF00B030F9 /* BackgroundImageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */; };
-		4C231DD61881E51300B030F9 /* ITuneMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD51881E51300B030F9 /* ITuneMusicViewController.m */; };
 		4C231DD91881E88500B030F9 /* ImageFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DD81881E88500B030F9 /* ImageFetcher.m */; };
 		4C231DDE1881F1D900B030F9 /* BackgroundImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DDD1881F1D900B030F9 /* BackgroundImageView.m */; };
 		4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231DE118820CC200B030F9 /* SaveMusicFromSources.m */; };
@@ -156,7 +155,6 @@
 		4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5272418985EFF00562CE1 /* youtube-48.png */; };
 		4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC527281898603600562CE1 /* youtube-48-highlight.png */; };
-		4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */; };
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
 		4CE4F4F9188C61F90013C31C /* FilterAndSaveMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
@@ -285,8 +283,6 @@
 		4C231DC81881DF3700B030F9 /* TestNSXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestNSXMLParser.m; sourceTree = "<group>"; };
 		4C231DC91881DF3700B030F9 /* TestXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestXMLParser.m; sourceTree = "<group>"; };
 		4C231DD11881E3FF00B030F9 /* BackgroundImageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BackgroundImageTest.m; sourceTree = "<group>"; };
-		4C231DD41881E51300B030F9 /* ITuneMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ITuneMusicViewController.h; path = ../SampleMusic/ITuneMusicViewController.h; sourceTree = "<group>"; };
-		4C231DD51881E51300B030F9 /* ITuneMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ITuneMusicViewController.m; path = ../SampleMusic/ITuneMusicViewController.m; sourceTree = "<group>"; };
 		4C231DD71881E88500B030F9 /* ImageFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageFetcher.h; sourceTree = "<group>"; };
 		4C231DD81881E88500B030F9 /* ImageFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageFetcher.m; sourceTree = "<group>"; };
 		4C231DDC1881F1D900B030F9 /* BackgroundImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundImageView.h; sourceTree = "<group>"; };
@@ -385,8 +381,6 @@
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
 		4CC5272418985EFF00562CE1 /* youtube-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48.png"; sourceTree = "<group>"; };
 		4CC527281898603600562CE1 /* youtube-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48-highlight.png"; sourceTree = "<group>"; };
-		4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusic_iTune.h; sourceTree = "<group>"; };
-		4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusic_iTune.m; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
 		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
 		4CE4F4F7188C61F90013C31C /* FilterAndSaveMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterAndSaveMusic.h; path = ../PublicMethod/FilterAndSaveMusic.h; sourceTree = "<group>"; };
@@ -547,8 +541,6 @@
 		4C231C89188104F800B030F9 /* Listened */ = {
 			isa = PBXGroup;
 			children = (
-				4C231DD41881E51300B030F9 /* ITuneMusicViewController.h */,
-				4C231DD51881E51300B030F9 /* ITuneMusicViewController.m */,
 			);
 			name = Listened;
 			path = ../Listened;
@@ -1115,8 +1107,6 @@
 			children = (
 				4C2F0FCD1884781F006BA932 /* SampleMusic.h */,
 				4C2F0FCE1884781F006BA932 /* SampleMusic.m */,
-				4CDEF2AB188399B000CBD40E /* SampleMusic_iTune.h */,
-				4CDEF2AC188399B000CBD40E /* SampleMusic_iTune.m */,
 			);
 			path = SampleMusic;
 			sourceTree = "<group>";
@@ -1397,7 +1387,6 @@
 				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
 				4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
-				4C231DD61881E51300B030F9 /* ITuneMusicViewController.m in Sources */,
 				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,
 				4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */,
@@ -1418,7 +1407,6 @@
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,
 				4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */,
 				4C231D05188104F800B030F9 /* MMLogoView.m in Sources */,
-				4CDEF2AD188399B000CBD40E /* SampleMusic_iTune.m in Sources */,
 				4C7CA74918AC5A4E00A0EC99 /* NSString+MD5.m in Sources */,
 				4C231D0C188104F800B030F9 /* TableViewController.m in Sources */,
 				4C231D16188104F800B030F9 /* ListenedViewController.m in Sources */,

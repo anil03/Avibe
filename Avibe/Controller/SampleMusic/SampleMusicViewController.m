@@ -14,7 +14,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "ShareMusicEntry.h"
 #import "Setting.h"
-#import "SampleMusic_iTune.h"
+#import "SampleMusic.h"
 #import "MMNavigationController.h"
 
 //Rdio
@@ -27,7 +27,7 @@
 //Youtube
 #import "LBYouTube.h"
 
-@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     UIColor *backgroundColor;
     UIColor *scrollViewBackgroundColor;
@@ -74,7 +74,7 @@
 @property (strong, nonatomic) UIWebView *sampleMusicWebView;
 
 //iTune
-@property (strong, nonatomic) SampleMusic_iTune *samepleMusic;
+@property (strong, nonatomic) SampleMusic *samepleMusic;
 @property (strong, nonatomic) UIView *sampleMusicITuneView;
 @property (strong, nonatomic) UIImageView *sampleMusicImageView;
 @property (strong, nonatomic) UILabel *playedTime;
@@ -89,12 +89,16 @@
 @property (nonatomic, retain) AVAudioPlayer *player;
 @property (nonatomic, strong) UIImage *albumImage;
 
+//iTune fetch error
+@property UIAlertView *iTuneFetchErrorAlertView;
+
 //Song Info
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
-@property NSString * songImageUrl;
-@property (nonatomic, strong) NSString *collectionViewUrl;
+@property NSString *songImageUrl;
+@property NSString *songPreviewUrl;
+@property (nonatomic, strong) NSString *collectionViewUrlLinkToITuneStore;
 
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
 
@@ -355,13 +359,7 @@
     [_alertBeforeSwitchToITune show];
 
 }
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    //Switch Webview
-    if([alertView isEqual:_alertBeforeSwitchToITune] && buttonIndex == 0){
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_collectionViewUrl]];
-    }
-}
+
 - (void)addSimilarSongView
 {
     moreLabel = [[UILabel alloc] initWithFrame:CGRectMake(buttonLeft, 0, width, buttonHeight)];
@@ -392,49 +390,25 @@
         //        [self.view addSubview:_sampleMusicITuneView];
     }else{
         NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
-        _samepleMusic = [[SampleMusic_iTune alloc] init];
+        _samepleMusic = [[SampleMusic alloc] init];
         _samepleMusic.delegate = self;
         [_samepleMusic startSearch:dict];
     }
 }
-- (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
+- (void)finishFetchData:(NSDictionary *)songInfo
 {
     //Update origin song info
     _songTitle = [songInfo objectForKey:@"title"];
     _songAlbum = [songInfo objectForKey:@"album"];
     _songArtist = [songInfo objectForKey:@"artist"];
-    _collectionViewUrl = [songInfo objectForKey:@"collectionViewUrl"];
+    _collectionViewUrlLinkToITuneStore = [songInfo objectForKey:@"collectionViewUrl"];
     _songImageUrl = [songInfo objectForKey:@"imageURL"];
+    _songPreviewUrl = [songInfo objectForKey:@"previewUrl"];
     _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
     
     
     //Music Player
-    NSError* __autoreleasing audioError = nil;
-    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:song error:&audioError];
-    if (!audioError) {
-        _player = newPlayer;
-        _player.delegate = self;
-        
-        //Update Progress Slider
-        //        self.progress.maximumValue = self.player.duration;
-        self.progress.userInteractionEnabled = NO;
-        
-        _playedTime.text = @"0:00";
-        int minLeft = self.player.duration/60;
-        int secLeft = ceil(self.player.duration-minLeft*60);
-        _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
-        
-        [_player prepareToPlay];
-    }else{
-        NSLog(@"Audio Error!");
-    }
-    
-    //User interface
-    [_playButton setHidden:NO];
-    [_shareButton setHidden:NO];
-    [_playSourceButton setHidden:NO];
-    [_iTuneButton setHidden:NO];
-    [_addMoreLikeThisView setHidden:NO];
+    [self handleAudioPlayer];
     //Album image
     [self handleAlbumImage];
     //Recommended songs
@@ -445,14 +419,84 @@
 }
 - (void)finishFetchDataWithError:(NSError *)error
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [alert show];
-    //Enable User interaction
-    //    self.view.userInteractionEnabled = YES;
-    [_spinner stopAnimating];
-    
-    [self fetchFromEchoNest];
+    _iTuneFetchErrorAlertView = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [_iTuneFetchErrorAlertView show];
+
+//    [_spinner stopAnimating];
+//    [self fetchFromEchoNest];
 }
+- (void)handleAudioPlayer
+{
+    dispatch_async(kBgQueue, ^{
+        NSURL* previewUrl = [NSURL URLWithString:_songPreviewUrl];
+        NSError* soundFileError = nil;
+        NSData *songFile = [[NSData alloc] initWithContentsOfURL:previewUrl options:NSDataReadingMappedIfSafe error:&soundFileError ];
+        if (soundFileError) {
+            NSLog(@"Sound file error:%@", soundFileError.description);
+            return;
+        }
+        
+        [self performSelectorOnMainThread:@selector(fetchSongData:)
+                               withObject:songFile waitUntilDone:YES];
+    });
+}
+- (void)fetchSongData:(NSData*)songData
+{
+    NSError* audioError = nil;
+    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:songData error:&audioError];
+    if (audioError) {
+        NSLog(@"Audio error:%@", audioError.description);
+    }
+    
+    _player = newPlayer;
+    _player.delegate = self;
+    
+    //Update Progress Slider
+    //        self.progress.maximumValue = self.player.duration;
+    self.progress.userInteractionEnabled = NO;
+    
+    _playedTime.text = @"0:00";
+    int minLeft = self.player.duration/60;
+    int secLeft = ceil(self.player.duration-minLeft*60);
+    _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
+    
+    [_player prepareToPlay];
+    
+    //User interface
+    [_playButton setHidden:NO];
+    [_shareButton setHidden:NO];
+    [_playSourceButton setHidden:NO];
+    [_iTuneButton setHidden:NO];
+    [_addMoreLikeThisView setHidden:NO];
+}
+- (void)updateSongInfo
+{
+    //Not working with song updating
+//    if(_pfObject){
+//        NSString *objectId = [_pfObject objectId];
+//        
+//        PFQuery *songQuery = [PFQuery queryWithClassName:kClassSong];
+//        [songQuery getObjectInBackgroundWithId:objectId block:^(PFObject *songObject, NSError *error) {
+//                songObject[kClassSongTitle] = @"test";
+////            [songObject setObject:_songTitle forKey:kClassSongTitle];
+////            [songObject setObject:_songAlbum forKey:kClassSongAlbum];
+////            [songObject setObject:_songArtist forKey:kClassSongArtist];
+////            [songObject setObject:_songImageUrl forKey:kClassSongAlbumURL];
+////            [songObject setObject:_songPreviewUrl forKey:kClassSongDataURL];
+//            
+//            [songObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+//                if (succeeded) {
+//                    NSLog(@"Update song successfully.");
+//                }else{
+//                    NSLog(@"Update song with error:%@",error.description);
+//                }
+//            }];
+//
+//        }];
+//        
+//    }
+}
+
 
 #pragma mark - Youtube
 - (void)listenInYoutube
@@ -659,22 +703,23 @@
  */
 - (void)handleAlbumImage
 {
-    BOOL echoNestSource = [self getImageFromEchoNest];
-    if (echoNestSource) {
-        return;
-    }
+    BOOL echoNestSource = NO;
+    BOOL parseSource = NO;
+    BOOL iTuneSource = NO;
     
-    BOOL parseSource = [self getImageFromParse];
-    if (parseSource) {
-        return;
+    echoNestSource = [self getImageFromEchoNest];
+    if (!echoNestSource) {
+        parseSource = [self getImageFromParse];
+        if (!parseSource) {
+            iTuneSource = [self getImageFromITune];
+            if (!iTuneSource) {
+                [self getImageFromDefault];
+            }
+        }
     }
-    
-    BOOL iTuneSrouce = [self getImageFromITune];
-    if (iTuneSrouce){
-        return;
-    }
-    
-    [self getImageFromDefault];
+
+    //After getting the image url, update parse in class song
+    [self updateSongInfo];
 }
 - (BOOL)getImageFromEchoNest
 {
@@ -706,6 +751,7 @@
             imageUrl = tracks[0][@"release_image"];
             NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
             if (imageData) {
+                _songImageUrl = imageUrl; //Update song image url
                 self.albumImage = [UIImage imageWithData:imageData];
                 return YES;
             }
@@ -720,6 +766,7 @@
     if (imageUrlFromParse) { //Parse image
         NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
         if (imageDataFromParse) {
+            _songImageUrl = imageUrlFromParse;
             self.albumImage = [UIImage imageWithData:imageDataFromParse];
             return YES;
         }
@@ -729,7 +776,7 @@
 - (BOOL)getImageFromITune
 {
     NSData *imageDataFromITune;
-    if (_collectionViewUrl) {
+    if (_songImageUrl) {
         imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:_songImageUrl]];
     }
     if (imageDataFromITune) {
@@ -937,6 +984,17 @@
     self.sampleMusicViewController.delegate = self;
     _navigationControllerForSampleMusic = [[MMNavigationController alloc] initWithRootViewController:self.sampleMusicViewController];
     [self.mm_drawerController setCenterViewController:_navigationControllerForSampleMusic withFullCloseAnimation:YES completion:nil];
+}
+
+#pragma mark - AlertView method
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    //Switch Webview
+    if([alertView isEqual:_alertBeforeSwitchToITune] && buttonIndex == 0){
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_collectionViewUrlLinkToITuneStore]];
+    }else if ([alertView isEqual:_iTuneFetchErrorAlertView] && buttonIndex == 0){
+        [self leftDrawerButtonPress];
+    }
 }
 
 #pragma mark - Button Handlers

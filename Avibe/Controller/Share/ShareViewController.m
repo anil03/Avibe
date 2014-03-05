@@ -19,7 +19,7 @@
 #import "SampleMusicViewController.h"
 #import "Setting.h"
 #import "PublicMethod.h"
-#import "SampleMusic_iTune.h"
+#import "SampleMusic.h"
 
 /**
  * Share view fetch all shared musics of all friends.

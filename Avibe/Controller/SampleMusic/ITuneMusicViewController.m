@@ -14,7 +14,6 @@
 #import "MMDrawerBarButtonItem.h"
 #import "UIViewController+MMDrawerController.h"
 
-#import "SampleMusic_iTune.h"
 
 #define kLatestKivaLoansURL [NSURL URLWithString:@"http://api.kivaws.org/v1/loans/search.json?status=fundraising"]
 #define kiTUNESearchAPI [NSURL URLWithString:@"https://itunes.apple.com/search?term=jack+johnson&limit=1"]
@@ -98,6 +97,7 @@
 }
 
 #pragma mark - Sample Music Data Delegate Method
+#error change signature
 - (void)finishFetchData:(NSData *)song andInfo:(NSDictionary *)songInfo
 {
     [self updateViewInfo:songInfo];

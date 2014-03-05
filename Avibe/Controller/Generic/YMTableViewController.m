@@ -17,7 +17,7 @@
 
 #import "Setting.h"
 
-#import "SampleMusic_iTune.h"
+#import "SampleMusic.h"
 
 @interface YMTableViewController ()
 
@@ -82,7 +82,7 @@
 {
     ITuneMusicViewController *controller = [[UIStoryboard storyboardWithName:SAMPLEMUSIC_STORYBOARD_NAME bundle:nil] instantiateViewControllerWithIdentifier:SAMPLEMUSIC_CONTROLLER_NAME];
     controller.pfObject = [self.PFObjects objectAtIndex:indexPath.row];
-    controller.sampleMusic = [[SampleMusic_iTune alloc] init];
+    controller.sampleMusic = [[SampleMusic alloc] init];
     controller.delegate = self;
     controller.previousViewController = self;
     
