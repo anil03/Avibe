@@ -73,8 +73,6 @@
 		4C231D32188104F800B030F9 /* sharethis-3-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CC3188104F800B030F9 /* sharethis-3-24.png */; };
 		4C231D33188104F800B030F9 /* undo-2-16.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CC4188104F800B030F9 /* undo-2-16.png */; };
 		4C231D34188104F800B030F9 /* undo-2-24.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CC5188104F800B030F9 /* undo-2-24.png */; };
-		4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */; };
-		4C231D5F188104F800B030F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF6188104F800B030F9 /* Main.storyboard */; };
 		4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */; };
 		4C231D62188104F800B030F9 /* User.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C231CF9188104F800B030F9 /* User.storyboard */; };
 		4C231D6B1881058A00B030F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C231D691881058A00B030F9 /* main.m */; };
@@ -269,8 +267,6 @@
 		4C231CC3188104F800B030F9 /* sharethis-3-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sharethis-3-24.png"; sourceTree = "<group>"; };
 		4C231CC4188104F800B030F9 /* undo-2-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "undo-2-16.png"; sourceTree = "<group>"; };
 		4C231CC5188104F800B030F9 /* undo-2-24.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "undo-2-24.png"; sourceTree = "<group>"; };
-		4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = FindFriendsStoryboard.storyboard; sourceTree = "<group>"; };
-		4C231CF6188104F800B030F9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SettingStoryboard.storyboard; sourceTree = "<group>"; };
 		4C231CF9188104F800B030F9 /* User.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = User.storyboard; sourceTree = "<group>"; };
 		4C231D671881058A00B030F9 /* Avibe-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Avibe-Info.plist"; sourceTree = "<group>"; };
@@ -700,8 +696,6 @@
 				4CADBB5318C500CB00F86916 /* Setting */,
 				4C23F1751885A3AB00D2075A /* SampleMusic */,
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
-				4C231CF6188104F800B030F9 /* Main.storyboard */,
-				4C231CF5188104F800B030F9 /* FindFriendsStoryboard.storyboard */,
 				4C231CF8188104F800B030F9 /* SettingStoryboard.storyboard */,
 				4C231CF9188104F800B030F9 /* User.storyboard */,
 			);
@@ -1257,7 +1251,6 @@
 				4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */,
 				4CADBB6B18C575FD00F86916 /* outline-star-32.png in Resources */,
 				4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */,
-				4C231D5E188104F800B030F9 /* FindFriendsStoryboard.storyboard in Resources */,
 				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
@@ -1283,7 +1276,6 @@
 				4CADBB7218C5774200F86916 /* stop-32.png in Resources */,
 				4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */,
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
-				4C231D5F188104F800B030F9 /* Main.storyboard in Resources */,
 				4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */,
 				4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */,
 				4C7ADAEC18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png in Resources */,

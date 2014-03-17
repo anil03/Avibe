@@ -9,16 +9,13 @@
 #import "FaceBookListenedMusic.h"
 
 @interface FaceBookListenedMusic()
-{
-    int connectionNumber;
-}
 
 @property (nonatomic, strong) NSMutableArray *musicArray;
 
 //Batch Request
 @property FBRequestConnection *connection;
 @property (nonatomic, strong) NSMutableArray *batchRequestResult;
-
+@property int connectionNumber;
 
 @end
 
@@ -33,7 +30,7 @@
         
         _connection = [[FBRequestConnection alloc] init];
         _batchRequestResult = [[NSMutableArray alloc] init];
-        connectionNumber = 0;
+        _connectionNumber = 0;
         
         //NSArray *permissionsNeeded = @[@"publish_actions"];
         NSArray *permissionsNeeded = @[@"user_actions.music"];
@@ -111,24 +108,26 @@
 }
 - (void)makeSongIDRequest:(NSString*)songID
 {
-    connectionNumber++;
+    self.connectionNumber++;
     
     FBRequest *request = [FBRequest requestWithGraphPath:[NSString stringWithFormat:@"/%@",songID] parameters:nil HTTPMethod:@"GET"];
+    
+    __weak typeof(self) weakSelf = self;
     [_connection addRequest:request completionHandler:^(FBRequestConnection *connection, id result, NSError *error) {
         if (!error) {
 //            NSLog(@"Connection succedd with %@", songID);
-            [_batchRequestResult addObject:result];
-            connectionNumber--;
+            [weakSelf.batchRequestResult addObject:result];
+            weakSelf.connectionNumber--;
             
-            if (connectionNumber == 0) {
+            if (weakSelf.connectionNumber == 0) {
 //                NSLog(@"The end");
-                for (id result in _batchRequestResult) {
-                    [self handleSongIDResult:result];
+                for (id result in weakSelf.batchRequestResult) {
+                    [weakSelf handleSongIDResult:result];
                 }
                 
                 //Call delegate method
-                if(self.delegate && [self.delegate respondsToSelector:@selector(finishGetListenedMusic:)]){
-                    [self.delegate finishGetListenedMusic:_musicArray];
+                if(weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(finishGetListenedMusic:)]){
+                    [weakSelf.delegate finishGetListenedMusic:weakSelf.musicArray];
                 }
             }
             

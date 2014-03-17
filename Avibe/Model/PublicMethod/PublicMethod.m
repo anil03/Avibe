@@ -372,7 +372,7 @@
         [songQuery whereKey:kClassSongUsername equalTo:[[PFUser currentUser] username]];
         [songQuery orderByDescending:kClassGeneralCreatedAt]; //Get latest song
     
-#warning Long time parse
+//#warning Long time parse
         NSArray *objects = [songQuery findObjects];
         for(PFObject *existingPFObject in objects){
             NSString *md5 = [existingPFObject objectForKey:kClassSongMD5];

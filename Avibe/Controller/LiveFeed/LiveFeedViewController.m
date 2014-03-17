@@ -146,7 +146,8 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
         [self refreshView:_refreshControl];
         
         //Save Youtube Music if already authorize
-        [self saveYoutubeMusic];
+#pragma mark - TODO Save Youtube Music
+//        [self saveYoutubeMusic];
     }
     
     [self setupBarMenuButton];
