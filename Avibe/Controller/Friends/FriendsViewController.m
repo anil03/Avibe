@@ -107,7 +107,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *displayname = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserDisplayname];
+//    NSString *displayname = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserDisplayname];
     NSString *username = [_friendsDictionarySortByAlphabet objectForKey:_titleForSection[indexPath.section]][indexPath.row][kClassUserUsername];
     
     _userViewController = [[UserViewController alloc] initWithUsername:username];

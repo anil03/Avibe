@@ -45,8 +45,8 @@
             NSInteger section = layoutAttributes.indexPath.section;
             NSInteger numberOfItemsInSection = [cv numberOfItemsInSection:section];
             
-            NSIndexPath *firstCellIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-            NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
+//            NSIndexPath *firstCellIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+//            NSIndexPath *lastCellIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
             
             NSIndexPath *firstObjectIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
             NSIndexPath *lastObjectIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];

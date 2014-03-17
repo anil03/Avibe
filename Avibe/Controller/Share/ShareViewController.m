@@ -133,7 +133,7 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%d", indexPath.row);
+    NSLog(@"%ld", (long)indexPath.row);
     
     PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
     NSString *title = [song objectForKey:@"title"];

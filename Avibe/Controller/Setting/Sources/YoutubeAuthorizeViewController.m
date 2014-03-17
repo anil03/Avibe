@@ -354,7 +354,7 @@
 }
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSLog(@"%d", [httpResponse statusCode]);
+    NSLog(@"%ld", (long)[httpResponse statusCode]);
 }
 
 -(void)refreshAccessToken{

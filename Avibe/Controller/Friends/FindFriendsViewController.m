@@ -73,7 +73,7 @@ enum FindFriendTableViewSection {
 - (void)searchAddressBook
 {
     //Address Book
-    ABAddressBookRef addressBook = ABAddressBookCreate();
+    ABAddressBookRef addressBook = ABAddressBookCreateWithOptions(nil, nil);// ABAddressBookCreate();
     __block BOOL accessGranted = NO;
     
     if (ABAddressBookRequestAccessWithCompletion != NULL) { // We are on iOS 6
@@ -163,7 +163,7 @@ enum FindFriendTableViewSection {
 {
     if (!error) {
         for(NSMutableDictionary *person in _contactList){
-            NSString *contactUsername = [person objectForKey:kClassContactUsername];
+//            NSString *contactUsername = [person objectForKey:kClassContactUsername];
             NSArray *contactEmailArray = [person objectForKey:kClassContactEmail];
             NSArray *contactPhoneNumberArray = [person objectForKey:kClassContactPhoneNumber];
             
@@ -286,7 +286,7 @@ enum FindFriendTableViewSection {
     switch (indexPath.section) {
         case RegisteredUserSection:
         {            
-            int followingUsersNumber = [_registeredFollowingUsers count];
+            int followingUsersNumber = (int)[_registeredFollowingUsers count];
             NSMutableDictionary *person = nil;
             if(indexPath.row < followingUsersNumber){
                 person = [_registeredFollowingUsers objectAtIndex:indexPath.row];

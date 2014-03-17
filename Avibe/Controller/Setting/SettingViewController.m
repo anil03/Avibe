@@ -297,7 +297,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             
             
             case FacebookRow:{
-                NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
+//                NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
                 BOOL facebookLogIn = NO;
                 if(FBSession.activeSession.state == FBSessionStateOpen
                    || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) facebookLogIn = YES;
@@ -709,7 +709,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 - (void)showFloatingView:(NSString*)identifier
 {
     float width = [[UIScreen mainScreen] bounds].size.width;
-    float height = [[UIScreen mainScreen] bounds].size.height;
+//    float height = [[UIScreen mainScreen] bounds].size.height;
     float widthForImage = width;
     float heightForImage;
     

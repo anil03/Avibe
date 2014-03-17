@@ -63,7 +63,7 @@
 -(void)connectionDidFinishLoading:(NSURLConnection *)connection{
     NSString *responseJSON;
     responseJSON = [[NSString alloc] initWithData:(NSData *)_receivedData encoding:NSUTF8StringEncoding];
-    NSLog(responseJSON);
+//    NSLog(responseJSON);
     
     NSError* error = nil;
     NSDictionary* json = [NSJSONSerialization
@@ -81,7 +81,7 @@
 }
 -(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-    NSLog(@"%d", [httpResponse statusCode]);
+    NSLog(@"%ld", (long)[httpResponse statusCode]);
     //200 means successful
 }
 

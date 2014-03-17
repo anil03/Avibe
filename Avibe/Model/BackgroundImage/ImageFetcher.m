@@ -33,7 +33,7 @@ static NSString *const kURLString = @"https://itunes.apple.com/search?";
 
 - (NSDictionary*)fetchMusicList
 {
-    NSURL *searchURL = [NSURL URLWithString:[kURLString stringByAppendingString:[NSString stringWithFormat:@"term=%@&limit=%d", _term, _limit]]];
+    NSURL *searchURL = [NSURL URLWithString:[kURLString stringByAppendingString:[NSString stringWithFormat:@"term=%@&limit=%ld", _term, (long)_limit]]];
     NSData* responseData = [NSData dataWithContentsOfURL:
                     searchURL];
     NSError* error = nil;

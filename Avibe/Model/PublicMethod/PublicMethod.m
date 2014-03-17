@@ -108,7 +108,7 @@
         }
         if(songs){
             for(NSDictionary *song in songs){
-                NSString *title = song[@"title"];
+//                NSString *title = song[@"title"];
                 NSString *artist = song[@"artist_name"];
                 
                 [artistArray addObject:artist];

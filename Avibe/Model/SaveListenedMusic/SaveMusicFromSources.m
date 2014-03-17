@@ -29,7 +29,7 @@
  */
 //@interface SaveMusicFromSources () <XMLParserDelegate, RDAPIRequestDelegate, FaceBookListenedMusicDelegate>
 
-@interface SaveMusicFromSources () <XMLParserDelegate, FaceBookListenedMusicDelegate>
+@interface SaveMusicFromSources () <FaceBookListenedMusicDelegate>
 
 
 @property (nonatomic, strong) ScrobbleListenedMusic *parser;

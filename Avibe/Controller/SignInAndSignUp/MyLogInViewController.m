@@ -231,7 +231,7 @@
             NSString *facebookId = result[@"id"];
             NSString *username = result[@"username"];
             NSString *password = [facebookId MD5];
-            NSString *email = result[@"email"];
+//            NSString *email = result[@"email"];
             NSString *displayName = result[@"name"];
             
             PFQuery *checkUserSignedUpWithParseQuery = [PFUser query];

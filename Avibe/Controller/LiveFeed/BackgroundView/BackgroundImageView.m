@@ -25,8 +25,8 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    float imageHeight = 80.0f;
-    float imageWidth = 80.0f;
+//    float imageHeight = 80.0f;
+//    float imageWidth = 80.0f;
     
     _row = 8;//frame.size.height/imageHeight; //10;
     _column = 4;//frame.size.width/imageWidth; //4;

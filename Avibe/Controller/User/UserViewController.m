@@ -286,7 +286,7 @@
             
             
             int diviedFully = ([objects count]%_collectionViewColumns == 0)? 0:1;
-            _collectionViewRows = [objects count]/_collectionViewColumns+diviedFully;
+            _collectionViewRows = (int) [objects count]/_collectionViewColumns+diviedFully;
             [collectionView setFrame:CGRectMake(0, unitHeight, width, _collectionViewRows*_collectionViewRowHeight)];
             shareViewHeight = unitHeight*1+_collectionViewRows*_collectionViewRowHeight;
             [self rearrangeView];
@@ -339,7 +339,7 @@
         if (!error) {
             _PFObjectsForTableView = objects;
             
-            _tableViewRows = [objects count];
+            _tableViewRows = (int)[objects count];
             [tableView setFrame:CGRectMake(0, unitHeight, width, _tableViewRows*_tableViewRowHeight)];
             historyViewHeight = unitHeight+_tableViewRows*_tableViewRowHeight;
           [self rearrangeView];
@@ -384,7 +384,7 @@
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"%d", indexPath.row);
+    NSLog(@"%ld", (long)indexPath.row);
     
     PFObject *song = [_PFObjectsForCollectionView objectAtIndex:indexPath.row];
     NSString *title = [song objectForKey:@"title"];
@@ -424,9 +424,9 @@
     
     PFObject *song = [_PFObjectsForTableView objectAtIndex:indexPath.row];
     NSString *title = [song objectForKey:kClassSongTitle];
-    NSString *album = [song objectForKey:kClassSongAlbum];
+//    NSString *album = [song objectForKey:kClassSongAlbum];
     NSString *artist = [song objectForKey:kClassSongArtist];
-    NSString *user = [song objectForKey:kClassSongUsername];
+//    NSString *user = [song objectForKey:kClassSongUsername];
 
     cell.backgroundColor = lightBackgroundColor;
     cell.textLabel.text = title;

@@ -43,7 +43,7 @@
     float height = [[UIScreen mainScreen] bounds].size.height;
     float fieldWidth = width;
     float fieldHeight = 40.0f;
-    float buttonWidth = width/2;
+//    float buttonWidth = width/2;
     float buttonHeight = fieldHeight;
     float currentHeight = 0.0f;
     
@@ -177,7 +177,7 @@
                  NSString *facebookId = result[@"id"];
                  NSString *username = result[@"username"];
                  NSString *password = [facebookId MD5];
-                 NSString *email = result[@"email"];
+//                 NSString *email = result[@"email"];
                  NSString *displayName = result[@"name"];
                  
                  PFUser *newUser = [PFUser user];
