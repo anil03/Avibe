@@ -82,7 +82,7 @@
 - (void)setupBackImages
 {
     NSUInteger limit = 500;
-    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&format=json&results=%lu&bucket=song_hotttnesss&sort=song_hotttnesss-desc",limit];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&format=json&results=%lu&bucket=song_hotttnesss&sort=song_hotttnesss-desc",(unsigned long)limit];
     NSURL *searchUrl = [NSURL URLWithString:urlString];
 //    dispatch_async(kBgQueue, ^{
         NSData* data = [NSData dataWithContentsOfURL:

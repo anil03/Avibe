@@ -158,7 +158,7 @@ NSInteger const LBYouTubePlayerExtractorErrorCodeNoJSONData   =    3;
         capacity = 0;
     }
     
-    self.buffer = [[NSMutableData alloc] initWithCapacity:capacity];
+    self.buffer = [[NSMutableData alloc] initWithCapacity:(int)capacity];
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

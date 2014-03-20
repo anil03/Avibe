@@ -997,7 +997,7 @@
     NSDictionary *dict = _songsForTableView[indexPath.row];
     
     self.sampleMusicViewController = [[SampleMusicViewController alloc] initWithDictionary:dict];
-    self.sampleMusicViewController.delegate = self;
+    self.sampleMusicViewController.delegate = self.delegate; //no matter how many levels go deep in sample music, always return to LiveFeed
     _navigationControllerForSampleMusic = [[MMNavigationController alloc] initWithRootViewController:self.sampleMusicViewController];
     [self.mm_drawerController setCenterViewController:_navigationControllerForSampleMusic withFullCloseAnimation:YES completion:nil];
 }

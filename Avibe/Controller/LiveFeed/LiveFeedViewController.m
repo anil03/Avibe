@@ -102,7 +102,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
     [flowLayout setMinimumLineSpacing:10.0f]; //Between lines
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 5, 5, 5); //Between sections
     flowLayout.headerReferenceSize = CGSizeMake(50, 20); //set header
-    flowLayout.footerReferenceSize = CGSizeMake(50, 20); //set footer
+    flowLayout.footerReferenceSize = CGSizeMake(50, 40); //set footer, height should be the same in YMCollectionReusableFooterView.h
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
