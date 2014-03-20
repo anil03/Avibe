@@ -26,6 +26,7 @@
 
 //Youtube
 #import "LBYouTube.h"
+#import "XCDYouTubeVideoPlayerViewController.h"
 
 @interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
@@ -71,6 +72,9 @@
 
 //Youtube
 @property (strong, nonatomic) MPMoviePlayerController* moviePlayer;
+@property UIView *sampleMusicYoutubeView;
+@property XCDYouTubeVideoPlayerViewController *videoPlayerViewController;
+@property NSString *youtubeVideoLink;
 @property (strong, nonatomic) UIWebView *sampleMusicWebView;
 
 //iTune
@@ -178,6 +182,11 @@
 {
     [_player pause];
     _player = nil;
+    
+    //Stop XCDYoutubeController
+    [_videoPlayerViewController.moviePlayer stop];
+    _videoPlayerViewController = nil;
+    _sampleMusicYoutubeView = nil;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -214,6 +223,17 @@
     }else{
         [self listenInItune];
     }
+    
+    /**
+     * XCDYoutubeController
+     */
+    [[NSUserDefaults standardUserDefaults] registerDefaults:@{ @"VideoIdentifier": @"9bZkp7q19f0" }];
+	
+	NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+	[defaultCenter addObserver:self selector:@selector(videoPlayerViewControllerDidReceiveMetadata:) name:XCDYouTubeVideoPlayerViewControllerDidReceiveMetadataNotification object:nil];
+	[defaultCenter addObserver:self selector:@selector(moviePlayerPlaybackDidFinish:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
+	[defaultCenter addObserver:self selector:@selector(moviePlayerPlaybackStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:nil];
+	[defaultCenter addObserver:self selector:@selector(moviePlayerLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:nil];
 }
 - (void)setupParameter
 {
@@ -258,6 +278,7 @@
     //iTune Image View
     float imageViewTopOffset = 30.0f;
     _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, barHeight+imageViewTopOffset, playerImageWidth, playerImageHeight)];
+    _sampleMusicYoutubeView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset, width, playerImageHeight)];
     [self.view addSubview:_sampleMusicImageView];
     
     //More like this
@@ -582,7 +603,7 @@
         [self fetchedDataWithError];
         return;
     }
-    NSLog(@"results: %@", entry);
+//    NSLog(@"results: %@", entry);
     
     NSArray *link = [entry[0] objectForKey:@"link"];
     NSString *href = [link[0] objectForKey:@"href"];
@@ -593,44 +614,15 @@
     [_spinner stopAnimating];
     
     [self playYoutube:href];
-//    [self parseYoutubeAddres:href];
-//    [self playYoutubeIFrame:href];
 }
 - (void)fetchedDataWithError
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't listen in Youtube right now. Please try later." delegate:self.delegate cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
-- (void)parseYoutubeAddres:(NSString*)videoString
-{
-    NSURL *youtubeUrl = [NSURL URLWithString:videoString];
-    
-    LBYouTubeExtractor* extractor = [[LBYouTubeExtractor alloc] initWithURL:youtubeUrl quality:LBYouTubeVideoQualityLarge];
-
-    [extractor extractVideoURLWithCompletionBlock:^(NSURL *videoURL, NSError *error) {
-        if(!error) {
-            NSString *urlString = [videoURL absoluteString];
-            urlString = [urlString stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            [[UIApplication sharedApplication] openURL:videoURL];
-            NSLog(@"Did extract video URL using completion block: %@", videoURL);
-        } else {
-            NSLog(@"Failed extracting video URL using block due to error:%@", error);
-        }
-    }];
-}
-- (void)playYoutubeIFrame:(NSString*)videoUrl
-{
-    /**
-     * https://developers.google.com/youtube/iframe_api_reference
-     */
-//    NSString* embedHTML = [NSString stringWithFormat:@"<!DOCTYPE html> <html> <body>  <div id=\"player\"></div> <script> var tag = document.createElement('script');  tag.src = \"https://www.youtube.com/iframe_api\"; var firstScriptTag = document.getElementsByTagName('script')[0]; firstScriptTag.parentNode.insertBefore(tag, firstScriptTag); var player; function onYouTubeIframeAPIReady() { player = new YT.Player('player', { height: '390', width: '640', videoId: 'M7lc1UVf-VE', events: { 'onReady': onPlayerReady, 'onStateChange': onPlayerStateChange } }); } function onPlayerReady(event) {  event.target.playVideo(); } var done = false; function onPlayerStateChange(event) { if (event.data == YT.PlayerState.PLAYING && !done) { setTimeout(stopVideo, 6000); done = true; } } function stopVideo() { player.stopVideo(); } </script> </body>  </html>", videoUrl];
-}
 - (void)playYoutube:(NSString*)videoURL
 {
-    //Safari or Youtube to open video url
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:videoURL]];
-    return;
-    
+    _youtubeVideoLink = videoURL;
     //URL Example
 //    NSString *videoURL = @"http://www.youtube.com/embed/SB-DA6hyuj4";
 //    videoURL = @"https://www.youtube.com/watch?v=FyXtoTLLcDk&feature=youtube_gdata";
@@ -645,24 +637,38 @@
     @catch (NSException *exception) {
         
     }
+    NSRange rangeEmbed = [videoURL rangeOfString:@"embed/"];
+    NSString *identifier = [videoURL substringFromIndex:rangeEmbed.location+rangeEmbed.length];
+    
+    /*
+     * XCDYoutubeController play embed view, if fails, open in safari/youtube app
+     */
+    [_sampleMusicImageView removeFromSuperview];
+    [self.view addSubview:_sampleMusicYoutubeView];
+    _videoPlayerViewController = [[XCDYouTubeVideoPlayerViewController alloc] initWithVideoIdentifier:identifier];
+    [_videoPlayerViewController.moviePlayer prepareToPlay];
+    [_videoPlayerViewController presentInView:_sampleMusicYoutubeView];
+//    [_videoPlayerViewController.moviePlayer play];
+//    self.videoPlayerViewController.moviePlayer.shouldAutoplay = self.shouldAutoplaySwitch.on;
+    return;
     
     // here your link is converted in embed format.
 //    NSString *embedHTML = [NSString stringWithFormat:@"<iframe id=\"ytplayer\" type=\"text/html\" width=\"640\" height=\"390\" src=\"%@\" frameborder=\"0\"/>", videoURL];
-    NSString* embedHTML = [NSString stringWithFormat:@"\
-                           <html><head>\
-                           <style type=\"text/css\">\
-                           iframe {position:absolute; top:50%%; margin-top:-130px;}\
-                           body {\
-                           background-color: transparent;\
-                           color: white;\
-                           }\
-                           </style>\
-                           </head><body style=\"margin:0\">\
-                           <iframe width=\"100%%\" height=\"240px\" src=\"%@?playsinline=1\" webkit-playsinline frameborder=\"0\"></iframe>\
-                           </body></html>",videoURL]; //fs=0&playsinline=1&modestbranding=1&rel=0&showinfo=0&autohide=2&html5=1
-    [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
-    self.sampleMusicWebView.allowsInlineMediaPlayback = YES;
-    _sampleMusicWebView.delegate = self;
+//    NSString* embedHTML = [NSString stringWithFormat:@"\
+//                           <html><head>\
+//                           <style type=\"text/css\">\
+//                           iframe {position:absolute; top:50%%; margin-top:-130px;}\
+//                           body {\
+//                           background-color: transparent;\
+//                           color: white;\
+//                           }\
+//                           </style>\
+//                           </head><body style=\"margin:0\">\
+//                           <iframe width=\"100%%\" height=\"240px\" src=\"%@?playsinline=1\" webkit-playsinline frameborder=\"0\"></iframe>\
+//                           </body></html>",videoURL]; //fs=0&playsinline=1&modestbranding=1&rel=0&showinfo=0&autohide=2&html5=1
+//    [self.sampleMusicWebView loadHTMLString:embedHTML baseURL:nil];
+//    self.sampleMusicWebView.allowsInlineMediaPlayback = YES;
+//    _sampleMusicWebView.delegate = self;
 }
 -(BOOL) webView:(UIWebView *)inWeb shouldStartLoadWithRequest:(NSURLRequest *)inRequest navigationType:(UIWebViewNavigationType)inType {
     if ( inType == UIWebViewNavigationTypeLinkClicked ) {
@@ -1039,6 +1045,84 @@
     }
     
     [self.mm_drawerController setCenterViewController:[[MMNavigationController alloc] initWithRootViewController:self.delegate] withCloseAnimation:YES completion:nil];
+}
+
+#pragma mark - XCDYoutubeController Notifications
+
+- (void) moviePlayerPlaybackDidFinish:(NSNotification *)notification
+{
+	MPMovieFinishReason finishReason = [notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] integerValue];
+	NSError *error = notification.userInfo[XCDMoviePlayerPlaybackDidFinishErrorUserInfoKey];
+	NSString *reason = @"Unknown";
+	switch (finishReason)
+	{
+		case MPMovieFinishReasonPlaybackEnded:
+			reason = @"Playback Ended";
+			break;
+		case MPMovieFinishReasonPlaybackError:
+			reason = @"Playback Error";
+			break;
+		case MPMovieFinishReasonUserExited:
+			reason = @"User Exited";
+			break;
+	}
+	NSLog(@"Finish Reason: %@%@", reason, error ? [@"\n" stringByAppendingString:[error description]] : @"");
+    
+    //Handle error
+    if (error) {
+        [self.view addSubview:_sampleMusicImageView];
+        //Safari or Youtube to open video url
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_youtubeVideoLink]];
+    }
+}
+
+- (void) moviePlayerPlaybackStateDidChange:(NSNotification *)notification
+{
+	MPMoviePlayerController *moviePlayerController = notification.object;
+	NSString *playbackState = @"Unknown";
+	switch (moviePlayerController.playbackState)
+	{
+		case MPMoviePlaybackStateStopped:
+			playbackState = @"Stopped";
+			break;
+		case MPMoviePlaybackStatePlaying:
+			playbackState = @"Playing";
+			break;
+		case MPMoviePlaybackStatePaused:
+			playbackState = @"Paused";
+			break;
+		case MPMoviePlaybackStateInterrupted:
+			playbackState = @"Interrupted";
+			break;
+		case MPMoviePlaybackStateSeekingForward:
+			playbackState = @"Seeking Forward";
+			break;
+		case MPMoviePlaybackStateSeekingBackward:
+			playbackState = @"Seeking Backward";
+			break;
+	}
+	NSLog(@"Playback State: %@", playbackState);
+}
+
+- (void) moviePlayerLoadStateDidChange:(NSNotification *)notification
+{
+	MPMoviePlayerController *moviePlayerController = notification.object;
+	
+	NSMutableString *loadState = [NSMutableString new];
+	MPMovieLoadState state = moviePlayerController.loadState;
+	if (state & MPMovieLoadStatePlayable)
+		[loadState appendString:@" | Playable"];
+	if (state & MPMovieLoadStatePlaythroughOK)
+		[loadState appendString:@" | Playthrough OK"];
+	if (state & MPMovieLoadStateStalled)
+		[loadState appendString:@" | Stalled"];
+	
+	NSLog(@"Load State: %@", loadState.length > 0 ? [loadState substringFromIndex:3] : @"N/A");
+}
+
+- (void) videoPlayerViewControllerDidReceiveMetadata:(NSNotification *)notification
+{
+	NSLog(@"Metadata: %@", notification.userInfo);
 }
 
 @end
