@@ -114,6 +114,7 @@
 		4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */; };
 		4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */; };
 		4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */; };
+		4C3407E718DBB94D00C3EC33 /* GlobalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3407E618DBB94D00C3EC33 /* GlobalPlayer.m */; };
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
 		4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
@@ -325,6 +326,8 @@
 		4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerViewController.m; sourceTree = "<group>"; };
 		4C3189B018BE821B00549731 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
 		4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
+		4C3407E518DBB94D00C3EC33 /* GlobalPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalPlayer.h; path = GlobalPlayer/GlobalPlayer.h; sourceTree = "<group>"; };
+		4C3407E618DBB94D00C3EC33 /* GlobalPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GlobalPlayer.m; path = GlobalPlayer/GlobalPlayer.m; sourceTree = "<group>"; };
 		4C4184D118A1CA9D00999660 /* iPodListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPodListenedMusic.h; path = iPod/iPodListenedMusic.h; sourceTree = "<group>"; };
 		4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPodListenedMusic.m; path = iPod/iPodListenedMusic.m; sourceTree = "<group>"; };
 		4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestIPodListenedMusic.m; path = SaveListenedMusicTest/iPod/TestIPodListenedMusic.m; sourceTree = "<group>"; };
@@ -643,6 +646,7 @@
 		4C231CAA188104F800B030F9 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				4C3407E418DBB92B00C3EC33 /* GlobalPlayer */,
 				4C3150BE18BFCE0A00D80BBB /* Interface */,
 				4C23F17F1885D6BB00D2075A /* ShareMethod */,
 				4C231DDF18820CA300B030F9 /* SaveListenedMusic */,
@@ -959,6 +963,15 @@
 				4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */,
 			);
 			path = LBYouTubeView;
+			sourceTree = "<group>";
+		};
+		4C3407E418DBB92B00C3EC33 /* GlobalPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				4C3407E518DBB94D00C3EC33 /* GlobalPlayer.h */,
+				4C3407E618DBB94D00C3EC33 /* GlobalPlayer.m */,
+			);
+			name = GlobalPlayer;
 			sourceTree = "<group>";
 		};
 		4C4184CF18A1C72500999660 /* Archive */ = {
@@ -1349,6 +1362,7 @@
 				4C231D15188104F800B030F9 /* YMTableViewController.m in Sources */,
 				4C231D02188104F800B030F9 /* MMExampleRightSideDrawerViewController.m in Sources */,
 				4C231D01188104F800B030F9 /* MMExampleLeftSideDrawerViewController.m in Sources */,
+				4C3407E718DBB94D00C3EC33 /* GlobalPlayer.m in Sources */,
 				4C231D03188104F800B030F9 /* MMExampleSideDrawerViewController.m in Sources */,
 				4C231D14188104F800B030F9 /* YMTableViewCell.m in Sources */,
 				4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */,

@@ -26,6 +26,8 @@
 
 #import "MMSideDrawerTableViewCell.h"
 
+#import "GlobalPlayer.h"
+
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
     BeetRow_Share,
@@ -51,6 +53,14 @@ typedef NS_ENUM(NSInteger, BeetRow){
 
 @property (nonatomic, strong) NSString *lastFMAccountUsername;
 
+//Global Player
+@property GlobalPlayer *globalPlayer;
+@property UIView *playerView;
+@property UIButton *nextSong;
+@property UIButton *previousSong;
+@property UIButton *pauseSong;
+@property UIImageView *albumImage;
+
 @end
 
 @implementation SideMenuViewController
@@ -69,6 +79,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
     }
     return self;
 }
+
 
 #pragma mark - TableView Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -323,6 +334,34 @@ typedef NS_ENUM(NSInteger, BeetRow){
     
     //log out
     [PFUser logOut];
+}
+
+#pragma mark - Footer view
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    if (section == 1) {
+        _playerView = [[UIView alloc] init];
+        [_playerView setBackgroundColor:[UIColor redColor]];
+        
+        _globalPlayer = [[GlobalPlayer alloc] init];
+        
+        float width = self.tableView.frame.size.width;
+        float height = 100.0f;
+        _nextSong = [[UIButton alloc] initWithFrame:CGRectMake(width/2, height-30, 30, 30)];
+        [_nextSong setBackgroundColor:[UIColor blueColor]];
+        [_playerView addSubview:_nextSong];
+        
+        return _playerView;
+    }
+    
+    return nil;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if (section == 1) {
+        return 130.0f;
+    }
+    return 0.0;
 }
 
 #pragma mark - UserViewController Delegate
