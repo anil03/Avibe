@@ -17,6 +17,9 @@
 #import "SampleMusic.h"
 #import "MMNavigationController.h"
 
+#import "PublicMethod.h"
+#import "GlobalPlayer.h"
+
 //Rdio
 #import "RdioConsumerCredentials.h"
 #import <Rdio/Rdio.h>
@@ -28,7 +31,7 @@
 #import "LBYouTube.h"
 #import "XCDYouTubeVideoPlayerViewController.h"
 
-@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface SampleMusicViewController () <UIWebViewDelegate, SampleMusicDelegate, AVAudioPlayerDelegate, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, GlobalPlayerDelegate>
 {
     UIColor *backgroundColor;
     UIColor *scrollViewBackgroundColor;
@@ -97,6 +100,7 @@
 @property UIAlertView *iTuneFetchErrorAlertView;
 
 //Song Info
+@property NSString *songMd5;
 @property (nonatomic, strong) NSString *songTitle;
 @property (nonatomic, strong) NSString *songAlbum;
 @property (nonatomic, strong) NSString *songArtist;
@@ -112,6 +116,9 @@
 
 //PFObject of current song
 @property PFObject *pfObject;
+
+//Global player
+@property GlobalPlayer *globalPlayer;
 
 //MoreLikeThis View - UITableView
 @property (nonatomic, strong) UIView *addMoreLikeThisView;
@@ -142,6 +149,8 @@
 #pragma mark - Init method
 - (void)checkInfoValid
 {
+    if (!_songMd5) _songMd5 = @" ";
+    
     if (!_songTitle) _songTitle = @" ";
     _songTitle =  [NSString stringWithUTF8String:[_songTitle UTF8String]];
     if (!_songAlbum) _songAlbum = @" ";
@@ -169,10 +178,14 @@
     self = [super init];
     if (self) {
         _pfObject = object;
+        _songMd5 = _pfObject[kClassSongMD5];
         _songTitle = [_pfObject objectForKey:kClassSongTitle];
         _songAlbum = [_pfObject objectForKey:kClassSongAlbum];
         _songArtist = [_pfObject objectForKey:kClassSongArtist];
         [self checkInfoValid];
+        
+        _globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+        [_globalPlayer setDelegate:self];
     }
     return self;
 }
@@ -214,15 +227,22 @@
     
     [self setupMusicView];
     
+    
+    /*
+     * Prepare global player current song
+     */
+    [_globalPlayer setCurrentSongByMd5:_songMd5];
+    [_globalPlayer prepareCurrentSong];
+    
     /**
      * Preview Url existed, then no need to search from iTune
      */
-    NSString *previewUrlString = [_pfObject objectForKey:kClassSongDataURL];
-    if (previewUrlString) {
-        [self handleAudioPlayer:previewUrlString];
-    }else{
-        [self listenInItune];
-    }
+//    NSString *previewUrlString = [_pfObject objectForKey:kClassSongDataURL];
+//    if (previewUrlString) {
+//        [self handleAudioPlayer:previewUrlString];
+//    }else{
+//        [self listenInItune];
+//    }
     
     /**
      * XCDYoutubeController
@@ -528,6 +548,24 @@
     }
 }
 
+#pragma mark - Global Player delegate
+- (void)prepareCurrentSongSucceed
+{
+    //User interface
+    [_playButton setHidden:NO];
+    [_shareButton setHidden:NO];
+    [_playSourceButton setHidden:NO];
+    [_iTuneButton setHidden:NO];
+    [_addMoreLikeThisView setHidden:NO];
+    
+    //Spinner
+    [_spinner stopAnimating];
+}
+- (void)prepareCurrentSongFailed
+{
+    
+}
+
 
 #pragma mark - Youtube
 - (void)listenInYoutube
@@ -808,15 +846,17 @@
 
 #pragma mark - Audio play method
 - (void)playOrPause {
-    _playButton.selected = !_playButton.selected;
-    // if already playing, then pause
-    if (_player.playing) {
-        [_player pause];
-        [_progressTimer invalidate];
-    } else {
-        [_player play];
-        _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
-    }
+    [_globalPlayer playPauseSong];
+    
+//    _playButton.selected = !_playButton.selected;
+//    // if already playing, then pause
+//    if (_player.playing) {
+//        [_player pause];
+//        [_progressTimer invalidate];
+//    } else {
+//        [_player play];
+//        _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
+//    }
 }
 - (void)updateProgress
 {

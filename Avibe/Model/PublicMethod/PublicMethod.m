@@ -388,5 +388,13 @@
     [self.md5Array addObject:md5String];
 }
 
+#pragma mark - Global player
+- (GlobalPlayer *)globalPlayer
+{
+    if (!_globalPlayer) {
+        _globalPlayer = [[GlobalPlayer alloc] init];
+    }
+    return _globalPlayer;
+}
 
 @end

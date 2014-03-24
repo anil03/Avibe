@@ -427,6 +427,22 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
                 [_refreshControl endRefreshing];
                 
                 
+                //Update global player
+                for(PFObject *object in objects){
+                    NSString *md5 = object[kClassSongMD5];
+                    NSString *title = object[kClassSongTitle];
+                    NSString *album = object[kClassSongAlbum];
+                    NSString *artist = object[kClassSongArtist];
+                    NSString *albumUrl = object[kClassSongAlbumURL];
+                    NSString *dataUrl = object[kClassSongDataURL];
+                    
+                    GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+                    [globalPlayer insertBasicInfoByMd5:md5 title:title album:album artist:artist];
+                    [globalPlayer insertAlbumUrlByMd5:md5 albumUrl:albumUrl];
+                    [globalPlayer insertDataUrlByMd5:md5 dataUrl:dataUrl];
+                }
+                
+                
                 [self.collectionView reloadData];
             }else{
                 NSLog(@"Error In Fetch Data: %@", error);
