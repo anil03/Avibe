@@ -437,6 +437,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
                     NSString *dataUrl = object[kClassSongDataURL];
                     
                     GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+                    [globalPlayer insertMd5:md5];
                     [globalPlayer insertBasicInfoByMd5:md5 title:title album:album artist:artist];
                     [globalPlayer insertAlbumUrlByMd5:md5 albumUrl:albumUrl];
                     [globalPlayer insertDataUrlByMd5:md5 dataUrl:dataUrl];

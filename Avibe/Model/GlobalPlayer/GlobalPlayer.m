@@ -8,16 +8,24 @@
 
 #import "GlobalPlayer.h"
 
-#import <AVFoundation/AVFoundation.h>
 #import "SampleMusic.h"
+#import "SampleMusicViewController.h"
 
 @interface GlobalPlayer() <SampleMusicDelegate>
 
-@property (nonatomic, retain) AVAudioPlayer *player;
 
 @property SampleMusic *sampleMusic; //search iTune
 
+@property NSMutableArray *playlist;
 @property NSMutableDictionary *dict; // md5 <-> NSMutableDictionary[title,album,artist,url,songdata,image...]
+
+@property (strong, nonatomic) NSTimer *progressTimer;
+
+
+@property NSString *currentAlbumParseUrl;
+@property NSString *currentAlbumITuneUrl;
+
+@property (nonatomic)  NSString *currentDataUrl;
 
 @end
 
@@ -38,6 +46,7 @@ NSString *const kSongData = @"data";
     self = [super init];
     if (self) {
         _dict = [[NSMutableDictionary alloc] init];
+        _playlist = [[NSMutableArray alloc] init];
     }
     return self;
 }
@@ -49,6 +58,20 @@ NSString *const kSongData = @"data";
         [_dict setValue:song forKey:md5];
     }
     return song;
+}
+- (NSString *)currentMd5
+{
+    if (!_currentMd5) {
+        if(_playlist) _currentMd5 = _playlist[0];
+    }
+    return _currentMd5;
+}
+/*
+ * Keep the order of the sequence md5 inserted
+ */
+- (void)insertMd5:(NSString *)md5
+{
+    [_playlist addObject:md5];
 }
 - (void)insertBasicInfoByMd5:(NSString *)md5 title:(NSString *)title album:(NSString *)album artist:(NSString *)artist
 {
@@ -77,8 +100,10 @@ NSString *const kSongData = @"data";
     _currentTitle = _dict[md5][kSongTitle];
     _currentAlbum = _dict[md5][kSongAlbum];
     _currentArtist = _dict[md5][kSongArtist];
-    _currentAlbumUrl = _dict[md5][kSongAlbumUrl];
+    _currentAlbumParseUrl = _dict[md5][kSongAlbumUrl];
     _currentDataUrl = _dict[md5][kSongDataUrl];
+    
+    [self prepareCurrentSong];
 }
 - (void)prepareCurrentSong
 {
@@ -95,6 +120,11 @@ NSString *const kSongData = @"data";
 #pragma mark - iTune Music
 - (void)listenInItune
 {
+    //Check valid info for dict
+    if(!_currentTitle) _currentTitle = @" ";
+    if(!_currentAlbum) _currentAlbum = @" ";
+    if(!_currentArtist) _currentArtist = @" ";
+    
     NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_currentTitle, _currentAlbum, _currentArtist] forKeys:@[@"title", @"album", @"artist"]];
     _sampleMusic = [[SampleMusic alloc] init];
     _sampleMusic.delegate = self;
@@ -108,7 +138,7 @@ NSString *const kSongData = @"data";
     _currentAlbum = [songInfo objectForKey:@"album"];
     _currentArtist = [songInfo objectForKey:@"artist"];
 //    _collectionViewUrlLinkToITuneStore = [songInfo objectForKey:@"collectionViewUrl"];
-//    _songImageUrlString = [songInfo objectForKey:@"imageURL"];
+    _currentAlbumITuneUrl = [songInfo objectForKey:@"imageURL"];
     _currentDataUrl = [songInfo objectForKey:@"previewUrl"];
     
     
@@ -147,11 +177,18 @@ NSString *const kSongData = @"data";
         NSLog(@"Audio error:%@", audioError.description);
     }
 
-    _player = newPlayer;
+    self.audioPlayer = newPlayer;
 
+    //Image
+    [self handleAlbumImage];
+    
+    
+    
     if (self.delegate && [self.delegate respondsToSelector:@selector(prepareCurrentSongSucceed)]) {
         [self.delegate prepareCurrentSongSucceed];
     }
+    
+    
 
     
 //    _player.delegate = self;
@@ -185,22 +222,167 @@ NSString *const kSongData = @"data";
 #pragma mark - Play method
 - (void)playPreviousSong
 {
+    NSUInteger index = [_playlist indexOfObject:self.currentMd5];
+    if (index == 0) {
+        index = [_playlist count];
+    }
     
+    NSString *previousMd5 = _playlist[index-1];
+    [self setCurrentSongByMd5:previousMd5];
 }
 - (void)playNextSong
 {
     
+    NSUInteger index = [_playlist indexOfObject:self.currentMd5];
+    
+    if (index == [_playlist count]-1) {
+        index = -1;
+    }
+    
+    NSString *nextMd5 = _playlist[index+1];
+    [self setCurrentSongByMd5:nextMd5];
 }
 - (void)playPauseSong
 {
-    if (_player.playing) {
-        [_player pause];
-//        [_progressTimer invalidate];
+    //If no default current song, play first one in playlist
+//    if (!_audioPlayer && _playlist) {
+//        [self setCurrentSongByMd5:_playlist[0]];
+//    }
+    
+    if (self.audioPlayer.playing) {
+        [self.audioPlayer pause];
+        [_progressTimer invalidate];
     } else {
-        [_player play];
-//        _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(updateProgress) userInfo:nil repeats:YES];
+        [self.audioPlayer play];
+        
+        if (self.delegate && [self.delegate isKindOfClass:[SampleMusicViewController class]]) {
+            _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self.delegate selector:@selector(updateProgress) userInfo:nil repeats:YES];
+
+            ;
+        }
     }
 
+}
+
+
+#pragma mark - Handle album image
+/**
+ * Get Image from PFObject image url
+ * If fails, then get album image from iTune
+ */
+- (void)setAlbumImage:(UIImage *)albumImage
+{
+//    _albumImage = albumImage;
+//    [_sampleMusicImageView setImage:albumImage];
+    
+    //Set background image for scroll view when setting album image
+    //    float imageHeight = albumImage.size.height;
+    //    float imageWidth = albumImage.size.width;
+    //    float portion = imageHeight/imageWidth;
+    
+//    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(-width/2, barHeight, height, height)];
+//    [scrollBackgroundView setImage:albumImage];
+//    //Mask for ScrollBackgroundView
+//    UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:CGRectMake(width/2, 0, width, height)];
+//    [scrollBackgroundViewMask setBackgroundColor:[ColorConstant backgroundViewMaskColor]];
+//    [scrollBackgroundView addSubview:scrollBackgroundViewMask];
+//    
+//    [self.view addSubview:scrollBackgroundView];
+//    [self.view sendSubviewToBack:scrollBackgroundView];
+}
+/**
+ * Get image from Echo Nest
+ * Then try saved album url
+ * Last try iTune image
+ */
+- (void)handleAlbumImage
+{
+    BOOL echoNestSource = NO;
+    BOOL parseSource = NO;
+    BOOL iTuneSource = NO;
+    
+    echoNestSource = [self getImageFromEchoNest];
+    if (!echoNestSource) {
+        parseSource = [self getImageFromParse];
+        if (!parseSource) {
+            iTuneSource = [self getImageFromITune];
+            if (!iTuneSource) {
+                [self getImageFromDefault];
+            }
+        }
+    }
+    
+    //After getting the image url, update parse in class song
+//    [self updateSongInfo];
+}
+- (BOOL)getImageFromEchoNest
+{
+    NSString *title = [_currentTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *artist = [_currentArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *urlString = [NSString stringWithFormat:@"http://developer.echonest.com/api/v4/song/search?api_key=9PFPYZSZPU9X2PKES&format=json&results=1&artist=%@&title=%@&bucket=id:7digital-US&bucket=audio_summary&bucket=tracks", artist, title];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+    NSData* responseData = [NSData dataWithContentsOfURL:
+                            searchUrl];
+    
+    //Return if no data
+    if(!responseData) return NO;
+    
+    NSError* error = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:responseData options:kNilOptions error:&error];
+    
+    NSArray *songs;
+    if(json && json[@"response"]){
+        songs = json[@"response"][@"songs"];
+    }
+    
+    if (songs && [songs count] > 0) {
+        NSDictionary *song = songs[0];
+        //        NSString *title = song[@"title"];
+        //        NSString *artist = song[@"artist_name"];
+        NSArray *tracks = song[@"tracks"];
+        NSString *imageUrl;
+        if(tracks && [tracks count] > 0){
+            imageUrl = tracks[0][@"release_image"];
+            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+            if (imageData) {
+//                _currentAlbumUrl = imageUrl; //Update song image url
+                _currentImage = [UIImage imageWithData:imageData];
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+- (BOOL)getImageFromParse
+{
+    NSString *imageUrlFromParse = _currentAlbumParseUrl;
+    if (imageUrlFromParse) { //Parse image
+        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
+        if (imageDataFromParse) {
+//            _songImageUrlString = imageUrlFromParse;
+            _currentImage = [UIImage imageWithData:imageDataFromParse];
+            return YES;
+        }
+    }
+    return NO;
+}
+- (BOOL)getImageFromITune
+{
+    NSString *imageUrlFromITune = _currentAlbumITuneUrl;
+    NSData *imageDataFromITune;
+    if (imageUrlFromITune) {
+        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
+    }
+    if (imageDataFromITune) {
+        _currentImage = [UIImage imageWithData:imageDataFromITune];
+        return YES;
+    }
+    return NO;
+}
+- (void)getImageFromDefault
+{
+    _currentImage = [UIImage imageNamed:@"avibe_icon_120_120.png"];
 }
 
 @end

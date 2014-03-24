@@ -99,6 +99,10 @@
 		4C2D0C7718DFC7D80096888D /* circle-dashed-4-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */; };
 		4C2D0C7818DFC7D80096888D /* pause-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7318DFC7D80096888D /* pause-32.png */; };
 		4C2D0C7918DFC7D80096888D /* play-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7418DFC7D80096888D /* play-32.png */; };
+		4C2D0C7C18E0E6940096888D /* arrow-24-32-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7A18E0E6940096888D /* arrow-24-32-highlight.png */; };
+		4C2D0C7D18E0E6940096888D /* arrow-89-32-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7B18E0E6940096888D /* arrow-89-32-highlight.png */; };
+		4C2D0C8018E0E9650096888D /* UIImage+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */; };
+		4C2D0C8218E0EB120096888D /* circle-dashed-4-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -310,6 +314,11 @@
 		4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-dashed-4-48.png"; path = "GlobalPlayer/circle-dashed-4-48.png"; sourceTree = "<group>"; };
 		4C2D0C7318DFC7D80096888D /* pause-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-32.png"; path = "GlobalPlayer/pause-32.png"; sourceTree = "<group>"; };
 		4C2D0C7418DFC7D80096888D /* play-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-32.png"; path = "GlobalPlayer/play-32.png"; sourceTree = "<group>"; };
+		4C2D0C7A18E0E6940096888D /* arrow-24-32-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-24-32-highlight.png"; path = "GlobalPlayer/arrow-24-32-highlight.png"; sourceTree = "<group>"; };
+		4C2D0C7B18E0E6940096888D /* arrow-89-32-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-89-32-highlight.png"; path = "GlobalPlayer/arrow-89-32-highlight.png"; sourceTree = "<group>"; };
+		4C2D0C7E18E0E9650096888D /* UIImage+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extras.h"; sourceTree = "<group>"; };
+		4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
+		4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-dashed-4-48-highlight.png"; path = "GlobalPlayer/circle-dashed-4-48-highlight.png"; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -848,6 +857,8 @@
 				4C7CA74818AC5A4E00A0EC99 /* NSString+MD5.m */,
 				4C3189B018BE821B00549731 /* NSMutableArray+Shuffling.h */,
 				4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */,
+				4C2D0C7E18E0E9650096888D /* UIImage+Extras.h */,
+				4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */,
 			);
 			name = ShareMethod;
 			path = PublicMethod;
@@ -873,6 +884,9 @@
 		4C2D0C6D18DFC55C0096888D /* GlobalPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */,
+				4C2D0C7A18E0E6940096888D /* arrow-24-32-highlight.png */,
+				4C2D0C7B18E0E6940096888D /* arrow-89-32-highlight.png */,
 				4C2D0C7018DFC7D80096888D /* arrow-24-32.png */,
 				4C2D0C7118DFC7D80096888D /* arrow-89-32.png */,
 				4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */,
@@ -1289,6 +1303,8 @@
 				4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */,
 				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
+				4C2D0C8218E0EB120096888D /* circle-dashed-4-48-highlight.png in Resources */,
+				4C2D0C7C18E0E6940096888D /* arrow-24-32-highlight.png in Resources */,
 				4C2D0C7818DFC7D80096888D /* pause-32.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4CADBB5218C500B300F86916 /* LinkFacebookStoryboard.storyboard in Resources */,
@@ -1299,6 +1315,7 @@
 				4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */,
 				4C231D2E188104F800B030F9 /* music-record-24.png in Resources */,
 				4C231D2B188104F800B030F9 /* Images.xcassets in Resources */,
+				4C2D0C7D18E0E6940096888D /* arrow-89-32-highlight.png in Resources */,
 				4C231D32188104F800B030F9 /* sharethis-3-24.png in Resources */,
 				4C2D0C7918DFC7D80096888D /* play-32.png in Resources */,
 				4C2D0C7718DFC7D80096888D /* circle-dashed-4-48.png in Resources */,
@@ -1442,6 +1459,7 @@
 				4C231D21188104F800B030F9 /* WelcomeViewController.m in Sources */,
 				4C231D1F188104F800B030F9 /* AppDelegate.m in Sources */,
 				4C231D07188104F800B030F9 /* MMSideDrawerSectionHeaderView.m in Sources */,
+				4C2D0C8018E0E9650096888D /* UIImage+Extras.m in Sources */,
 				4C231D05188104F800B030F9 /* MMLogoView.m in Sources */,
 				4C7CA74918AC5A4E00A0EC99 /* NSString+MD5.m in Sources */,
 				4C231D0C188104F800B030F9 /* TableViewController.m in Sources */,

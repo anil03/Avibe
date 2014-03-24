@@ -20,4 +20,6 @@
  */
 -(void)setupNavigationBar;
 
+- (void)updateProgress;
+
 @end

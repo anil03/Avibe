@@ -26,7 +26,10 @@
 
 #import "MMSideDrawerTableViewCell.h"
 
+#import "PublicMethod.h"
 #import "GlobalPlayer.h"
+
+#import "UIImage+Extras.h"
 
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
@@ -36,7 +39,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_Friends,
 };
 
-@interface SideMenuViewController () <LiveFeedViewControllerDelegate, UserViewControllerDelegate>
+@interface SideMenuViewController () <LiveFeedViewControllerDelegate, UserViewControllerDelegate, GlobalPlayerDelegate>
 {
     BOOL animating;
 }
@@ -63,8 +66,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property UIButton *nextSongButton;
 @property UIButton *playPauseSongButton;
 @property UIButton *previousSongButton;
+@property UIImageView *albumImageFrame;
 @property UIImageView *albumImage;
-
 
 @end
 
@@ -76,8 +79,18 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @synthesize friendsViewController;
 @synthesize userViewController;
 
--(id)initWithDefaultCenterView:(MMNavigationController*)controller{
+-(id)init
+{
     self = [super init];
+    if (self) {
+        _globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+        [_globalPlayer setDelegate:self];
+    }
+    return self;
+}
+
+-(id)initWithDefaultCenterView:(MMNavigationController*)controller{
+    self = [self init];
     if(self){
         [self setRestorationIdentifier:@"MMExampleLeftSideDrawerController"];
         self.navigationLiveFeedViewController = controller;
@@ -85,6 +98,11 @@ typedef NS_ENUM(NSInteger, BeetRow){
     return self;
 }
 
+#pragma mark - View method
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setupAlbumImage];
+}
 
 #pragma mark - TableView Data Source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -370,17 +388,16 @@ typedef NS_ENUM(NSInteger, BeetRow){
         [_playerBackgroundView setBackgroundColor:[ColorConstant sideMenuHeaderBackgroundColor]];
         [_playerView addSubview:_playerBackgroundView];
         
-        _globalPlayer = [[GlobalPlayer alloc] init];
-        
         
         //Album Image
-        _albumImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
-        [_albumImage setImage:[UIImage imageNamed:@"circle-dashed-4-48.png"]];
-        [_playerBackgroundView addSubview:_albumImage];
+        _albumImageFrame = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+        [_albumImageFrame setImage:[UIImage imageNamed:@"circle-dashed-4-48-highlight.png"]];
+        [_playerBackgroundView addSubview:_albumImageFrame];
         
         //Control Button
         _previousSongButton = [[UIButton alloc] initWithFrame:CGRectMake(60, buttonHeight, 32, 32)];
         [_previousSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-89-32.png"] forState:UIControlStateNormal];
+        [_nextSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-89-32-highlight.png"] forState:UIControlStateHighlighted];
         [_previousSongButton addTarget:self action:@selector(playPreviousSong) forControlEvents:UIControlEventTouchUpInside];
         [_playerBackgroundView addSubview:_previousSongButton];
         
@@ -394,12 +411,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
         
         _nextSongButton = [[UIButton alloc] initWithFrame:CGRectMake(130, buttonHeight, 32, 32)];
         [_nextSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-24-32.png"] forState:UIControlStateNormal];
+        [_nextSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-24-32-highlight.png"] forState:UIControlStateHighlighted];
         [_nextSongButton addTarget:self action:@selector(playNextSong) forControlEvents:UIControlEventTouchUpInside];
         [_playerBackgroundView addSubview:_nextSongButton];
         
-        
-        
-
         
         return _playerView;
     }
@@ -418,20 +433,27 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (void)playPreviousSong
 {
     NSLog(@"Previous song...");
+    [_globalPlayer playPreviousSong];
 }
 - (void)playPauseSong
 {
-    _playPauseSongButton.selected = !_playPauseSongButton.selected;
+    NSLog(@"Play/Pause song...");
+    
+    [_globalPlayer playPauseSong];
+    
+    _playPauseSongButton.selected = [_globalPlayer audioPlayer].playing;
     if (_playPauseSongButton.selected) {
+        [self setupAlbumImage];
         [self startSpin];
     }else{
         [self stopSpin];
     }
-    NSLog(@"Play/Pause song...");
+    
 }
 - (void)playNextSong
 {
     NSLog(@"Next song...");
+    [_globalPlayer playNextSong];
 }
 
 - (void) spinWithOptions: (UIViewAnimationOptions) options {
@@ -440,7 +462,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
                           delay: 0.0f
                         options: options
                      animations: ^{
-                         self.albumImage.transform = CGAffineTransformRotate(self.albumImage.transform, M_PI / 2);
+                         self.albumImageFrame.transform = CGAffineTransformRotate(self.albumImageFrame.transform, M_PI / 2);
                      }
                      completion: ^(BOOL finished) {
                          if (finished) {
@@ -465,6 +487,53 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (void) stopSpin {
     // set the flag to stop spinning after one last 90 degree increment
     animating = NO;
+}
+
+- (void)setupAlbumImage
+{
+    UIImage *image = [_globalPlayer currentImage];
+    CGSize maskSize = _albumImageFrame.frame.size;
+    maskSize.height -= 5;
+    maskSize.width -= 5;
+    image = [image imageByScalingProportionallyToSize:maskSize];
+    
+    _albumImage = [[UIImageView alloc] initWithImage:image];
+    _albumImage.center = _albumImageFrame.center;
+    _albumImage.layer.cornerRadius = roundf(_albumImage.frame.size.width/2.0);
+    _albumImage.layer.masksToBounds = YES;
+    
+    // make new layer to contain shadow and masked image
+    CALayer* containerLayer = [CALayer layer];
+    containerLayer.shadowColor = [UIColor blackColor].CGColor;
+    containerLayer.shadowRadius = 10.f;
+    containerLayer.shadowOffset = CGSizeMake(0.f, 5.f);
+    containerLayer.shadowOpacity = 1.f;
+    
+    // add masked image layer into container layer so that it's shadowed
+    [containerLayer addSublayer:_albumImage.layer];
+    
+    // add container including masked image and shadow into view
+    [self.view.layer addSublayer:containerLayer];
+    
+    [_albumImageFrame addSubview:_albumImage];
+}
+
+#pragma mark - Global player delegate
+- (void)prepareCurrentSongSucceed
+{
+    [_globalPlayer playPauseSong];
+    
+    _playPauseSongButton.selected = [_globalPlayer audioPlayer].playing;
+    if (_playPauseSongButton.selected) {
+        [self setupAlbumImage];
+        [self startSpin];
+    }else{
+        [self stopSpin];
+    }
+}
+- (void)prepareCurrentSongFailed
+{
+    
 }
 
 @end
