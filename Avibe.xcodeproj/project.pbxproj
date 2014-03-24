@@ -94,6 +94,11 @@
 		4C23F17E1885D5C200D2075A /* ShareMusicEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F17D1885D5C200D2075A /* ShareMusicEntry.m */; };
 		4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C23F1811885D6C800D2075A /* PublicMethod.m */; };
 		4C23F185188612FB00D2075A /* default_album.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C23F184188612FB00D2075A /* default_album.png */; };
+		4C2D0C7518DFC7D80096888D /* arrow-24-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7018DFC7D80096888D /* arrow-24-32.png */; };
+		4C2D0C7618DFC7D80096888D /* arrow-89-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7118DFC7D80096888D /* arrow-89-32.png */; };
+		4C2D0C7718DFC7D80096888D /* circle-dashed-4-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */; };
+		4C2D0C7818DFC7D80096888D /* pause-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7318DFC7D80096888D /* pause-32.png */; };
+		4C2D0C7918DFC7D80096888D /* play-32.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7418DFC7D80096888D /* play-32.png */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -300,6 +305,11 @@
 		4C23F1801885D6C800D2075A /* PublicMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PublicMethod.h; sourceTree = "<group>"; };
 		4C23F1811885D6C800D2075A /* PublicMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PublicMethod.m; sourceTree = "<group>"; };
 		4C23F184188612FB00D2075A /* default_album.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default_album.png; sourceTree = "<group>"; };
+		4C2D0C7018DFC7D80096888D /* arrow-24-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-24-32.png"; path = "GlobalPlayer/arrow-24-32.png"; sourceTree = "<group>"; };
+		4C2D0C7118DFC7D80096888D /* arrow-89-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow-89-32.png"; path = "GlobalPlayer/arrow-89-32.png"; sourceTree = "<group>"; };
+		4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-dashed-4-48.png"; path = "GlobalPlayer/circle-dashed-4-48.png"; sourceTree = "<group>"; };
+		4C2D0C7318DFC7D80096888D /* pause-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pause-32.png"; path = "GlobalPlayer/pause-32.png"; sourceTree = "<group>"; };
+		4C2D0C7418DFC7D80096888D /* play-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play-32.png"; path = "GlobalPlayer/play-32.png"; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -661,6 +671,7 @@
 		4C231CB3188104F800B030F9 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				4C2D0C6D18DFC55C0096888D /* GlobalPlayer */,
 				4C7ADAED18B19F5600ACEA79 /* Setting */,
 				4C23F183188612FB00D2075A /* Share */,
 				4C2F0FC518846071006BA932 /* SampleMusic */,
@@ -857,6 +868,18 @@
 				4C231CA7188104F800B030F9 /* MainViewController.m */,
 			);
 			name = Main;
+			sourceTree = "<group>";
+		};
+		4C2D0C6D18DFC55C0096888D /* GlobalPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				4C2D0C7018DFC7D80096888D /* arrow-24-32.png */,
+				4C2D0C7118DFC7D80096888D /* arrow-89-32.png */,
+				4C2D0C7218DFC7D80096888D /* circle-dashed-4-48.png */,
+				4C2D0C7318DFC7D80096888D /* pause-32.png */,
+				4C2D0C7418DFC7D80096888D /* play-32.png */,
+			);
+			name = GlobalPlayer;
 			sourceTree = "<group>";
 		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
@@ -1266,8 +1289,10 @@
 				4CADBB4D18C4FA7800F86916 /* Pandora.png in Resources */,
 				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
+				4C2D0C7818DFC7D80096888D /* pause-32.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
 				4CADBB5218C500B300F86916 /* LinkFacebookStoryboard.storyboard in Resources */,
+				4C2D0C7618DFC7D80096888D /* arrow-89-32.png in Resources */,
 				4CADBB4E18C4FA7800F86916 /* Rdio.png in Resources */,
 				4C23F185188612FB00D2075A /* default_album.png in Resources */,
 				4C3150C518BFEC6300D80BBB /* settings-24.png in Resources */,
@@ -1275,6 +1300,8 @@
 				4C231D2E188104F800B030F9 /* music-record-24.png in Resources */,
 				4C231D2B188104F800B030F9 /* Images.xcassets in Resources */,
 				4C231D32188104F800B030F9 /* sharethis-3-24.png in Resources */,
+				4C2D0C7918DFC7D80096888D /* play-32.png in Resources */,
+				4C2D0C7718DFC7D80096888D /* circle-dashed-4-48.png in Resources */,
 				4C31899E18BDA1CA00549731 /* README.md in Resources */,
 				4C231D34188104F800B030F9 /* undo-2-24.png in Resources */,
 				4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */,
@@ -1291,6 +1318,7 @@
 				4C231D61188104F800B030F9 /* SettingStoryboard.storyboard in Resources */,
 				4C23F1771885A3AB00D2075A /* SampleMusic.storyboard in Resources */,
 				4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */,
+				4C2D0C7518DFC7D80096888D /* arrow-24-32.png in Resources */,
 				4C7ADAEC18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png in Resources */,
 				4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */,
 				4C231D2C188104F800B030F9 /* conference-24.png in Resources */,

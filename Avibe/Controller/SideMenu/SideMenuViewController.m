@@ -37,6 +37,9 @@ typedef NS_ENUM(NSInteger, BeetRow){
 };
 
 @interface SideMenuViewController () <LiveFeedViewControllerDelegate, UserViewControllerDelegate>
+{
+    BOOL animating;
+}
 
 @property (nonatomic, strong) LiveFeedViewController *liveFeedViewController;
 @property (nonatomic, strong) ShareViewController *shareViewController;
@@ -56,10 +59,12 @@ typedef NS_ENUM(NSInteger, BeetRow){
 //Global Player
 @property GlobalPlayer *globalPlayer;
 @property UIView *playerView;
-@property UIButton *nextSong;
-@property UIButton *previousSong;
-@property UIButton *pauseSong;
+@property UIView *playerBackgroundView;
+@property UIButton *nextSongButton;
+@property UIButton *playPauseSongButton;
+@property UIButton *previousSongButton;
 @property UIImageView *albumImage;
+
 
 @end
 
@@ -336,20 +341,65 @@ typedef NS_ENUM(NSInteger, BeetRow){
     [PFUser logOut];
 }
 
-#pragma mark - Footer view
+
+
+#pragma mark - UserViewController Delegate
+- (void)setLastFMAccount:(NSString*)account
+{
+    _lastFMAccountUsername = account;
+}
+- (NSString*)getLastFMAccount
+{
+    return _lastFMAccountUsername;
+}
+
+#pragma mark - Global Player Footer view
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     if (section == 1) {
-        _playerView = [[UIView alloc] init];
-        [_playerView setBackgroundColor:[UIColor redColor]];
         
-        _globalPlayer = [[GlobalPlayer alloc] init];
         
         float width = self.tableView.frame.size.width;
         float height = 100.0f;
-        _nextSong = [[UIButton alloc] initWithFrame:CGRectMake(width/2, height-30, 30, 30)];
-        [_nextSong setBackgroundColor:[UIColor blueColor]];
-        [_playerView addSubview:_nextSong];
+        float buttonHeight = 25.0f;
+        
+        _playerView = [[UIView alloc] init];
+//        [_playerView setBackgroundColor:[UIColor redColor]];
+        
+        _playerBackgroundView = [[UIView alloc] initWithFrame:CGRectMake(0, 50, width, 60)];
+        [_playerBackgroundView setBackgroundColor:[ColorConstant sideMenuHeaderBackgroundColor]];
+        [_playerView addSubview:_playerBackgroundView];
+        
+        _globalPlayer = [[GlobalPlayer alloc] init];
+        
+        
+        //Album Image
+        _albumImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 60, 60)];
+        [_albumImage setImage:[UIImage imageNamed:@"circle-dashed-4-48.png"]];
+        [_playerBackgroundView addSubview:_albumImage];
+        
+        //Control Button
+        _previousSongButton = [[UIButton alloc] initWithFrame:CGRectMake(60, buttonHeight, 32, 32)];
+        [_previousSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-89-32.png"] forState:UIControlStateNormal];
+        [_previousSongButton addTarget:self action:@selector(playPreviousSong) forControlEvents:UIControlEventTouchUpInside];
+        [_playerBackgroundView addSubview:_previousSongButton];
+        
+        
+        _playPauseSongButton = [[UIButton alloc] initWithFrame:CGRectMake(95, buttonHeight, 32, 32)];
+        [_playPauseSongButton setBackgroundImage:[UIImage imageNamed:@"play-32.png"] forState:UIControlStateNormal];
+        [_playPauseSongButton setBackgroundImage:[UIImage imageNamed:@"pause-32.png"] forState:UIControlStateSelected];
+        [_playPauseSongButton addTarget:self action:@selector(playPauseSong) forControlEvents:UIControlEventTouchUpInside];
+        [_playerBackgroundView addSubview:_playPauseSongButton];
+        
+        
+        _nextSongButton = [[UIButton alloc] initWithFrame:CGRectMake(130, buttonHeight, 32, 32)];
+        [_nextSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-24-32.png"] forState:UIControlStateNormal];
+        [_nextSongButton addTarget:self action:@selector(playNextSong) forControlEvents:UIControlEventTouchUpInside];
+        [_playerBackgroundView addSubview:_nextSongButton];
+        
+        
+        
+
         
         return _playerView;
     }
@@ -364,14 +414,57 @@ typedef NS_ENUM(NSInteger, BeetRow){
     return 0.0;
 }
 
-#pragma mark - UserViewController Delegate
-- (void)setLastFMAccount:(NSString*)account
+#pragma mark - Global Player Function
+- (void)playPreviousSong
 {
-    _lastFMAccountUsername = account;
+    NSLog(@"Previous song...");
 }
-- (NSString*)getLastFMAccount
+- (void)playPauseSong
 {
-    return _lastFMAccountUsername;
+    _playPauseSongButton.selected = !_playPauseSongButton.selected;
+    if (_playPauseSongButton.selected) {
+        [self startSpin];
+    }else{
+        [self stopSpin];
+    }
+    NSLog(@"Play/Pause song...");
+}
+- (void)playNextSong
+{
+    NSLog(@"Next song...");
+}
+
+- (void) spinWithOptions: (UIViewAnimationOptions) options {
+    // this spin completes 360 degrees every 2 seconds
+    [UIView animateWithDuration: 0.5f
+                          delay: 0.0f
+                        options: options
+                     animations: ^{
+                         self.albumImage.transform = CGAffineTransformRotate(self.albumImage.transform, M_PI / 2);
+                     }
+                     completion: ^(BOOL finished) {
+                         if (finished) {
+                             if (animating) {
+                                 // if flag still set, keep spinning with constant speed
+                                 [self spinWithOptions: UIViewAnimationOptionCurveLinear];
+                             } else if (options != UIViewAnimationOptionCurveEaseOut) {
+                                 // one last spin, with deceleration
+                                 [self spinWithOptions: UIViewAnimationOptionCurveEaseOut];
+                             }
+                         }
+                     }];
+}
+
+- (void) startSpin {
+    if (!animating) {
+        animating = YES;
+        [self spinWithOptions: UIViewAnimationOptionCurveEaseIn];
+    }
+}
+
+- (void) stopSpin {
+    // set the flag to stop spinning after one last 90 degree increment
+    animating = NO;
 }
 
 @end
