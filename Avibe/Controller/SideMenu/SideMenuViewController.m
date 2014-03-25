@@ -30,6 +30,7 @@
 #import "GlobalPlayer.h"
 
 #import "UIImage+Extras.h"
+#import "AutoScrollLabel.h"
 
 typedef NS_ENUM(NSInteger, BeetRow){
     BeetRow_LiveFeed,
@@ -68,6 +69,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
 @property UIButton *previousSongButton;
 @property UIImageView *albumImageFrame;
 @property UIImageView *albumImage;
+@property AutoScrollLabel *marquee;
 
 @end
 
@@ -394,6 +396,16 @@ typedef NS_ENUM(NSInteger, BeetRow){
         [_albumImageFrame setImage:[UIImage imageNamed:@"circle-dashed-4-48-highlight.png"]];
         [_playerBackgroundView addSubview:_albumImageFrame];
         
+        
+        //AutoScrollLabel
+         _marquee = [[AutoScrollLabel alloc] initWithFrame:CGRectMake(70, 0, width-70-10, 30)];
+        [_playerBackgroundView addSubview:_marquee];
+        [_marquee setScrollSpeed:20.0];
+        [_marquee setFont:[UIFont systemFontOfSize:12.0]];
+//        _marquee.text = @"My long text";
+        [_marquee readjustLabels];
+        [_marquee scroll];
+        
         //Control Button
         _previousSongButton = [[UIButton alloc] initWithFrame:CGRectMake(60, buttonHeight, 32, 32)];
         [_previousSongButton setBackgroundImage:[UIImage imageNamed:@"arrow-89-32.png"] forState:UIControlStateNormal];
@@ -478,6 +490,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
 }
 
 - (void) startSpin {
+    _marquee.text = [_globalPlayer currentTitle];
+    
     if (!animating) {
         animating = YES;
         [self spinWithOptions: UIViewAnimationOptionCurveEaseIn];

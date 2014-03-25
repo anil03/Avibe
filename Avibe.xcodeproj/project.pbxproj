@@ -103,6 +103,7 @@
 		4C2D0C7D18E0E6940096888D /* arrow-89-32-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7B18E0E6940096888D /* arrow-89-32-highlight.png */; };
 		4C2D0C8018E0E9650096888D /* UIImage+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */; };
 		4C2D0C8218E0EB120096888D /* circle-dashed-4-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */; };
+		4C2D0C8618E12E300096888D /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0C8518E12E300096888D /* AutoScrollLabel.m */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -319,6 +320,8 @@
 		4C2D0C7E18E0E9650096888D /* UIImage+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extras.h"; sourceTree = "<group>"; };
 		4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
 		4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-dashed-4-48-highlight.png"; path = "GlobalPlayer/circle-dashed-4-48-highlight.png"; sourceTree = "<group>"; };
+		4C2D0C8418E12E300096888D /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
+		4C2D0C8518E12E300096888D /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -896,6 +899,15 @@
 			name = GlobalPlayer;
 			sourceTree = "<group>";
 		};
+		4C2D0C8318E12E300096888D /* AutoScrollLabel */ = {
+			isa = PBXGroup;
+			children = (
+				4C2D0C8418E12E300096888D /* AutoScrollLabel.h */,
+				4C2D0C8518E12E300096888D /* AutoScrollLabel.m */,
+			);
+			path = AutoScrollLabel;
+			sourceTree = "<group>";
+		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
@@ -985,6 +997,7 @@
 		4C31899F18BDAC9A00549731 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				4C2D0C8318E12E300096888D /* AutoScrollLabel */,
 				4C3189A818BDAD8C00549731 /* LBYouTubeView */,
 			);
 			name = Framework;
@@ -1449,6 +1462,7 @@
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
 				4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */,
+				4C2D0C8618E12E300096888D /* AutoScrollLabel.m in Sources */,
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
