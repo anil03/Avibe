@@ -11,7 +11,7 @@
 #import "SampleMusic.h"
 #import "SampleMusicViewController.h"
 
-@interface GlobalPlayer() <SampleMusicDelegate>
+@interface GlobalPlayer() <SampleMusicDelegate,AVAudioPlayerDelegate>
 
 
 @property SampleMusic *sampleMusic; //search iTune
@@ -178,6 +178,7 @@ NSString *const kSongData = @"data";
     }
 
     self.audioPlayer = newPlayer;
+    _audioPlayer.delegate = self;
 
     //Image
     [self handleAlbumImage];
@@ -245,23 +246,22 @@ NSString *const kSongData = @"data";
 - (void)playPauseSong
 {
     //If no default current song, play first one in playlist
-//    if (!_audioPlayer && _playlist) {
-//        [self setCurrentSongByMd5:_playlist[0]];
-//    }
-    
-    if (self.audioPlayer.playing) {
-        [self.audioPlayer pause];
-        [_progressTimer invalidate];
-    } else {
-        [self.audioPlayer play];
-        
-        if (self.delegate && [self.delegate isKindOfClass:[SampleMusicViewController class]]) {
-            _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self.delegate selector:@selector(updateProgress) userInfo:nil repeats:YES];
-
-            ;
+    if (!_audioPlayer && _playlist) {
+        [self setCurrentSongByMd5:_playlist[0]];
+    }else{
+        if (self.audioPlayer.playing) {
+            [self.audioPlayer pause];
+            [_progressTimer invalidate];
+        } else {
+            [self.audioPlayer play];
+            
+            if (self.delegate && [self.delegate isKindOfClass:[SampleMusicViewController class]]) {
+                _progressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self.delegate selector:@selector(updateProgress) userInfo:nil repeats:YES];
+                
+                ;
+            }
         }
     }
-
 }
 
 
@@ -383,6 +383,15 @@ NSString *const kSongData = @"data";
 - (void)getImageFromDefault
 {
     _currentImage = [UIImage imageNamed:@"avibe_icon_120_120.png"];
+}
+
+#pragma mark - AVAudio player method
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    if (self.delegate && [self.delegate respondsToSelector:@selector(playCurrentSongFinished)]) {
+        [self.delegate playCurrentSongFinished];
+    }
+    
 }
 
 @end

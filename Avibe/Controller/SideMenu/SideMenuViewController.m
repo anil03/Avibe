@@ -104,6 +104,18 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (void)viewWillAppear:(BOOL)animated
 {
     [self setupAlbumImage];
+    [self updatePlayerInfo];
+}
+
+- (void)updatePlayerInfo
+{
+    _playPauseSongButton.selected = [_globalPlayer audioPlayer].playing;
+    if (_playPauseSongButton.selected) {
+        [self setupAlbumImage];
+        [self startSpin];
+    }else{
+        [self stopSpin];
+    }
 }
 
 #pragma mark - TableView Data Source
@@ -548,6 +560,10 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (void)prepareCurrentSongFailed
 {
     
+}
+- (void)playCurrentSongFinished
+{
+    [_globalPlayer playNextSong];
 }
 
 @end

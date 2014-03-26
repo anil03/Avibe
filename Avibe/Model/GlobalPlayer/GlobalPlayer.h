@@ -15,6 +15,7 @@
 
 - (void)prepareCurrentSongSucceed;
 - (void)prepareCurrentSongFailed;
+- (void)playCurrentSongFinished;
 
 @end
 
