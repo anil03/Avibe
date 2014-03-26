@@ -110,6 +110,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
 - (void)updatePlayerInfo
 {
     _playPauseSongButton.selected = [_globalPlayer audioPlayer].playing;
+    animating = _playPauseSongButton.selected;
     if (_playPauseSongButton.selected) {
         [self setupAlbumImage];
         [self startSpin];
