@@ -140,6 +140,7 @@
 		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
+		4C9E605318E4AB0F00627745 /* FilterFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E605218E4AB0F00627745 /* FilterFriendViewController.m */; };
 		4CAA5E2118C7A44900EE6259 /* YMCollectionReusableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA5E2018C7A44900EE6259 /* YMCollectionReusableFooterView.m */; };
 		4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4618C4FA7800F86916 /* 8tracks.png */; };
 		4CADBB4C18C4FA7800F86916 /* Deezer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4718C4FA7800F86916 /* Deezer.png */; };
@@ -375,6 +376,8 @@
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		4C9E605118E4AB0F00627745 /* FilterFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterFriendViewController.h; path = /Users/Michael/Developer/github/Avibe/Avibe/Controller/FilterFriend/FilterFriendViewController.h; sourceTree = "<absolute>"; };
+		4C9E605218E4AB0F00627745 /* FilterFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterFriendViewController.m; path = ../FilterFriend/FilterFriendViewController.m; sourceTree = "<group>"; };
 		4CAA5E1F18C7A44900EE6259 /* YMCollectionReusableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMCollectionReusableFooterView.h; sourceTree = "<group>"; };
 		4CAA5E2018C7A44900EE6259 /* YMCollectionReusableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCollectionReusableFooterView.m; sourceTree = "<group>"; };
 		4CADBB4618C4FA7800F86916 /* 8tracks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 8tracks.png; path = Setting/LinkAccount/8tracks.png; sourceTree = "<group>"; };
@@ -491,6 +494,7 @@
 				4C231C8C188104F800B030F9 /* LiveFeed */,
 				4C231DD31881E51300B030F9 /* SampleMusic */,
 				4C231C93188104F800B030F9 /* Share */,
+				4C9E604C18E4AACB00627745 /* FilterFriend */,
 				4C231C77188104F800B030F9 /* Friends */,
 				4C231C90188104F800B030F9 /* Setting */,
 				4C231CA0188104F800B030F9 /* Profile */,
@@ -1114,6 +1118,16 @@
 			path = Avibe;
 			sourceTree = "<group>";
 		};
+		4C9E604C18E4AACB00627745 /* FilterFriend */ = {
+			isa = PBXGroup;
+			children = (
+				4C9E605118E4AB0F00627745 /* FilterFriendViewController.h */,
+				4C9E605218E4AB0F00627745 /* FilterFriendViewController.m */,
+			);
+			name = FilterFriend;
+			path = Share;
+			sourceTree = "<group>";
+		};
 		4CADBB4018C4F77700F86916 /* LinkAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -1452,6 +1466,7 @@
 				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
 				4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
+				4C9E605318E4AB0F00627745 /* FilterFriendViewController.m in Sources */,
 				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,
 				4CAA5E2118C7A44900EE6259 /* YMCollectionReusableFooterView.m in Sources */,
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,

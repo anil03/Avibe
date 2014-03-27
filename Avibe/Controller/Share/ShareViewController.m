@@ -21,6 +21,8 @@
 #import "PublicMethod.h"
 #import "SampleMusic.h"
 
+#import "FilterFriendViewController.h"
+
 /**
  * Share view fetch all shared musics of all friends.
  * Music can be shared within sample music view.
@@ -232,11 +234,18 @@
 	MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
 	[self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
     
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
-}
+    UIBarButtonItem * rightDrawerButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(rightDrawerButtonPress)];
+	[self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton animated:YES];}
 
 -(void)leftDrawerButtonPress:(id)sender{
 	[self.mm_drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
+}
+
+-(void)rightDrawerButtonPress{
+    FilterFriendViewController *filterFriendViewController = [[FilterFriendViewController alloc] init];
+    filterFriendViewController.delegate = self;
+	MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:filterFriendViewController];
+    [self.mm_drawerController setCenterViewController:navigationController];
 }
 
 @end
