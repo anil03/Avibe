@@ -129,7 +129,7 @@
     
     PFObject *song = [_PFObjects objectAtIndex:indexPath.row];
     NSString *title = [song objectForKey:@"title"];
-    NSString *artist = [song objectForKey:@"artist"];
+//    NSString *artist = [song objectForKey:@"artist"];
 //    NSString *album = [song objectForKey:@"album"];
     NSString *user = [song objectForKey:@"user"];
     

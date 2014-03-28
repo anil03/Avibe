@@ -393,7 +393,7 @@ typedef NS_ENUM(NSInteger, BeetRow){
         
         
         float width = self.tableView.frame.size.width;
-        float height = 100.0f;
+//        float height = 100.0f;
         float buttonHeight = 25.0f;
         
         _playerView = [[UIView alloc] init];

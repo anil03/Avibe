@@ -137,10 +137,11 @@
 		4C8F74EC188D825D00B91651 /* Constant.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EB188D825D00B91651 /* Constant.m */; };
 		4C8F74EF188DC1AB00B91651 /* UserShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */; };
 		4C8F74F5188DD8DA00B91651 /* FindFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */; };
-		4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8F74F7188DE90B00B91651 /* FindFriendButton.m */; };
 		4C9169E0187DF1B0000AB100 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169DF187DF1B0000AB100 /* Parse.framework */; };
 		4C9169E2187DF38A000AB100 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9169E1187DF38A000AB100 /* libsqlite3.dylib */; };
 		4C9E605318E4AB0F00627745 /* FilterFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E605218E4AB0F00627745 /* FilterFriendViewController.m */; };
+		4C9E605718E5F69E00627745 /* FindFriendButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C9E605618E5F69D00627745 /* FindFriendButton.m */; };
+		4C9E605918E5F74500627745 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C9E605818E5F74500627745 /* MessageUI.framework */; };
 		4CAA5E2118C7A44900EE6259 /* YMCollectionReusableFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CAA5E2018C7A44900EE6259 /* YMCollectionReusableFooterView.m */; };
 		4CADBB4B18C4FA7800F86916 /* 8tracks.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4618C4FA7800F86916 /* 8tracks.png */; };
 		4CADBB4C18C4FA7800F86916 /* Deezer.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CADBB4718C4FA7800F86916 /* Deezer.png */; };
@@ -371,13 +372,14 @@
 		4C8F74EE188DC1AB00B91651 /* UserShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserShareViewController.m; sourceTree = "<group>"; };
 		4C8F74F3188DD8DA00B91651 /* FindFriendTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendTableViewCell.h; sourceTree = "<group>"; };
 		4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendTableViewCell.m; sourceTree = "<group>"; };
-		4C8F74F6188DE90B00B91651 /* FindFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendButton.h; sourceTree = "<group>"; };
-		4C8F74F7188DE90B00B91651 /* FindFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendButton.m; sourceTree = "<group>"; };
 		4C9169DF187DF1B0000AB100 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../../../Downloads/Parse.framework; sourceTree = "<group>"; };
 		4C9169E1187DF38A000AB100 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		4C9169E5187DF3AC000AB100 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
 		4C9E605118E4AB0F00627745 /* FilterFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterFriendViewController.h; path = /Users/Michael/Developer/github/Avibe/Avibe/Controller/FilterFriend/FilterFriendViewController.h; sourceTree = "<absolute>"; };
 		4C9E605218E4AB0F00627745 /* FilterFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FilterFriendViewController.m; path = ../FilterFriend/FilterFriendViewController.m; sourceTree = "<group>"; };
+		4C9E605518E5F69D00627745 /* FindFriendButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindFriendButton.h; sourceTree = "<group>"; };
+		4C9E605618E5F69D00627745 /* FindFriendButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindFriendButton.m; sourceTree = "<group>"; };
+		4C9E605818E5F74500627745 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		4CAA5E1F18C7A44900EE6259 /* YMCollectionReusableFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YMCollectionReusableFooterView.h; sourceTree = "<group>"; };
 		4CAA5E2018C7A44900EE6259 /* YMCollectionReusableFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YMCollectionReusableFooterView.m; sourceTree = "<group>"; };
 		4CADBB4618C4FA7800F86916 /* 8tracks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 8tracks.png; path = Setting/LinkAccount/8tracks.png; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C9E605918E5F74500627745 /* MessageUI.framework in Frameworks */,
 				4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */,
 				4CC5271B18984A4F00562CE1 /* libstdc++.dylib in Frameworks */,
 				4CC5271918984A4500562CE1 /* Security.framework in Frameworks */,
@@ -536,12 +539,12 @@
 		4C231C77188104F800B030F9 /* Friends */ = {
 			isa = PBXGroup;
 			children = (
-				4C231C7A188104F800B030F9 /* FriendsViewController.h */,
-				4C231C7B188104F800B030F9 /* FriendsViewController.m */,
-				4C8F74F6188DE90B00B91651 /* FindFriendButton.h */,
-				4C8F74F7188DE90B00B91651 /* FindFriendButton.m */,
+				4C9E605518E5F69D00627745 /* FindFriendButton.h */,
+				4C9E605618E5F69D00627745 /* FindFriendButton.m */,
 				4C8F74F3188DD8DA00B91651 /* FindFriendTableViewCell.h */,
 				4C8F74F4188DD8DA00B91651 /* FindFriendTableViewCell.m */,
+				4C231C7A188104F800B030F9 /* FriendsViewController.h */,
+				4C231C7B188104F800B030F9 /* FriendsViewController.m */,
 				4C231C78188104F800B030F9 /* FindFriendsViewController.h */,
 				4C231C79188104F800B030F9 /* FindFriendsViewController.m */,
 			);
@@ -970,6 +973,7 @@
 		4C31797718440EA700F7D41B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C9E605818E5F74500627745 /* MessageUI.framework */,
 				4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */,
 				4CC5271A18984A4F00562CE1 /* libstdc++.dylib */,
 				4CC5271718984A2300562CE1 /* CoreAudio.framework */,
@@ -1463,7 +1467,6 @@
 				4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */,
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
-				4C8F74F8188DE90B00B91651 /* FindFriendButton.m in Sources */,
 				4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
 				4C9E605318E4AB0F00627745 /* FilterFriendViewController.m in Sources */,
@@ -1497,6 +1500,7 @@
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
 				4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
+				4C9E605718E5F69E00627745 /* FindFriendButton.m in Sources */,
 				4C17610718A5B18500B58F42 /* GoogleOAuth.m in Sources */,
 				4C231D04188104F800B030F9 /* MMExampleViewController.m in Sources */,
 				4C23F17A1885A48100D2075A /* SampleMusicViewController.m in Sources */,

@@ -11,19 +11,21 @@
 
 #import "FriendsViewController.h"
 #import "MMDrawerBarButtonItem.h"
+#import "MMNavigationController.h"
 #import "UIViewController+MMDrawerController.h"
 #import "BackgroundImageView.h"
 #import "FindFriendTableViewCell.h"
 
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import <MessageUI/MessageUI.h>
 
 enum FindFriendTableViewSection {
     RegisteredUserSection = 0,
     UnRegisteredUserSection = 1
 };
 
-@interface FindFriendsViewController () <UIAlertViewDelegate>
+@interface FindFriendsViewController () <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contactList;
 @property NSMutableArray *registeredUsers;
@@ -378,6 +380,26 @@ enum FindFriendTableViewSection {
 - (void)inviteButtonPressed:(FindFriendButton*)sender
 {
     NSLog(@"Invite %@", sender.username_contact);
+    NSString *phoneNumber = sender.phoneNumber_contact[0];
+    
+    //SMS, Email
+    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+    if([MFMessageComposeViewController canSendText])
+    {
+        controller.body = @"Checkout the new app AVIBE I have been using. Link to the app in appstore.";
+        controller.recipients = [NSArray arrayWithObjects:phoneNumber, nil];
+        controller.messageComposeDelegate = self;
+        [self presentViewController:controller animated:YES completion:nil];
+    }
+}
+
+#pragma mark - Message delegate method
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
+{
+//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:self.friendsViewController];
+#pragma mark - TODO bug here
+//    [self popCurrentView];
+//    [self.mm_drawerController setCenterViewController:self.friendsViewController withCloseAnimation:YES completion:nil];
 }
 
 #pragma mark - BarMenuButton
