@@ -117,6 +117,10 @@
     [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 
+#pragma mark - TODO
+//choose friend and DONE button return
+//then update share page
+
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
 {

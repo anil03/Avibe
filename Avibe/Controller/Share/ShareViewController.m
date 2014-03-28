@@ -28,18 +28,30 @@
  * Music can be shared within sample music view.
  */
 
-@interface ShareViewController ()
+@interface ShareViewController () <FilterFriendViewControllerDelegate>
 
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 @property (nonatomic, strong) NSArray *songs;
 
+@property (nonatomic)  FilterFriendViewController *filterFriendViewController;
 
 @end
 
 @implementation ShareViewController
 
 @synthesize songs = _songs;
+
+#pragma mark - Getter and Setter
+- (FilterFriendViewController *)filterFriendViewController
+{
+    if (!_filterFriendViewController) {
+        _filterFriendViewController = [[FilterFriendViewController alloc] init];
+        _filterFriendViewController.delegate = self;
+    }
+    return _filterFriendViewController;
+}
+
 
 - (id)init
 {
@@ -242,10 +254,11 @@
 }
 
 -(void)rightDrawerButtonPress{
-    FilterFriendViewController *filterFriendViewController = [[FilterFriendViewController alloc] init];
-    filterFriendViewController.delegate = self;
-	MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:filterFriendViewController];
+	MMNavigationController *navigationController = [[MMNavigationController alloc] initWithRootViewController:self.filterFriendViewController];
     [self.mm_drawerController setCenterViewController:navigationController];
 }
+
+#pragma mark - FilterFriendViewController delegate method
+
 
 @end
