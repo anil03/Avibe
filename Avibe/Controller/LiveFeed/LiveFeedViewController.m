@@ -229,7 +229,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
             NSString *info;
             NSString *source = [song objectForKey:kClassSongSource];
             if (source) {
-                info = [username stringByAppendingFormat:@"\n%@", source];
+                info = username;//[username stringByAppendingFormat:@"\n%@", source];
             }
             cell.label.text = info;
             cell.label.lineBreakMode = NSLineBreakByWordWrapping;

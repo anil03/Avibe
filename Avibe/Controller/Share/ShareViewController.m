@@ -57,8 +57,8 @@
 {
     _username = [[PFUser currentUser] username];
     
-    _column = 2;
-    _row = 4;
+    _column = 3;
+    _row = 5;
     float cellWidth = [UIScreen mainScreen].bounds.size.width/_column-1;
     float cellHeight = [UIScreen mainScreen].bounds.size.height/_row;
     
@@ -134,7 +134,7 @@
     NSString *user = [song objectForKey:@"user"];
     
     
-    cell.titleLabel.text = [NSString stringWithFormat:@"%@ share \"%@\" by %@", user, title, artist];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@ share \"%@\"", user, title];
 
     UIImage *image = [_albumImages objectAtIndex:indexPath.row];
     if (!image) {
@@ -202,30 +202,34 @@
             [friendUsernameArray addObject:friendUsername];
         }
         
-        PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
-        [postQuery whereKey:kClassSongUsername notEqualTo:[[PFUser currentUser] username]];
-        [postQuery whereKey:kClassSongUsername containedIn:friendUsernameArray];
-        [postQuery orderByDescending:@"updatedAt"];
-        [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            if (!error) {
-                _PFObjects = objects;
-                _albumImages = [[NSMutableArray alloc] init];
-                for(PFObject *object in objects){
-                    PFFile *albumImage = [object objectForKey:@"albumImage"];
-                    NSData *imageData = [albumImage getData];
-                    UIImage *image = [[UIImage alloc] initWithData:imageData];
-                    if(!image){
-                        image = [UIImage imageNamed:@"default_album.png"];
-                    }
-                    [_albumImages addObject:image];
+        [self fetchDataWithFriendsArray:friendUsernameArray];
+    }];
+}
+- (void)fetchDataWithFriendsArray:(NSArray*)friendUsernameArray
+{
+    PFQuery *postQuery = [PFQuery queryWithClassName:@"Share"];
+    [postQuery whereKey:kClassSongUsername notEqualTo:[[PFUser currentUser] username]];
+    [postQuery whereKey:kClassSongUsername containedIn:friendUsernameArray];
+    [postQuery orderByDescending:@"updatedAt"];
+    [postQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            _PFObjects = objects;
+            _albumImages = [[NSMutableArray alloc] init];
+            for(PFObject *object in objects){
+                PFFile *albumImage = [object objectForKey:@"albumImage"];
+                NSData *imageData = [albumImage getData];
+                UIImage *image = [[UIImage alloc] initWithData:imageData];
+                if(!image){
+                    image = [UIImage imageNamed:@"default_album.png"];
                 }
-                
-                
-                refresh.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
-                [self.collectionView reloadData];
-                [refresh endRefreshing];
+                [_albumImages addObject:image];
             }
-        }];
+            
+            
+            self.refreshControl.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
+            [self.collectionView reloadData];
+            [self.refreshControl endRefreshing];
+        }
     }];
 }
 
@@ -259,6 +263,9 @@
 }
 
 #pragma mark - FilterFriendViewController delegate method
-
+- (void)updateWithSelectedFriendsArrayWithUsername:(NSArray *)firendsArrayWithUsername
+{
+    [self fetchDataWithFriendsArray:firendsArrayWithUsername];
+}
 
 @end
