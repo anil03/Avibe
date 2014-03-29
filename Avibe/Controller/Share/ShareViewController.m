@@ -68,6 +68,7 @@
     [flowLayout setMinimumInteritemSpacing:0.5f]; //Between items
     [flowLayout setMinimumLineSpacing:5.5f]; //Between lines
     flowLayout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0); //Between sections
+    flowLayout.headerReferenceSize = CGSizeMake(50, 25); //set header
     
     self = [super initWithCollectionViewLayout:flowLayout];
     
@@ -77,6 +78,7 @@
         self.collectionView.delegate = self;
         self.collectionView.dataSource = self;
         self.collectionView.backgroundColor = [UIColor blackColor];
+        [self.collectionView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView"];
         
         //BackgroundView
         dispatch_async(kBgQueue, ^{
@@ -113,13 +115,31 @@
 }
 
 #pragma mark - UICollection view data source
-
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
 	return 1;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
 	return [_PFObjects count];
+}
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionReusableView *reusableview = nil;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        
+        UICollectionReusableView *headerview = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
+        [headerview setBackgroundColor:[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.9]];
+        
+        UIButton *button = [[UIButton alloc] initWithFrame:headerview.frame];
+        [button setTitle:@"Play All" forState:UIControlStateNormal];
+        [[button titleLabel] setFont:[UIFont systemFontOfSize:14.0f]];
+        [button addTarget:self action:@selector(playAllMusicForShare) forControlEvents:UIControlEventTouchUpInside];
+        [headerview addSubview:button];
+        reusableview = headerview;
+    }
+    
+    return reusableview;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
 	static NSString *identifier = @"Cell";
@@ -266,6 +286,12 @@
 - (void)updateWithSelectedFriendsArrayWithUsername:(NSArray *)firendsArrayWithUsername
 {
     [self fetchDataWithFriendsArray:firendsArrayWithUsername];
+}
+
+#pragma mark - Global player 
+- (void)playAllMusicForShare
+{
+    NSLog(@"Play all music for share.");
 }
 
 @end
