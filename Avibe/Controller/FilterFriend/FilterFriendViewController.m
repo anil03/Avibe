@@ -93,7 +93,22 @@
             [self.tableView reloadData];
         }
     }];
+}
 
+- (void)toggleSelectedFriend
+{
+    for(int i=0; i < [_selectedFriendDictionary count]; i++){
+        //Selected row
+        NSString *key = [NSString stringWithFormat:@"%ld",(long)i];
+        BOOL showCheckmark =  [[_selectedFriendDictionary valueForKey:key] boolValue];
+        
+        if (showCheckmark == YES){
+            [_selectedFriendDictionary setObject:@"0" forKey:key];
+        }else{
+            [_selectedFriendDictionary setObject:@"1" forKey:key];
+        }
+    }
+    [self.tableView reloadData];
 }
 
 #pragma mark - Tableview Delegate
@@ -157,7 +172,8 @@
     else
     {
         cell.accessoryType = UITableViewCellAccessoryNone;
-        [_selectedFriendDictionary removeObjectForKey:key];
+//        [_selectedFriendDictionary removeObjectForKey:key];
+        [_selectedFriendDictionary setObject:@"0" forKey:key];
     }
     
     //slow-motion selection animation.
@@ -199,7 +215,8 @@
     //    MMDrawerBarButtonItem * leftDrawerButton = [[MMDrawerBarButtonItem alloc] initWithTarget:self action:@selector(leftDrawerButtonPress:)];
     UIBarButtonItem *leftDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(leftDrawerButtonPress)];
     [self.mm_drawerController.navigationItem setLeftBarButtonItem:leftDrawerButton animated:YES];
-    [self.mm_drawerController.navigationItem setRightBarButtonItem:nil];
+    UIBarButtonItem *rightDrawerButton = [[UIBarButtonItem alloc] initWithTitle:@"Toggle" style:UIBarButtonItemStylePlain target:self action:@selector(toggleSelectedFriend)];
+    [self.mm_drawerController.navigationItem setRightBarButtonItem:rightDrawerButton];
 }
 -(void)leftDrawerButtonPress{
     if (self.delegate && [self.delegate isKindOfClass:[ShareViewController class]]) {
