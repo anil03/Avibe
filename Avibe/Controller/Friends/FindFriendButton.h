@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) NSString *username_contact;
 @property (nonatomic, strong) NSArray *phoneNumber_contact;
-@property (nonatomic, strong) NSString *email_contact;
+@property (nonatomic, strong) NSArray *email_contact;
 @property (nonatomic, strong) NSString *friendObjectId;
 
 @end

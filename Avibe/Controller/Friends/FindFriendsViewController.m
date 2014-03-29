@@ -25,7 +25,7 @@ enum FindFriendTableViewSection {
     UnRegisteredUserSection = 1
 };
 
-@interface FindFriendsViewController () <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate>
+@interface FindFriendsViewController () <UIAlertViewDelegate, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSMutableArray *contactList;
 @property NSMutableArray *registeredUsers;
@@ -380,26 +380,50 @@ enum FindFriendTableViewSection {
 - (void)inviteButtonPressed:(FindFriendButton*)sender
 {
     NSLog(@"Invite %@", sender.username_contact);
-    NSString *phoneNumber = sender.phoneNumber_contact[0];
-    
-    //SMS, Email
-    MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
-    if([MFMessageComposeViewController canSendText])
-    {
-        controller.body = @"Checkout the new app AVIBE I have been using. Link to the app in appstore.";
-        controller.recipients = [NSArray arrayWithObjects:phoneNumber, nil];
-        controller.messageComposeDelegate = self;
-        [self presentViewController:controller animated:YES completion:nil];
+    NSString *phoneNumber;
+    NSString *emailAddress;
+    if (sender.phoneNumber_contact && [sender.phoneNumber_contact count] > 0) {
+        phoneNumber = sender.phoneNumber_contact[0];
     }
+    if (sender.email_contact && [sender.email_contact count] > 0) {
+        emailAddress = sender.email_contact[0];
+    }
+    
+    if (phoneNumber) {
+        //SMS
+        MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
+        if([MFMessageComposeViewController canSendText])
+        {
+            controller.body = @"Checkout the new app AVIBE I have been using. Link to the app in appstore.";
+            controller.recipients = [NSArray arrayWithObjects:phoneNumber, nil];
+            controller.messageComposeDelegate = self;
+            [self presentViewController:controller animated:YES completion:nil];
+            
+        }
+    }else if(emailAddress){
+        //Email
+        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
+        controller.mailComposeDelegate = self;
+        [controller setToRecipients:@[emailAddress]];
+        [controller setSubject:@"New Avibe App"];
+        [controller setMessageBody:@"Checkout the new app AVIBE I have been using. Link to the app in appstore." isHTML:NO];
+        [self presentViewController:controller animated:YES completion:nil];
+    }else{
+        //No SMS or Email
+        [[[UIAlertView alloc] initWithTitle: @"Sorry" message:@"Couldn't send the invitation right now." delegate: self cancelButtonTitle:@"YES" otherButtonTitles:nil] show];
+    }
+    
+    
 }
 
 #pragma mark - Message delegate method
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
 {
-//    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:self.friendsViewController];
-#pragma mark - TODO bug here
-//    [self popCurrentView];
-//    [self.mm_drawerController setCenterViewController:self.friendsViewController withCloseAnimation:YES completion:nil];
+    [controller dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - BarMenuButton
