@@ -66,6 +66,11 @@ NSString *const kSongData = @"data";
     }
     return _currentMd5;
 }
+
+- (void)clearPlaylist
+{
+    [_playlist removeAllObjects];
+}
 /*
  * Keep the order of the sequence md5 inserted
  */

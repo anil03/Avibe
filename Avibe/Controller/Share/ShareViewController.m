@@ -249,8 +249,34 @@
             self.refreshControl.attributedTitle = [[PublicMethod sharedInstance] refreshFinsihedString];
             [self.collectionView reloadData];
             [self.refreshControl endRefreshing];
+            
+            [self updateGlobalPlayer];
         }
     }];
+}
+- (void)updateGlobalPlayer
+{
+    GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+    [globalPlayer clearPlaylist];
+    
+    for(PFObject *object in _PFObjects){
+        NSString *md5 = object[kClassSongMD5];
+        NSString *title = object[kClassSongTitle];
+        NSString *album = object[kClassSongAlbum];
+        NSString *artist = object[kClassSongArtist];
+        NSString *albumUrl = object[kClassSongAlbumURL];
+        NSString *dataUrl = object[kClassSongDataURL];
+        
+        if(!md5){
+            NSString *stringForMD5 = [NSString stringWithFormat:@"%@%@%@%@",title,artist,album,[[PFUser currentUser]username]];
+            md5 = [[PublicMethod sharedInstance] handleStringToMD5:stringForMD5];
+        }
+            
+        [globalPlayer insertMd5:md5];
+        [globalPlayer insertBasicInfoByMd5:md5 title:title album:album artist:artist];
+        [globalPlayer insertAlbumUrlByMd5:md5 albumUrl:albumUrl];
+        [globalPlayer insertDataUrlByMd5:md5 dataUrl:dataUrl];
+    }
 }
 
 #pragma mark - Button Handlers
@@ -292,6 +318,9 @@
 - (void)playAllMusicForShare
 {
     NSLog(@"Play all music for share.");
+    GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+#pragma mark - TODO should play from beginning
+    [globalPlayer playPauseSong];
 }
 
 @end

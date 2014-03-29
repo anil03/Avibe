@@ -48,4 +48,8 @@
 - (void)playNextSong;
 - (void)playPauseSong;
 
+
+- (void)clearPlaylist;
+
+
 @end

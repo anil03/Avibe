@@ -12,6 +12,7 @@
 #import "UIViewController+MMDrawerController.h"
 #import "MMNavigationController.h"
 #import "SaveMusicFromSources.h"
+#import "NSString+MD5.h"
 
 @interface PublicMethod()<GoogleOAuthDelegate>
 
@@ -395,6 +396,14 @@
         _globalPlayer = [[GlobalPlayer alloc] init];
     }
     return _globalPlayer;
+}
+
+- (NSString*)handleStringToMD5:(NSString*)string
+{
+    NSString *charactirzedString = [NSString stringWithUTF8String:[string UTF8String]];
+    NSString *MD5String = [charactirzedString MD5];
+    //    NSLog(@"Original: %@ Charactrized:%@ MD5: %@", string, charactirzedString, MD5String);
+    return MD5String;
 }
 
 @end

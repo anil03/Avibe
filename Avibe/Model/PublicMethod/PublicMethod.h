@@ -44,5 +44,7 @@
 
 #pragma mark - Global player
 @property (nonatomic,strong) GlobalPlayer *globalPlayer;
+- (NSString*)handleStringToMD5:(NSString*)string;
+
 
 @end

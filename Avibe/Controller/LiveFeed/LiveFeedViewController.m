@@ -428,20 +428,7 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
                 
                 
                 //Update global player
-                for(PFObject *object in objects){
-                    NSString *md5 = object[kClassSongMD5];
-                    NSString *title = object[kClassSongTitle];
-                    NSString *album = object[kClassSongAlbum];
-                    NSString *artist = object[kClassSongArtist];
-                    NSString *albumUrl = object[kClassSongAlbumURL];
-                    NSString *dataUrl = object[kClassSongDataURL];
-                    
-                    GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
-                    [globalPlayer insertMd5:md5];
-                    [globalPlayer insertBasicInfoByMd5:md5 title:title album:album artist:artist];
-                    [globalPlayer insertAlbumUrlByMd5:md5 albumUrl:albumUrl];
-                    [globalPlayer insertDataUrlByMd5:md5 dataUrl:dataUrl];
-                }
+                [self updateGlobalPlayer];
                 
                 
                 [self.collectionView reloadData];
@@ -454,6 +441,29 @@ typedef NS_ENUM(NSInteger, MMCenterViewControllerSection){
 - (void)loadMoreData
 {
     [self fetchDataFromParse:[_PFObjects count]];
+}
+- (void)updateGlobalPlayer
+{
+    GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+    [globalPlayer clearPlaylist];
+    
+    for(PFObject *object in _PFObjects){
+        NSString *md5 = object[kClassSongMD5];
+        NSString *title = object[kClassSongTitle];
+        NSString *album = object[kClassSongAlbum];
+        NSString *artist = object[kClassSongArtist];
+        NSString *albumUrl = object[kClassSongAlbumURL];
+        NSString *dataUrl = object[kClassSongDataURL];
+        
+        if(!md5){
+            
+        }
+        
+        [globalPlayer insertMd5:md5];
+        [globalPlayer insertBasicInfoByMd5:md5 title:title album:album artist:artist];
+        [globalPlayer insertAlbumUrlByMd5:md5 albumUrl:albumUrl];
+        [globalPlayer insertDataUrlByMd5:md5 dataUrl:dataUrl];
+    }
 }
 #pragma mark - RefreshControl Method
 - (void)setupRefreshControl
