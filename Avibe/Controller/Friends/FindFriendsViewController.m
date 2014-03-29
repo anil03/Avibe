@@ -389,12 +389,14 @@ enum FindFriendTableViewSection {
         emailAddress = sender.email_contact[0];
     }
     
+    NSString *subject = @"Checkout the new Avibe app";
+    NSString *body = @"Yo, download Avibe, it's like the best music app in the world";
     if (phoneNumber) {
         //SMS
         MFMessageComposeViewController *controller = [[MFMessageComposeViewController alloc] init];
         if([MFMessageComposeViewController canSendText])
         {
-            controller.body = @"Checkout the new app AVIBE I have been using. Link to the app in appstore.";
+            controller.body = body;
             controller.recipients = [NSArray arrayWithObjects:phoneNumber, nil];
             controller.messageComposeDelegate = self;
             [self presentViewController:controller animated:YES completion:nil];
@@ -405,8 +407,8 @@ enum FindFriendTableViewSection {
         MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
         controller.mailComposeDelegate = self;
         [controller setToRecipients:@[emailAddress]];
-        [controller setSubject:@"New Avibe App"];
-        [controller setMessageBody:@"Checkout the new app AVIBE I have been using. Link to the app in appstore." isHTML:NO];
+        [controller setSubject:subject];
+        [controller setMessageBody:body isHTML:NO];
         [self presentViewController:controller animated:YES completion:nil];
     }else{
         //No SMS or Email
