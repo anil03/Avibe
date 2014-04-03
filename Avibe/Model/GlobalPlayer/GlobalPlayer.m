@@ -11,7 +11,7 @@
 #import "SampleMusic.h"
 #import "SampleMusicViewController.h"
 
-@interface GlobalPlayer() <SampleMusicDelegate,AVAudioPlayerDelegate>
+@interface GlobalPlayer() <SampleMusicDelegate,AVAudioPlayerDelegate,NSXMLParserDelegate>
 
 
 @property SampleMusic *sampleMusic; //search iTune
@@ -26,6 +26,10 @@
 @property NSString *currentAlbumITuneUrl;
 
 @property (nonatomic)  NSString *currentDataUrl;
+
+
+@property BOOL foundSevenDigitalImage;
+@property NSString *sevenDigitalImageUrl;
 
 @end
 
@@ -302,24 +306,100 @@ NSString *const kSongData = @"data";
  */
 - (void)handleAlbumImage
 {
+    BOOL sevenDigitalSource = NO;
     BOOL echoNestSource = NO;
     BOOL parseSource = NO;
     BOOL iTuneSource = NO;
     
-    echoNestSource = [self getImageFromEchoNest];
-    if (!echoNestSource) {
-        parseSource = [self getImageFromParse];
-        if (!parseSource) {
-            iTuneSource = [self getImageFromITune];
-            if (!iTuneSource) {
-                [self getImageFromDefault];
+    sevenDigitalSource = [self getImageFromSevenDigital];
+    if (!sevenDigitalSource) {
+        echoNestSource = [self getImageFromEchoNest];
+        if (!echoNestSource) {
+            parseSource = [self getImageFromParse];
+            if (!parseSource) {
+                iTuneSource = [self getImageFromITune];
+                if (!iTuneSource) {
+                    [self getImageFromDefault];
+                }
             }
         }
     }
     
+    
     //After getting the image url, update parse in class song
 //    [self updateSongInfo];
 }
+- (BOOL)getImageFromSevenDigital
+{
+    NSString *title = [_currentTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    NSString *artist = [_currentArtist stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    /*
+     * For release cover art images the following sizes are supported:
+        33, 50, 100, 180, 182, 200, 350, 500* and 800* pixels
+     * Cover art at this size is not available for some releases (less than 0.1% of the catalogue)
+     */
+    int imageSize = 500;
+    NSString *urlString = [NSString stringWithFormat:@"http://api.7digital.com/1.2/track/search?q=%@+%@&oauth_consumer_key=7ddy52asmehf&pageSize=1&imageSize=%d",title,artist,imageSize];
+    NSURL *searchUrl = [NSURL URLWithString:urlString];
+    NSData* responseData = [NSData dataWithContentsOfURL:
+                            searchUrl];
+    
+    //XML Parser
+    _foundSevenDigitalImage = NO;
+    NSXMLParser *parser = [[NSXMLParser alloc] initWithData:responseData];
+    parser.delegate = self;
+    [parser parse];
+    
+    if(_sevenDigitalImageUrl){
+        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_sevenDigitalImageUrl]];
+        if (imageData) {
+            _currentImage = [UIImage imageWithData:imageData];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+#pragma mark - XMLParser Delegate
+- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
+{
+//    NSLog(@"didStartElement: %@", elementName);
+    
+    if ([elementName isEqualToString:@"image"]) {
+        _foundSevenDigitalImage = YES;
+    }
+    
+//    if (namespaceURI != nil)
+//        NSLog(@"namespace: %@", namespaceURI);
+//    
+//    if (qName != nil)
+//        NSLog(@"qualifiedName: %@", qName);
+//    
+//    // print all attributes for this element
+//    NSEnumerator *attribs = [attributeDict keyEnumerator];
+//    NSString *key, *value;
+//    
+//    while((key = [attribs nextObject]) != nil) {
+//        value = [attributeDict objectForKey:key];
+//        NSLog(@"  attribute: %@ = %@", key, value);
+//    }
+}
+- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
+{
+//    NSLog(@"didEndElement: %@", elementName);
+}
+- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+{
+    if(_foundSevenDigitalImage)
+    {
+//        NSLog(@"Value %@",string);
+        _foundSevenDigitalImage = NO;
+        _sevenDigitalImageUrl = string;
+    }
+    
+}
+
+
 - (BOOL)getImageFromEchoNest
 {
     NSString *title = [_currentTitle stringByReplacingOccurrencesOfString:@" " withString:@"+"];
