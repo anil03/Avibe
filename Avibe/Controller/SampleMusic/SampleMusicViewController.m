@@ -309,11 +309,11 @@
 {
     playerHeight = 200;
     
-    playerImageWidth = width;//width/2;
-    playerImageHeight = 250;//playerHeight*2/3;
+    playerImageWidth = width*0.98;
+    playerImageHeight = playerImageWidth;//playerHeight*2/3;
     
     playerProgressWidth = width*2/3;
-    playerProgressHeight = 36.0;
+    playerProgressHeight = 30.0;
     playerLabelWidth = 36.0f;
     playerLabelHeight = playerProgressHeight;
     
@@ -323,14 +323,14 @@
     float buttonSize = 24;
     
     //iTune Image View
-    float imageViewTopOffset = 30.0f;
+    float imageViewTopOffset = 20.0f;
     _sampleMusicImageView = [[UIImageView alloc] initWithFrame:CGRectMake(width/2-playerImageWidth/2, barHeight+imageViewTopOffset, playerImageWidth, playerImageHeight)];
     _sampleMusicYoutubeView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset, width, playerImageHeight)];
     [self.view addSubview:_sampleMusicImageView];
     
     //More like this
-    float moreLikeThisViewTopOffset = 10.0f;
-    float moreLikeThisViewBottomOffset = 10.0f;
+    float moreLikeThisViewTopOffset = 0.0f;
+    float moreLikeThisViewBottomOffset = 0.0f;
     float moreLikeThisViewHeight = height-(barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset+moreLikeThisViewBottomOffset)-playerButtonHeight-playerProgressHeight;
     _addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset, width, moreLikeThisViewHeight)];
     [_addMoreLikeThisView setHidden:YES];
@@ -338,7 +338,7 @@
     
     //More Like this Parameter
     _tableViewRows = 8;
-    _tableViewRowHeight = 50.0f;
+    _tableViewRowHeight = 35.0f;
     [self addSimilarSongView];
     
     //Progress View
