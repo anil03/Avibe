@@ -309,8 +309,8 @@
 {
     playerHeight = 200;
     
-    playerImageWidth = 200;//width/2;
-    playerImageHeight = 200;//playerHeight*2/3;
+    playerImageWidth = width;//width/2;
+    playerImageHeight = 250;//playerHeight*2/3;
     
     playerProgressWidth = width*2/3;
     playerProgressHeight = 36.0;
