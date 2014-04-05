@@ -117,7 +117,7 @@ enum FindFriendTableViewSection {
         NSString *contactUsername = @"default";
         
         if (firstName != nil && lastName != nil) {
-            contactUsername = [NSString stringWithFormat:@"%@ %@", lastName, firstName];
+            contactUsername = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
         }else if (firstName == nil && lastName == nil){
             contactUsername = [NSString stringWithFormat:@"%@", companyName];
         }else if (lastName != nil){
