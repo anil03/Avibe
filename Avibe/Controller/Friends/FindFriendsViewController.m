@@ -110,16 +110,22 @@ enum FindFriendTableViewSection {
         ABRecordRef ref = CFArrayGetValueAtIndex(allPeople,i);
         
         //For username and surname
-        CFStringRef firstName, lastName;
+        CFStringRef firstName, lastName, companyName;
         firstName = ABRecordCopyValue(ref, kABPersonFirstNameProperty);
         lastName  = ABRecordCopyValue(ref, kABPersonLastNameProperty);
+        companyName = ABRecordCopyValue(ref, kABPersonOrganizationProperty);
+        NSString *contactUsername = @"default";
+        
         if (firstName != nil && lastName != nil) {
-            [person setObject:[NSString stringWithFormat:@"%@ %@", firstName, lastName] forKey:kClassContactUsername];
-        }else if (firstName != nil){
-            [person setObject:[NSString stringWithFormat:@"%@", firstName] forKey:kClassContactUsername];
+            contactUsername = [NSString stringWithFormat:@"%@ %@", lastName, firstName];
+        }else if (firstName == nil && lastName == nil){
+            contactUsername = [NSString stringWithFormat:@"%@", companyName];
         }else if (lastName != nil){
-            [person setObject:[NSString stringWithFormat:@"%@", lastName] forKey:kClassContactUsername];
+            contactUsername = [NSString stringWithFormat:@"%@", lastName];
+        }else if (firstName != nil){
+            contactUsername = [NSString stringWithFormat:@"%@", firstName];
         }
+        [person setObject:contactUsername forKey:kClassContactUsername];
         
         //For Email ids
         ABMutableMultiValueRef eMail  = ABRecordCopyValue(ref, kABPersonEmailProperty);
@@ -202,6 +208,7 @@ enum FindFriendTableViewSection {
                 [_unRegisteredUsers addObject:person];
             }
         }
+        
         [self handleRegisteredUserInFriendList];
 //        [self.tableView reloadData];
 
@@ -241,11 +248,37 @@ enum FindFriendTableViewSection {
 
                 }
             }
+            
+            //Sort users
+            _unRegisteredUsers = [self sortUsersAlphabetically:_unRegisteredUsers];
+            
             [self.tableView reloadData];
         }else{
             NSLog(@"Error:%@", error);
         }
     }];
+}
+
+#pragma mark - Helper function, Sort user alphabetically
+/**
+ * UserArray(Person - kClassContactUsername, kClassUserUsername, kClassContactEmail, kClassContactPhoneNumber...)
+ */
+- (NSMutableArray*)sortUsersAlphabetically:(NSMutableArray*)userArray
+{
+    
+    
+    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:kClassContactUsername ascending:YES];
+    NSArray *sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+    NSArray *sortedArray = [userArray sortedArrayUsingDescriptors:sortDescriptors];
+    NSMutableArray * result = [NSMutableArray arrayWithArray:sortedArray];
+    
+    //Debug to print
+//    for(NSMutableDictionary *person in sortedArray){
+//        NSString *contactUsername = [person objectForKey:kClassContactUsername];
+//        NSLog(@"ContactUsername:%@",contactUsername);
+//    }
+
+    return result;
 }
 
 #pragma mark - TableView method

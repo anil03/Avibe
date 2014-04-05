@@ -181,7 +181,7 @@
 }
 - (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSLog(@"Deselected row %ld",indexPath.row);
+    NSLog(@"Deselected row %ld",(long)indexPath.row);
 
 }
 #pragma mark - UITableView edit mode
