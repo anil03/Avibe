@@ -1,6 +1,11 @@
 Beet
 ========
 
+#TO-DO
+Optimize loading big picture in Sample Music
+Playlist Bug with Share
+Music trend
+
 
 
 

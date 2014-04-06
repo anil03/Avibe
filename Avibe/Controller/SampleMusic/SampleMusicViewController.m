@@ -589,9 +589,31 @@
     [_spinner stopAnimating];
     
     //Image
-    [self setAlbumImage:[_globalPlayer currentImage]];
+    NSString *imageUrl = [_globalPlayer currentImageUrl];
+    if (!imageUrl) {
+         [self setAlbumImage:[UIImage imageNamed:@"avibe_icon_120_120.png"]];
+    }else{
+        //Get image in background
+        NSURL *searchUrl = [NSURL URLWithString:imageUrl];
+        dispatch_async(kBgQueue, ^{
+            NSData* data = [NSData dataWithContentsOfURL:
+                            searchUrl];
+            [self performSelectorOnMainThread:@selector(fetchImageFinish:)
+                                   withObject:data waitUntilDone:YES];
+        });
+    }
+}
+- (void)fetchImageFinish:(NSData*)responseData
+{
+    if (responseData) {
+        UIImage *image = [UIImage imageWithData:responseData];
+        [self setAlbumImage:image];
+    }else{
+        //Fetch image fails, use default image
+        [self setAlbumImage:[UIImage imageNamed:@"avibe_icon_120_120.png"]];
+    }
     
-    //Recommended songs
+    //Recommended songs - wait until get image finish
     [self fetchFromEchoNest];
 }
 - (void)prepareCurrentSongFailed

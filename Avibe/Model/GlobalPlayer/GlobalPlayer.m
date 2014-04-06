@@ -350,12 +350,18 @@ NSString *const kSongData = @"data";
     parser.delegate = self;
     [parser parse];
     
+    
+    /*
+     * Postpone loading image data in Sample Music
+     */
     if(_sevenDigitalImageUrl){
-        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_sevenDigitalImageUrl]];
-        if (imageData) {
-            _currentImage = [UIImage imageWithData:imageData];
-            return YES;
-        }
+        _currentImageUrl = _sevenDigitalImageUrl;
+        return YES;
+//        NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:_sevenDigitalImageUrl]];
+//        if (imageData) {
+//            _currentImage = [UIImage imageWithData:imageData];
+//            return YES;
+//        }
     }
     
     return NO;
@@ -428,12 +434,18 @@ NSString *const kSongData = @"data";
         NSString *imageUrl;
         if(tracks && [tracks count] > 0){
             imageUrl = tracks[0][@"release_image"];
-            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
-            if (imageData) {
-//                _currentAlbumUrl = imageUrl; //Update song image url
-                _currentImage = [UIImage imageWithData:imageData];
+            
+            if (imageUrl) {
+                _currentImageUrl = imageUrl;
                 return YES;
             }
+            
+//            NSData *imageData = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]];
+//            if (imageData) {
+////                _currentAlbumUrl = imageUrl; //Update song image url
+//                _currentImage = [UIImage imageWithData:imageData];
+//                return YES;
+//            }
         }
     }
     
@@ -443,30 +455,39 @@ NSString *const kSongData = @"data";
 {
     NSString *imageUrlFromParse = _currentAlbumParseUrl;
     if (imageUrlFromParse) { //Parse image
-        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
-        if (imageDataFromParse) {
-//            _songImageUrlString = imageUrlFromParse;
-            _currentImage = [UIImage imageWithData:imageDataFromParse];
-            return YES;
-        }
+        
+        _currentImageUrl = imageUrlFromParse;
+        return YES;
+        
+//        NSData *imageDataFromParse = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromParse]];
+//        if (imageDataFromParse) {
+////            _songImageUrlString = imageUrlFromParse;
+//            _currentImage = [UIImage imageWithData:imageDataFromParse];
+//            return YES;
+//        }
     }
     return NO;
 }
 - (BOOL)getImageFromITune
 {
     NSString *imageUrlFromITune = _currentAlbumITuneUrl;
-    NSData *imageDataFromITune;
+//    NSData *imageDataFromITune;
     if (imageUrlFromITune) {
-        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
-    }
-    if (imageDataFromITune) {
-        _currentImage = [UIImage imageWithData:imageDataFromITune];
+        
+        _currentImageUrl = imageUrlFromITune;
         return YES;
+        
+//        imageDataFromITune = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrlFromITune]];
     }
+//    if (imageDataFromITune) {
+//        _currentImage = [UIImage imageWithData:imageDataFromITune];
+//        return YES;
+//    }
     return NO;
 }
 - (void)getImageFromDefault
 {
+    
     _currentImage = [UIImage imageNamed:@"avibe_icon_120_120.png"];
 }
 

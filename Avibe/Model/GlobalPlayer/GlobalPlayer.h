@@ -34,6 +34,7 @@
 
 
 @property NSData *currentData;
+@property NSString *currentImageUrl;
 @property UIImage *currentImage;
 
 - (void)insertMd5:(NSString*)md5;
