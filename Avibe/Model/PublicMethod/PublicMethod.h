@@ -34,6 +34,12 @@
 - (void)revokeAccess;
 
 
+#pragma mark - Write/Load Image
+- (void)saveLocalImage:(NSString*)name image:(UIImage*)imageToSave;
+- (UIImage*)loadLocalImage:(NSString*)name;
+
+
+
 #pragma mark - PFUser Object
 @property (nonatomic, strong) NSMutableArray *pfUserArray;
 - (PFObject*)searchPFUserByUsername:(NSString*)username;

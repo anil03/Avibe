@@ -27,6 +27,7 @@
 
     #import "Constant.h"
     #import "ColorConstant.h"
+    #import "PublicMethod.h"
 
 #endif
 

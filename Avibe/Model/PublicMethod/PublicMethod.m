@@ -168,6 +168,26 @@
     return shuffleBackGroundImages;
 }
 
+#pragma mark - Write/Load Image
+- (void)saveLocalImage:(NSString*)name image:(UIImage*)imageToSave
+{
+    //Paths to Save or Load
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *imageName = [basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", name]];
+    NSData * binaryImageData = UIImagePNGRepresentation(imageToSave);
+    [binaryImageData writeToFile:imageName atomically:YES];
+
+}
+- (UIImage*)loadLocalImage:(NSString*)name
+{
+    //Paths to Save or Load
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString *imageName = [basePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.jpg", name]];
+    UIImage *imageToLoad = [UIImage imageWithContentsOfFile:imageName];
+    return imageToLoad;
+}
 
 #pragma mark - Refresh Control
 - (NSMutableAttributedString*)refreshBeginString
