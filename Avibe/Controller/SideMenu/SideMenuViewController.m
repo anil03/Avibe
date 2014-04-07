@@ -566,5 +566,9 @@ typedef NS_ENUM(NSInteger, BeetRow){
 {
     [_globalPlayer playNextSong];
 }
+- (void)fetchImageFinished:(UIImage *)image
+{
+    [_albumImage setImage:image];
+}
 
 @end

@@ -72,6 +72,7 @@
 @property (nonatomic, strong) UIView *buyInView;
 @property (nonatomic, strong) UIAlertView *alertBeforeSwitchToITune;
 
+@property (nonatomic, strong) UIImageView *backgroundView;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 
@@ -245,6 +246,11 @@
     [self setupParameter];
     [self setupNavigationBar];
 
+    //Set up background view
+    _backgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(-width/2, barHeight, height, height)];
+    [self.view addSubview:_backgroundView];
+    [self.view sendSubviewToBack:_backgroundView];
+    
     //Navigation bar title
     _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
     
@@ -309,7 +315,7 @@
 {
     playerHeight = 200;
     
-    playerImageWidth = width*0.98;
+    playerImageWidth = width;
     playerImageHeight = playerImageWidth;//playerHeight*2/3;
     
     playerProgressWidth = width*2/3;
@@ -589,38 +595,20 @@
     [_spinner stopAnimating];
     
     //Image
-    NSString *imageUrl = [_globalPlayer currentImageUrl];
-    if (!imageUrl) {
-         [self setAlbumImage:[UIImage imageNamed:@"avibe_icon_120_120.png"]];
-    }else{
-        //Get image in background
-        NSURL *searchUrl = [NSURL URLWithString:imageUrl];
-        dispatch_async(kBgQueue, ^{
-            NSData* data = [NSData dataWithContentsOfURL:
-                            searchUrl];
-            [self performSelectorOnMainThread:@selector(fetchImageFinish:)
-                                   withObject:data waitUntilDone:YES];
-        });
-    }
-}
-- (void)fetchImageFinish:(NSData*)responseData
-{
-    if (responseData) {
-        UIImage *image = [UIImage imageWithData:responseData];
-        [self setAlbumImage:image];
-    }else{
-        //Fetch image fails, use default image
-        [self setAlbumImage:[UIImage imageNamed:@"avibe_icon_120_120.png"]];
-    }
+    UIImage *image = [_globalPlayer currentImage];
+    [self setAlbumImage:image];
     
-    //Recommended songs - wait until get image finish
+    //Recommended songs
     [self fetchFromEchoNest];
 }
 - (void)prepareCurrentSongFailed
 {
     [self finishFetchDataWithError:nil];
 }
-
+- (void)fetchImageFinished:(UIImage *)image
+{
+    [self setAlbumImage:image];
+}
 
 #pragma mark - Youtube
 - (void)listenInYoutube
@@ -795,15 +783,13 @@
 //    float imageWidth = albumImage.size.width;
 //    float portion = imageHeight/imageWidth;
     
-    UIImageView *scrollBackgroundView = [[UIImageView alloc] initWithFrame:CGRectMake(-width/2, barHeight, height, height)];
-    [scrollBackgroundView setImage:albumImage];
+    
+    [_backgroundView setImage:albumImage];
     //Mask for ScrollBackgroundView
     UIView *scrollBackgroundViewMask = [[UIView alloc] initWithFrame:CGRectMake(width/2, 0, width, height)];
     [scrollBackgroundViewMask setBackgroundColor:[ColorConstant backgroundViewMaskColor]];
-    [scrollBackgroundView addSubview:scrollBackgroundViewMask];
+    [_backgroundView addSubview:scrollBackgroundViewMask];
     
-    [self.view addSubview:scrollBackgroundView];
-    [self.view sendSubviewToBack:scrollBackgroundView];
 }
 
 #pragma mark - Audio play method

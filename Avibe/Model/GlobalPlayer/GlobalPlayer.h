@@ -17,6 +17,9 @@
 - (void)prepareCurrentSongFailed;
 - (void)playCurrentSongFinished;
 
+@optional
+- (void)fetchImageFinished:(UIImage*)image;
+
 @end
 
 @interface GlobalPlayer : NSObject
@@ -34,8 +37,7 @@
 
 
 @property NSData *currentData;
-@property NSString *currentImageUrl;
-@property UIImage *currentImage;
+@property (nonatomic) UIImage *currentImage;
 
 - (void)insertMd5:(NSString*)md5;
 - (void)insertBasicInfoByMd5:(NSString*)md5 title:(NSString*)title album:(NSString*)album artist:(NSString*)artist;

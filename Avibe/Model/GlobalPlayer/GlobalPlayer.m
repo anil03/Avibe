@@ -26,6 +26,7 @@
 @property NSString *currentAlbumITuneUrl;
 
 @property (nonatomic)  NSString *currentDataUrl;
+@property NSString *currentImageUrl;
 
 
 @property BOOL foundSevenDigitalImage;
@@ -43,6 +44,38 @@ NSString *const kSongDataUrl = @"dataUrl";
 
 NSString *const kSongData = @"data";
 
+#pragma mark - Setter & Getter
+- (UIImage *)currentImage
+{
+    if(_currentImageUrl == nil){
+        _currentImage = [UIImage imageNamed:@"avibe_icon_120_120.png"];
+    }else{
+        //Return default image first, then fetch image in background
+//        _currentImage = nil;
+        
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            //Call your function or whatever work that needs to be done
+            //Code in this part is run on a background thread
+            NSURL *searchUrl = [NSURL URLWithString:_currentImageUrl];
+            _currentImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:searchUrl]];
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void) {
+                
+                //Stop your activity indicator or anything else with the GUI
+                //Code here is run on the main thread
+                if (self.delegate && [self.delegate respondsToSelector:@selector(fetchImageFinished:)]) {
+                    [self.delegate fetchImageFinished:_currentImage];
+                }
+            });
+        });
+
+
+    }
+    
+    return _currentImage;
+}
 
 #pragma mark - Init global player
 - (id)init
@@ -70,6 +103,7 @@ NSString *const kSongData = @"data";
     }
     return _currentMd5;
 }
+
 
 - (void)clearPlaylist
 {
