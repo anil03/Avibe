@@ -323,7 +323,7 @@
     playerLabelWidth = 36.0f;
     playerLabelHeight = playerProgressHeight;
     
-    playerButtonWidth = 36.0f;
+    playerButtonWidth = 80.0f;
     playerButtonHeight = playerButtonWidth;
     
     float buttonSize = 24;
@@ -337,7 +337,7 @@
     //More like this
     float moreLikeThisViewTopOffset = 0.0f;
     float moreLikeThisViewBottomOffset = 0.0f;
-    float moreLikeThisViewHeight = height-(barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset+moreLikeThisViewBottomOffset)-playerButtonHeight-playerProgressHeight;
+    float moreLikeThisViewHeight = height-(barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset+moreLikeThisViewBottomOffset)-buttonSize-playerProgressHeight;
     _addMoreLikeThisView = [[UIView alloc] initWithFrame:CGRectMake(0, barHeight+imageViewTopOffset+playerImageHeight+moreLikeThisViewTopOffset, width, moreLikeThisViewHeight)];
     [_addMoreLikeThisView setHidden:YES];
     [self.view addSubview:_addMoreLikeThisView];
@@ -348,19 +348,19 @@
     [self addSimilarSongView];
     
     //Progress View
-    _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
+    _progress = [[UIProgressView alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2, height-buttonSize-playerProgressHeight/2, playerProgressWidth, playerProgressHeight)];
     [_progress setProgressViewStyle:UIProgressViewStyleBar];
     [self.view addSubview:_progress];
     
     float fontSize = 12.0;
-    _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, height-playerButtonHeight-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
+    _playedTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2-playerProgressWidth/2-playerLabelWidth, height-buttonSize-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
     _playedTime.textColor = textColor;
     _playedTime.font = [UIFont systemFontOfSize:fontSize];
     _playedTime.backgroundColor = backgroundColor;
     _playedTime.adjustsFontSizeToFitWidth = YES;
     [self.view addSubview:_playedTime];
     
-    _leftTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2+playerProgressWidth/2, height-playerButtonHeight-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
+    _leftTime = [[UILabel alloc] initWithFrame:CGRectMake(width/2+playerProgressWidth/2, height-buttonSize-playerProgressHeight, playerLabelWidth, playerLabelHeight)];
     _leftTime.textColor = textColor;
     _leftTime.font = [UIFont systemFontOfSize:fontSize];
     _leftTime.backgroundColor = backgroundColor;
@@ -369,7 +369,8 @@
     
     //Button View
     [_playButton removeFromSuperview];
-    _playButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2-playerButtonWidth/2, height-playerButtonHeight, playerButtonWidth, playerButtonHeight)];
+    CGRect playButtonPos = CGRectMake(width/2-playerButtonWidth/2, barHeight+imageViewTopOffset+(playerImageHeight)/2-playerButtonHeight/2, playerButtonWidth, playerButtonHeight); //CGRectMake(width/2-playerButtonWidth/2, height-playerButtonHeight, playerButtonWidth, playerButtonHeight);
+    _playButton = [[UIButton alloc] initWithFrame:playButtonPos];
     [_playButton addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
     
     [_playButton setBackgroundImage:[UIImage imageNamed:@"start-32.png"] forState:UIControlStateNormal];
@@ -467,38 +468,7 @@
     [_addMoreLikeThisView addSubview:tableView];
 }
 
-#pragma mark - iTune Music
-//- (void)listenInItune
-//{
-//    //    [_sampleMusicWebView removeFromSuperview];
-//    
-////    if (_player) {
-////        [_spinner stopAnimating];
-////        //        [self.view addSubview:_sampleMusicITuneView];
-////    }else{
-//    
-//    NSDictionary *dict = [[NSDictionary alloc] initWithObjects:@[_songTitle, _songAlbum, _songArtist] forKeys:@[@"title", @"album", @"artist"]];
-//    _samepleMusic = [[SampleMusic alloc] init];
-//    _samepleMusic.delegate = self;
-//    [_samepleMusic startSearch:dict];
-//    
-////    }
-//}
-//- (void)finishFetchData:(NSDictionary *)songInfo
-//{
-//    //Update origin song info
-//    _songTitle = [songInfo objectForKey:@"title"];
-//    _songAlbum = [songInfo objectForKey:@"album"];
-//    _songArtist = [songInfo objectForKey:@"artist"];
-//    _collectionViewUrlLinkToITuneStore = [songInfo objectForKey:@"collectionViewUrl"];
-//    _songImageUrlString = [songInfo objectForKey:@"imageURL"];
-//    _songPreviewUrlString = [songInfo objectForKey:@"previewUrl"];
-//    _navigationBarTitleLabel.text = [NSString stringWithFormat:@"%@ - %@", _songTitle, _songArtist];
-//    
-//    
-//    //Music Player
-//    [self handleAudioPlayer:_songPreviewUrlString];    
-//}
+#pragma mark - iTune Music error
 - (void)finishFetchDataWithError:(NSError *)error
 {
     _iTuneFetchErrorAlertView = [[UIAlertView alloc] initWithTitle: @"Error" message: @"Sorry, can't find the sample song." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -507,79 +477,6 @@
 //    [_spinner stopAnimating];
 //    [self fetchFromEchoNest];
 }
-//- (void)handleAudioPlayer:(NSString*)previewUrlString
-//{
-//    dispatch_async(kBgQueue, ^{
-//        NSURL* previewUrl = [NSURL URLWithString:previewUrlString];
-//        NSError* soundFileError = nil;
-//        NSData *songFile = [[NSData alloc] initWithContentsOfURL:previewUrl options:NSDataReadingMappedIfSafe error:&soundFileError ];
-//        if (soundFileError) {
-//            NSLog(@"Sound file error:%@", soundFileError.description);
-//            return;
-//        }
-//        
-//        [self performSelectorOnMainThread:@selector(fetchSongData:)
-//                               withObject:songFile waitUntilDone:YES];
-//    });
-//}
-//- (void)fetchSongData:(NSData*)songData
-//{
-//    NSError* audioError = nil;
-//    AVAudioPlayer *newPlayer = [[AVAudioPlayer alloc] initWithData:songData error:&audioError];
-//    if (audioError) {
-//        NSLog(@"Audio error:%@", audioError.description);
-//    }
-//    
-//    _player = newPlayer;
-//    _player.delegate = self;
-//    
-//    //Update Progress Slider
-//    //        self.progress.maximumValue = self.player.duration;
-//    self.progress.userInteractionEnabled = NO;
-//    
-//    _playedTime.text = @"0:00";
-//    int minLeft = self.player.duration/60;
-//    int secLeft = ceil(self.player.duration-minLeft*60);
-//    _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
-//    
-//    [_player prepareToPlay];
-//    
-//    //User interface
-//    [_playButton setHidden:NO];
-//    [_shareButton setHidden:NO];
-//    [_playSourceButton setHidden:NO];
-//    [_iTuneButton setHidden:NO];
-//    [_addMoreLikeThisView setHidden:NO];
-//    
-//    //Spinner
-//    [_spinner stopAnimating];
-//    //Album image
-////    [self handleAlbumImage];
-//    //Recommended songs
-//    [self fetchFromEchoNest];
-//}
-//- (void)updateSongInfo
-//{
-//    //Update song info if previewDataUrl not saved
-//    if(_pfObject && ![_pfObject objectForKey:kClassSongDataURL]){
-//        NSString *objectId = [_pfObject objectId];
-//
-//        PFObject *songObject = [PFObject objectWithoutDataWithClassName:kClassSong objectId:objectId];
-//        if(_songTitle) [songObject setObject:_songTitle forKey:kClassSongTitle];
-//        if(_songAlbum) [songObject setObject:_songAlbum forKey:kClassSongAlbum];
-//        if(_songArtist) [songObject setObject:_songArtist forKey:kClassSongArtist];
-//        if(_songImageUrlString) [songObject setObject:_songImageUrlString forKey:kClassSongAlbumURL];
-//        if(_songPreviewUrlString) [songObject setObject:_songPreviewUrlString forKey:kClassSongDataURL];
-//        [songObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//            if (succeeded) {
-//                NSLog(@"Sample music update song successfully.");
-//            }else{
-//                NSLog(@"Sample music update song with error:%@",error.description);
-//            }
-//        }];
-//        
-//    }
-//}
 
 #pragma mark - Global Player delegate
 - (void)prepareCurrentSongSucceed
@@ -940,7 +837,7 @@
 }
 - (void)noDataFromEchoNest
 {
-    [_sampleMusicImageView setFrame:CGRectMake(width/2-playerImageWidth/2, height/2-playerImageHeight/2, playerImageWidth, playerImageHeight)];
+//    [_sampleMusicImageView setFrame:CGRectMake(width/2-playerImageWidth/2, height/2-playerImageHeight/2, playerImageWidth, playerImageHeight)];
 }
 
 #pragma mark - UITableView
@@ -1029,7 +926,6 @@
 }
 
 #pragma mark - XCDYoutubeController Notifications
-
 - (void) moviePlayerPlaybackDidFinish:(NSNotification *)notification
 {
 	MPMovieFinishReason finishReason = [notification.userInfo[MPMoviePlayerPlaybackDidFinishReasonUserInfoKey] integerValue];
@@ -1056,7 +952,6 @@
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:_youtubeVideoLink]];
     }
 }
-
 - (void) moviePlayerPlaybackStateDidChange:(NSNotification *)notification
 {
 	MPMoviePlayerController *moviePlayerController = notification.object;
@@ -1084,7 +979,6 @@
 	}
 	NSLog(@"Playback State: %@", playbackState);
 }
-
 - (void) moviePlayerLoadStateDidChange:(NSNotification *)notification
 {
 	MPMoviePlayerController *moviePlayerController = notification.object;
@@ -1100,7 +994,6 @@
 	
 	NSLog(@"Load State: %@", loadState.length > 0 ? [loadState substringFromIndex:3] : @"N/A");
 }
-
 - (void) videoPlayerViewControllerDidReceiveMetadata:(NSNotification *)notification
 {
 	NSLog(@"Metadata: %@", notification.userInfo);
