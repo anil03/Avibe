@@ -44,6 +44,7 @@
 
     //Side Menu
     _leftSideDrawerViewController = [[SideMenuViewController alloc] initWithDefaultCenterView:_liveFeedViewController];
+//    _leftSideDrawerViewController.drawerWidths = 80;
     _leftSideNavController = [[MMNavigationController alloc] initWithRootViewController:_leftSideDrawerViewController];
     [_leftSideNavController setRestorationIdentifier:@"MMExampleLeftNavigationControllerRestorationKey"];
     
@@ -59,7 +60,7 @@
     [self setRestorationIdentifier:@"MMDrawer"];
     [self setShowsShadow:YES];
     [self setAnimationVelocity:1500];
-//    [self setMaximumLeftDrawerWidth:160.0];
+    [self setMaximumLeftDrawerWidth:50.0];
     [self setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
     [self setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
     

@@ -400,7 +400,7 @@
     [self.view addSubview:_playSourceButton];
     
     //Buy in iTune button
-    _iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2+buttonSize*3/2, height-buttonSize, 64, 24)];
+    _iTuneButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2, height-buttonSize, 64, 24)];
     [_iTuneButton setBackgroundImage:[UIImage imageNamed:@"Download_on_iTunes_Badge_US-UK_110x40_1004"] forState:UIControlStateNormal];
     [_iTuneButton addTarget:self action:@selector(buyInItune) forControlEvents:UIControlEventTouchUpInside];
     //    [_iTuneButton setBackgroundColor:[UIColor whiteColor]];
