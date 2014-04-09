@@ -718,9 +718,9 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     
     if ([identifier isEqualToString:@"Spotify"]) {
         image = [UIImage imageNamed:@"Spotify.png"];
-        widthForImage = width*1.5;
+        widthForImage = width;
         heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(-100, 50, widthForImage, heightForImage)];
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
         imageView.image = image;
     }else if ([identifier isEqualToString:@"Pandora"]) {
         image = [UIImage imageNamed:@"Pandora.png"];
@@ -744,7 +744,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         image = [UIImage imageNamed:@"8tracks.png"];
         widthForImage = width;
         heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 100, widthForImage, heightForImage)];
+        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 80, widthForImage, heightForImage)];
         imageView.image = image;
     }
     
