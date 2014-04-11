@@ -169,6 +169,7 @@ typedef NS_ENUM(NSInteger, SettingRowInAvibeAccountSection){
     PhoneNumber
 };
 typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
+    ITuneMusicRow,
     YoutubeRow,
     ScrobbleRow,
     
@@ -189,7 +190,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         case AvibeAccount:
             return 4;
         case LinkedAccount:
-            return 8;
+            return 9;
         default:
             return 2;
     }
@@ -271,6 +272,14 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         [cell bringSubviewToFront:switchView];
         
         switch (indexPath.row) {
+            case ITuneMusicRow:{
+                cell.textLabel.text = @"iTune";
+                cell.selected = YES;
+                switchView.on = YES;
+                cell.userInteractionEnabled = NO;
+                break;
+            }
+                
             case YoutubeRow:{
                 NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
                 _youtubeAuthorized = googleUsername? YES : NO;
