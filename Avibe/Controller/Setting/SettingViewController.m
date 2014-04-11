@@ -174,11 +174,13 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     ScrobbleRow,
     
     FacebookRow,
+    
+    //Link with Facebook, User setting
     SpotifyRow,
     PandoraRow,
     RdioRow,
     DeezerRow,
-    EightTracksRow
+    EightTracksRow,
 };
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -194,6 +196,14 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         default:
             return 2;
     }
+}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 10.0f;
+//}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40.0f;
 }
 - (NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
@@ -268,12 +278,25 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         }
     }else if (indexPath.section == LinkedAccount){
         UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(250, 6, 50, 20)];
-        [cell addSubview:switchView];
         [cell bringSubviewToFront:switchView];
+        
+        CGRect showButtonCGRect = CGRectMake(250, 10, 50, 20);
+        UIButton *showButton = [UIButton buttonWithType:UIButtonTypeInfoLight];
+        [showButton setFrame:showButtonCGRect];
+        
+        
+        //Facebook Login Status
+        BOOL facebookLogIn = NO;
+        if(FBSession.activeSession.state == FBSessionStateOpen
+           || FBSession.activeSession.state == FBSessionStateOpenTokenExtended){
+            facebookLogIn = YES;
+        }
         
         switch (indexPath.row) {
             case ITuneMusicRow:{
-                cell.textLabel.text = @"iTune";
+                [cell addSubview:switchView];
+                
+                cell.textLabel.text = @"iPhone";
                 cell.selected = YES;
                 switchView.on = YES;
                 cell.userInteractionEnabled = NO;
@@ -281,6 +304,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             }
                 
             case YoutubeRow:{
+                [cell addSubview:switchView];
+                
                 NSString *googleUsername = [[PFUser currentUser] objectForKey:kClassUserGoogleUsername];
                 _youtubeAuthorized = googleUsername? YES : NO;
                 
@@ -294,6 +319,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
             }
             case ScrobbleRow:{
+                [cell addSubview:switchView];
+                
                 cell.textLabel.text = @"Last.fm";
                 NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
 //                cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
@@ -306,36 +333,28 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             
             
             case FacebookRow:{
-//                NSString *displayName = [[PFUser currentUser] objectForKey:kClassUserFacebookDisplayname];
-                BOOL facebookLogIn = NO;
-                if(FBSession.activeSession.state == FBSessionStateOpen
-                   || FBSession.activeSession.state == FBSessionStateOpenTokenExtended) facebookLogIn = YES;
+                [cell addSubview:switchView];
                 
                 cell.textLabel.text = @"Facebook";
                 
                 switchView.on = facebookLogIn;
                 [switchView addTarget:self action:@selector(facebookAuthroize) forControlEvents:UIControlEventValueChanged];
-                
-//                cell.detailTextLabel.text = facebookLogIn? [displayName stringByAppendingString:@"✓"] : @"Unauthorized✗";
-//                cell.detailTextLabel.textColor = facebookLogIn? [UIColor redColor] : [UIColor grayColor];
-                
-                
                 break;
             }
+                
+                
             case SpotifyRow:{
                 cell.textLabel.text = @"Spotify";
                 
-                switchView.on = self.spotifyAuthorized;
-                [switchView addTarget:self action:@selector(spotifyAuthorize) forControlEvents:UIControlEventValueChanged];
-                
+                [showButton addTarget:self action:@selector(spotifyAuthorize) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:showButton];
                 break;
             }
             case PandoraRow:{
                 cell.textLabel.text = @"Pandora";
                 
-                switchView.on = self.pandoraAuthorized;
-                [switchView addTarget:self action:@selector(pandoraAuthorize) forControlEvents:UIControlEventValueChanged];
-                
+                [showButton addTarget:self action:@selector(pandoraAuthorize) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:showButton];
                 break;
             }
             case RdioRow:{
@@ -346,33 +365,29 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 //                [cell bringSubviewToFront:imageView];
                 
                 cell.textLabel.text = @"Rdio";
-                switchView.on = self.rdioAuthorized;
-                [switchView addTarget:self action:@selector(rdioAuthorize) forControlEvents:UIControlEventValueChanged];
                 
+                [showButton addTarget:self action:@selector(rdioAuthorize) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:showButton];
                 break;
             }
             case DeezerRow:{
                 cell.textLabel.text = @"Deezer";
                 
-                switchView.on = self.deezerAuthorized;
-                [switchView addTarget:self action:@selector(deezerAuthorize) forControlEvents:UIControlEventValueChanged];
-                
+                [showButton addTarget:self action:@selector(deezerAuthorize) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:showButton];
                 break;
             }
             case EightTracksRow:{
                 cell.textLabel.text = @"EightTracks";
                 
-                switchView.on = self.eightTracksAuthorized;
-                [switchView addTarget:self action:@selector(eightTrackAuthorize) forControlEvents:UIControlEventValueChanged];
-                
+                [showButton addTarget:self action:@selector(eightTrackAuthorize) forControlEvents:UIControlEventTouchUpInside];
+                [cell addSubview:showButton];
                 break;
             }
             default:
                 break;
         }
-
     }
-    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -717,44 +732,27 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 }
 - (void)showFloatingView:(NSString*)identifier
 {
-    float width = [[UIScreen mainScreen] bounds].size.width;
-//    float height = [[UIScreen mainScreen] bounds].size.height;
-    float widthForImage = width;
-    float heightForImage;
+    float tableviewOffset = self.tableView.contentOffset.y;
+    NSLog(@"Tableview Offset y:%f",tableviewOffset);
     
-    UIImage *image;
-    UIImageView *imageView;
+    float width = [[UIScreen mainScreen] bounds].size.width;
+    float height = [[UIScreen mainScreen] bounds].size.height;
+    float widthForImage = width;
+    float heightForImage = height-70;
+    CGRect imageCGRect = CGRectMake(0, tableviewOffset+70, widthForImage, heightForImage);
+    
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:imageCGRect];
     
     if ([identifier isEqualToString:@"Spotify"]) {
-        image = [UIImage imageNamed:@"Spotify.png"];
-        widthForImage = width;
-        heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
-        imageView.image = image;
+        imageView.image = [UIImage imageNamed:@"Spotify.png"];
     }else if ([identifier isEqualToString:@"Pandora"]) {
-        image = [UIImage imageNamed:@"Pandora.png"];
-        widthForImage = width;
-        heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
-        imageView.image = image;
+        imageView.image = [UIImage imageNamed:@"Pandora.png"];
     }else if ([identifier isEqualToString:@"Rdio"]) {
-        image = [UIImage imageNamed:@"Rdio.png"];
-        widthForImage = width;
-        heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, widthForImage, heightForImage)];
-        imageView.image = image;
+        imageView.image = [UIImage imageNamed:@"Rdio.png"];
     }else if ([identifier isEqualToString:@"Deezer"]) {
-        image = [UIImage imageNamed:@"Deezer.png"];
-        widthForImage = width;
-        heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 120, widthForImage, heightForImage)];
-        imageView.image = image;
+        imageView.image = [UIImage imageNamed:@"Deezer.png"];
     }else if ([identifier isEqualToString:@"EightTracks"]) {
-        image = [UIImage imageNamed:@"8tracks.png"];
-        widthForImage = width;
-        heightForImage = image.size.height/image.size.width*widthForImage;
-        imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 80, widthForImage, heightForImage)];
-        imageView.image = image;
+        imageView.image = [UIImage imageNamed:@"8tracks.png"];
     }
     
     [_floatingView removeFromSuperview];
@@ -775,41 +773,28 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 
 - (void)linkFacebookAuthorize:(BOOL)authorized identifier:(NSString*)identifier defaultKey:(NSString*)key
 {
-    if (!authorized) {
-        //Switch to show viewcontroller with image or just a subview of setting
-//        [self showViewController:identifier];
-        [self showFloatingView:identifier];
-    }else{
-        [_floatingView removeFromSuperview];
-    }
-    
-    [defaults setBool:!authorized forKey:key];
+    [self showFloatingView:identifier];
 }
 
 - (void)spotifyAuthorize
 {
-    [self linkFacebookAuthorize:self.spotifyAuthorized identifier:@"Spotify" defaultKey:spotifyDefault];
-    self.spotifyAuthorized = !self.spotifyAuthorized;
+    [self showFloatingView:@"Spotify"];
 }
 - (void)pandoraAuthorize
 {
     [self linkFacebookAuthorize:self.pandoraAuthorized identifier:@"Pandora" defaultKey:pandoraDefault];
-    self.pandoraAuthorized = !self.pandoraAuthorized;
 }
 - (void)rdioAuthorize
 {
     [self linkFacebookAuthorize:self.rdioAuthorized identifier:@"Rdio" defaultKey:rdioDefault];
-    self.rdioAuthorized = !self.rdioAuthorized;
 }
 - (void)deezerAuthorize
 {
     [self linkFacebookAuthorize:self.deezerAuthorized identifier:@"Deezer" defaultKey:deezerDefault];
-    self.deezerAuthorized = !self.deezerAuthorized;
 }
 - (void)eightTrackAuthorize
 {
     [self linkFacebookAuthorize:self.eightTracksAuthorized identifier:@"EightTracks" defaultKey:eightTracksDefault];
-    self.eightTracksAuthorized = !self.eightTracksAuthorized;
 }
 
 
