@@ -29,6 +29,8 @@
     #import "ColorConstant.h"
     #import "PublicMethod.h"
 
+    #import "SCUI.h"
+
 #endif
 
 //static BOOL OSVersionIsAtLeastiOS7() {

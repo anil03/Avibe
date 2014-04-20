@@ -119,6 +119,13 @@ static AppDelegate *launchedDelegate;
                              object:_player];
     [_player beginGeneratingPlaybackNotifications];
     
+    
+    /*
+     * Sound Cloud
+     */
+    [SCSoundCloud setClientID:@"2d61decbeafe409f858ccf074c335a50" secret:@"f9527fc934621cf497e473719976c962" redirectURL:[NSURL URLWithString:@"http://localhost.com"]];
+    
+    
     return YES;
 }
 
