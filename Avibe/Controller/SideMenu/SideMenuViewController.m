@@ -106,8 +106,8 @@ typedef NS_ENUM(NSInteger, BeetRow){
     [self setupAlbumImage];
     [self updatePlayerInfo];
     
-    float width = self.view.frame.size.width;
-    float height = self.view.frame.size.height;
+//    float width = self.view.frame.size.width;
+//    float height = self.view.frame.size.height;
 //    NSLog(@"Side menu width:%f height:%f",width,height);
 }
 
