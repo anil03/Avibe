@@ -15,7 +15,7 @@
 
 #import "YoutubeAuthorizeViewController.h"
 #import "FacebookAuthorizeViewController.h"
-#import "Rdio/Rdio.h"
+//#import "Rdio/Rdio.h"
 #import "AppDelegate.h"
 #import "Setting.h"
 #import "PublicMethod.h"
@@ -30,7 +30,7 @@
 #import "DeezerViewController.h"
 #import "EightTracksViewController.h"
 
-@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate, RdioDelegate>
+@interface SettingViewController () <UITextFieldDelegate, UIAlertViewDelegate, GoogleOAuthDelegate, FBLoginViewDelegate>
 {
     int leftOffset;
     int topOffset;

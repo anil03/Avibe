@@ -23,8 +23,8 @@
 #import "GlobalPlayer.h"
 
 //Rdio
-#import "RdioConsumerCredentials.h"
-#import <Rdio/Rdio.h>
+//#import "RdioConsumerCredentials.h"
+//#import <Rdio/Rdio.h>
 
 //Echo NEst
 #import "NSMutableArray+Shuffling.h"
@@ -114,7 +114,7 @@
 @property (nonatomic, strong) ShareMusicEntry *shareMusicEntry;
 
 //Rdio
-@property (readonly) Rdio *rdio;
+//@property (readonly) Rdio *rdio;
 @property NSString *rdio_userkey;
 
 //PFObject of current song
