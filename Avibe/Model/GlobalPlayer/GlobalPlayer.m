@@ -154,6 +154,11 @@ NSString *const kSongData = @"data";
 }
 - (void)prepareCurrentSong
 {
+    //Check from Sound Cloud first
+    [self searchSoundCloud:[NSString stringWithFormat:@"%@+%@", _currentTitle, _currentArtist]];
+}
+- (void)soundCloudFails
+{
     /**
      * Preview Url existed, then no need to search from iTune
      */
@@ -164,7 +169,40 @@ NSString *const kSongData = @"data";
     }
 }
 
+#pragma mark - Sound Cloud
+- (void)searchSoundCloud:(NSString*)query
+{
+    query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
+    
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        NSError *jsonError = nil;
+        NSJSONSerialization *jsonResponse = [NSJSONSerialization JSONObjectWithData:data
+                                             options:0
+                                             error:&jsonError];
+        if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
+           
+            NSDictionary *track = [((NSArray*)jsonResponse) objectAtIndex:0];
+            NSString *streamURL = [track objectForKey:@"stream_url"];
+            
+            if (streamURL) {
+                NSString *urlString = [NSString stringWithFormat:@"%@?client_id=%@", streamURL, @"2d61decbeafe409f858ccf074c335a50"];
+                [self handleAudioPlayer:urlString];
+            }else{
+                [self soundCloudFails];
+            }
 
+        }
+    };
+    
+    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/tracks.json?consumer_key=2d61decbeafe409f858ccf074c335a50&q=%@&filter=all&order=created_at",query];
+    [SCRequest performMethod:SCRequestMethodGET
+                  onResource:[NSURL URLWithString:resourceURL]
+             usingParameters:nil
+                 withAccount:nil
+      sendingProgressHandler:nil
+             responseHandler:handler];
+}
 
 #pragma mark - iTune Music
 - (void)listenInItune
