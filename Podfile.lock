@@ -38,7 +38,6 @@ PODS:
     - MMDrawerController/Core
   - NXOAuth2Client (1.2.2)
   - OHAttributedLabel (3.5.3)
-  - Rdio (1.3.5)
   - XCDYouTubeVideoPlayerViewController (1.1.2)
 
 DEPENDENCIES:
@@ -47,7 +46,6 @@ DEPENDENCIES:
   - CocoaSoundCloudUI (> 1.0.5)
   - Facebook-iOS-SDK (> 3.9.0)
   - MMDrawerController (> 0.4.0)
-  - Rdio (>= 1.3.5)
   - XCDYouTubeVideoPlayerViewController (>= 1.1.2)
 
 SPEC CHECKSUMS:
@@ -58,7 +56,6 @@ SPEC CHECKSUMS:
   MMDrawerController: 76408e0a01b0a3996479261c57aed5d5765a6ea1
   NXOAuth2Client: 2abb027fb64a9d9a467202e281bb0f2206924661
   OHAttributedLabel: 985e4b57eec0dc6add79179ac47ec888b8a914e7
-  Rdio: e166b1cd7a1fed894c16982776e58ca499d56676
   XCDYouTubeVideoPlayerViewController: 7b8c4787c246a36b9858a8a348f4c163d152cff7
 
 COCOAPODS: 0.32.1
