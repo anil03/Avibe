@@ -166,6 +166,7 @@
 		4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5272418985EFF00562CE1 /* youtube-48.png */; };
 		4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC527281898603600562CE1 /* youtube-48-highlight.png */; };
+		4CD04AFA1905A4C700A5B859 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD04AF91905A4C700A5B859 /* Main.storyboard */; };
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
 		4CE4F4F9188C61F90013C31C /* FilterAndSaveMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
@@ -410,6 +411,7 @@
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
 		4CC5272418985EFF00562CE1 /* youtube-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48.png"; sourceTree = "<group>"; };
 		4CC527281898603600562CE1 /* youtube-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48-highlight.png"; sourceTree = "<group>"; };
+		4CD04AF91905A4C700A5B859 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
 		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
 		4CE4F4F7188C61F90013C31C /* FilterAndSaveMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FilterAndSaveMusic.h; path = ../PublicMethod/FilterAndSaveMusic.h; sourceTree = "<group>"; };
@@ -729,6 +731,7 @@
 		4C231CF4188104F800B030F9 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				4CD04AF91905A4C700A5B859 /* Main.storyboard */,
 				4CADBB5318C500CB00F86916 /* Setting */,
 				4C23F1751885A3AB00D2075A /* SampleMusic */,
 				4CDEF2AF1883A80700CBD40E /* SampleMusicSource */,
@@ -1365,6 +1368,7 @@
 				4C231D34188104F800B030F9 /* undo-2-24.png in Resources */,
 				4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */,
 				4C231D62188104F800B030F9 /* User.storyboard in Resources */,
+				4CD04AFA1905A4C700A5B859 /* Main.storyboard in Resources */,
 				4C231D2D188104F800B030F9 /* dj-24.png in Resources */,
 				4C7ADAEF18B19F6300ACEA79 /* rdio-logo.png in Resources */,
 				4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */,
