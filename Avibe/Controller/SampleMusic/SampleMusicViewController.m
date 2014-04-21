@@ -244,10 +244,6 @@
 {
     [super viewDidLoad];
     
-    [self soundCloundLogin];
-//    [self soundCloudGetTracks];
-    [self playSounds];
-    
     [self setupParameter];
     [self setupNavigationBar];
 
@@ -316,88 +312,7 @@
 }
 
 
-#pragma mark - Sound Clound
-- (void)soundCloundLogin
-{
-    SCLoginViewControllerCompletionHandler handler = ^(NSError *error) {
-        if (SC_CANCELED(error)) {
-            NSLog(@"Canceled!");
-        } else if (error) {
-            NSLog(@"Error: %@", [error localizedDescription]);
-        } else {
-            NSLog(@"Done!");
-        }
-    };
-    
-    [SCSoundCloud requestAccessWithPreparedAuthorizationURLHandler:^(NSURL *preparedURL) {
-        SCLoginViewController *loginViewController;
-        
-        loginViewController = [SCLoginViewController
-                               loginViewControllerWithPreparedURL:preparedURL
-                               completionHandler:handler];
-        [self presentModalViewController:loginViewController animated:YES];
-    }];
-}
-- (void)soundCloudGetTracks
-{
-    SCAccount *account = [SCSoundCloud account];
-//    if (account == nil) {
-//        UIAlertView *alert = [[UIAlertView alloc]
-//                              initWithTitle:@"Not Logged In"
-//                              message:@"You must login first"
-//                              delegate:nil
-//                              cancelButtonTitle:@"OK"
-//                              otherButtonTitles:nil];
-//        [alert show];
-//        return;
-//    }
-    
-    SCRequestResponseHandler handler;
-    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        NSError *jsonError = nil;
-        NSJSONSerialization *jsonResponse = [NSJSONSerialization
-                                             JSONObjectWithData:data
-                                             options:0
-                                             error:&jsonError];
-        if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
-//            SCTTrackListViewController *trackListVC;
-//            trackListVC = [[SCTTrackListViewController alloc]
-//                           initWithNibName:@"SCTTrackListViewController"
-//                           bundle:nil];
-//            trackListVC.tracks = (NSArray *)jsonResponse;
-//            [self presentViewController:trackListVC
-//                               animated:YES completion:nil];
-        }
-    };
-    
-    NSString *resourceURL = @"https://api.soundcloud.com/tracks.json?consumer_key=2d61decbeafe409f858ccf074c335a50&q=girlfriend&filter=all&order=created_at";
-    [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:resourceURL]
-             usingParameters:nil
-                 withAccount:account
-      sendingProgressHandler:nil
-             responseHandler:handler];
-}
-- (void)playSounds
-{
-//    Permalink_url
-//    NSString *streamURL = @"http://soundcloud.com/jeffrey-margera/jeffrey-hoegee-ft-mirna-appelhof-to-zanarkand";
-    NSString *streamURL = @"https://api.soundcloud.com/tracks/145564446/stream";
-    
-    SCAccount *account = [SCSoundCloud account];
-    
-    [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:streamURL]
-             usingParameters:nil
-                 withAccount:account
-      sendingProgressHandler:nil
-             responseHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                 NSError *playerError;
-//                 player = [[AVAudioPlayer alloc] initWithData:data error:&playerError];
-//                 [player prepareToPlay];
-//                 [player play];
-             }];
-}
+
 
 #pragma mark - Add SubView
 - (void)setupMusicView
