@@ -127,6 +127,7 @@
 		4C3407E718DBB94D00C3EC33 /* GlobalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3407E618DBB94D00C3EC33 /* GlobalPlayer.m */; };
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
 		4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */; };
+		4C44FB24190435DA009C29B1 /* SearchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C44FB23190435DA009C29B1 /* SearchTest.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
 		4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */; };
 		4C7ADAEC18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7ADAEB18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png */; };
@@ -356,6 +357,7 @@
 		4C4184D118A1CA9D00999660 /* iPodListenedMusic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iPodListenedMusic.h; path = iPod/iPodListenedMusic.h; sourceTree = "<group>"; };
 		4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iPodListenedMusic.m; path = iPod/iPodListenedMusic.m; sourceTree = "<group>"; };
 		4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestIPodListenedMusic.m; path = SaveListenedMusicTest/iPod/TestIPodListenedMusic.m; sourceTree = "<group>"; };
+		4C44FB23190435DA009C29B1 /* SearchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SearchTest.m; path = SoundCloudTest/SearchTest.m; sourceTree = "<group>"; };
 		4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes-10-icon.png"; sourceTree = "<group>"; };
 		4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoutubeAuthorizeViewController.h; path = Sources/YoutubeAuthorizeViewController.h; sourceTree = "<group>"; };
 		4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoutubeAuthorizeViewController.m; path = Sources/YoutubeAuthorizeViewController.m; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 		4C231DC21881DF3700B030F9 /* AvibeTests */ = {
 			isa = PBXGroup;
 			children = (
+				4C44FB22190435A3009C29B1 /* SoundCloudTest */,
 				4C4184D418A1CBFC00999660 /* SaveListenedMusicTest */,
 				4C231DD01881E3E300B030F9 /* BackgroundImageTest */,
 				4C231DC71881DF3700B030F9 /* XMLTest */,
@@ -1069,6 +1072,14 @@
 				4C4184D618A1CC3900999660 /* TestIPodListenedMusic.m */,
 			);
 			name = iPod;
+			sourceTree = "<group>";
+		};
+		4C44FB22190435A3009C29B1 /* SoundCloudTest */ = {
+			isa = PBXGroup;
+			children = (
+				4C44FB23190435DA009C29B1 /* SearchTest.m */,
+			);
+			name = SoundCloudTest;
 			sourceTree = "<group>";
 		};
 		4C716EAE18A9B63A00816A62 /* Sources */ = {
@@ -1521,6 +1532,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C44FB24190435DA009C29B1 /* SearchTest.m in Sources */,
 				4C231DCC1881DF3700B030F9 /* MusicTests.m in Sources */,
 				4C1760BD18A5381600B58F42 /* TestYoutubeOAuth.m in Sources */,
 				4C4184D718A1CC3900999660 /* TestIPodListenedMusic.m in Sources */,
