@@ -43,6 +43,8 @@
 - (void)insertBasicInfoByMd5:(NSString*)md5 title:(NSString*)title album:(NSString*)album artist:(NSString*)artist;
 - (void)insertAlbumUrlByMd5:(NSString*)md5 albumUrl:(NSString*)albumUrl;
 - (void)insertDataUrlByMd5:(NSString*)md5 dataUrl:(NSString*)dataUrl;
+- (void)setPlayMethod:(NSString*)method;
+
 
 - (void)setCurrentSongByMd5:(NSString*)md5;
 //- (void)prepareCurrentSong;

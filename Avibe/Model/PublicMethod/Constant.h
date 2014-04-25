@@ -67,4 +67,8 @@ extern NSString *const kClassSongSource;
 extern NSString *const kClassSongMD5;
 
 
+#pragma mark - Global Player Play Method
+extern NSString *const kGlobalPlayerPlayMethodSample;
+extern NSString *const kGlobalPlayerPlayMethodFullLength;
+
 @end

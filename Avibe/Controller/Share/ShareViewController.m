@@ -257,6 +257,7 @@
 - (void)updateGlobalPlayer
 {
     GlobalPlayer *globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
+    [globalPlayer setPlayMethod:kGlobalPlayerPlayMethodFullLength];
     [globalPlayer clearPlaylist];
     
     for(PFObject *object in _PFObjects){

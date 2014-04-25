@@ -21,7 +21,7 @@
 
 @property (strong, nonatomic) NSTimer *progressTimer;
 
-
+@property NSString *currentPlayMethod;
 @property NSString *currentAlbumParseUrl;
 @property NSString *currentAlbumITuneUrl;
 
@@ -88,6 +88,9 @@ NSString *const kSongData = @"data";
     if (self) {
         _dict = [[NSMutableDictionary alloc] init];
         _playlist = [[NSMutableArray alloc] init];
+        
+        //Default Play Method
+        _currentPlayMethod = kGlobalPlayerPlayMethodSample;
     }
     return self;
 }
@@ -141,6 +144,10 @@ NSString *const kSongData = @"data";
         song[kSongDataUrl] = dataUrl;
     }
 }
+- (void)setPlayMethod:(NSString*)method
+{
+    _currentPlayMethod = method;
+}
 - (void)setCurrentSongByMd5:(NSString *)md5
 {
     _currentMd5 = md5;
@@ -154,10 +161,14 @@ NSString *const kSongData = @"data";
 }
 - (void)prepareCurrentSong
 {
-    //Check from Sound Cloud first
-    [self searchSoundCloud:[NSString stringWithFormat:@"%@+%@", _currentTitle, _currentArtist]];
+    if ([_currentPlayMethod isEqualToString:kGlobalPlayerPlayMethodSample]) {
+        [self searchSampleMusic];
+    }else{
+        //Check from Sound Cloud first
+        [self searchSoundCloud:[NSString stringWithFormat:@"%@+%@", _currentTitle, _currentArtist]];
+    }
 }
-- (void)soundCloudFails
+- (void)searchSampleMusic
 {
     /**
      * Preview Url existed, then no need to search from iTune
@@ -189,7 +200,7 @@ NSString *const kSongData = @"data";
                 NSString *urlString = [NSString stringWithFormat:@"%@?client_id=%@", streamURL, @"2d61decbeafe409f858ccf074c335a50"];
                 [self handleAudioPlayer:urlString];
             }else{
-                [self soundCloudFails];
+                [self searchSampleMusic];
             }
 
         }

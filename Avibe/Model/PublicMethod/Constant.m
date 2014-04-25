@@ -72,4 +72,8 @@ NSString *const kClassSongSource = @"source";
 NSString *const kClassSongMD5 = @"md5";
 
 
+#pragma mark - Global Player Play Method
+NSString *const kGlobalPlayerPlayMethodSample = @"SampleSong";
+NSString *const kGlobalPlayerPlayMethodFullLength = @"FullLength";
+
 @end

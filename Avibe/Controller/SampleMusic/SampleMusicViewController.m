@@ -190,6 +190,7 @@
         
         [_globalPlayer insertBasicInfoByMd5:_songMd5 title:_songTitle album:_songAlbum artist:_songArtist];
 
+
     }
     
     return self;
@@ -266,6 +267,7 @@
     /*
      * Prepare global player current song
      */
+    [_globalPlayer setPlayMethod:kGlobalPlayerPlayMethodSample];
     [_globalPlayer setCurrentSongByMd5:_songMd5];
     
     /**
