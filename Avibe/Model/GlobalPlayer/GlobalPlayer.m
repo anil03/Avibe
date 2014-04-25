@@ -90,7 +90,7 @@ NSString *const kSongData = @"data";
         _playlist = [[NSMutableArray alloc] init];
         
         //Default Play Method
-        _currentPlayMethod = kGlobalPlayerPlayMethodSample;
+        _currentPlayMethod = kGlobalPlayerPlayMethodFullLength;
     }
     return self;
 }
@@ -286,36 +286,7 @@ NSString *const kSongData = @"data";
     if (self.delegate && [self.delegate respondsToSelector:@selector(prepareCurrentSongSucceed)]) {
         [self.delegate prepareCurrentSongSucceed];
     }
-    
-    
 
-    
-//    _player.delegate = self;
-//    
-//    //Update Progress Slider
-//    //        self.progress.maximumValue = self.player.duration;
-//    self.progress.userInteractionEnabled = NO;
-//    
-//    _playedTime.text = @"0:00";
-//    int minLeft = self.player.duration/60;
-//    int secLeft = ceil(self.player.duration-minLeft*60);
-//    _leftTime.text = [NSString stringWithFormat:@"%d:%02d", minLeft, secLeft];
-//    
-//    [_player prepareToPlay];
-//    
-//    //User interface
-//    [_playButton setHidden:NO];
-//    [_shareButton setHidden:NO];
-//    [_playSourceButton setHidden:NO];
-//    [_iTuneButton setHidden:NO];
-//    [_addMoreLikeThisView setHidden:NO];
-//    
-//    //Spinner
-//    [_spinner stopAnimating];
-//    //Album image
-//    [self handleAlbumImage];
-//    //Recommended songs
-//    [self fetchFromEchoNest];
 }
 
 #pragma mark - Play method

@@ -96,6 +96,9 @@
 @property UIButton *shareButton;
 @property UIButton *playSourceButton;
 @property UIButton *iTuneButton;
+@property UIButton *playMethodButton;
+@property NSString *currentPlayMethod;
+
 @property (nonatomic, retain) AVAudioPlayer *player;
 @property (nonatomic, strong) UIImage *albumImage;
 
@@ -169,6 +172,8 @@
     if (self) {
         _globalPlayer = [[PublicMethod sharedInstance] globalPlayer];
         [_globalPlayer setDelegate:self];
+        
+        _currentPlayMethod = kGlobalPlayerPlayMethodSample;
     }
     return self;
 }
@@ -270,15 +275,6 @@
     [_globalPlayer setPlayMethod:kGlobalPlayerPlayMethodSample];
     [_globalPlayer setCurrentSongByMd5:_songMd5];
     
-    /**
-     * Preview Url existed, then no need to search from iTune
-     */
-//    NSString *previewUrlString = [_pfObject objectForKey:kClassSongDataURL];
-//    if (previewUrlString) {
-//        [self handleAudioPlayer:previewUrlString];
-//    }else{
-//        [self listenInItune];
-//    }
     
     /**
      * XCDYoutubeController
@@ -421,6 +417,16 @@
     [self.view addSubview:_spinner];
     [self.view bringSubviewToFront:_spinner];
     [_spinner startAnimating];
+    
+    //Switch method button
+    _playMethodButton = [[UIButton alloc] initWithFrame:CGRectMake(width/2+buttonSize*3, height-buttonSize, buttonSize*2, buttonSize)];
+    [_playMethodButton.titleLabel setAdjustsFontSizeToFitWidth:YES];
+    [_playMethodButton setTitle:@"30s" forState:UIControlStateNormal];
+    [_playMethodButton setTitle:@"Full" forState:UIControlStateSelected];
+    [_playMethodButton addTarget:self action:@selector(switchPlayMethod) forControlEvents:UIControlEventTouchUpInside];
+    [_playMethodButton setHidden:YES];
+    [self.view addSubview:_playMethodButton];
+    
 }
 - (void)shareMusic
 {
@@ -474,6 +480,29 @@
     [_addMoreLikeThisView addSubview:tableView];
 }
 
+#pragma mark - Switch play method
+- (void)switchPlayMethod
+{
+    //User interface
+    [_playButton setHidden:YES];
+    [_shareButton setHidden:YES];
+    [_playSourceButton setHidden:YES];
+    [_iTuneButton setHidden:YES];
+    [_addMoreLikeThisView setHidden:YES];
+    [_playMethodButton setHidden:YES];
+    //Spinner
+    [_spinner startAnimating];
+    
+    
+    if (_playMethodButton.selected) {
+        [_globalPlayer setPlayMethod:kGlobalPlayerPlayMethodSample];
+    }else{
+        [_globalPlayer setPlayMethod:kGlobalPlayerPlayMethodFullLength];
+    }
+    _playMethodButton.selected = !_playMethodButton.selected;
+    [_globalPlayer setCurrentSongByMd5:_songMd5];
+}
+
 #pragma mark - iTune Music error
 - (void)finishFetchDataWithError:(NSError *)error
 {
@@ -493,6 +522,7 @@
     [_playSourceButton setHidden:NO];
     [_iTuneButton setHidden:NO];
     [_addMoreLikeThisView setHidden:NO];
+    [_playMethodButton setHidden:NO];
     
     //Spinner
     [_spinner stopAnimating];
