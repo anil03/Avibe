@@ -175,7 +175,14 @@
         
         _currentPlayMethod = kGlobalPlayerPlayMethodSample;
     }
+   
     return self;
+}
+- (void)initGlobalPlayer
+{
+    [self checkInfoValid];
+
+    [_globalPlayer insertBasicInfoByMd5:_songMd5 title:_songTitle album:_songAlbum artist:_songArtist];
 }
 - (id)initWithDictionary:(NSDictionary*)dictionary
 {
@@ -189,15 +196,7 @@
         NSString *stringForMD5 = [NSString stringWithFormat:@"%@%@%@%@",_songTitle,_songArtist,_songAlbum,[[PFUser currentUser]username]];
         NSString *MD5String = [self handleStringToMD5:stringForMD5];
         _songMd5 = MD5String;
-        
-
-        [self checkInfoValid];
-        
-        [_globalPlayer insertBasicInfoByMd5:_songMd5 title:_songTitle album:_songAlbum artist:_songArtist];
-
-
     }
-    
     return self;
 }
 - (id)initWithPFObject:(PFObject*)object
@@ -209,9 +208,8 @@
         _songTitle = [_pfObject objectForKey:kClassSongTitle];
         _songAlbum = [_pfObject objectForKey:kClassSongAlbum];
         _songArtist = [_pfObject objectForKey:kClassSongArtist];
-        [self checkInfoValid];
         
-        
+        [self initGlobalPlayer];
     }
     return self;
 }

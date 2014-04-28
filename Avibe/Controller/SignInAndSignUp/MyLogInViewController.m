@@ -135,8 +135,8 @@
     [self.logInView.passwordField setFrame:CGRectMake(0, currentHeight, fieldWidth, fieldHeight)];
     [self.logInView.passwordField setBackgroundColor:fieldBackgroundColor];
     // Field default text
-    self.logInView.usernameField.text = @"myhgew";
-    self.logInView.passwordField.text = @"1989723";
+//    self.logInView.usernameField.text = @"myhgew";
+//    self.logInView.passwordField.text = @"1989723";
 
 
     //Log In

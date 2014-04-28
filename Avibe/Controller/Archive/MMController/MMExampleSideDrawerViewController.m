@@ -43,11 +43,11 @@
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
     
     //TableView BackgroundColor - SideMenu Background Color
-    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SideMenuBackgroundImage.png"]];
-    [self.tableView setBackgroundView:imageView];
+//    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"SideMenuBackgroundImage.png"]];
+//    [self.tableView setBackgroundView:imageView];
     
-    //    UIColor * tableViewBackgroundColor= [ColorConstant sideMenuBackgroundColor];
-    //    [self.tableView setBackgroundColor:tableViewBackgroundColor];
+    UIColor * tableViewBackgroundColor= [ColorConstant sideMenuBackgroundColor];
+    [self.tableView setBackgroundColor:tableViewBackgroundColor];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleSingleLine];
     
     //BarColor

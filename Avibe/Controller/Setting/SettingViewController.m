@@ -93,6 +93,9 @@
 @property (nonatomic, strong) YoutubeAuthorizeViewController *youtubeAuthorizeViewController;
 @property (nonatomic, strong) FacebookAuthorizeViewController *facebookAuthorizeViewController;
 
+//Gesture Recognization
+@property (nonatomic, strong) UITapGestureRecognizer *tap;
+
 @end
 
 @implementation SettingViewController
@@ -115,8 +118,7 @@ static NSString* const eightTracksDefault = @"EightTracksAuthorized";
     [super viewDidLoad];
     
     //Touch Event
-    UITapGestureRecognizer * tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
-    [self.view addGestureRecognizer:tap];
+    _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     
     //Constant
     leftOffset = 15;
@@ -197,10 +199,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             return 2;
     }
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 10.0f;
-//}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 40.0f;
@@ -260,6 +258,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
             case Username:
                 cell.textLabel.text = @"Username";
                 cell.detailTextLabel.text = [[PFUser currentUser] username];
+                cell.userInteractionEnabled = NO;
                 break;
             case DisplayName:
                 cell.textLabel.text = @"Full Name";
@@ -277,6 +276,8 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 break;
         }
     }else if (indexPath.section == LinkedAccount){
+        
+        
         UISwitch *switchView = [[UISwitch alloc] initWithFrame:CGRectMake(250, 6, 50, 20)];
         [cell bringSubviewToFront:switchView];
         
@@ -299,6 +300,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 cell.textLabel.text = @"iPhone";
                 cell.selected = YES;
                 switchView.on = YES;
+                
                 cell.userInteractionEnabled = NO;
                 break;
             }
@@ -314,8 +316,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 switchView.on = _youtubeAuthorized;
                 [switchView addTarget:self action:@selector(youtubeAuthorize) forControlEvents:UIControlEventValueChanged];
                 
-                //                cell.detailTextLabel.text = _youtubeAuthorized? @"Authorized✓" : @"Unauthorized✗";
-                //                cell.detailTextLabel.textColor = _youtubeAuthorized? [UIColor redColor] : [UIColor grayColor];
+                cell.userInteractionEnabled = NO;
                 break;
             }
             case ScrobbleRow:{
@@ -323,15 +324,13 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 
                 cell.textLabel.text = @"Last.fm";
                 NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
-//                cell.detailTextLabel.text = lastFMUser? [lastFMUser stringByAppendingString:@"✓"] : @"Unauthorized✗";
-//                cell.detailTextLabel.textColor = lastFMUser? [UIColor redColor] : [UIColor grayColor];
                 switchView.on = lastFMUser? YES:NO;
                 [switchView addTarget:self action:@selector(scrobbleAuthorize) forControlEvents:UIControlEventValueChanged];
+                cell.userInteractionEnabled = NO;
                 
-                }
                 break;
             
-            
+            }
             case FacebookRow:{
                 [cell addSubview:switchView];
                 
@@ -339,10 +338,9 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 
                 switchView.on = facebookLogIn;
                 [switchView addTarget:self action:@selector(facebookAuthroize) forControlEvents:UIControlEventValueChanged];
+                cell.userInteractionEnabled = NO;
                 break;
             }
-                
-                
             case SpotifyRow:{
                 cell.textLabel.text = @"Spotify";
                 
@@ -631,14 +629,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         _scrobbleRevokeAlertView.alertViewStyle = UIAlertViewStyleDefault;
         [_scrobbleRevokeAlertView show];
     }
-    
-    //
-    //
-    //    _scrobbleAuthorizeViewController = [[ScrobbleAuthorizeViewController alloc] init];
-    //    _scrobbleAuthorizeViewController.previousViewController = self;
-    //
-    //    MMNavigationController *navigationAddFriendsViewController = [[MMNavigationController alloc] initWithRootViewController:_scrobbleAuthorizeViewController];
-    //    [self.mm_drawerController setCenterViewController:navigationAddFriendsViewController withCloseAnimation:YES completion:nil];
 }
 
 - (void)facebookAuthroize
@@ -713,9 +703,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
              }else{
                  [[[UIAlertView alloc] initWithTitle: @"Error" message: @"Facebook authorized could not be finished. Please try later." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
              }
-             
-             
-             
+
          }];
     }
 }
@@ -733,7 +721,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 - (void)showFloatingView:(NSString*)identifier
 {
     float tableviewOffset = self.tableView.contentOffset.y;
-    NSLog(@"Tableview Offset y:%f",tableviewOffset);
+//    NSLog(@"Tableview Offset y:%f",tableviewOffset);
     
     float width = [[UIScreen mainScreen] bounds].size.width;
     float height = [[UIScreen mainScreen] bounds].size.height;
@@ -759,6 +747,10 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     _floatingView = [[UIView alloc] init];
     [_floatingView addSubview:imageView];
     
+    
+    //Add tap recognization to floating view
+    [self.view addGestureRecognizer:_tap];
+    
     [self.view addSubview:_floatingView];
     [self.view bringSubviewToFront:_floatingView];
 }
@@ -767,6 +759,7 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
     if (sender.state == UIGestureRecognizerStateEnded)
     {
         [_floatingView removeFromSuperview];
+        [self.view removeGestureRecognizer:_tap];
     }
 }
 
@@ -887,11 +880,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
 
 #pragma mark - Google OAuth
 - (void)authorizeGoogle:(UIView*)view {
-    //    [_googleOAuth authorizeUserWithClienID:@"746869634473-hl2v6kv6e65r1ak0u6uvajdl5grrtsgb.apps.googleusercontent.com"
-    //                           andClientSecret:@"_FsYBVXMeUD9BGzNmmBvE9Q4"
-    //                             andParentView:self.view
-    //                                 andScopes:[NSArray arrayWithObjects:@"https://www.googleapis.com/auth/userinfo.profile", nil]
-    //     ];
     [self.youtubeAuthorizeViewController authorizeUserWithClienID:@"4881560502-uteihtgcnas28bcjmnh0hfrbk4chlmsa.apps.googleusercontent.com"
                                andClientSecret:@"R02t8Pk-59eEYy-B359-gvOY"
                                  andParentView:view
@@ -968,8 +956,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
         _facebookLoginView = [[FBLoginView alloc] init];
         [_facebookLoginView setReadPermissions:@[@"basic_info", @"user_actions.music"]];
         [self.tableView bringSubviewToFront:_facebookLoginView];
-//        [_facebookLoginView setPublishPermissions:[NSArray arrayWithObject:@"publish_actions"]];
-//        [_facebookLoginView setDefaultAudience:FBSessionDefaultAudienceFriends];
     }
     
     _facebookLoginView.frame = frame;

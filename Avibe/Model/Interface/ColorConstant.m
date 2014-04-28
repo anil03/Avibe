@@ -76,7 +76,7 @@
 #pragma mark - Side Menu
 + (UIColor*)sideMenuBackgroundColor
 {
-    return [UIColor colorWithRed:246.0 green:246.0 blue:246.0 alpha:1.0];
+    return [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.9];
 //    return [ColorConstant color:@"FF" green:@"FF" blue:@"FF" alpha:1.0f];
 }
 + (UIColor*)sideMenuHeaderBackgroundColor

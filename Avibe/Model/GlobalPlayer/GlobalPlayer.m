@@ -183,6 +183,7 @@ NSString *const kSongData = @"data";
 #pragma mark - Sound Cloud
 - (void)searchSoundCloud:(NSString*)query
 {
+    query = [query stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     query = [query stringByReplacingOccurrencesOfString:@" " withString:@"+"];
     
     SCRequestResponseHandler handler;

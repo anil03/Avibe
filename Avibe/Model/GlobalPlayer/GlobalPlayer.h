@@ -15,9 +15,10 @@
 
 - (void)prepareCurrentSongSucceed;
 - (void)prepareCurrentSongFailed;
-- (void)playCurrentSongFinished;
+
 
 @optional
+- (void)playCurrentSongFinished;
 - (void)fetchImageFinished:(UIImage*)image;
 
 @end
