@@ -316,7 +316,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 switchView.on = _youtubeAuthorized;
                 [switchView addTarget:self action:@selector(youtubeAuthorize) forControlEvents:UIControlEventValueChanged];
                 
-                cell.userInteractionEnabled = NO;
                 break;
             }
             case ScrobbleRow:{
@@ -326,7 +325,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 NSString *lastFMUser = [[PFUser currentUser] objectForKey:kClassUserLastFMUsername];
                 switchView.on = lastFMUser? YES:NO;
                 [switchView addTarget:self action:@selector(scrobbleAuthorize) forControlEvents:UIControlEventValueChanged];
-                cell.userInteractionEnabled = NO;
                 
                 break;
             
@@ -338,7 +336,6 @@ typedef NS_ENUM(NSInteger, SettingRowInLinkedAccountSection){
                 
                 switchView.on = facebookLogIn;
                 [switchView addTarget:self action:@selector(facebookAuthroize) forControlEvents:UIControlEventValueChanged];
-                cell.userInteractionEnabled = NO;
                 break;
             }
             case SpotifyRow:{

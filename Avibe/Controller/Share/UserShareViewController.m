@@ -21,8 +21,8 @@
 {
     self.username = username;
     
-    self.column = 2;
-    self.row = 4;
+    self.column = 3;
+    self.row = 5;
     float cellWidth = [UIScreen mainScreen].bounds.size.width/self.column-1;
     float cellHeight = [UIScreen mainScreen].bounds.size.height/self.row;
     
