@@ -651,6 +651,7 @@
     }
     NSRange rangeEmbed = [videoURL rangeOfString:@"embed/"];
     NSString *identifier = [videoURL substringFromIndex:rangeEmbed.location+rangeEmbed.length];
+//    identifier = @"W-TE_Ys4iwM"; //Test for Commerical Video - One Direction
     
     /*
      * XCDYoutubeController play embed view, if fails, open in safari/youtube app

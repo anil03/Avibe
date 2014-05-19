@@ -103,7 +103,6 @@
 		4C2D0C7D18E0E6940096888D /* arrow-89-32-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7B18E0E6940096888D /* arrow-89-32-highlight.png */; };
 		4C2D0C8018E0E9650096888D /* UIImage+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */; };
 		4C2D0C8218E0EB120096888D /* circle-dashed-4-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */; };
-		4C2D0C8618E12E300096888D /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C2D0C8518E12E300096888D /* AutoScrollLabel.m */; };
 		4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC718846071006BA932 /* iTuneLogo.png */; };
 		4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FC91884616E006BA932 /* spotifyLogo.png */; };
 		4C2F0FCC1884616E006BA932 /* spotifyLogo_highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */; };
@@ -121,8 +120,6 @@
 		4C3179CA1844107800F7D41B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179C91844107800F7D41B /* AVFoundation.framework */; };
 		4C3179CC1844107D00F7D41B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C3179CB1844107D00F7D41B /* MediaPlayer.framework */; };
 		4C31899E18BDA1CA00549731 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4C31899D18BDA1CA00549731 /* README.md */; };
-		4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */; };
-		4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */; };
 		4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */; };
 		4C3407E718DBB94D00C3EC33 /* GlobalPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C3407E618DBB94D00C3EC33 /* GlobalPlayer.m */; };
 		4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4184D218A1CA9D00999660 /* iPodListenedMusic.m */; };
@@ -130,6 +127,15 @@
 		4C44FB24190435DA009C29B1 /* SearchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C44FB23190435DA009C29B1 /* SearchTest.m */; };
 		4C5A7F551899F0A800BBD6D7 /* iTunes-10-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */; };
 		4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */; };
+		4C71CF34192AAEA40000B8CC /* AutoScrollLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF1D192AAEA40000B8CC /* AutoScrollLabel.m */; };
+		4C71CF35192AAEA40000B8CC /* LBYouTubeExtractor.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF21192AAEA40000B8CC /* LBYouTubeExtractor.m */; };
+		4C71CF36192AAEA40000B8CC /* LBYouTubePlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF23192AAEA40000B8CC /* LBYouTubePlayerViewController.m */; };
+		4C71CF4D192AB28A0000B8CC /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4C71CF3E192AB28A0000B8CC /* Info.plist */; };
+		4C71CF4E192AB28A0000B8CC /* XCDYouTubeClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF40192AB28A0000B8CC /* XCDYouTubeClient.m */; };
+		4C71CF4F192AB28A0000B8CC /* XCDYouTubePlayerScript.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF45192AB28A0000B8CC /* XCDYouTubePlayerScript.m */; };
+		4C71CF50192AB28A0000B8CC /* XCDYouTubeVideo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF48192AB28A0000B8CC /* XCDYouTubeVideo.m */; };
+		4C71CF51192AB28A0000B8CC /* XCDYouTubeVideoOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF4A192AB28A0000B8CC /* XCDYouTubeVideoOperation.m */; };
+		4C71CF52192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C71CF4C192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.m */; };
 		4C7ADAEC18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7ADAEB18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png */; };
 		4C7ADAEF18B19F6300ACEA79 /* rdio-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7ADAEE18B19F6300ACEA79 /* rdio-logo.png */; };
 		4C7CA74918AC5A4E00A0EC99 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7CA74818AC5A4E00A0EC99 /* NSString+MD5.m */; };
@@ -166,8 +172,6 @@
 		4CC5271E18984DA500562CE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C231DF1188316AC00B030F9 /* AudioToolbox.framework */; };
 		4CC5272518985EFF00562CE1 /* youtube-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC5272418985EFF00562CE1 /* youtube-48.png */; };
 		4CC527291898603600562CE1 /* youtube-48-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC527281898603600562CE1 /* youtube-48-highlight.png */; };
-		4CD04AF61905920A00A5B859 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CD04AF81905920A00A5B859 /* Main.storyboard */; };
-
 		4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */; };
 		4CE4F4F9188C61F90013C31C /* FilterAndSaveMusic.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE4F4F8188C61F90013C31C /* FilterAndSaveMusic.m */; };
 		4CEBEE2D184ADEA80018ABE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CEBEE2C184ADEA80018ABE0 /* SystemConfiguration.framework */; };
@@ -325,8 +329,6 @@
 		4C2D0C7E18E0E9650096888D /* UIImage+Extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extras.h"; sourceTree = "<group>"; };
 		4C2D0C7F18E0E9650096888D /* UIImage+Extras.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
 		4C2D0C8118E0EB120096888D /* circle-dashed-4-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "circle-dashed-4-48-highlight.png"; path = "GlobalPlayer/circle-dashed-4-48-highlight.png"; sourceTree = "<group>"; };
-		4C2D0C8418E12E300096888D /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
-		4C2D0C8518E12E300096888D /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
 		4C2F0FC718846071006BA932 /* iTuneLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTuneLogo.png; sourceTree = "<group>"; };
 		4C2F0FC91884616E006BA932 /* spotifyLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo.png; sourceTree = "<group>"; };
 		4C2F0FCA1884616E006BA932 /* spotifyLogo_highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spotifyLogo_highlight.png; sourceTree = "<group>"; };
@@ -346,11 +348,6 @@
 		4C3179C91844107800F7D41B /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		4C3179CB1844107D00F7D41B /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		4C31899D18BDA1CA00549731 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		4C3189A918BDAD8C00549731 /* LBYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTube.h; sourceTree = "<group>"; };
-		4C3189AA18BDAD8C00549731 /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
-		4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
-		4C3189AC18BDAD8C00549731 /* LBYouTubePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubePlayerViewController.h; sourceTree = "<group>"; };
-		4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerViewController.m; sourceTree = "<group>"; };
 		4C3189B018BE821B00549731 /* NSMutableArray+Shuffling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Shuffling.h"; sourceTree = "<group>"; };
 		4C3189B118BE821B00549731 /* NSMutableArray+Shuffling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Shuffling.m"; sourceTree = "<group>"; };
 		4C3407E518DBB94D00C3EC33 /* GlobalPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalPlayer.h; path = GlobalPlayer/GlobalPlayer.h; sourceTree = "<group>"; };
@@ -362,6 +359,28 @@
 		4C5A7F541899F0A800BBD6D7 /* iTunes-10-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunes-10-icon.png"; sourceTree = "<group>"; };
 		4C716EAF18A9B66500816A62 /* YoutubeAuthorizeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = YoutubeAuthorizeViewController.h; path = Sources/YoutubeAuthorizeViewController.h; sourceTree = "<group>"; };
 		4C716EB018A9B66500816A62 /* YoutubeAuthorizeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = YoutubeAuthorizeViewController.m; path = Sources/YoutubeAuthorizeViewController.m; sourceTree = "<group>"; };
+		4C71CF1C192AAEA40000B8CC /* AutoScrollLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoScrollLabel.h; sourceTree = "<group>"; };
+		4C71CF1D192AAEA40000B8CC /* AutoScrollLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoScrollLabel.m; sourceTree = "<group>"; };
+		4C71CF1F192AAEA40000B8CC /* LBYouTube.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTube.h; sourceTree = "<group>"; };
+		4C71CF20192AAEA40000B8CC /* LBYouTubeExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubeExtractor.h; sourceTree = "<group>"; };
+		4C71CF21192AAEA40000B8CC /* LBYouTubeExtractor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubeExtractor.m; sourceTree = "<group>"; };
+		4C71CF22192AAEA40000B8CC /* LBYouTubePlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LBYouTubePlayerViewController.h; sourceTree = "<group>"; };
+		4C71CF23192AAEA40000B8CC /* LBYouTubePlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LBYouTubePlayerViewController.m; sourceTree = "<group>"; };
+		4C71CF3E192AB28A0000B8CC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4C71CF3F192AB28A0000B8CC /* XCDYouTubeClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeClient.h; sourceTree = "<group>"; };
+		4C71CF40192AB28A0000B8CC /* XCDYouTubeClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCDYouTubeClient.m; sourceTree = "<group>"; };
+		4C71CF41192AB28A0000B8CC /* XCDYouTubeError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeError.h; sourceTree = "<group>"; };
+		4C71CF42192AB28A0000B8CC /* XCDYouTubeKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeKit.h; sourceTree = "<group>"; };
+		4C71CF43192AB28A0000B8CC /* XCDYouTubeOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeOperation.h; sourceTree = "<group>"; };
+		4C71CF44192AB28A0000B8CC /* XCDYouTubePlayerScript.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubePlayerScript.h; sourceTree = "<group>"; };
+		4C71CF45192AB28A0000B8CC /* XCDYouTubePlayerScript.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCDYouTubePlayerScript.m; sourceTree = "<group>"; };
+		4C71CF46192AB28A0000B8CC /* XCDYouTubeVideo+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XCDYouTubeVideo+Private.h"; sourceTree = "<group>"; };
+		4C71CF47192AB28A0000B8CC /* XCDYouTubeVideo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeVideo.h; sourceTree = "<group>"; };
+		4C71CF48192AB28A0000B8CC /* XCDYouTubeVideo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCDYouTubeVideo.m; sourceTree = "<group>"; };
+		4C71CF49192AB28A0000B8CC /* XCDYouTubeVideoOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeVideoOperation.h; sourceTree = "<group>"; };
+		4C71CF4A192AB28A0000B8CC /* XCDYouTubeVideoOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCDYouTubeVideoOperation.m; sourceTree = "<group>"; };
+		4C71CF4B192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XCDYouTubeVideoPlayerViewController.h; sourceTree = "<group>"; };
+		4C71CF4C192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XCDYouTubeVideoPlayerViewController.m; sourceTree = "<group>"; };
 		4C7ADAEB18B19E5D00ACEA79 /* Download_on_iTunes_Badge_US-UK_110x40_1004.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Download_on_iTunes_Badge_US-UK_110x40_1004.png"; sourceTree = "<group>"; };
 		4C7ADAEE18B19F6300ACEA79 /* rdio-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rdio-logo.png"; sourceTree = "<group>"; };
 		4C7CA74718AC5A4E00A0EC99 /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MD5.h"; sourceTree = "<group>"; };
@@ -412,7 +431,6 @@
 		4CC5271C18984D6000562CE1 /* SPLoginResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = SPLoginResources.bundle; path = Framework/SPLoginResources.bundle; sourceTree = "<group>"; };
 		4CC5272418985EFF00562CE1 /* youtube-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48.png"; sourceTree = "<group>"; };
 		4CC527281898603600562CE1 /* youtube-48-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "youtube-48-highlight.png"; sourceTree = "<group>"; };
-
 		4CD04AF91905A4C700A5B859 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4CDEF2B01883A81000CBD40E /* SampleMusicSourceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleMusicSourceView.h; sourceTree = "<group>"; };
 		4CDEF2B11883A81000CBD40E /* SampleMusicSourceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleMusicSourceView.m; sourceTree = "<group>"; };
@@ -914,15 +932,6 @@
 			name = GlobalPlayer;
 			sourceTree = "<group>";
 		};
-		4C2D0C8318E12E300096888D /* AutoScrollLabel */ = {
-			isa = PBXGroup;
-			children = (
-				4C2D0C8418E12E300096888D /* AutoScrollLabel.h */,
-				4C2D0C8518E12E300096888D /* AutoScrollLabel.m */,
-			);
-			path = AutoScrollLabel;
-			sourceTree = "<group>";
-		};
 		4C2F0FC518846071006BA932 /* SampleMusic */ = {
 			isa = PBXGroup;
 			children = (
@@ -1010,25 +1019,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		4C31899F18BDAC9A00549731 /* Framework */ = {
+		4C31899F18BDAC9A00549731 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				4C2D0C8318E12E300096888D /* AutoScrollLabel */,
-				4C3189A818BDAD8C00549731 /* LBYouTubeView */,
+				4C71CF3D192AB28A0000B8CC /* XCDYouTubeKit */,
+				4C71CF1B192AAEA40000B8CC /* AutoScrollLabel */,
+				4C71CF1E192AAEA40000B8CC /* LBYouTubeView */,
 			);
-			name = Framework;
-			sourceTree = "<group>";
-		};
-		4C3189A818BDAD8C00549731 /* LBYouTubeView */ = {
-			isa = PBXGroup;
-			children = (
-				4C3189A918BDAD8C00549731 /* LBYouTube.h */,
-				4C3189AA18BDAD8C00549731 /* LBYouTubeExtractor.h */,
-				4C3189AB18BDAD8C00549731 /* LBYouTubeExtractor.m */,
-				4C3189AC18BDAD8C00549731 /* LBYouTubePlayerViewController.h */,
-				4C3189AD18BDAD8C00549731 /* LBYouTubePlayerViewController.m */,
-			);
-			path = LBYouTubeView;
+			name = Helper;
 			sourceTree = "<group>";
 		};
 		4C3407E418DBB92B00C3EC33 /* GlobalPlayer */ = {
@@ -1097,6 +1095,52 @@
 			name = Sources;
 			sourceTree = "<group>";
 		};
+		4C71CF1B192AAEA40000B8CC /* AutoScrollLabel */ = {
+			isa = PBXGroup;
+			children = (
+				4C71CF1C192AAEA40000B8CC /* AutoScrollLabel.h */,
+				4C71CF1D192AAEA40000B8CC /* AutoScrollLabel.m */,
+			);
+			name = AutoScrollLabel;
+			path = Helper/AutoScrollLabel;
+			sourceTree = "<group>";
+		};
+		4C71CF1E192AAEA40000B8CC /* LBYouTubeView */ = {
+			isa = PBXGroup;
+			children = (
+				4C71CF1F192AAEA40000B8CC /* LBYouTube.h */,
+				4C71CF20192AAEA40000B8CC /* LBYouTubeExtractor.h */,
+				4C71CF21192AAEA40000B8CC /* LBYouTubeExtractor.m */,
+				4C71CF22192AAEA40000B8CC /* LBYouTubePlayerViewController.h */,
+				4C71CF23192AAEA40000B8CC /* LBYouTubePlayerViewController.m */,
+			);
+			name = LBYouTubeView;
+			path = Helper/LBYouTubeView;
+			sourceTree = "<group>";
+		};
+		4C71CF3D192AB28A0000B8CC /* XCDYouTubeKit */ = {
+			isa = PBXGroup;
+			children = (
+				4C71CF3E192AB28A0000B8CC /* Info.plist */,
+				4C71CF3F192AB28A0000B8CC /* XCDYouTubeClient.h */,
+				4C71CF40192AB28A0000B8CC /* XCDYouTubeClient.m */,
+				4C71CF41192AB28A0000B8CC /* XCDYouTubeError.h */,
+				4C71CF42192AB28A0000B8CC /* XCDYouTubeKit.h */,
+				4C71CF43192AB28A0000B8CC /* XCDYouTubeOperation.h */,
+				4C71CF44192AB28A0000B8CC /* XCDYouTubePlayerScript.h */,
+				4C71CF45192AB28A0000B8CC /* XCDYouTubePlayerScript.m */,
+				4C71CF46192AB28A0000B8CC /* XCDYouTubeVideo+Private.h */,
+				4C71CF47192AB28A0000B8CC /* XCDYouTubeVideo.h */,
+				4C71CF48192AB28A0000B8CC /* XCDYouTubeVideo.m */,
+				4C71CF49192AB28A0000B8CC /* XCDYouTubeVideoOperation.h */,
+				4C71CF4A192AB28A0000B8CC /* XCDYouTubeVideoOperation.m */,
+				4C71CF4B192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.h */,
+				4C71CF4C192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.m */,
+			);
+			name = XCDYouTubeKit;
+			path = Helper/XCDYouTubeKit;
+			sourceTree = "<group>";
+		};
 		4C7ADAEA18B19E5500ACEA79 /* iTune */ = {
 			isa = PBXGroup;
 			children = (
@@ -1133,7 +1177,7 @@
 				4C231CB3188104F800B030F9 /* Resource */,
 				4C231C4C188104F800B030F9 /* Archive */,
 				4C231D6C1881063A00B030F9 /* Supporting Files */,
-				4C31899F18BDAC9A00549731 /* Framework */,
+				4C31899F18BDAC9A00549731 /* Helper */,
 			);
 			path = Avibe;
 			sourceTree = "<group>";
@@ -1351,6 +1395,7 @@
 				4CC5271D18984D6000562CE1 /* SPLoginResources.bundle in Resources */,
 				4C231D2F188104F800B030F9 /* newspaper-10-24.png in Resources */,
 				4C2D0C8218E0EB120096888D /* circle-dashed-4-48-highlight.png in Resources */,
+				4C71CF4D192AB28A0000B8CC /* Info.plist in Resources */,
 				4C2D0C7C18E0E6940096888D /* arrow-24-32-highlight.png in Resources */,
 				4C2D0C7818DFC7D80096888D /* pause-32.png in Resources */,
 				4C231CFD188104F800B030F9 /* MMDrawerControllerKitchenSink-Info.plist in Resources */,
@@ -1370,8 +1415,6 @@
 				4C231D34188104F800B030F9 /* undo-2-24.png in Resources */,
 				4C2F0FCB1884616E006BA932 /* spotifyLogo.png in Resources */,
 				4C231D62188104F800B030F9 /* User.storyboard in Resources */,
-
-				4CD04AFA1905A4C700A5B859 /* Main.storyboard in Resources */,
 				4C231D2D188104F800B030F9 /* dj-24.png in Resources */,
 				4C7ADAEF18B19F6300ACEA79 /* rdio-logo.png in Resources */,
 				4C2F0FC818846071006BA932 /* iTuneLogo.png in Resources */,
@@ -1475,30 +1518,33 @@
 				4C231D00188104F800B030F9 /* MMExampleDrawerVisualStateManager.m in Sources */,
 				4CADBB6318C50A3400F86916 /* RdioViewController.m in Sources */,
 				4C8B5807188F64BE00430CF9 /* FaceBookListenedMusic.m in Sources */,
+				4C71CF52192AB28A0000B8CC /* XCDYouTubeVideoPlayerViewController.m in Sources */,
 				4C231D17188104F800B030F9 /* LiveFeedViewController.m in Sources */,
+				4C71CF34192AAEA40000B8CC /* AutoScrollLabel.m in Sources */,
+				4C71CF51192AB28A0000B8CC /* XCDYouTubeVideoOperation.m in Sources */,
 				4C23F1821885D6C800D2075A /* PublicMethod.m in Sources */,
+				4C71CF4E192AB28A0000B8CC /* XCDYouTubeClient.m in Sources */,
 				4C231D0D188104F800B030F9 /* UIViewController+MMDrawerController.m in Sources */,
 				4C231CFA188104F800B030F9 /* MMCenterTableViewCell.m in Sources */,
 				4C231D11188104F800B030F9 /* YMGenericCollectionViewCell.m in Sources */,
 				4C8F74EC188D825D00B91651 /* Constant.m in Sources */,
 				4C8F74E9188CC4F900B91651 /* ShareCollectionViewCell.m in Sources */,
-				4C3189AF18BDAD8C00549731 /* LBYouTubePlayerViewController.m in Sources */,
 				4C231D24188104F800B030F9 /* Song.xcdatamodeld in Sources */,
 				4C231D0F188104F800B030F9 /* FriendsViewController.m in Sources */,
+				4C71CF36192AAEA40000B8CC /* LBYouTubePlayerViewController.m in Sources */,
 				4CADBB6618C50D7300F86916 /* LinkFacebookViewController.m in Sources */,
 				4C231D22188104F800B030F9 /* Setting.m in Sources */,
 				4C9E605318E4AB0F00627745 /* FilterFriendViewController.m in Sources */,
 				4CDEF2B21883A81000CBD40E /* SampleMusicSourceView.m in Sources */,
 				4CAA5E2118C7A44900EE6259 /* YMCollectionReusableFooterView.m in Sources */,
 				4C231D10188104F800B030F9 /* YMGenericCollectionReusableHeaderView.m in Sources */,
+				4C71CF4F192AB28A0000B8CC /* XCDYouTubePlayerScript.m in Sources */,
 				4C4184D318A1CA9D00999660 /* iPodListenedMusic.m in Sources */,
 				4C231D0B188104F800B030F9 /* SubclassConfigViewController.m in Sources */,
 				4C3150C118BFCEDA00D80BBB /* ColorConstant.m in Sources */,
-				4C3189AE18BDAD8C00549731 /* LBYouTubeExtractor.m in Sources */,
 				4C231D19188104F800B030F9 /* ShareViewController.m in Sources */,
 				4C231D1B188104F800B030F9 /* SideMenuViewController.m in Sources */,
 				4C231DEA188311CC00B030F9 /* ScrobbleListenedMusic.m in Sources */,
-				4C2D0C8618E12E300096888D /* AutoScrollLabel.m in Sources */,
 				4C231D1C188104F800B030F9 /* MyLogInViewController.m in Sources */,
 				4C231D1D188104F800B030F9 /* MySignUpViewController.m in Sources */,
 				4C231D20188104F800B030F9 /* MainViewController.m in Sources */,
@@ -1515,6 +1561,7 @@
 				4C231D0C188104F800B030F9 /* TableViewController.m in Sources */,
 				4C231D16188104F800B030F9 /* ListenedViewController.m in Sources */,
 				4C231CFF188104F800B030F9 /* MMExampleCenterTableViewController.m in Sources */,
+				4C71CF35192AAEA40000B8CC /* LBYouTubeExtractor.m in Sources */,
 				4C231D06188104F800B030F9 /* MMNavigationController.m in Sources */,
 				4C716EB118A9B66500816A62 /* YoutubeAuthorizeViewController.m in Sources */,
 				4C231D0E188104F800B030F9 /* FindFriendsViewController.m in Sources */,
@@ -1526,6 +1573,7 @@
 				4CADBB5718C5045500F86916 /* SpotifyViewController.m in Sources */,
 				4CADBB6118C50A3400F86916 /* EightTracksViewController.m in Sources */,
 				4C231D6B1881058A00B030F9 /* main.m in Sources */,
+				4C71CF50192AB28A0000B8CC /* XCDYouTubeVideo.m in Sources */,
 				4C231DE218820CC200B030F9 /* SaveMusicFromSources.m in Sources */,
 				4C3189B218BE821B00549731 /* NSMutableArray+Shuffling.m in Sources */,
 			);
@@ -1562,14 +1610,6 @@
 				4C231DC51881DF3700B030F9 /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		4CD04AF81905920A00A5B859 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4CD04AF71905920A00A5B859 /* en */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
