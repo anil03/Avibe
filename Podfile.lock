@@ -47,12 +47,12 @@ DEPENDENCIES:
   - MMDrawerController (> 0.4.0)
 
 SPEC CHECKSUMS:
-  AFNetworking: ae513199cca79e9d7af2708ccabe2ed075550c42
-  CocoaSoundCloudAPI: 76323652e2e49e15609932ec4bf349f2249d039e
-  CocoaSoundCloudUI: 0ba59a3bf331b7de5eca73bb5698cc046dc7d2e4
-  Facebook-iOS-SDK: 47ae9e54684c84f93d75d4e6ab47cd031abdf406
-  MMDrawerController: 76408e0a01b0a3996479261c57aed5d5765a6ea1
-  NXOAuth2Client: 2abb027fb64a9d9a467202e281bb0f2206924661
-  OHAttributedLabel: 8fec862b9ba3e7e9a8ff624e21c9f00c56eb195a
+  AFNetworking: 47947303319594706f48a55185ea95a95159ab94
+  CocoaSoundCloudAPI: 4e762deae813dbd34311780f19d7130d0c795b58
+  CocoaSoundCloudUI: 4a5ae1d08c4e9b66ec0db6c786f113a59a0bde4a
+  Facebook-iOS-SDK: bc0d0bdf14f64cb7f4d49f8f17d445f49c40d342
+  MMDrawerController: ff4b6a3a6fa1342d5f4d405e59673be69270c18b
+  NXOAuth2Client: d0d18286b0d47da2b066bc3ab4e95157b2890675
+  OHAttributedLabel: fcf1d1245b4c8d2df94da91369b1474901d7fb14
 
 COCOAPODS: 0.32.1
